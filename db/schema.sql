@@ -63,3 +63,43 @@ CREATE TABLE IF NOT EXISTS subscribers (
     interest   TEXT,
     created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
+
+-- Mapa del Olvido: obras públicas en Venezuela
+CREATE TABLE IF NOT EXISTS obras (
+    id                       TEXT PRIMARY KEY,
+    nombre                   TEXT NOT NULL,
+    lat                      NUMERIC,
+    lng                      NUMERIC,
+    geohash                  TEXT,
+    presupuesto_usd          NUMERIC,
+    anio_inicio              INTEGER,
+    categoria                TEXT,
+    estado_venezuela         TEXT NOT NULL,
+    estatus                  TEXT NOT NULL,
+    ente_responsable         TEXT,
+    fuente_url               TEXT,
+    fotos_url                JSONB DEFAULT '[]',
+    descripcion              TEXT,
+    progreso_pct             NUMERIC,
+    sobrecosto_pct           NUMERIC,
+    presupuesto_original_usd NUMERIC,
+    responsable_politico     TEXT,
+    partido_politico         TEXT,
+    contratista              TEXT,
+    created_at               TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    updated_at               TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+CREATE INDEX IF NOT EXISTS idx_obras_estado  ON obras(estado_venezuela);
+CREATE INDEX IF NOT EXISTS idx_obras_estatus ON obras(estatus);
+CREATE INDEX IF NOT EXISTS idx_obras_anio    ON obras(anio_inicio);
+
+CREATE TABLE IF NOT EXISTS reportes_ciudadanos (
+    id            TEXT PRIMARY KEY,
+    obra_id       TEXT REFERENCES obras(id),
+    contacto      TEXT,
+    descripcion   TEXT NOT NULL,
+    evidencia_url TEXT,
+    status        TEXT NOT NULL DEFAULT 'pending',
+    created_at    TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);

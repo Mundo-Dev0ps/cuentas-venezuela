@@ -1,6 +1,8 @@
 import {
   bigint,
   integer,
+  jsonb,
+  numeric,
   pgTable,
   serial,
   text,
@@ -41,4 +43,46 @@ export const indicators = pgTable("indicators", {
   unit: text("unit").notNull(),
   description: text("description"),
   datasetId: integer("dataset_id").references(() => datasets.id),
+});
+
+// Mapa del Olvido: obras públicas en Venezuela.
+export const obras = pgTable("obras", {
+  id: text("id").primaryKey(),
+  nombre: text("nombre").notNull(),
+  lat: numeric("lat", { mode: "number" }),
+  lng: numeric("lng", { mode: "number" }),
+  geohash: text("geohash"),
+  presupuestoUsd: numeric("presupuesto_usd", { mode: "number" }),
+  anioInicio: integer("anio_inicio"),
+  categoria: text("categoria"),
+  estadoVenezuela: text("estado_venezuela").notNull(),
+  estatus: text("estatus").notNull(),
+  enteResponsable: text("ente_responsable"),
+  fuenteUrl: text("fuente_url"),
+  fotosUrl: jsonb("fotos_url").default([]),
+  descripcion: text("descripcion"),
+  progresoPct: numeric("progreso_pct", { mode: "number" }),
+  sobrecostoPct: numeric("sobrecosto_pct", { mode: "number" }),
+  presupuestoOriginalUsd: numeric("presupuesto_original_usd", { mode: "number" }),
+  responsablePolitico: text("responsable_politico"),
+  partidoPolitico: text("partido_politico"),
+  contratista: text("contratista"),
+  createdAt: timestamp("created_at", { withTimezone: true })
+    .notNull()
+    .defaultNow(),
+  updatedAt: timestamp("updated_at", { withTimezone: true })
+    .notNull()
+    .defaultNow(),
+});
+
+export const reportesCiudadanos = pgTable("reportes_ciudadanos", {
+  id: text("id").primaryKey(),
+  obraId: text("obra_id").references(() => obras.id),
+  contacto: text("contacto"),
+  descripcion: text("descripcion").notNull(),
+  evidenciaUrl: text("evidencia_url"),
+  status: text("status").notNull().default("pending"),
+  createdAt: timestamp("created_at", { withTimezone: true })
+    .notNull()
+    .defaultNow(),
 });

@@ -45,3 +45,71 @@ ON CONFLICT (slug) DO UPDATE SET
   unit = EXCLUDED.unit,
   description = EXCLUDED.description,
   dataset_id = EXCLUDED.dataset_id;
+
+-- ===== Mapa del Olvido: seed obras (mirror of mapa-olvido-vnzla scraper/seed.py) =====
+INSERT INTO obras (
+  id, nombre, lat, lng, geohash, presupuesto_usd, anio_inicio, categoria,
+  estado_venezuela, estatus, ente_responsable, fuente_url, fotos_url,
+  descripcion, progreso_pct, sobrecosto_pct, presupuesto_original_usd,
+  responsable_politico, partido_politico, contratista
+) VALUES
+  ('hospital-maracaibo', 'Hospital Universitario de Maracaibo',
+   10.651, -71.614, 'e6ku4p',
+   45000000, 2003, 'Salud',
+   'Zulia', 'paralizada', 'MPPS',
+   'https://transparenciave.org/obras/1', '[]'::jsonb,
+   'Centro de atención médica de alta complejidad anunciado para descongestionar el Hospital Central. Tras 22 años, las estructuras están abandonadas y vandalizadas.',
+   35, 180, 16000000,
+   'Manuel Rosales', 'Un Nuevo Tiempo', 'Constructora Norberto Odebrecht'),
+
+  ('viaducto-la-cabrera', 'Viaducto La Cabrera',
+   10.327, -66.104, 'djvqkp',
+   120000000, 2007, 'Infraestructura',
+   'Miranda', 'critica', 'MINFRA',
+   'https://transparenciave.org/obras/2', '[]'::jsonb,
+   'Conexión vial estratégica entre Caracas y los Valles del Tuy. Estructura presenta fallas geológicas sin resolver.',
+   78, 95, 61500000,
+   'Diosdado Cabello', 'PSUV', 'Odebrecht Venezuela'),
+
+  ('estadio-puerto-la-cruz', 'Estadio de Béisbol Puerto La Cruz',
+   10.213, -64.638, 'dju8kp',
+   18000000, 2011, 'Deporte',
+   'Anzoátegui', 'inoperativa', 'MPPE',
+   'https://transparenciave.org/obras/3', '[]'::jsonb,
+   'Estadio anunciado para Serie del Caribe 2014. Inaugurado parcialmente, hoy sin uso por daños estructurales.',
+   90, 50, 12000000,
+   'Tarek William Saab', 'PSUV', 'Constructora del Caribe'),
+
+  ('linea5-metro-caracas', 'Línea 5 Metro de Caracas',
+   10.491, -66.878, 'djv0kp',
+   890000000, 1999, 'Transporte',
+   'Distrito Capital', 'paralizada', 'Metro de Caracas',
+   'https://transparenciave.org/obras/4', '[]'::jsonb,
+   'Línea anunciada hace 26 años para conectar Plaza Venezuela con Parque del Este. Túneles excavados parcialmente, sin estaciones funcionales.',
+   22, 245, 258000000,
+   'Hugo Chávez Frías', 'MVR / PSUV', 'Consorcio Constructora Norberto Odebrecht-Ghella'),
+
+  ('universidad-tachira', 'Universidad Bolivariana del Táchira',
+   7.773, -72.226, 'd39jkp',
+   25000000, 2014, 'Educación',
+   'Táchira', 'critica', 'MPPES',
+   'https://transparenciave.org/obras/5', '[]'::jsonb,
+   'Sede universitaria anunciada con capacidad para 8.000 estudiantes. Edificios sin terminar, sin servicios básicos.',
+   55, 30, 19200000,
+   'José Vielma Mora', 'PSUV', 'Sin licitación pública'),
+
+  ('central-tocoma', 'Central Hidroeléctrica Tocoma',
+   7.892, -63.103, 'd6vk7p',
+   4300000000, 2007, 'Energía',
+   'Bolívar', 'paralizada', 'CORPOELEC',
+   'https://transparenciave.org/obras/6', '[]'::jsonb,
+   'Central hidroeléctrica anunciada con capacidad de 2.160 MW. Tras 18 años, opera al 40% de capacidad por fallas en turbinas.',
+   60, 110, 2050000000,
+   'Hugo Chávez Frías', 'PSUV', 'Constructora OAS')
+ON CONFLICT (id) DO UPDATE SET
+  nombre = EXCLUDED.nombre,
+  lat = EXCLUDED.lat,
+  lng = EXCLUDED.lng,
+  presupuesto_usd = EXCLUDED.presupuesto_usd,
+  estatus = EXCLUDED.estatus,
+  updated_at = NOW();

@@ -2,7 +2,8 @@ import { serve } from "@hono/node-server";
 import { Hono } from "hono";
 import { cors } from "hono/cors";
 import { logger } from "hono/logger";
-import { eq } from "drizzle-orm";
+import { eq, sql } from "drizzle-orm";
+import { randomUUID } from "node:crypto";
 import { db, schema } from "./db/client.js";
 import { duckdb } from "./duckdb/client.js";
 
@@ -252,6 +253,85 @@ app.get("/v1/data/aporte-tributario", async (c) => {
   } catch (e) {
     return c.json({ items: [], error: (e as Error).message }, 200);
   }
+});
+
+// ===== Mapa del Olvido: obras públicas en Venezuela =====
+
+// postgres-js returns NUMERIC as string. Coerce to number for the JSON API.
+const num = (v: unknown): number =>
+  v == null ? 0 : typeof v === "number" ? v : Number(v);
+const numOpt = (v: unknown): number | undefined =>
+  v == null || v === "" ? undefined : Number(v);
+
+function rowToObra(r: typeof schema.obras.$inferSelect) {
+  // Mapa frontend expects { coordenadas: { lat, lng } } not flat lat/lng.
+  return {
+    id: r.id,
+    nombre: r.nombre,
+    coordenadas: {
+      lat: num(r.lat),
+      lng: num(r.lng),
+    },
+    geohash: r.geohash ?? "",
+    presupuesto_usd: num(r.presupuestoUsd),
+    anio_inicio: r.anioInicio ?? 0,
+    categoria: r.categoria ?? "",
+    estado_venezuela: r.estadoVenezuela,
+    estatus: r.estatus,
+    ente_responsable: r.enteResponsable ?? "",
+    fuente_url: r.fuenteUrl ?? "",
+    fotos_url: (r.fotosUrl as string[] | null) ?? [],
+    descripcion: r.descripcion ?? undefined,
+    progreso_pct: numOpt(r.progresoPct),
+    sobrecosto_pct: numOpt(r.sobrecostoPct),
+    presupuesto_original_usd: numOpt(r.presupuestoOriginalUsd),
+    responsable_politico: r.responsablePolitico ?? undefined,
+    partido_politico: r.partidoPolitico ?? undefined,
+    contratista: r.contratista ?? undefined,
+  };
+}
+
+app.get("/api/obras", async (c) => {
+  const rows = await db.select().from(schema.obras).orderBy(schema.obras.nombre);
+  c.header("Cache-Control", "public, max-age=60, s-maxage=300");
+  return c.json(rows.map(rowToObra));
+});
+
+app.get("/api/obras/:id", async (c) => {
+  const id = c.req.param("id");
+  const [row] = await db
+    .select()
+    .from(schema.obras)
+    .where(eq(schema.obras.id, id))
+    .limit(1);
+  if (!row) return c.json({ error: "not found" }, 404);
+  c.header("Cache-Control", "public, max-age=60, s-maxage=300");
+  return c.json(rowToObra(row));
+});
+
+app.post("/api/reportes", async (c) => {
+  let body: any;
+  try {
+    body = await c.req.json();
+  } catch {
+    return c.json({ error: "invalid json" }, 400);
+  }
+  const descripcion = String(body?.descripcion ?? "").trim();
+  if (descripcion.length < 10) {
+    return c.json(
+      { error: "descripcion debe tener al menos 10 caracteres" },
+      400,
+    );
+  }
+  const id = randomUUID();
+  await db.insert(schema.reportesCiudadanos).values({
+    id,
+    obraId: body?.obra_id ?? null,
+    descripcion,
+    contacto: body?.contacto ?? null,
+    evidenciaUrl: body?.evidencia_url ?? null,
+  });
+  return c.json({ id, status: "pending" }, 201);
 });
 
 const port = 8000;
