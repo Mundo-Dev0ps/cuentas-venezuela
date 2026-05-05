@@ -2,23 +2,19 @@ import { test, expect } from "@playwright/test";
 
 test.describe.configure({ mode: "serial" });
 
-test("/mapa-del-olvido renders with hero stats", async ({ page }) => {
+test("/mapa-del-olvido serves the original Vite mapa via rewrite", async ({
+  page,
+}) => {
   await page.goto("/mapa-del-olvido", { waitUntil: "domcontentloaded" });
-  await expect(page.getByTestId("hero-total")).toBeVisible({ timeout: 30000 });
-  await expect(page.getByText(/Mapa del Olvido — Venezuela/i)).toBeVisible();
+  await expect(page).toHaveTitle(/mapa del olvido/i);
 });
 
-test("/mapa-del-olvido shows filters panel", async ({ page }) => {
-  await page.goto("/mapa-del-olvido", { waitUntil: "domcontentloaded" });
-  await expect(
-    page.getByRole("heading", { name: "Filtros" }),
-  ).toBeVisible({ timeout: 30000 });
-  await expect(
-    page.getByRole("button", { name: /^limpiar$/i }),
-  ).toBeVisible();
+test("/mapa-del-olvido vite client asset reachable", async ({ request }) => {
+  const r = await request.get("/mapa-del-olvido/@vite/client");
+  expect(r.ok()).toBe(true);
 });
 
-test("/mapa-del-olvido renders deckgl canvas", async ({ page }) => {
-  await page.goto("/mapa-del-olvido", { waitUntil: "domcontentloaded" });
-  await expect(page.locator("#deckgl-overlay")).toBeAttached({ timeout: 30000 });
+test("/mapa-del-olvido boundary geojson reachable", async ({ request }) => {
+  const r = await request.get("/mapa-del-olvido/data/venezuela.geojson");
+  expect(r.ok()).toBe(true);
 });

@@ -8,11 +8,15 @@ services:
     environment:
       - NEXT_PUBLIC_API_URL=${NEXT_PUBLIC_API_URL:-http://localhost:8100}
       - INTERNAL_API_URL=http://api:8000
+      - MAPA_INTERNAL_URL=http://mapa-web:5173
       - NODE_ENV=development
     volumes:
       - ./web:/app
       - web_node_modules:/app/node_modules
       - web_next:/app/.next
+    networks:
+      - default
+      - mapa
     depends_on:
       api:
         condition: service_healthy
@@ -120,3 +124,9 @@ volumes:
   web_node_modules:
   web_next:
   api_node_modules:
+
+networks:
+  default:
+  mapa:
+    name: mapa-olvido-vnzla_default
+    external: true
