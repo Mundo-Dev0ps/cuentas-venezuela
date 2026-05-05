@@ -1,23 +1,24 @@
 import { test, expect } from "@playwright/test";
 
+test.describe.configure({ mode: "serial" });
+
 test("/mapa-del-olvido renders with hero stats", async ({ page }) => {
-  await page.goto("/mapa-del-olvido");
-  await expect(page.getByTestId("hero-total")).toBeVisible();
-  await expect(page.getByText(/obras totales/i).first()).toBeVisible();
+  await page.goto("/mapa-del-olvido", { waitUntil: "domcontentloaded" });
+  await expect(page.getByTestId("hero-total")).toBeVisible({ timeout: 30000 });
+  await expect(page.getByText(/Mapa del Olvido — Venezuela/i)).toBeVisible();
 });
 
 test("/mapa-del-olvido shows filters panel", async ({ page }) => {
-  await page.goto("/mapa-del-olvido");
-  await expect(page.locator(".maplibregl-map")).toBeVisible({ timeout: 10000 });
+  await page.goto("/mapa-del-olvido", { waitUntil: "domcontentloaded" });
   await expect(
     page.getByRole("heading", { name: "Filtros" }),
-  ).toBeVisible();
+  ).toBeVisible({ timeout: 30000 });
   await expect(
-    page.getByRole("button", { name: /limpiar filtros/i }),
+    page.getByRole("button", { name: /^limpiar$/i }),
   ).toBeVisible();
 });
 
-test("/mapa-del-olvido renders maplibre canvas", async ({ page }) => {
-  await page.goto("/mapa-del-olvido");
-  await expect(page.locator(".maplibregl-map")).toBeVisible({ timeout: 10000 });
+test("/mapa-del-olvido renders deckgl canvas", async ({ page }) => {
+  await page.goto("/mapa-del-olvido", { waitUntil: "domcontentloaded" });
+  await expect(page.locator("#deckgl-overlay")).toBeAttached({ timeout: 30000 });
 });

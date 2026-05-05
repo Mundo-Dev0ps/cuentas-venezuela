@@ -9,6 +9,9 @@ test('landing page lists both products', async ({ page }) => {
 
 test('landing CTA navigates to mapa-del-olvido', async ({ page }) => {
   await page.goto('/');
-  await page.getByRole('link', { name: /explorar.*mapa|abrir mapa|ver mapa/i }).first().click();
-  await expect(page).toHaveURL(/\/mapa-del-olvido$/);
+  const link = page.locator('a[href="/mapa-del-olvido"]').first();
+  await Promise.all([
+    page.waitForURL(/\/mapa-del-olvido$/, { timeout: 15000 }),
+    link.click(),
+  ]);
 });

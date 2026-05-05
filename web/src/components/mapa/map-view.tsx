@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import Map, { NavigationControl } from "react-map-gl/maplibre";
+import { Map as MapGL, NavigationControl } from "react-map-gl/maplibre";
 import DeckGL from "@deck.gl/react";
 import { ScatterplotLayer, GeoJsonLayer } from "@deck.gl/layers";
 import "maplibre-gl/dist/maplibre-gl.css";
@@ -11,9 +11,9 @@ import { MOCK_OBRAS, mockStats } from "@/lib/obras-mock";
 import type { Obra, ObraStatus, ObraTipo } from "@/lib/obras-types";
 
 const INITIAL_VIEW = {
-  longitude: -66.5,
-  latitude: 8.0,
-  zoom: 5.4,
+  longitude: -66.2,
+  latitude: 7.5,
+  zoom: 5.7,
   pitch: 0,
   bearing: 0,
 };
@@ -56,16 +56,33 @@ const DEFAULT_FILTERS: Filters = {
   yearRange: [2000, 2025],
 };
 
+interface StateFeature {
+  properties: { shapeName?: string; name?: string; [k: string]: unknown };
+  [k: string]: unknown;
+}
+
+function stateName(f: StateFeature): string {
+  return (f.properties?.shapeName ?? f.properties?.name ?? "") as string;
+}
+
 export function MapaDelOlvido() {
   const [filters, setFilters] = useState<Filters>(DEFAULT_FILTERS);
   const [selected, setSelected] = useState<Obra | null>(null);
-  const [boundary, setBoundary] = useState<unknown>(null);
+  const [hoverState, setHoverState] = useState<string | null>(null);
+  const [country, setCountry] = useState<unknown>(null);
+  const [states, setStates] = useState<{ features: StateFeature[] } | null>(
+    null,
+  );
 
   useEffect(() => {
     fetch("/data/venezuela.geojson")
       .then((r) => r.json())
-      .then(setBoundary)
-      .catch(() => setBoundary(null));
+      .then(setCountry)
+      .catch(() => setCountry(null));
+    fetch("/data/venezuela-states.geojson")
+      .then((r) => r.json())
+      .then(setStates)
+      .catch(() => setStates(null));
   }, []);
 
   const filtered = useMemo(() => filterObras(MOCK_OBRAS, filters), [filters]);
@@ -75,16 +92,55 @@ export function MapaDelOlvido() {
     [],
   );
 
+  const obrasByEstado = useMemo(() => {
+    const m = new Map<string, number>();
+    for (const o of filtered) m.set(o.estado, (m.get(o.estado) ?? 0) + 1);
+    return m;
+  }, [filtered]);
+
   const layers = [
-    boundary &&
+    country &&
       new GeoJsonLayer({
-        id: "venezuela-boundary",
-        data: boundary as any,
+        id: "venezuela-country",
+        data: country as any,
         stroked: true,
         filled: true,
-        getFillColor: [40, 60, 90, 30],
-        getLineColor: [120, 180, 220, 200],
-        lineWidthMinPixels: 1,
+        getFillColor: [240, 245, 250, 255],
+        getLineColor: [60, 90, 130, 220],
+        lineWidthMinPixels: 1.5,
+      }),
+    states &&
+      new GeoJsonLayer({
+        id: "venezuela-states",
+        data: states as any,
+        stroked: true,
+        filled: true,
+        pickable: true,
+        getFillColor: (f: any) => {
+          const name = stateName(f);
+          if (filters.estado && filters.estado === name)
+            return [16, 185, 129, 90];
+          if (hoverState === name) return [16, 185, 129, 60];
+          const n = obrasByEstado.get(name) ?? 0;
+          if (n === 0) return [255, 255, 255, 0];
+          const intensity = Math.min(180, 60 + n * 25);
+          return [239, 68, 68, intensity];
+        },
+        getLineColor: [80, 100, 130, 180],
+        lineWidthMinPixels: 0.8,
+        onHover: (info) =>
+          setHoverState(info.object ? stateName(info.object) : null),
+        onClick: (info) => {
+          if (!info.object) return;
+          const name = stateName(info.object);
+          setFilters((f) => ({
+            ...f,
+            estado: f.estado === name ? null : name,
+          }));
+        },
+        updateTriggers: {
+          getFillColor: [filters.estado, hoverState, obrasByEstado],
+        },
       }),
     new ScatterplotLayer<Obra>({
       id: "obras-scatter",
@@ -92,11 +148,13 @@ export function MapaDelOlvido() {
       pickable: true,
       getPosition: (o) => [o.lon!, o.lat!],
       getRadius: (o) =>
-        o.monto_usd ? Math.max(8, Math.min(40, Math.log10(o.monto_usd) * 4)) : 8,
+        o.monto_usd
+          ? Math.max(8, Math.min(28, Math.log10(o.monto_usd) * 3.5))
+          : 8,
       radiusUnits: "pixels",
-      getFillColor: (o) => [...STATUS_COLOR[o.status], 220],
-      getLineColor: [255, 255, 255, 200],
-      lineWidthMinPixels: 1,
+      getFillColor: (o) => [...STATUS_COLOR[o.status], 230],
+      getLineColor: [255, 255, 255, 230],
+      lineWidthMinPixels: 1.5,
       stroked: true,
       onClick: (info) => setSelected((info.object as Obra) ?? null),
     }),
@@ -104,16 +162,32 @@ export function MapaDelOlvido() {
 
   return (
     <div className="relative h-[calc(100dvh-4rem)]">
-      <div className="absolute inset-0">
+      <div className="absolute inset-0 bg-neutral-100 dark:bg-neutral-900">
         <DeckGL
           initialViewState={INITIAL_VIEW}
           controller
           layers={layers}
           getCursor={({ isHovering }) => (isHovering ? "pointer" : "grab")}
+          getTooltip={({ object, layer }) => {
+            if (!object || !layer) return null;
+            if (layer.id === "venezuela-states") {
+              const name = stateName(object as StateFeature);
+              const n = obrasByEstado.get(name) ?? 0;
+              return {
+                text: `${name}\n${n} obra${n === 1 ? "" : "s"}`,
+                style: tooltipStyle,
+              };
+            }
+            if (layer.id === "obras-scatter") {
+              const o = object as Obra;
+              return { text: `${o.nombre}\n${STATUS_LABEL[o.status]}`, style: tooltipStyle };
+            }
+            return null;
+          }}
         >
-          <Map mapStyle="https://basemaps.cartocdn.com/gl/positron-gl-style/style.json">
+          <MapGL mapStyle="https://basemaps.cartocdn.com/gl/positron-gl-style/style.json">
             <NavigationControl position="top-left" />
-          </Map>
+          </MapGL>
         </DeckGL>
       </div>
 
@@ -130,6 +204,16 @@ export function MapaDelOlvido() {
     </div>
   );
 }
+
+const tooltipStyle = {
+  backgroundColor: "rgba(20,30,50,0.96)",
+  color: "#f1f5f9",
+  fontSize: "12px",
+  padding: "6px 10px",
+  borderRadius: "6px",
+  whiteSpace: "pre-line" as const,
+  pointerEvents: "none" as const,
+};
 
 function filterObras(obras: Obra[], f: Filters): Obra[] {
   return obras.filter((o) => {
@@ -156,26 +240,31 @@ function HeroPanel({
       maximumFractionDigits: 0,
     });
   return (
-    <div className="pointer-events-none absolute left-4 top-4 z-10 max-w-xs rounded-lg bg-white/95 p-4 shadow-lg backdrop-blur dark:bg-neutral-900/95">
-      <h2 className="text-sm font-semibold uppercase tracking-wide text-neutral-500">
-        Mapa del Olvido
+    <div className="pointer-events-none absolute left-4 top-4 z-10 max-w-xs rounded-lg bg-white/95 p-3 shadow-lg backdrop-blur dark:bg-neutral-900/95">
+      <h2 className="text-xs font-semibold uppercase tracking-wide text-neutral-500">
+        Mapa del Olvido — Venezuela
       </h2>
       <div className="mt-2 grid grid-cols-2 gap-3 text-sm">
         <div>
-          <div className="text-2xl font-bold tabular-nums" data-testid="hero-total">
+          <div
+            className="text-xl font-bold tabular-nums"
+            data-testid="hero-total"
+          >
             {stats.total_count}
           </div>
-          <div className="text-xs text-neutral-500">obras totales</div>
+          <div className="text-[10px] uppercase text-neutral-500">obras</div>
         </div>
         <div>
-          <div className="text-2xl font-bold tabular-nums">{filtered}</div>
-          <div className="text-xs text-neutral-500">en vista</div>
+          <div className="text-xl font-bold tabular-nums">{filtered}</div>
+          <div className="text-[10px] uppercase text-neutral-500">en vista</div>
         </div>
-        <div className="col-span-2 border-t border-neutral-200 pt-2 dark:border-neutral-800">
+        <div className="col-span-2 border-t border-neutral-200 pt-1.5 dark:border-neutral-800">
           <div className="text-sm tabular-nums">
             {usd(stats.total_monto_usd)}
           </div>
-          <div className="text-xs text-neutral-500">monto registrado</div>
+          <div className="text-[10px] uppercase text-neutral-500">
+            monto registrado
+          </div>
         </div>
       </div>
     </div>
@@ -191,22 +280,36 @@ function FiltersPanel({
   setFilters: React.Dispatch<React.SetStateAction<Filters>>;
   estados: string[];
 }) {
+  const active =
+    filters.status || filters.tipo || filters.estado
+      ? "text-emerald-600"
+      : "text-neutral-500";
   return (
-    <div className="absolute right-4 top-4 z-10 w-72 rounded-lg bg-white/95 p-4 shadow-lg backdrop-blur dark:bg-neutral-900/95">
-      <h3 className="mb-3 text-sm font-semibold uppercase tracking-wide text-neutral-500">
-        Filtros
-      </h3>
-      <div className="space-y-3 text-sm">
+    <div className="absolute right-4 top-4 z-10 w-64 rounded-lg bg-white/95 p-3 shadow-lg backdrop-blur dark:bg-neutral-900/95">
+      <div className="mb-2 flex items-center justify-between">
+        <h3
+          className={`text-xs font-semibold uppercase tracking-wide ${active}`}
+        >
+          Filtros
+        </h3>
+        <button
+          onClick={() => setFilters(DEFAULT_FILTERS)}
+          className="text-[10px] uppercase text-neutral-500 hover:text-neutral-900 dark:hover:text-white"
+        >
+          Limpiar
+        </button>
+      </div>
+      <div className="space-y-2 text-sm">
         <Select
           label="Status"
           value={filters.status ?? ""}
           onChange={(v) =>
-            setFilters((f) => ({ ...f, status: (v || null) as ObraStatus | null }))
+            setFilters((f) => ({
+              ...f,
+              status: (v || null) as ObraStatus | null,
+            }))
           }
-          options={[
-            ["", "Todos"],
-            ...Object.entries(STATUS_LABEL),
-          ]}
+          options={[["", "Todos"], ...Object.entries(STATUS_LABEL)]}
         />
         <Select
           label="Tipo"
@@ -214,56 +317,17 @@ function FiltersPanel({
           onChange={(v) =>
             setFilters((f) => ({ ...f, tipo: (v || null) as ObraTipo | null }))
           }
-          options={[
-            ["", "Todos"],
-            ...Object.entries(TIPO_LABEL),
-          ]}
+          options={[["", "Todos"], ...Object.entries(TIPO_LABEL)]}
         />
         <Select
           label="Estado"
           value={filters.estado ?? ""}
           onChange={(v) => setFilters((f) => ({ ...f, estado: v || null }))}
-          options={[["", "Todos"], ...estados.map((e) => [e, e] as [string, string])]}
+          options={[
+            ["", "Todos"],
+            ...estados.map((e) => [e, e] as [string, string]),
+          ]}
         />
-        <div>
-          <label className="block text-xs text-neutral-500">
-            Año {filters.yearRange[0]} – {filters.yearRange[1]}
-          </label>
-          <div className="flex items-center gap-2">
-            <input
-              type="number"
-              min={2000}
-              max={2025}
-              value={filters.yearRange[0]}
-              onChange={(e) =>
-                setFilters((f) => ({
-                  ...f,
-                  yearRange: [Number(e.target.value), f.yearRange[1]],
-                }))
-              }
-              className="w-full rounded border border-neutral-200 px-2 py-1 dark:border-neutral-700 dark:bg-neutral-800"
-            />
-            <input
-              type="number"
-              min={2000}
-              max={2025}
-              value={filters.yearRange[1]}
-              onChange={(e) =>
-                setFilters((f) => ({
-                  ...f,
-                  yearRange: [f.yearRange[0], Number(e.target.value)],
-                }))
-              }
-              className="w-full rounded border border-neutral-200 px-2 py-1 dark:border-neutral-700 dark:bg-neutral-800"
-            />
-          </div>
-        </div>
-        <button
-          onClick={() => setFilters(DEFAULT_FILTERS)}
-          className="w-full rounded bg-neutral-100 py-1.5 text-xs hover:bg-neutral-200 dark:bg-neutral-800 dark:hover:bg-neutral-700"
-        >
-          Limpiar filtros
-        </button>
       </div>
     </div>
   );
@@ -282,11 +346,13 @@ function Select({
 }) {
   return (
     <label className="block">
-      <span className="block text-xs text-neutral-500">{label}</span>
+      <span className="block text-[10px] uppercase text-neutral-500">
+        {label}
+      </span>
       <select
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        className="mt-1 w-full rounded border border-neutral-200 px-2 py-1 dark:border-neutral-700 dark:bg-neutral-800"
+        className="mt-0.5 w-full rounded border border-neutral-200 px-2 py-1 text-sm dark:border-neutral-700 dark:bg-neutral-800"
       >
         {options.map(([v, l]) => (
           <option key={v} value={v}>
@@ -300,9 +366,9 @@ function Select({
 
 function Legend() {
   return (
-    <div className="absolute bottom-6 left-4 z-10 rounded-lg bg-white/95 p-3 text-xs shadow-lg backdrop-blur dark:bg-neutral-900/95">
-      <div className="mb-1 font-semibold uppercase tracking-wide text-neutral-500">
-        Status
+    <div className="absolute bottom-6 left-4 z-10 rounded-lg bg-white/95 p-2.5 text-xs shadow-lg backdrop-blur dark:bg-neutral-900/95">
+      <div className="mb-1 text-[10px] font-semibold uppercase tracking-wide text-neutral-500">
+        Status de la obra
       </div>
       <ul className="space-y-1">
         {(Object.keys(STATUS_COLOR) as ObraStatus[]).map((s) => {
@@ -310,7 +376,7 @@ function Legend() {
           return (
             <li key={s} className="flex items-center gap-2">
               <span
-                className="inline-block h-3 w-3 rounded-full"
+                className="inline-block h-2.5 w-2.5 rounded-full"
                 style={{ background: `rgb(${r},${g},${b})` }}
               />
               <span>{STATUS_LABEL[s]}</span>
@@ -318,6 +384,9 @@ function Legend() {
           );
         })}
       </ul>
+      <div className="mt-2 border-t border-neutral-200 pt-1.5 text-[10px] text-neutral-500 dark:border-neutral-800">
+        Click en estado para filtrar
+      </div>
     </div>
   );
 }
@@ -333,7 +402,7 @@ function ObraDrawer({ obra, onClose }: { obra: Obra; onClose: () => void }) {
       : "—";
 
   return (
-    <aside className="absolute bottom-4 right-4 top-44 z-10 w-96 overflow-y-auto rounded-lg bg-white/95 p-4 shadow-2xl backdrop-blur dark:bg-neutral-900/95">
+    <aside className="absolute bottom-4 right-4 top-32 z-10 w-80 overflow-y-auto rounded-lg bg-white/97 p-4 shadow-2xl backdrop-blur dark:bg-neutral-900/97">
       <button
         onClick={onClose}
         className="absolute right-3 top-3 rounded p-1 text-neutral-500 hover:bg-neutral-100 dark:hover:bg-neutral-800"
@@ -341,8 +410,8 @@ function ObraDrawer({ obra, onClose }: { obra: Obra; onClose: () => void }) {
       >
         ✕
       </button>
-      <h3 className="pr-6 text-lg font-semibold">{obra.nombre}</h3>
-      <dl className="mt-3 space-y-2 text-sm">
+      <h3 className="pr-6 text-base font-semibold">{obra.nombre}</h3>
+      <dl className="mt-3 space-y-1.5 text-sm">
         <Row label="Estado" value={obra.estado} />
         <Row label="Status" value={STATUS_LABEL[obra.status]} />
         <Row label="Tipo" value={TIPO_LABEL[obra.tipo]} />
@@ -367,7 +436,7 @@ function ObraDrawer({ obra, onClose }: { obra: Obra; onClose: () => void }) {
             </a>
           </div>
         )}
-        <div className="pt-2">
+        <div className="pt-1">
           <Link
             href={`/mapa-del-olvido/obra/${obra.slug}`}
             className="text-emerald-600 hover:underline dark:text-emerald-400"
