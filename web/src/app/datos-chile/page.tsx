@@ -39,13 +39,13 @@ export default async function HomePage() {
         </p>
         <div className="mt-6 flex flex-wrap gap-3">
           <Link
-            href="/dashboards"
+            href="/datos-chile/dashboards"
             className="inline-flex items-center gap-2 rounded-md bg-emerald-600 px-4 py-2 text-sm font-medium text-white hover:bg-emerald-700"
           >
             Ver dashboards <ArrowRight className="h-4 w-4" />
           </Link>
           <Link
-            href="/fuentes"
+            href="/datos-chile/fuentes"
             className="inline-flex items-center gap-2 rounded-md border border-neutral-300 px-4 py-2 text-sm font-medium hover:bg-neutral-50 dark:border-neutral-700 dark:hover:bg-neutral-800"
           >
             Explorar fuentes
@@ -122,7 +122,7 @@ export default async function HomePage() {
                   </span>
                 </span>
                 <Link
-                  href={`/fuentes`}
+                  href={`/datos-chile/fuentes`}
                   className="text-xs text-emerald-600 hover:underline"
                 >
                   ver →

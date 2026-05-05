@@ -35,7 +35,7 @@ export default async function ComparativaPage() {
   return (
     <main className="mx-auto max-w-6xl px-6 py-12">
       <Link
-        href="/dashboards"
+        href="/datos-chile/dashboards"
         className="inline-flex items-center gap-1 text-sm text-neutral-500 hover:text-neutral-900 dark:hover:text-white"
       >
         <ArrowLeft className="h-4 w-4" /> Dashboards

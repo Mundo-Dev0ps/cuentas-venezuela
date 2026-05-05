@@ -52,8 +52,8 @@ export function DemografiaView({ rows }: { rows: StockRegionRow[] }) {
       }
       const qs = params.toString();
       const path = qs
-        ? `/dashboards/demografia?${qs}`
-        : "/dashboards/demografia";
+        ? `/datos-chile/dashboards/demografia?${qs}`
+        : "/datos-chile/dashboards/demografia";
       router.replace(path, { scroll: false });
     },
     [router, years],

@@ -8,10 +8,10 @@ import { cn } from "@/lib/cn";
 
 const NAV = [
   { href: "/", label: "Inicio" },
-  { href: "/fuentes", label: "Fuentes" },
-  { href: "/indicadores", label: "Indicadores" },
-  { href: "/dashboards", label: "Dashboards" },
-  { href: "/metodologia", label: "Metodología" },
+  { href: "/datos-chile/fuentes", label: "Fuentes" },
+  { href: "/datos-chile/indicadores", label: "Indicadores" },
+  { href: "/datos-chile/dashboards", label: "Dashboards" },
+  { href: "/datos-chile/metodologia", label: "Metodología" },
 ];
 
 export function SiteHeader() {

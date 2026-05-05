@@ -4,22 +4,22 @@ import { Card, CardDescription, CardTitle } from "@/components/card";
 
 const CATEGORIES = [
   {
-    href: "/dashboards/demografia",
+    href: "/datos-chile/dashboards/demografia",
     title: "Demografía",
     desc: "Stock migratorio por región y año, mapa nacional, comparativa legal vs estimado total.",
   },
   {
-    href: "/dashboards/pensiones",
+    href: "/datos-chile/dashboards/pensiones",
     title: "Pensiones",
     desc: "Cotizantes AFP por sector económico y serie temporal.",
   },
   {
-    href: "/dashboards/tributario",
+    href: "/datos-chile/dashboards/tributario",
     title: "Tributario",
     desc: "Aporte estimado por impuesto a la renta e IVA.",
   },
   {
-    href: "/dashboards/comparativa",
+    href: "/datos-chile/dashboards/comparativa",
     title: "Comparativa por nacionalidad",
     desc: "Stock legal de las principales colectividades migrantes en Chile (Venezuela, Perú, Haití, Colombia, Bolivia).",
   },

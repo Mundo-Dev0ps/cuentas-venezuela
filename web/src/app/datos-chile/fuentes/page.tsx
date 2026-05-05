@@ -24,7 +24,7 @@ export default async function FuentesPage() {
             <Card key={s.id}>
               <div className="flex items-start justify-between gap-3">
                 <Link
-                  href={`/fuentes/${s.slug}`}
+                  href={`/datos-chile/fuentes/${s.slug}`}
                   className="flex-1 hover:opacity-80"
                 >
                   <CardTitle>{s.name}</CardTitle>
@@ -51,7 +51,7 @@ export default async function FuentesPage() {
                   <span className="font-mono">{s.slug}</span>
                 </span>
                 <Link
-                  href={`/fuentes/${s.slug}`}
+                  href={`/datos-chile/fuentes/${s.slug}`}
                   className="text-emerald-600 hover:underline"
                 >
                   Ver detalle →

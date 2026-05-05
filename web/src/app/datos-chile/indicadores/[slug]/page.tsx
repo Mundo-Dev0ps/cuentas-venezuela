@@ -21,7 +21,7 @@ export default async function IndicatorDetailPage({
   return (
     <main className="mx-auto max-w-5xl px-6 py-12">
       <Link
-        href="/indicadores"
+        href="/datos-chile/indicadores"
         className="inline-flex items-center gap-1 text-sm text-neutral-500 hover:text-neutral-900 dark:hover:text-white"
       >
         <ArrowLeft className="h-4 w-4" /> Todos los indicadores

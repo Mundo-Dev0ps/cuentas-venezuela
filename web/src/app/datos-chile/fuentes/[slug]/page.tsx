@@ -18,7 +18,7 @@ export default async function SourceDetailPage({
   return (
     <main className="mx-auto max-w-5xl px-6 py-12">
       <Link
-        href="/fuentes"
+        href="/datos-chile/fuentes"
         className="inline-flex items-center gap-1 text-sm text-neutral-500 hover:text-neutral-900 dark:hover:text-white"
       >
         <ArrowLeft className="h-4 w-4" /> Todas las fuentes

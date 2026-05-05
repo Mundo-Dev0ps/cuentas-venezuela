@@ -45,7 +45,7 @@ export default async function IndicadoresPage() {
                     {items.map((i) => (
                       <tr key={i.id} className="hover:bg-neutral-50 dark:hover:bg-neutral-900/50">
                         <td className="px-4 py-2.5">
-                          <Link href={`/indicadores/${i.slug}`} className="hover:underline">
+                          <Link href={`/datos-chile/indicadores/${i.slug}`} className="hover:underline">
                             <div className="font-medium">{i.name}</div>
                             {i.description ? (
                               <div className="text-xs text-neutral-500">
