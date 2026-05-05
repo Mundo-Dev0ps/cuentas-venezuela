@@ -16,6 +16,7 @@ data/
 *.duckdb
 *.parquet
 !etl/fixtures/*.parquet
+!web/public/data/
 
 # env
 .env
