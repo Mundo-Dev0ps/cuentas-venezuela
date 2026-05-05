@@ -8,10 +8,8 @@ import { cn } from "@/lib/cn";
 
 const NAV = [
   { href: "/", label: "Inicio" },
-  { href: "/datos-chile/fuentes", label: "Fuentes" },
-  { href: "/datos-chile/indicadores", label: "Indicadores" },
-  { href: "/datos-chile/dashboards", label: "Dashboards" },
-  { href: "/datos-chile/metodologia", label: "Metodología" },
+  { href: "/mapa-del-olvido", label: "Mapa del Olvido" },
+  { href: "/datos-chile", label: "Datos Chile" },
 ];
 
 export function SiteHeader() {
@@ -32,7 +30,7 @@ export function SiteHeader() {
           className="flex items-center gap-2 font-semibold"
         >
           <BarChart3 className="h-5 w-5 text-emerald-600" />
-          <span>datos-chile</span>
+          <span>cuentas-venezuela</span>
         </Link>
 
         <nav className="hidden gap-5 text-sm text-neutral-600 dark:text-neutral-300 md:flex">
