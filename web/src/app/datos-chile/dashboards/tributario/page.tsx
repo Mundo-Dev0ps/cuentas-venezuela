@@ -4,6 +4,7 @@ import { Card, CardDescription, CardTitle } from "@/components/card";
 import { Stat } from "@/components/stat";
 import { SourcePill } from "@/components/source-pill";
 import { AporteBarChart, type AporteByYear } from "@/components/aporte-bar-chart";
+import { Reveal } from "@/components/reveal";
 import { getAporteTributario } from "@/lib/api";
 
 export default async function TributarioPage() {
@@ -51,25 +52,34 @@ export default async function TributarioPage() {
           <section className="mt-8 grid grid-cols-2 gap-4 md:grid-cols-4">
             <Stat
               label={`Aporte ${latest?.year ?? "—"}`}
-              value={`${(totalLatest / 1000).toFixed(1)} BB CLP`}
+              numericValue={totalLatest}
+              divisor={1_000_000}
+              decimals={1}
+              suffix=" BB CLP"
               hint="renta + IVA"
             />
             <Stat
               label="Renta"
-              value={`${((latest?.Renta ?? 0) / 1000).toFixed(0)} MM CLP`}
+              numericValue={latest?.Renta ?? 0}
+              divisor={1000}
+              suffix=" MM CLP"
             />
             <Stat
               label="IVA"
-              value={`${((latest?.IVA ?? 0) / 1000).toFixed(0)} MM CLP`}
+              numericValue={latest?.IVA ?? 0}
+              divisor={1000}
+              suffix=" MM CLP"
             />
             <Stat
               label="Crecimiento 2020→último"
-              value="+67%"
+              numericValue={67}
+              prefix="+"
+              suffix="%"
               hint="renta+IVA"
             />
           </section>
 
-          <section className="mt-10">
+          <Reveal className="mt-10">
             <Card>
               <div className="flex items-baseline justify-between">
                 <div>
@@ -88,7 +98,7 @@ export default async function TributarioPage() {
                 <AporteBarChart data={byYear} />
               </div>
             </Card>
-          </section>
+          </Reveal>
         </>
       )}
     </main>

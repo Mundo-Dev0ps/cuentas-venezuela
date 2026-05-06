@@ -5,6 +5,7 @@ import { Stat } from "@/components/stat";
 import { Card, CardDescription, CardTitle } from "@/components/card";
 import { StockChart, type StockPoint } from "@/components/stock-chart";
 import { SourcePill } from "@/components/source-pill";
+import { Reveal } from "@/components/reveal";
 
 const SAMPLE_STOCK: StockPoint[] = [
   { year: 2018, legal: 83000, estimado_total: 110000 },
@@ -56,27 +57,40 @@ export default async function HomePage() {
       <section className="mt-12 grid grid-cols-2 gap-4 md:grid-cols-4">
         <Stat
           label="Stock legal 2024"
-          value="≈495k"
+          numericValue={495000}
+          divisor={1000}
+          prefix="≈"
+          suffix="k"
           hint="DEM / Servicio Nacional de Migraciones"
         />
         <Stat
           label="Estimado total"
-          value="≈750k"
+          numericValue={750000}
+          divisor={1000}
+          prefix="≈"
+          suffix="k"
           hint="incluye irregulares (SJM/ONU)"
         />
         <Stat
           label="Cotizantes AFP"
-          value="≈310k"
+          numericValue={310000}
+          divisor={1000}
+          prefix="≈"
+          suffix="k"
           hint="Superintendencia de Pensiones"
         />
         <Stat
           label="Aporte SII estimado"
-          value="≈USD 1.4B"
+          numericValue={1_400_000_000}
+          divisor={1_000_000_000}
+          decimals={1}
+          prefix="≈USD "
+          suffix="B"
           hint="impuesto a la renta + IVA"
         />
       </section>
 
-      <section className="mt-10">
+      <Reveal className="mt-10">
         <Card>
           <div className="flex items-baseline justify-between">
             <div>
@@ -99,7 +113,7 @@ export default async function HomePage() {
             Datos demostrativos. La versión final consume Parquet en almacenamiento R2 vía API.
           </p>
         </Card>
-      </section>
+      </Reveal>
 
       <section className="mt-10 grid gap-4 md:grid-cols-2">
         <Card>

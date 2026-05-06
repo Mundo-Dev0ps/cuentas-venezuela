@@ -8,6 +8,7 @@ import { SourcePill } from "@/components/source-pill";
 import { ShareButton } from "@/components/share-button";
 import { StockChart, type StockPoint } from "@/components/stock-chart";
 import { RegionBarChart } from "@/components/region-bar-chart";
+import { Reveal } from "@/components/reveal";
 import { ChileMapLoader } from "@/components/chile-map-loader";
 import type { StockRegionRow } from "@/lib/api";
 
@@ -169,8 +170,9 @@ export function DemografiaView({ rows }: { rows: StockRegionRow[] }) {
 
       <section className="mt-8 grid grid-cols-2 gap-4 md:grid-cols-4">
         <Stat
+          key={`stock-${year}-${totalLatest}`}
           label={`Stock legal ${year}`}
-          value={totalLatest.toLocaleString("es-CL")}
+          numericValue={totalLatest}
           hint={
             excluded.size > 0
               ? `excluyendo ${excluded.size} región(es)`
@@ -184,17 +186,19 @@ export function DemografiaView({ rows }: { rows: StockRegionRow[] }) {
         />
         <Stat
           label="Regiones con datos"
-          value={`${ranked.length}/16`}
+          numericValue={ranked.length}
+          suffix="/16"
           hint="cobertura DPA"
         />
         <Stat
+          key={`est-${year}-${totalLatest}`}
           label="Estimado total"
-          value={`${Math.round(totalLatest * 1.5).toLocaleString("es-CL")}`}
+          numericValue={Math.round(totalLatest * 1.5)}
           hint="incluye irregulares"
         />
       </section>
 
-      <section className="mt-10 grid gap-4 lg:grid-cols-2">
+      <Reveal className="mt-10 grid gap-4 lg:grid-cols-2">
         <Card>
           <div className="flex items-baseline justify-between">
             <div>
@@ -231,9 +235,9 @@ export function DemografiaView({ rows }: { rows: StockRegionRow[] }) {
             />
           </div>
         </Card>
-      </section>
+      </Reveal>
 
-      <section className="mt-8">
+      <Reveal className="mt-8">
         <Card>
           <div className="flex items-baseline justify-between">
             <div>
@@ -256,7 +260,7 @@ export function DemografiaView({ rows }: { rows: StockRegionRow[] }) {
             />
           </div>
         </Card>
-      </section>
+      </Reveal>
     </>
   );
 }

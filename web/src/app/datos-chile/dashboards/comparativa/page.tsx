@@ -7,6 +7,7 @@ import {
   ComparativaChart,
   type ComparativaPoint,
 } from "@/components/comparativa-chart";
+import { Reveal } from "@/components/reveal";
 import { getComparativaNacionalidad } from "@/lib/api";
 
 export default async function ComparativaPage() {
@@ -60,7 +61,7 @@ export default async function ComparativaPage() {
           <section className="mt-8 grid grid-cols-2 gap-4 md:grid-cols-4">
             <Stat
               label={`Total ${latestYear}`}
-              value={total.toLocaleString("es-CL")}
+              numericValue={total}
               hint="5 nacionalidades"
             />
             <Stat
@@ -70,17 +71,19 @@ export default async function ComparativaPage() {
             />
             <Stat
               label="Venezuela"
-              value={venezuela?.stock_legal.toLocaleString("es-CL") ?? "—"}
+              numericValue={venezuela?.stock_legal ?? 0}
               hint={`${venezuela ? Math.round((venezuela.stock_legal / total) * 100) : 0}% del total`}
             />
             <Stat
               label="Crecimiento Venezuela"
-              value="+496%"
+              numericValue={496}
+              prefix="+"
+              suffix="%"
               hint="2018 → 2024"
             />
           </section>
 
-          <section className="mt-10">
+          <Reveal className="mt-10">
             <Card>
               <div className="flex items-baseline justify-between">
                 <div>
@@ -102,7 +105,7 @@ export default async function ComparativaPage() {
                 />
               </div>
             </Card>
-          </section>
+          </Reveal>
         </>
       )}
     </main>

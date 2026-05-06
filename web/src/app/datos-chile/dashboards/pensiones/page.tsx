@@ -4,6 +4,7 @@ import { Card, CardDescription, CardTitle } from "@/components/card";
 import { Stat } from "@/components/stat";
 import { SourcePill } from "@/components/source-pill";
 import { SectorPieChart } from "@/components/sector-pie-chart";
+import { Reveal } from "@/components/reveal";
 import { getCotizantesSector } from "@/lib/api";
 
 export default async function PensionesPage() {
@@ -40,7 +41,7 @@ export default async function PensionesPage() {
           <section className="mt-8 grid grid-cols-2 gap-4 md:grid-cols-4">
             <Stat
               label={`Cotizantes ${latestYear}`}
-              value={total.toLocaleString("es-CL")}
+              numericValue={total}
               hint="todos los sectores"
             />
             <Stat
@@ -48,15 +49,17 @@ export default async function PensionesPage() {
               value={top?.sector ?? "—"}
               hint={`${top ? Math.round((top.cotizantes / total) * 100) : 0}% del total`}
             />
-            <Stat label="Sectores cubiertos" value={`${latest.length}`} />
+            <Stat label="Sectores cubiertos" numericValue={latest.length} />
             <Stat
               label="Crecimiento 2020→2024"
-              value="+55%"
+              numericValue={55}
+              prefix="+"
+              suffix="%"
               hint="estimado base 200k"
             />
           </section>
 
-          <section className="mt-10">
+          <Reveal className="mt-10">
             <Card>
               <div className="flex items-baseline justify-between">
                 <div>
@@ -81,7 +84,7 @@ export default async function PensionesPage() {
                 />
               </div>
             </Card>
-          </section>
+          </Reveal>
         </>
       )}
     </main>
