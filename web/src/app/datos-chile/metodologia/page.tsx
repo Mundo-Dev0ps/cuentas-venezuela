@@ -1,12 +1,12 @@
 export default function MetodologiaPage() {
   return (
     <main className="mx-auto max-w-3xl px-6 py-12">
-      <h1 className="text-3xl font-bold tracking-tight">Metodología</h1>
-      <p className="mt-2 text-slate-300 dark:text-slate-500">
+      <h1 className="text-3xl sm:text-4xl font-bold tracking-tight">Metodología</h1>
+      <p className="mt-2 text-slate-300">
         Cómo extraemos, procesamos y publicamos los datos.
       </p>
 
-      <section className="prose prose-neutral mt-8 max-w-none dark:prose-invert">
+      <section className="prose prose-neutral mt-8 max-w-none">
         <h2>Principios</h2>
         <ul>
           <li>Nunca publicamos datos personales identificables.</li>

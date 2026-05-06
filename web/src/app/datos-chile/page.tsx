@@ -26,13 +26,13 @@ export default async function HomePage() {
   return (
     <main className="mx-auto max-w-6xl px-6 py-12">
       <section>
-        <p className="text-xs uppercase tracking-widest text-orange-400">
+        <p className="text-xs font-semibold uppercase tracking-widest text-orange-400">
           Proyecto cívico · datos públicos
         </p>
-        <h1 className="mt-3 text-4xl font-bold tracking-tight md:text-5xl">
+        <h1 className="mt-3 text-3xl sm:text-4xl font-bold tracking-tight">
           Migración venezolana en Chile, en datos.
         </h1>
-        <p className="mt-4 max-w-2xl text-lg text-slate-300 dark:text-slate-500">
+        <p className="mt-4 max-w-2xl text-lg text-slate-300">
           Centralizamos cifras oficiales sobre stock migratorio, trabajo,
           cotizaciones, salud y aporte fiscal. Cada gráfico cita su fuente y
           fecha. Todo abierto, todo verificable.
@@ -46,7 +46,7 @@ export default async function HomePage() {
           </Link>
           <Link
             href="/datos-chile/fuentes"
-            className="inline-flex items-center gap-2 rounded-md border border-slate-700/40 px-4 py-2 text-sm font-medium hover:bg-slate-900/80 dark:border-neutral-700 dark:hover:bg-neutral-800"
+            className="inline-flex items-center gap-2 rounded-md border border-slate-700/40 px-4 py-2 text-sm font-medium hover:bg-slate-900/80"
           >
             Explorar fuentes
           </Link>
@@ -113,7 +113,7 @@ export default async function HomePage() {
             {sources.slice(0, 5).map((s) => (
               <li
                 key={s.id}
-                className="flex items-center justify-between border-b border-neutral-100 pb-2 last:border-0 dark:border-neutral-800"
+                className="flex items-center justify-between border-b border-neutral-100 pb-2 last:border-0"
               >
                 <span>
                   <span className="font-medium">{s.name}</span>
@@ -143,7 +143,7 @@ export default async function HomePage() {
             {indicators.slice(0, 5).map((i) => (
               <li
                 key={i.id}
-                className="flex items-center justify-between border-b border-neutral-100 pb-2 last:border-0 dark:border-neutral-800"
+                className="flex items-center justify-between border-b border-neutral-100 pb-2 last:border-0"
               >
                 <span>
                   <span className="font-medium">{i.name}</span>

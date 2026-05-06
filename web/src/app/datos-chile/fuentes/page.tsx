@@ -8,14 +8,14 @@ export default async function FuentesPage() {
 
   return (
     <main className="mx-auto max-w-6xl px-6 py-12">
-      <h1 className="text-3xl font-bold tracking-tight">Fuentes oficiales</h1>
-      <p className="mt-2 max-w-2xl text-slate-300 dark:text-slate-500">
+      <h1 className="text-3xl sm:text-4xl font-bold tracking-tight">Fuentes oficiales</h1>
+      <p className="mt-2 max-w-2xl text-slate-300">
         Cada dataset publicado se origina en una fuente oficial. Listamos
         organismo, licencia, URL original y descripción.
       </p>
 
       {sources.length === 0 ? (
-        <p className="mt-10 rounded-lg border border-dashed border-slate-700/40 p-8 text-center text-sm text-slate-400 dark:border-neutral-700">
+        <p className="mt-10 rounded-lg border border-dashed border-slate-700/40 p-8 text-center text-sm text-slate-400">
           Sin fuentes registradas. Corré los seeds para poblar Postgres.
         </p>
       ) : (
@@ -34,14 +34,14 @@ export default async function FuentesPage() {
                   href={s.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="rounded-md p-1.5 text-slate-400 hover:bg-slate-800 hover:text-slate-100 dark:hover:bg-neutral-800 dark:hover:text-white"
+                  className="rounded-md p-1.5 text-slate-400 hover:bg-slate-800 hover:text-slate-100"
                   aria-label="Abrir fuente"
                 >
                   <ExternalLink className="h-4 w-4" />
                 </Link>
               </div>
               {s.description ? (
-                <p className="mt-3 text-sm text-slate-200 dark:text-neutral-300">
+                <p className="mt-3 text-sm text-slate-200">
                   {s.description}
                 </p>
               ) : null}

@@ -19,18 +19,18 @@ export default async function SourceDetailPage({
     <main className="mx-auto max-w-5xl px-6 py-12">
       <Link
         href="/datos-chile/fuentes"
-        className="inline-flex items-center gap-1 text-sm text-slate-400 hover:text-slate-100 dark:hover:text-white"
+        className="inline-flex items-center gap-1 text-sm text-slate-400 hover:text-slate-100"
       >
         <ArrowLeft className="h-4 w-4" /> Todas las fuentes
       </Link>
 
       <header className="mt-6">
-        <h1 className="text-3xl font-bold tracking-tight">{source.name}</h1>
-        <p className="mt-1 text-slate-300 dark:text-slate-500">
+        <h1 className="text-3xl sm:text-4xl font-bold tracking-tight">{source.name}</h1>
+        <p className="mt-1 text-slate-300">
           {source.organization}
         </p>
         {source.description ? (
-          <p className="mt-4 max-w-2xl text-slate-200 dark:text-neutral-300">
+          <p className="mt-4 max-w-2xl text-slate-200">
             {source.description}
           </p>
         ) : null}
@@ -39,14 +39,14 @@ export default async function SourceDetailPage({
             href={source.url}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-1.5 rounded-md border border-slate-700/40 px-3 py-1.5 hover:bg-slate-900/80 dark:border-neutral-700 dark:hover:bg-neutral-800"
+            className="inline-flex items-center gap-1.5 rounded-md border border-slate-700/40 px-3 py-1.5 hover:bg-slate-900/80"
           >
             Sitio oficial <ExternalLink className="h-3.5 w-3.5" />
           </Link>
-          <span className="rounded-md bg-slate-800 px-3 py-1.5 dark:bg-neutral-800">
+          <span className="rounded-md bg-slate-800 px-3 py-1.5">
             Licencia: {source.license ?? "no especificada"}
           </span>
-          <span className="rounded-md bg-slate-800 px-3 py-1.5 font-mono dark:bg-neutral-800">
+          <span className="rounded-md bg-slate-800 px-3 py-1.5 font-mono">
             {source.slug}
           </span>
         </div>
@@ -86,7 +86,7 @@ export default async function SourceDetailPage({
         {indicators.length === 0 ? (
           <p className="mt-3 text-sm text-slate-400">Sin indicadores.</p>
         ) : (
-          <ul className="mt-4 divide-y divide-slate-700 rounded-xl border border-slate-700/40 dark:divide-neutral-800 dark:border-neutral-800">
+          <ul className="mt-4 divide-y divide-slate-700 rounded-xl border border-slate-700/40">
             {indicators.map((i) => (
               <li
                 key={i.id}

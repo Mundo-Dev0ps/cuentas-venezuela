@@ -33,15 +33,15 @@ export function SiteHeader() {
           <span>cuentas-venezuela</span>
         </Link>
 
-        <nav className="hidden gap-5 text-sm text-slate-300 dark:text-neutral-300 md:flex">
+        <nav className="hidden gap-5 text-sm text-slate-300 md:flex">
           {NAV.map((item) => (
             <Link
               key={item.href}
               href={item.href}
               className={cn(
-                "transition hover:text-slate-100 dark:hover:text-white",
+                "transition hover:text-slate-100",
                 isActive(item.href) &&
-                  "font-semibold text-orange-400 dark:text-orange-300",
+                  "font-semibold text-orange-400",
               )}
             >
               {item.label}
@@ -51,7 +51,7 @@ export function SiteHeader() {
 
         <button
           type="button"
-          className="-mr-2 inline-flex h-10 w-10 items-center justify-center rounded-md text-slate-200 hover:bg-slate-800 md:hidden dark:text-neutral-200 dark:hover:bg-neutral-800"
+          className="-mr-2 inline-flex h-10 w-10 items-center justify-center rounded-md text-slate-200 hover:bg-slate-800 md:hidden"
           aria-label={open ? "Cerrar menú" : "Abrir menú"}
           aria-expanded={open}
           onClick={() => setOpen((v) => !v)}
@@ -61,7 +61,7 @@ export function SiteHeader() {
       </div>
 
       {open ? (
-        <nav className="border-t border-slate-700/40 bg-slate-900/80 px-4 py-2 md:hidden dark:border-neutral-800 dark:bg-neutral-950">
+        <nav className="border-t border-slate-700/40 bg-slate-900/80 px-4 py-2 md:hidden">
           <ul className="flex flex-col">
             {NAV.map((item) => (
               <li key={item.href}>
@@ -69,9 +69,9 @@ export function SiteHeader() {
                   href={item.href}
                   onClick={() => setOpen(false)}
                   className={cn(
-                    "block rounded-md px-3 py-2.5 text-sm text-slate-200 hover:bg-slate-800 dark:text-neutral-200 dark:hover:bg-neutral-800",
+                    "block rounded-md px-3 py-2.5 text-sm text-slate-200 hover:bg-slate-800",
                     isActive(item.href) &&
-                      "bg-orange-900/30 font-semibold text-orange-500 dark:bg-orange-900/30 dark:text-orange-300",
+                      "bg-orange-900/30 font-semibold text-orange-500",
                   )}
                 >
                   {item.label}

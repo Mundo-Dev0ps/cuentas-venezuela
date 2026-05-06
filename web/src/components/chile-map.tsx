@@ -17,7 +17,7 @@ export function ChileMap({ data }: { data: MapRow[] }) {
   );
 
   return (
-    <div className="h-[420px] w-full overflow-hidden rounded-xl border border-slate-700/40 md:h-[520px] dark:border-neutral-800">
+    <div className="h-[420px] w-full overflow-hidden rounded-xl border border-slate-700/40 md:h-[520px]">
       <MapContainer
         center={[-37, -71]}
         zoom={4}

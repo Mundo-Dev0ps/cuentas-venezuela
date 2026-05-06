@@ -122,7 +122,7 @@ export function DemografiaView({ rows }: { rows: StockRegionRow[] }) {
           <select
             value={year}
             onChange={(e) => setYear(Number(e.target.value))}
-            className="mt-1 rounded-md border border-slate-700/40 bg-slate-900/80 px-3 py-1.5 text-sm dark:border-neutral-700 dark:bg-neutral-900"
+            className="mt-1 rounded-md border border-slate-700/40 bg-slate-900/80 px-3 py-1.5 text-sm"
           >
             {years.map((y) => (
               <option key={y} value={y}>
@@ -145,7 +145,7 @@ export function DemografiaView({ rows }: { rows: StockRegionRow[] }) {
                   className={
                     active
                       ? "rounded-full border border-orange-400 bg-orange-400 px-2.5 py-0.5 text-xs text-white hover:bg-orange-500"
-                      : "rounded-full border border-slate-700/40 px-2.5 py-0.5 text-xs text-slate-400 hover:bg-slate-800 dark:border-neutral-700 dark:hover:bg-neutral-800"
+                      : "rounded-full border border-slate-700/40 px-2.5 py-0.5 text-xs text-slate-400 hover:bg-slate-800"
                   }
                 >
                   {name}
@@ -155,7 +155,7 @@ export function DemografiaView({ rows }: { rows: StockRegionRow[] }) {
             {excluded.size > 0 ? (
               <button
                 onClick={clearFilters}
-                className="ml-2 text-xs text-slate-400 underline hover:text-slate-100 dark:hover:text-white"
+                className="ml-2 text-xs text-slate-400 underline hover:text-slate-100"
               >
                 limpiar filtro
               </button>

@@ -6,9 +6,9 @@ export function PreviewTable({ rows }: { rows: Record<string, unknown>[] }) {
   }
   const columns = Object.keys(rows[0]);
   return (
-    <div className="overflow-x-auto rounded-xl border border-slate-700/40 dark:border-neutral-800">
+    <div className="overflow-x-auto rounded-xl border border-slate-700/40">
       <table className="w-full text-sm">
-        <thead className="bg-slate-900/80 text-left text-xs uppercase tracking-wider text-slate-400 dark:bg-neutral-900">
+        <thead className="bg-slate-900/80 text-left text-xs uppercase tracking-wider text-slate-400">
           <tr>
             {columns.map((c) => (
               <th key={c} className="px-3 py-2.5">
@@ -17,7 +17,7 @@ export function PreviewTable({ rows }: { rows: Record<string, unknown>[] }) {
             ))}
           </tr>
         </thead>
-        <tbody className="divide-y divide-neutral-100 dark:divide-neutral-800">
+        <tbody className="divide-y divide-slate-700/40">
           {rows.slice(0, 50).map((row, i) => (
             <tr key={i}>
               {columns.map((c) => (
@@ -30,7 +30,7 @@ export function PreviewTable({ rows }: { rows: Record<string, unknown>[] }) {
         </tbody>
       </table>
       {rows.length > 50 ? (
-        <div className="border-t border-slate-700/40 bg-slate-900/80 px-3 py-2 text-xs text-slate-400 dark:border-neutral-800 dark:bg-neutral-900">
+        <div className="border-t border-slate-700/40 bg-slate-900/80 px-3 py-2 text-xs text-slate-400">
           Mostrando 50 de {rows.length} filas
         </div>
       ) : null}

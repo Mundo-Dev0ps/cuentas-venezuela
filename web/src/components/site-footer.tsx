@@ -5,14 +5,14 @@ export function SiteFooter() {
     <footer className="mt-20 border-t border-slate-700/40 bg-slate-900/60 backdrop-blur-md py-8 text-sm text-slate-400">
       <div className="mx-auto grid max-w-6xl gap-6 px-6 md:grid-cols-3">
         <div>
-          <h4 className="mb-2 font-semibold text-slate-100 dark:text-neutral-200">
+          <h4 className="mb-2 font-semibold text-slate-100">
             Productos
           </h4>
           <ul className="space-y-1">
             <li>
               <Link
                 href="/mapa-del-olvido"
-                className="hover:text-slate-100 dark:hover:text-white"
+                className="hover:text-slate-100"
               >
                 Mapa del Olvido
               </Link>
@@ -20,7 +20,7 @@ export function SiteFooter() {
             <li>
               <Link
                 href="/datos-chile"
-                className="hover:text-slate-100 dark:hover:text-white"
+                className="hover:text-slate-100"
               >
                 Datos Chile
               </Link>

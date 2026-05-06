@@ -22,28 +22,28 @@ export default async function IndicatorDetailPage({
     <main className="mx-auto max-w-5xl px-6 py-12">
       <Link
         href="/datos-chile/indicadores"
-        className="inline-flex items-center gap-1 text-sm text-slate-400 hover:text-slate-100 dark:hover:text-white"
+        className="inline-flex items-center gap-1 text-sm text-slate-400 hover:text-slate-100"
       >
         <ArrowLeft className="h-4 w-4" /> Todos los indicadores
       </Link>
 
       <header className="mt-6">
-        <span className="text-xs uppercase tracking-widest text-orange-400">
+        <span className="text-xs font-semibold uppercase tracking-widest text-orange-400">
           {indicator.category}
         </span>
-        <h1 className="mt-1 text-3xl font-bold tracking-tight">
+        <h1 className="mt-1 text-3xl sm:text-4xl font-bold tracking-tight">
           {indicator.name}
         </h1>
         {indicator.description ? (
-          <p className="mt-2 max-w-2xl text-slate-300 dark:text-slate-500">
+          <p className="mt-2 max-w-2xl text-slate-300">
             {indicator.description}
           </p>
         ) : null}
         <div className="mt-4 flex flex-wrap gap-2 text-xs">
-          <span className="rounded-md bg-slate-800 px-2.5 py-1 font-mono dark:bg-neutral-800">
+          <span className="rounded-md bg-slate-800 px-2.5 py-1 font-mono">
             {indicator.slug}
           </span>
-          <span className="rounded-md bg-slate-800 px-2.5 py-1 dark:bg-neutral-800">
+          <span className="rounded-md bg-slate-800 px-2.5 py-1">
             unidad: {indicator.unit}
           </span>
         </div>
@@ -69,7 +69,7 @@ export default async function IndicatorDetailPage({
             href={source.url}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-1.5 rounded-md border border-slate-700/40 px-3 py-1.5 text-sm hover:bg-slate-900/80 dark:border-neutral-700 dark:hover:bg-neutral-800"
+            className="inline-flex items-center gap-1.5 rounded-md border border-slate-700/40 px-3 py-1.5 text-sm hover:bg-slate-900/80"
           >
             Sitio fuente <ExternalLink className="h-3.5 w-3.5" />
           </Link>
@@ -83,7 +83,7 @@ export default async function IndicatorDetailPage({
             Primeras filas leídas directamente del Parquet en almacenamiento.
           </CardDescription>
           {previewError ? (
-            <p className="mt-4 rounded-md bg-amber-50 px-3 py-2 text-xs text-amber-900 dark:bg-amber-900/30 dark:text-amber-200">
+            <p className="mt-4 rounded-md bg-amber-900/30 px-3 py-2 text-xs text-amber-200">
               {previewError}
             </p>
           ) : null}

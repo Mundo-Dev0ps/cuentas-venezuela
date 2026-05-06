@@ -18,20 +18,20 @@ export default async function PensionesPage() {
     <main className="mx-auto max-w-6xl px-6 py-12">
       <Link
         href="/datos-chile/dashboards"
-        className="inline-flex items-center gap-1 text-sm text-slate-400 hover:text-slate-100 dark:hover:text-white"
+        className="inline-flex items-center gap-1 text-sm text-slate-400 hover:text-slate-100"
       >
         <ArrowLeft className="h-4 w-4" /> Dashboards
       </Link>
-      <h1 className="mt-4 text-3xl font-bold tracking-tight">Pensiones</h1>
-      <p className="mt-2 max-w-2xl text-slate-300 dark:text-slate-500">
+      <h1 className="mt-4 text-3xl sm:text-4xl font-bold tracking-tight">Pensiones</h1>
+      <p className="mt-2 max-w-2xl text-slate-300">
         Cotizantes activos en el sistema de AFP, distribuidos por sector
         económico.
       </p>
 
       {rows.length === 0 ? (
-        <p className="mt-10 rounded-lg border border-dashed border-slate-700/40 p-8 text-sm text-slate-400 dark:border-neutral-700">
+        <p className="mt-10 rounded-lg border border-dashed border-slate-700/40 p-8 text-sm text-slate-400">
           Sin datos. Corré:
-          <code className="ml-2 rounded bg-slate-800 px-1.5 py-0.5 font-mono dark:bg-neutral-800">
+          <code className="ml-2 rounded bg-slate-800 px-1.5 py-0.5 font-mono">
             docker compose --profile etl run --rm etl python -m pipelines sp
           </code>
         </p>

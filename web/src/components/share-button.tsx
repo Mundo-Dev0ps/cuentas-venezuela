@@ -22,7 +22,7 @@ export function ShareButton({ label = "Copiar enlace" }: { label?: string }) {
     <button
       type="button"
       onClick={copy}
-      className="inline-flex items-center gap-1.5 rounded-md border border-slate-700/40 px-3 py-1.5 text-sm hover:bg-slate-900/80 dark:border-neutral-700 dark:hover:bg-neutral-800"
+      className="inline-flex items-center gap-1.5 rounded-md border border-slate-700/40 px-3 py-1.5 text-sm hover:bg-slate-900/80"
       aria-label={label}
     >
       {copied ? (

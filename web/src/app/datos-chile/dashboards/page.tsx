@@ -28,8 +28,8 @@ const CATEGORIES = [
 export default function DashboardsPage() {
   return (
     <main className="mx-auto max-w-6xl px-6 py-12">
-      <h1 className="text-3xl font-bold tracking-tight">Dashboards</h1>
-      <p className="mt-2 max-w-2xl text-slate-300 dark:text-slate-500">
+      <h1 className="text-3xl sm:text-4xl font-bold tracking-tight">Dashboards</h1>
+      <p className="mt-2 max-w-2xl text-slate-300">
         Vistas pre-armadas por categoría. Cada gráfico cita su fuente y se
         consume directamente desde Parquet en almacenamiento.
       </p>
