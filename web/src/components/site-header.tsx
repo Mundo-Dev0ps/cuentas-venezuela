@@ -22,8 +22,8 @@ export function SiteHeader() {
   }
 
   return (
-    <header className="sticky top-0 z-40 border-b border-slate-700/40 bg-slate-900/80 backdrop-blur-md">
-      <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3 md:px-6 md:py-4">
+    <header className="sticky top-0 z-40 h-12 border-b border-slate-700/40 bg-slate-900/80 backdrop-blur-md">
+      <div className="mx-auto flex h-full max-w-6xl items-center justify-between px-4 md:px-6">
         <Link
           href="/"
           onClick={() => setOpen(false)}
