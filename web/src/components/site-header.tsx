@@ -20,7 +20,7 @@ export function SiteHeader() {
   }
 
   return (
-    <header className="sticky top-0 z-40 h-12 border-b border-slate-700/40 bg-slate-900/80 backdrop-blur-md text-sm">
+    <header className="sticky top-0 z-40 h-12 shrink-0 border-b border-slate-700/40 bg-slate-900/80 backdrop-blur-md text-sm">
       <div className="mx-auto flex h-full max-w-6xl items-center justify-between gap-4 px-4 md:px-6">
         <Link
           href="/"
