@@ -40,7 +40,7 @@ export default async function HomePage() {
         <div className="mt-6 flex flex-wrap gap-3">
           <Link
             href="/datos-chile/dashboards"
-            className="inline-flex items-center gap-2 rounded-md bg-orange-400 px-4 py-2 text-sm font-medium text-white hover:bg-orange-500"
+            className="inline-flex items-center gap-2 rounded-md bg-cyan-500 px-4 py-2 text-sm font-medium text-slate-950 hover:bg-cyan-400"
           >
             Ver dashboards <ArrowRight className="h-4 w-4" />
           </Link>
@@ -123,7 +123,7 @@ export default async function HomePage() {
                 </span>
                 <Link
                   href={`/datos-chile/fuentes`}
-                  className="text-xs text-orange-400 hover:text-orange-300 hover:underline"
+                  className="text-xs text-cyan-300 hover:text-cyan-200 hover:underline"
                 >
                   ver →
                 </Link>

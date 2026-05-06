@@ -40,7 +40,7 @@ export default function DashboardsPage() {
             <Card className="h-full transition hover:border-emerald-500">
               <CardTitle>{cat.title}</CardTitle>
               <CardDescription>{cat.desc}</CardDescription>
-              <div className="mt-4 inline-flex items-center gap-1 text-sm text-orange-400">
+              <div className="mt-4 inline-flex items-center gap-1 text-sm text-cyan-300">
                 Abrir <ArrowRight className="h-4 w-4" />
               </div>
             </Card>

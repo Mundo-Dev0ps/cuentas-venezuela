@@ -39,9 +39,9 @@ export function SiteHeader() {
               key={item.href}
               href={item.href}
               className={cn(
-                "transition hover:text-slate-100",
+                "transition hover:text-cyan-300",
                 isActive(item.href) &&
-                  "font-semibold text-orange-400",
+                  "font-semibold text-cyan-300",
               )}
             >
               {item.label}
@@ -71,7 +71,7 @@ export function SiteHeader() {
                   className={cn(
                     "block rounded-md px-3 py-2.5 text-sm text-slate-200 hover:bg-slate-800/80",
                     isActive(item.href) &&
-                      "bg-orange-900/30 font-semibold text-orange-400",
+                      "bg-cyan-500/10 font-semibold text-cyan-300",
                   )}
                 >
                   {item.label}

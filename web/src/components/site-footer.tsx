@@ -12,7 +12,7 @@ export function SiteFooter() {
             <li>
               <Link
                 href="/mapa-del-olvido"
-                className="hover:text-slate-100"
+                className="hover:text-cyan-300"
               >
                 Mapa del Olvido
               </Link>
@@ -20,7 +20,7 @@ export function SiteFooter() {
             <li>
               <Link
                 href="/datos-chile"
-                className="hover:text-slate-100"
+                className="hover:text-cyan-300"
               >
                 Datos Chile
               </Link>

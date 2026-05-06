@@ -144,7 +144,7 @@ export function DemografiaView({ rows }: { rows: StockRegionRow[] }) {
                   onClick={() => toggleRegion(code)}
                   className={
                     active
-                      ? "rounded-full border border-orange-400 bg-orange-400 px-2.5 py-0.5 text-xs text-white hover:bg-orange-500"
+                      ? "rounded-full border border-cyan-500 bg-cyan-500 px-2.5 py-0.5 text-xs text-slate-950 hover:bg-cyan-400"
                       : "rounded-full border border-slate-700/40 px-2.5 py-0.5 text-xs text-slate-400 hover:bg-slate-800/80"
                   }
                 >
