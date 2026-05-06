@@ -38,8 +38,8 @@ export function ChileMap({ data }: { data: MapRow[] }) {
               center={[meta.lat, meta.lng]}
               radius={radius}
               pathOptions={{
-                color: "#059669",
-                fillColor: "#10b981",
+                color: "#fb923c",
+                fillColor: "#fb923c",
                 fillOpacity: 0.55,
                 weight: 1,
               }}

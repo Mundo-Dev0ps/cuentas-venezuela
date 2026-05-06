@@ -10,8 +10,8 @@ import {
 } from "recharts";
 
 const COLORS = [
-  "#059669", "#9333ea", "#0ea5e9", "#f59e0b", "#ef4444",
-  "#14b8a6", "#6366f1", "#ec4899", "#84cc16", "#64748b",
+  "#fb923c", "#7dd3fc", "#38bdf8", "#fbbf24", "#fb7185",
+  "#22d3ee", "#a78bfa", "#ec4899", "#84cc16", "#64748b",
 ];
 
 export interface SectorRow {
@@ -37,7 +37,17 @@ export function SectorPieChart({ data }: { data: SectorRow[] }) {
             <Cell key={i} fill={COLORS[i % COLORS.length]} />
           ))}
         </Pie>
-        <Tooltip formatter={(v: number) => v.toLocaleString("es-CL")} />
+        <Tooltip
+          contentStyle={{
+            background: "rgba(15,23,42,0.95)",
+            border: "1px solid rgba(51,65,85,0.6)",
+            borderRadius: 8,
+            color: "#e2e8f0",
+            fontSize: 12,
+          }}
+          itemStyle={{ color: "#e2e8f0" }}
+          formatter={(v: number) => v.toLocaleString("es-CL")}
+        />
         <Legend />
       </PieChart>
     </ResponsiveContainer>
