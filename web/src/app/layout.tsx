@@ -15,7 +15,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="es" className="dark">
+    <html lang="es" className="dark" suppressHydrationWarning>
       <body className="flex min-h-screen flex-col text-slate-100 antialiased animate-page-fade">
         <SiteHeader />
         <div className="flex-1 animate-page-rise">{children}</div>
