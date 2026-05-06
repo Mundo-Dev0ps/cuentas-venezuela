@@ -20,15 +20,15 @@ export function SiteHeader() {
   }
 
   return (
-    <header className="sticky top-0 z-40 h-12 border-b border-slate-700/40 bg-slate-900/80 backdrop-blur-md">
+    <header className="sticky top-0 z-40 h-12 border-b border-slate-700/40 bg-slate-900/80 backdrop-blur-md text-sm">
       <div className="mx-auto flex h-full max-w-6xl items-center justify-between gap-4 px-4 md:px-6">
         <Link
           href="/"
           aria-label="cuentas-venezuela"
-          className="inline-flex items-center gap-2 font-semibold whitespace-nowrap"
+          className="inline-flex items-center gap-2 text-sm font-semibold whitespace-nowrap"
         >
           <BarChart3 className="h-5 w-5 text-orange-400" />
-          <span className="hidden xs:inline sm:inline">cuentas-venezuela</span>
+          <span className="hidden sm:inline">cuentas-venezuela</span>
         </Link>
 
         <nav
