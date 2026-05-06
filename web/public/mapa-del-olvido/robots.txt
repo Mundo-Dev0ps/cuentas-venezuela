@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /embed
+
+Sitemap: https://cuentas-claras-61114.web.app/sitemap.xml
