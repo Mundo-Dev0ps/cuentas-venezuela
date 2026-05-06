@@ -44,7 +44,7 @@ test("demografia URL params seed filters and reflect changes", async ({
   await expect(page.getByText("Stock legal 2022")).toBeVisible();
   await expect(page.getByText(/excluyendo 1 región/)).toBeVisible();
   const metro = page.getByRole("button", { name: "Metropolitana" });
-  await expect(metro).toHaveClass(/border-neutral-300/);
+  await expect(metro).toHaveClass(/border-slate-700/);
 
   await page.locator("select").first().selectOption("2023");
   await expect(page).toHaveURL(/year=2023/);

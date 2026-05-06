@@ -116,13 +116,13 @@ export function DemografiaView({ rows }: { rows: StockRegionRow[] }) {
     <>
       <section className="mt-8 flex flex-col gap-4 md:flex-row md:flex-wrap md:items-end">
         <div>
-          <label className="block text-xs uppercase tracking-wider text-neutral-500">
+          <label className="block text-xs uppercase tracking-wider text-slate-400">
             Año
           </label>
           <select
             value={year}
             onChange={(e) => setYear(Number(e.target.value))}
-            className="mt-1 rounded-md border border-neutral-300 bg-white px-3 py-1.5 text-sm dark:border-neutral-700 dark:bg-neutral-900"
+            className="mt-1 rounded-md border border-slate-700 bg-slate-900 px-3 py-1.5 text-sm dark:border-neutral-700 dark:bg-neutral-900"
           >
             {years.map((y) => (
               <option key={y} value={y}>
@@ -132,7 +132,7 @@ export function DemografiaView({ rows }: { rows: StockRegionRow[] }) {
           </select>
         </div>
         <div className="flex-1">
-          <div className="text-xs uppercase tracking-wider text-neutral-500">
+          <div className="text-xs uppercase tracking-wider text-slate-400">
             Regiones (click para alternar)
           </div>
           <div className="mt-1 flex flex-wrap gap-1.5">
@@ -144,8 +144,8 @@ export function DemografiaView({ rows }: { rows: StockRegionRow[] }) {
                   onClick={() => toggleRegion(code)}
                   className={
                     active
-                      ? "rounded-full border border-emerald-600 bg-emerald-600 px-2.5 py-0.5 text-xs text-white hover:bg-emerald-700"
-                      : "rounded-full border border-neutral-300 px-2.5 py-0.5 text-xs text-neutral-500 hover:bg-neutral-100 dark:border-neutral-700 dark:hover:bg-neutral-800"
+                      ? "rounded-full border border-orange-400 bg-orange-400 px-2.5 py-0.5 text-xs text-white hover:bg-orange-500"
+                      : "rounded-full border border-slate-700 px-2.5 py-0.5 text-xs text-slate-400 hover:bg-slate-800 dark:border-neutral-700 dark:hover:bg-neutral-800"
                   }
                 >
                   {name}
@@ -155,7 +155,7 @@ export function DemografiaView({ rows }: { rows: StockRegionRow[] }) {
             {excluded.size > 0 ? (
               <button
                 onClick={clearFilters}
-                className="ml-2 text-xs text-neutral-500 underline hover:text-neutral-900 dark:hover:text-white"
+                className="ml-2 text-xs text-slate-400 underline hover:text-slate-100 dark:hover:text-white"
               >
                 limpiar filtro
               </button>

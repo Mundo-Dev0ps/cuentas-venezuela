@@ -14,7 +14,7 @@ export default function HomePage() {
         <h1 className="text-4xl md:text-6xl font-bold tracking-tight">
           Cuentas Venezuela
         </h1>
-        <p className="max-w-2xl text-lg text-neutral-600 dark:text-neutral-300">
+        <p className="max-w-2xl text-lg text-slate-300 dark:text-neutral-300">
           Datos abiertos sobre obras públicas en Venezuela y la migración
           venezolana en Chile. Auditables, comparables y citados desde fuentes
           oficiales.
@@ -24,34 +24,34 @@ export default function HomePage() {
       <section className="grid gap-6 md:grid-cols-2">
         <Link
           href="/mapa-del-olvido"
-          className="group rounded-xl border border-neutral-200 bg-white p-8 transition hover:border-emerald-400 hover:shadow-lg dark:border-neutral-800 dark:bg-neutral-900"
+          className="group rounded-xl border border-slate-700 bg-slate-900 p-8 transition hover:border-orange-300 hover:shadow-lg dark:border-neutral-800 dark:bg-neutral-900"
         >
           <div className="mb-3 flex items-center gap-2">
-            <Map className="h-5 w-5 text-emerald-600" />
+            <Map className="h-5 w-5 text-orange-400" />
             <h2 className="text-2xl font-semibold">Mapa del Olvido</h2>
           </div>
-          <p className="mb-4 text-neutral-600 dark:text-neutral-300">
+          <p className="mb-4 text-slate-300 dark:text-neutral-300">
             Mapa interactivo de obras públicas inauguradas, abandonadas o
             paralizadas en Venezuela.
           </p>
-          <span className="text-sm font-medium text-emerald-600 group-hover:underline dark:text-emerald-400">
+          <span className="text-sm font-medium text-orange-400 group-hover:underline dark:text-orange-300">
             Explorar el mapa →
           </span>
         </Link>
 
         <Link
           href="/datos-chile"
-          className="group rounded-xl border border-neutral-200 bg-white p-8 transition hover:border-emerald-400 hover:shadow-lg dark:border-neutral-800 dark:bg-neutral-900"
+          className="group rounded-xl border border-slate-700 bg-slate-900 p-8 transition hover:border-orange-300 hover:shadow-lg dark:border-neutral-800 dark:bg-neutral-900"
         >
           <div className="mb-3 flex items-center gap-2">
-            <BarChart3 className="h-5 w-5 text-emerald-600" />
+            <BarChart3 className="h-5 w-5 text-orange-400" />
             <h2 className="text-2xl font-semibold">Datos Chile</h2>
           </div>
-          <p className="mb-4 text-neutral-600 dark:text-neutral-300">
+          <p className="mb-4 text-slate-300 dark:text-neutral-300">
             Dashboards sobre venezolanos en Chile: demografía, pensiones,
             tributario, regional.
           </p>
-          <span className="text-sm font-medium text-emerald-600 group-hover:underline dark:text-emerald-400">
+          <span className="text-sm font-medium text-orange-400 group-hover:underline dark:text-orange-300">
             Ver dashboards →
           </span>
         </Link>

@@ -8,7 +8,7 @@ const ChileMap = dynamic(
   {
     ssr: false,
     loading: () => (
-      <div className="flex h-[420px] w-full items-center justify-center rounded-xl border border-neutral-200 text-sm text-neutral-500 md:h-[520px] dark:border-neutral-800">
+      <div className="flex h-[420px] w-full items-center justify-center rounded-xl border border-slate-700 text-sm text-slate-400 md:h-[520px] dark:border-neutral-800">
         Cargando mapa…
       </div>
     ),

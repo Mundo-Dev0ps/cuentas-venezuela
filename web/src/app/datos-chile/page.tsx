@@ -26,13 +26,13 @@ export default async function HomePage() {
   return (
     <main className="mx-auto max-w-6xl px-6 py-12">
       <section>
-        <p className="text-xs uppercase tracking-widest text-emerald-600">
+        <p className="text-xs uppercase tracking-widest text-orange-400">
           Proyecto cívico · datos públicos
         </p>
         <h1 className="mt-3 text-4xl font-bold tracking-tight md:text-5xl">
           Migración venezolana en Chile, en datos.
         </h1>
-        <p className="mt-4 max-w-2xl text-lg text-neutral-600 dark:text-neutral-400">
+        <p className="mt-4 max-w-2xl text-lg text-slate-300 dark:text-slate-500">
           Centralizamos cifras oficiales sobre stock migratorio, trabajo,
           cotizaciones, salud y aporte fiscal. Cada gráfico cita su fuente y
           fecha. Todo abierto, todo verificable.
@@ -40,13 +40,13 @@ export default async function HomePage() {
         <div className="mt-6 flex flex-wrap gap-3">
           <Link
             href="/datos-chile/dashboards"
-            className="inline-flex items-center gap-2 rounded-md bg-emerald-600 px-4 py-2 text-sm font-medium text-white hover:bg-emerald-700"
+            className="inline-flex items-center gap-2 rounded-md bg-orange-400 px-4 py-2 text-sm font-medium text-white hover:bg-orange-500"
           >
             Ver dashboards <ArrowRight className="h-4 w-4" />
           </Link>
           <Link
             href="/datos-chile/fuentes"
-            className="inline-flex items-center gap-2 rounded-md border border-neutral-300 px-4 py-2 text-sm font-medium hover:bg-neutral-50 dark:border-neutral-700 dark:hover:bg-neutral-800"
+            className="inline-flex items-center gap-2 rounded-md border border-slate-700 px-4 py-2 text-sm font-medium hover:bg-slate-900 dark:border-neutral-700 dark:hover:bg-neutral-800"
           >
             Explorar fuentes
           </Link>
@@ -95,7 +95,7 @@ export default async function HomePage() {
           <div className="mt-6">
             <StockChart data={SAMPLE_STOCK} />
           </div>
-          <p className="mt-4 text-xs text-neutral-500">
+          <p className="mt-4 text-xs text-slate-400">
             Datos demostrativos. La versión final consume Parquet en almacenamiento R2 vía API.
           </p>
         </Card>
@@ -117,13 +117,13 @@ export default async function HomePage() {
               >
                 <span>
                   <span className="font-medium">{s.name}</span>
-                  <span className="ml-2 text-neutral-500">
+                  <span className="ml-2 text-slate-400">
                     {s.organization}
                   </span>
                 </span>
                 <Link
                   href={`/datos-chile/fuentes`}
-                  className="text-xs text-emerald-600 hover:underline"
+                  className="text-xs text-orange-400 hover:underline"
                 >
                   ver →
                 </Link>
@@ -147,18 +147,18 @@ export default async function HomePage() {
               >
                 <span>
                   <span className="font-medium">{i.name}</span>
-                  <span className="ml-2 text-xs text-neutral-500">
+                  <span className="ml-2 text-xs text-slate-400">
                     {i.unit}
                   </span>
                 </span>
-                <span className="text-xs text-neutral-500">{i.category}</span>
+                <span className="text-xs text-slate-400">{i.category}</span>
               </li>
             ))}
           </ul>
         </Card>
       </section>
 
-      <section className="mt-10 text-xs text-neutral-500">
+      <section className="mt-10 text-xs text-slate-400">
         Estado API: {health ? `ok · ${new Date(health.ts).toLocaleString()}` : "sin respuesta"}
       </section>
     </main>

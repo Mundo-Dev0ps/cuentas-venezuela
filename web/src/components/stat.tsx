@@ -14,16 +14,16 @@ export function Stat({
   return (
     <div
       className={cn(
-        "rounded-xl border border-neutral-200 bg-white p-5 dark:border-neutral-800 dark:bg-neutral-900",
+        "rounded-xl border border-slate-700 bg-slate-900 p-5 dark:border-neutral-800 dark:bg-neutral-900",
         className,
       )}
     >
-      <div className="text-xs uppercase tracking-wider text-neutral-500">
+      <div className="text-xs uppercase tracking-wider text-slate-400">
         {label}
       </div>
       <div className="mt-2 text-3xl font-bold tracking-tight">{value}</div>
       {hint ? (
-        <div className="mt-1 text-xs text-neutral-500">{hint}</div>
+        <div className="mt-1 text-xs text-slate-400">{hint}</div>
       ) : null}
     </div>
   );

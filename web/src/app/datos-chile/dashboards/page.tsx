@@ -29,7 +29,7 @@ export default function DashboardsPage() {
   return (
     <main className="mx-auto max-w-6xl px-6 py-12">
       <h1 className="text-3xl font-bold tracking-tight">Dashboards</h1>
-      <p className="mt-2 max-w-2xl text-neutral-600 dark:text-neutral-400">
+      <p className="mt-2 max-w-2xl text-slate-300 dark:text-slate-500">
         Vistas pre-armadas por categoría. Cada gráfico cita su fuente y se
         consume directamente desde Parquet en almacenamiento.
       </p>
@@ -40,7 +40,7 @@ export default function DashboardsPage() {
             <Card className="h-full transition hover:border-emerald-500">
               <CardTitle>{cat.title}</CardTitle>
               <CardDescription>{cat.desc}</CardDescription>
-              <div className="mt-4 inline-flex items-center gap-1 text-sm text-emerald-600">
+              <div className="mt-4 inline-flex items-center gap-1 text-sm text-orange-400">
                 Abrir <ArrowRight className="h-4 w-4" />
               </div>
             </Card>

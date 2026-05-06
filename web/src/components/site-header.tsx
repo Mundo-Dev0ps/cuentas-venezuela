@@ -22,26 +22,26 @@ export function SiteHeader() {
   }
 
   return (
-    <header className="sticky top-0 z-40 border-b border-neutral-200 bg-white/80 backdrop-blur dark:border-neutral-800 dark:bg-neutral-950/80">
+    <header className="sticky top-0 z-40 border-b border-slate-700 bg-slate-900/80 backdrop-blur dark:border-neutral-800 dark:bg-neutral-950/80">
       <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3 md:px-6 md:py-4">
         <Link
           href="/"
           onClick={() => setOpen(false)}
           className="flex items-center gap-2 font-semibold"
         >
-          <BarChart3 className="h-5 w-5 text-emerald-600" />
+          <BarChart3 className="h-5 w-5 text-orange-400" />
           <span>cuentas-venezuela</span>
         </Link>
 
-        <nav className="hidden gap-5 text-sm text-neutral-600 dark:text-neutral-300 md:flex">
+        <nav className="hidden gap-5 text-sm text-slate-300 dark:text-neutral-300 md:flex">
           {NAV.map((item) => (
             <Link
               key={item.href}
               href={item.href}
               className={cn(
-                "transition hover:text-neutral-900 dark:hover:text-white",
+                "transition hover:text-slate-100 dark:hover:text-white",
                 isActive(item.href) &&
-                  "font-semibold text-emerald-600 dark:text-emerald-400",
+                  "font-semibold text-orange-400 dark:text-orange-300",
               )}
             >
               {item.label}
@@ -51,7 +51,7 @@ export function SiteHeader() {
 
         <button
           type="button"
-          className="-mr-2 inline-flex h-10 w-10 items-center justify-center rounded-md text-neutral-700 hover:bg-neutral-100 md:hidden dark:text-neutral-200 dark:hover:bg-neutral-800"
+          className="-mr-2 inline-flex h-10 w-10 items-center justify-center rounded-md text-slate-200 hover:bg-slate-800 md:hidden dark:text-neutral-200 dark:hover:bg-neutral-800"
           aria-label={open ? "Cerrar menú" : "Abrir menú"}
           aria-expanded={open}
           onClick={() => setOpen((v) => !v)}
@@ -61,7 +61,7 @@ export function SiteHeader() {
       </div>
 
       {open ? (
-        <nav className="border-t border-neutral-200 bg-white px-4 py-2 md:hidden dark:border-neutral-800 dark:bg-neutral-950">
+        <nav className="border-t border-slate-700 bg-slate-900 px-4 py-2 md:hidden dark:border-neutral-800 dark:bg-neutral-950">
           <ul className="flex flex-col">
             {NAV.map((item) => (
               <li key={item.href}>
@@ -69,9 +69,9 @@ export function SiteHeader() {
                   href={item.href}
                   onClick={() => setOpen(false)}
                   className={cn(
-                    "block rounded-md px-3 py-2.5 text-sm text-neutral-700 hover:bg-neutral-100 dark:text-neutral-200 dark:hover:bg-neutral-800",
+                    "block rounded-md px-3 py-2.5 text-sm text-slate-200 hover:bg-slate-800 dark:text-neutral-200 dark:hover:bg-neutral-800",
                     isActive(item.href) &&
-                      "bg-emerald-50 font-semibold text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-300",
+                      "bg-orange-900/30 font-semibold text-orange-500 dark:bg-orange-900/30 dark:text-orange-300",
                   )}
                 >
                   {item.label}
