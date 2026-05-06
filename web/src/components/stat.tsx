@@ -67,7 +67,14 @@ export function Stat({
       <div className="text-xs uppercase tracking-widest text-slate-400 font-semibold">
         {label}
       </div>
-      <div className="mt-2 text-3xl font-bold tracking-tight font-mono text-orange-400">
+      <div
+        className={cn(
+          "mt-2 font-bold tracking-tight text-orange-400 break-words leading-tight",
+          numericValue !== undefined
+            ? "text-3xl font-mono"
+            : "text-xl sm:text-2xl",
+        )}
+      >
         {display}
       </div>
       {hint ? (
