@@ -2,21 +2,20 @@ import { devices, expect, test } from "@playwright/test";
 
 test.use({ ...devices["Pixel 5"] });
 
-test("desktop nav hidden, hamburger visible on mobile", async ({ page }) => {
+test("nav links inline on mobile (no hamburger)", async ({ page }) => {
   await page.goto("/");
-  const desktopNav = page.locator("header nav.hidden");
-  await expect(desktopNav).toBeHidden();
-  const hamburger = page.getByRole("button", { name: "Abrir menú" });
-  await expect(hamburger).toBeVisible();
+  const links = page.locator("header nav a");
+  await expect(links).toHaveCount(3);
+  for (const label of ["Inicio", "Mapa del Olvido", "Datos Chile"]) {
+    await expect(
+      page.locator("header nav").getByRole("link", { name: label }),
+    ).toBeVisible();
+  }
 });
 
-test("hamburger opens menu and navigates", async ({ page }) => {
+test("nav link Datos Chile navigates", async ({ page }) => {
   await page.goto("/");
-  await page.getByRole("button", { name: "Abrir menú" }).click();
-  const mobileNav = page.locator("header nav").last();
-  const link = mobileNav.getByRole("link", { name: /datos chile/i });
-  await expect(link).toBeVisible();
-  await link.click();
+  await page.locator("header nav").getByRole("link", { name: "Datos Chile" }).click();
   await expect(page).toHaveURL(/\/datos-chile$/);
 });
 

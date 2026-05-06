@@ -2,8 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
-import { BarChart3, Menu, X } from "lucide-react";
+import { BarChart3 } from "lucide-react";
 import { cn } from "@/lib/cn";
 
 const NAV = [
@@ -13,7 +12,6 @@ const NAV = [
 ];
 
 export function SiteHeader() {
-  const [open, setOpen] = useState(false);
   const pathname = usePathname();
 
   function isActive(href: string) {
@@ -23,64 +21,34 @@ export function SiteHeader() {
 
   return (
     <header className="sticky top-0 z-40 h-12 border-b border-slate-700/40 bg-slate-900/80 backdrop-blur-md">
-      <div className="mx-auto flex h-full max-w-6xl items-center justify-between px-4 md:px-6">
+      <div className="mx-auto flex h-full max-w-6xl items-center justify-between gap-4 px-4 md:px-6">
         <Link
           href="/"
-          onClick={() => setOpen(false)}
-          className="flex items-center gap-2 font-semibold"
+          aria-label="cuentas-venezuela"
+          className="inline-flex items-center gap-2 font-semibold whitespace-nowrap"
         >
           <BarChart3 className="h-5 w-5 text-orange-400" />
-          <span>cuentas-venezuela</span>
+          <span className="hidden xs:inline sm:inline">cuentas-venezuela</span>
         </Link>
 
-        <nav className="hidden gap-5 text-sm text-slate-300 md:flex">
+        <nav
+          aria-label="primary"
+          className="flex items-center gap-3 text-sm text-slate-300 sm:gap-5"
+        >
           {NAV.map((item) => (
             <Link
               key={item.href}
               href={item.href}
               className={cn(
-                "transition hover:text-cyan-300",
-                isActive(item.href) &&
-                  "font-semibold text-cyan-300",
+                "whitespace-nowrap transition hover:text-cyan-300",
+                isActive(item.href) && "font-semibold text-cyan-300",
               )}
             >
               {item.label}
             </Link>
           ))}
         </nav>
-
-        <button
-          type="button"
-          className="-mr-2 inline-flex h-10 w-10 items-center justify-center rounded-md text-slate-200 hover:bg-slate-800 md:hidden"
-          aria-label={open ? "Cerrar menú" : "Abrir menú"}
-          aria-expanded={open}
-          onClick={() => setOpen((v) => !v)}
-        >
-          {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-        </button>
       </div>
-
-      {open ? (
-        <nav className="border-t border-slate-700/40 bg-slate-900/80 px-4 py-2 md:hidden">
-          <ul className="flex flex-col">
-            {NAV.map((item) => (
-              <li key={item.href}>
-                <Link
-                  href={item.href}
-                  onClick={() => setOpen(false)}
-                  className={cn(
-                    "block rounded-md px-3 py-2.5 text-sm text-slate-200 hover:bg-slate-800/80",
-                    isActive(item.href) &&
-                      "bg-cyan-500/10 font-semibold text-cyan-300",
-                  )}
-                >
-                  {item.label}
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </nav>
-      ) : null}
     </header>
   );
 }
