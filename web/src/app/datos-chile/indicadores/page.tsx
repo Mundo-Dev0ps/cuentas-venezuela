@@ -21,7 +21,7 @@ export default async function IndicadoresPage() {
       </p>
 
       {indicators.length === 0 ? (
-        <p className="mt-10 rounded-lg border border-dashed border-slate-700 p-8 text-center text-sm text-slate-400 dark:border-neutral-700">
+        <p className="mt-10 rounded-lg border border-dashed border-slate-700/40 p-8 text-center text-sm text-slate-400 dark:border-neutral-700">
           Sin indicadores catalogados aún.
         </p>
       ) : (
@@ -31,9 +31,9 @@ export default async function IndicadoresPage() {
               <h2 className="text-sm font-semibold uppercase tracking-wider text-orange-400">
                 {category}
               </h2>
-              <div className="mt-3 overflow-x-auto rounded-xl border border-slate-700 dark:border-neutral-800">
+              <div className="mt-3 overflow-x-auto rounded-xl border border-slate-700/40 dark:border-neutral-800">
                 <table className="w-full min-w-[640px] text-sm">
-                  <thead className="bg-slate-900 text-left text-xs uppercase tracking-wider text-slate-400 dark:bg-neutral-900">
+                  <thead className="bg-slate-900/80 text-left text-xs uppercase tracking-wider text-slate-400 dark:bg-neutral-900">
                     <tr>
                       <th className="px-4 py-2.5">Indicador</th>
                       <th className="px-4 py-2.5">Slug</th>
@@ -43,7 +43,7 @@ export default async function IndicadoresPage() {
                   </thead>
                   <tbody className="divide-y divide-neutral-100 dark:divide-neutral-800">
                     {items.map((i) => (
-                      <tr key={i.id} className="hover:bg-slate-900 dark:hover:bg-neutral-900/50">
+                      <tr key={i.id} className="hover:bg-slate-900/80 dark:hover:bg-neutral-900/50">
                         <td className="px-4 py-2.5">
                           <Link href={`/datos-chile/indicadores/${i.slug}`} className="hover:underline">
                             <div className="font-medium">{i.name}</div>

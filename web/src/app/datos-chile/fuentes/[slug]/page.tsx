@@ -39,7 +39,7 @@ export default async function SourceDetailPage({
             href={source.url}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-1.5 rounded-md border border-slate-700 px-3 py-1.5 hover:bg-slate-900 dark:border-neutral-700 dark:hover:bg-neutral-800"
+            className="inline-flex items-center gap-1.5 rounded-md border border-slate-700/40 px-3 py-1.5 hover:bg-slate-900/80 dark:border-neutral-700 dark:hover:bg-neutral-800"
           >
             Sitio oficial <ExternalLink className="h-3.5 w-3.5" />
           </Link>
@@ -86,7 +86,7 @@ export default async function SourceDetailPage({
         {indicators.length === 0 ? (
           <p className="mt-3 text-sm text-slate-400">Sin indicadores.</p>
         ) : (
-          <ul className="mt-4 divide-y divide-slate-700 rounded-xl border border-slate-700 dark:divide-neutral-800 dark:border-neutral-800">
+          <ul className="mt-4 divide-y divide-slate-700 rounded-xl border border-slate-700/40 dark:divide-neutral-800 dark:border-neutral-800">
             {indicators.map((i) => (
               <li
                 key={i.id}

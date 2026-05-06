@@ -49,7 +49,7 @@ export default async function ComparativaPage() {
       </p>
 
       {rows.length === 0 ? (
-        <p className="mt-10 rounded-lg border border-dashed border-slate-700 p-8 text-sm text-slate-400 dark:border-neutral-700">
+        <p className="mt-10 rounded-lg border border-dashed border-slate-700/40 p-8 text-sm text-slate-400 dark:border-neutral-700">
           Sin datos. Corré:
           <code className="ml-2 rounded bg-slate-800 px-1.5 py-0.5 font-mono dark:bg-neutral-800">
             docker compose --profile etl run --rm etl python -m pipelines comparativa

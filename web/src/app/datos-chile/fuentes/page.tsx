@@ -15,7 +15,7 @@ export default async function FuentesPage() {
       </p>
 
       {sources.length === 0 ? (
-        <p className="mt-10 rounded-lg border border-dashed border-slate-700 p-8 text-center text-sm text-slate-400 dark:border-neutral-700">
+        <p className="mt-10 rounded-lg border border-dashed border-slate-700/40 p-8 text-center text-sm text-slate-400 dark:border-neutral-700">
           Sin fuentes registradas. Corré los seeds para poblar Postgres.
         </p>
       ) : (

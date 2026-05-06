@@ -14,14 +14,16 @@ export function Stat({
   return (
     <div
       className={cn(
-        "rounded-xl border border-slate-700 bg-slate-900 p-5 dark:border-neutral-800 dark:bg-neutral-900",
+        "rounded-xl border border-slate-700/40 bg-slate-900/80 backdrop-blur-md p-5",
         className,
       )}
     >
-      <div className="text-xs uppercase tracking-wider text-slate-400">
+      <div className="text-xs uppercase tracking-widest text-slate-400 font-semibold">
         {label}
       </div>
-      <div className="mt-2 text-3xl font-bold tracking-tight">{value}</div>
+      <div className="mt-2 text-3xl font-bold tracking-tight font-mono text-orange-400">
+        {value}
+      </div>
       {hint ? (
         <div className="mt-1 text-xs text-slate-400">{hint}</div>
       ) : null}

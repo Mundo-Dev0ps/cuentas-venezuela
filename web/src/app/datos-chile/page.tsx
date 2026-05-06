@@ -46,7 +46,7 @@ export default async function HomePage() {
           </Link>
           <Link
             href="/datos-chile/fuentes"
-            className="inline-flex items-center gap-2 rounded-md border border-slate-700 px-4 py-2 text-sm font-medium hover:bg-slate-900 dark:border-neutral-700 dark:hover:bg-neutral-800"
+            className="inline-flex items-center gap-2 rounded-md border border-slate-700/40 px-4 py-2 text-sm font-medium hover:bg-slate-900/80 dark:border-neutral-700 dark:hover:bg-neutral-800"
           >
             Explorar fuentes
           </Link>

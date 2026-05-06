@@ -16,9 +16,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="es" className="dark">
-      <body className="flex min-h-screen flex-col bg-slate-950 text-slate-100 antialiased">
+      <body className="flex min-h-screen flex-col text-slate-100 antialiased animate-page-fade">
         <SiteHeader />
-        <div className="flex-1">{children}</div>
+        <div className="flex-1 animate-page-rise">{children}</div>
         <SiteFooter />
       </body>
     </html>

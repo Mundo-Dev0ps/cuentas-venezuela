@@ -24,7 +24,7 @@ export default function HomePage() {
       <section className="grid gap-6 md:grid-cols-2">
         <Link
           href="/mapa-del-olvido"
-          className="group rounded-xl border border-slate-700 bg-slate-900 p-8 transition hover:border-orange-300 hover:shadow-lg dark:border-neutral-800 dark:bg-neutral-900"
+          className="group rounded-xl border border-slate-700/40 bg-slate-900/80 p-8 transition hover:border-orange-300 hover:shadow-lg dark:border-neutral-800 dark:bg-neutral-900"
         >
           <div className="mb-3 flex items-center gap-2">
             <Map className="h-5 w-5 text-orange-400" />
@@ -41,7 +41,7 @@ export default function HomePage() {
 
         <Link
           href="/datos-chile"
-          className="group rounded-xl border border-slate-700 bg-slate-900 p-8 transition hover:border-orange-300 hover:shadow-lg dark:border-neutral-800 dark:bg-neutral-900"
+          className="group rounded-xl border border-slate-700/40 bg-slate-900/80 p-8 transition hover:border-orange-300 hover:shadow-lg dark:border-neutral-800 dark:bg-neutral-900"
         >
           <div className="mb-3 flex items-center gap-2">
             <BarChart3 className="h-5 w-5 text-orange-400" />

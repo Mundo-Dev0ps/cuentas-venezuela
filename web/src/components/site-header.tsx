@@ -22,7 +22,7 @@ export function SiteHeader() {
   }
 
   return (
-    <header className="sticky top-0 z-40 border-b border-slate-700 bg-slate-900/80 backdrop-blur dark:border-neutral-800 dark:bg-neutral-950/80">
+    <header className="sticky top-0 z-40 border-b border-slate-700/40 bg-slate-900/80 backdrop-blur-md">
       <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3 md:px-6 md:py-4">
         <Link
           href="/"
@@ -61,7 +61,7 @@ export function SiteHeader() {
       </div>
 
       {open ? (
-        <nav className="border-t border-slate-700 bg-slate-900 px-4 py-2 md:hidden dark:border-neutral-800 dark:bg-neutral-950">
+        <nav className="border-t border-slate-700/40 bg-slate-900/80 px-4 py-2 md:hidden dark:border-neutral-800 dark:bg-neutral-950">
           <ul className="flex flex-col">
             {NAV.map((item) => (
               <li key={item.href}>
