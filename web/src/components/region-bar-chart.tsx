@@ -47,7 +47,14 @@ export function RegionBarChart({ data }: { data: RegionRow[] }) {
           itemStyle={{ color: "#e2e8f0" }}
           formatter={(v: number) => v.toLocaleString("es-CL")}
         />
-        <Bar dataKey="stock_legal" fill="#fb923c" radius={[0, 4, 4, 0]} />
+        <Bar
+          dataKey="stock_legal"
+          fill="#fb923c"
+          radius={[0, 4, 4, 0]}
+          isAnimationActive
+          animationDuration={1100}
+          animationEasing="ease-out"
+        />
       </BarChart>
     </ResponsiveContainer>
   );

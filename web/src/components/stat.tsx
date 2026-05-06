@@ -37,7 +37,7 @@ export function Stat({
   groupThousands = true,
   hint,
   className,
-  duration = 1500,
+  duration = 800,
 }: StatProps) {
   const { ref, inView } = useInView<HTMLDivElement>({ threshold: 0.3 });
   const animated = useCountUp(numericValue ?? 0, duration, inView);

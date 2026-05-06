@@ -20,12 +20,22 @@ export interface AporteByYear {
 export function AporteBarChart({ data }: { data: AporteByYear[] }) {
   return (
     <ResponsiveContainer width="100%" height={320}>
-      <BarChart data={data} margin={{ top: 8, right: 16, left: 0, bottom: 0 }}>
+      <BarChart
+        data={data}
+        layout="vertical"
+        margin={{ top: 8, right: 16, left: 0, bottom: 0 }}
+      >
         <CartesianGrid stroke="#334155" strokeDasharray="3 3" />
-        <XAxis dataKey="year" stroke="#94a3b8" />
-        <YAxis
+        <XAxis
+          type="number"
           stroke="#94a3b8"
           tickFormatter={(v) => `${(v / 1000).toFixed(0)}MM`}
+        />
+        <YAxis
+          type="category"
+          dataKey="year"
+          stroke="#94a3b8"
+          width={50}
         />
         <Tooltip
           contentStyle={{
@@ -40,8 +50,23 @@ export function AporteBarChart({ data }: { data: AporteByYear[] }) {
           formatter={(v: number) => `${v.toLocaleString("es-CL")} M CLP`}
         />
         <Legend wrapperStyle={{ color: "#cbd5e1", fontSize: 12 }} />
-        <Bar dataKey="Renta" stackId="a" fill="#fb923c" />
-        <Bar dataKey="IVA" stackId="a" fill="#7dd3fc" />
+        <Bar
+          dataKey="Renta"
+          stackId="a"
+          fill="#fb923c"
+          isAnimationActive
+          animationDuration={1100}
+          animationEasing="ease-out"
+        />
+        <Bar
+          dataKey="IVA"
+          stackId="a"
+          fill="#7dd3fc"
+          isAnimationActive
+          animationDuration={1100}
+          animationEasing="ease-out"
+          animationBegin={150}
+        />
       </BarChart>
     </ResponsiveContainer>
   );
