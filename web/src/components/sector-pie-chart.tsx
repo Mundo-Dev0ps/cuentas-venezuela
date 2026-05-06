@@ -48,7 +48,7 @@ export function SectorPieChart({ data }: { data: SectorRow[] }) {
           itemStyle={{ color: "#e2e8f0" }}
           formatter={(v: number) => v.toLocaleString("es-CL")}
         />
-        <Legend />
+        <Legend wrapperStyle={{ color: "#cbd5e1", fontSize: 12 }} />
       </PieChart>
     </ResponsiveContainer>
   );

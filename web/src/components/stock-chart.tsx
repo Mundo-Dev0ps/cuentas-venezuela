@@ -40,7 +40,7 @@ export function StockChart({ data }: { data: StockPoint[] }) {
           formatter={(v: number) => v.toLocaleString("es-CL")}
           labelFormatter={(l) => `Año ${l}`}
         />
-        <Legend />
+        <Legend wrapperStyle={{ color: "#cbd5e1", fontSize: 12 }} />
         <Line
           type="monotone"
           dataKey="legal"

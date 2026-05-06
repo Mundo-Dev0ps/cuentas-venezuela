@@ -113,7 +113,7 @@ export default async function HomePage() {
             {sources.slice(0, 5).map((s) => (
               <li
                 key={s.id}
-                className="flex items-center justify-between border-b border-neutral-100 pb-2 last:border-0"
+                className="flex items-center justify-between border-b border-slate-700/40 pb-2 last:border-0"
               >
                 <span>
                   <span className="font-medium">{s.name}</span>
@@ -143,7 +143,7 @@ export default async function HomePage() {
             {indicators.slice(0, 5).map((i) => (
               <li
                 key={i.id}
-                className="flex items-center justify-between border-b border-neutral-100 pb-2 last:border-0"
+                className="flex items-center justify-between border-b border-slate-700/40 pb-2 last:border-0"
               >
                 <span>
                   <span className="font-medium">{i.name}</span>

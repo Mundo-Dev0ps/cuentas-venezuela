@@ -39,7 +39,7 @@ export function AporteBarChart({ data }: { data: AporteByYear[] }) {
           labelStyle={{ color: "#94a3b8", fontWeight: 600 }}
           formatter={(v: number) => `${v.toLocaleString("es-CL")} M CLP`}
         />
-        <Legend />
+        <Legend wrapperStyle={{ color: "#cbd5e1", fontSize: 12 }} />
         <Bar dataKey="Renta" stackId="a" fill="#fb923c" />
         <Bar dataKey="IVA" stackId="a" fill="#7dd3fc" />
       </BarChart>
