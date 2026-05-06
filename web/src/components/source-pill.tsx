@@ -15,7 +15,7 @@ export function SourcePill({
       href={url}
       target="_blank"
       rel="noopener noreferrer"
-      className="inline-flex items-center gap-1 rounded-full border border-slate-700/40 bg-slate-900/80 px-2.5 py-1 text-xs text-slate-200 hover:bg-slate-800"
+      className="inline-flex items-center gap-1 rounded-full border border-slate-700/40 bg-slate-900/80 px-2.5 py-1 text-xs text-slate-200 hover:bg-slate-800/80"
     >
       <span>Fuente: {name}</span>
       {extractedAt ? (

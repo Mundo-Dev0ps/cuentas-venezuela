@@ -28,7 +28,7 @@ export default async function IndicadoresPage() {
         <div className="mt-8 space-y-10">
           {Object.entries(grouped).map(([category, items]) => (
             <section key={category}>
-              <h2 className="text-sm font-semibold uppercase tracking-wider text-orange-400">
+              <h2 className="text-sm font-semibold uppercase tracking-widest text-orange-400">
                 {category}
               </h2>
               <div className="mt-3 overflow-x-auto rounded-xl border border-slate-700/40">

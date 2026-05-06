@@ -69,9 +69,9 @@ export function SiteHeader() {
                   href={item.href}
                   onClick={() => setOpen(false)}
                   className={cn(
-                    "block rounded-md px-3 py-2.5 text-sm text-slate-200 hover:bg-slate-800",
+                    "block rounded-md px-3 py-2.5 text-sm text-slate-200 hover:bg-slate-800/80",
                     isActive(item.href) &&
-                      "bg-orange-900/30 font-semibold text-orange-500",
+                      "bg-orange-900/30 font-semibold text-orange-400",
                   )}
                 >
                   {item.label}

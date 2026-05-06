@@ -123,7 +123,7 @@ export default async function HomePage() {
                 </span>
                 <Link
                   href={`/datos-chile/fuentes`}
-                  className="text-xs text-orange-400 hover:underline"
+                  className="text-xs text-orange-400 hover:text-orange-300 hover:underline"
                 >
                   ver →
                 </Link>

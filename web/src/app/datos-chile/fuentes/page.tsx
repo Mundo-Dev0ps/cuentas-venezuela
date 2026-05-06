@@ -52,7 +52,7 @@ export default async function FuentesPage() {
                 </span>
                 <Link
                   href={`/datos-chile/fuentes/${s.slug}`}
-                  className="text-orange-400 hover:underline"
+                  className="text-orange-400 hover:text-orange-300 hover:underline"
                 >
                   Ver detalle →
                 </Link>
