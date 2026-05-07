@@ -2,7 +2,7 @@
 
 import sys
 
-from pipelines import comparativa, extranjeria, ine, sii, sp
+from pipelines import comparativa, extranjeria, ine, obras, sii, sp
 
 PIPELINES = {
     "extranjeria": extranjeria.run,
@@ -10,6 +10,7 @@ PIPELINES = {
     "sp": sp.run,
     "sii": sii.run,
     "comparativa": comparativa.run,
+    "obras": obras.main,
 }
 
 
