@@ -4,8 +4,10 @@ import { cors } from "hono/cors";
 import { logger } from "hono/logger";
 import { eq, sql } from "drizzle-orm";
 import { randomUUID } from "node:crypto";
+import { z } from "zod";
 import { db, schema } from "./db/client.js";
 import { duckdb } from "./duckdb/client.js";
+import { rateLimit } from "./lib/rate-limit.js";
 
 const app = new Hono();
 
@@ -309,27 +311,53 @@ app.get("/api/obras/:id", async (c) => {
   return c.json(rowToObra(row));
 });
 
-app.post("/api/reportes", async (c) => {
-  let body: any;
+// Strict input shape. Honeypot field 'website' must be empty (bots fill it).
+const ReportSchema = z.object({
+  obra_id: z.string().min(1).max(64).optional(),
+  descripcion: z.string().min(10).max(4000),
+  contacto: z
+    .string()
+    .max(254)
+    .email()
+    .optional()
+    .or(z.literal("").transform(() => undefined)),
+  evidencia_url: z
+    .string()
+    .max(2048)
+    .url()
+    .optional()
+    .or(z.literal("").transform(() => undefined)),
+  website: z.string().max(0).optional().default(""), // honeypot
+});
+
+const reportLimiter = rateLimit({ limit: 5, windowMs: 10 * 60 * 1000 }); // 5 reports / 10 min / IP
+
+app.post("/api/reportes", reportLimiter, async (c) => {
+  let body: unknown;
   try {
     body = await c.req.json();
   } catch {
     return c.json({ error: "invalid json" }, 400);
   }
-  const descripcion = String(body?.descripcion ?? "").trim();
-  if (descripcion.length < 10) {
+  const parsed = ReportSchema.safeParse(body);
+  if (!parsed.success) {
     return c.json(
-      { error: "descripcion debe tener al menos 10 caracteres" },
+      { error: "invalid", details: parsed.error.flatten() },
       400,
     );
   }
+  // Honeypot tripped — silently 201 so bots don't learn.
+  if (parsed.data.website && parsed.data.website.length > 0) {
+    return c.json({ id: randomUUID(), status: "pending" }, 201);
+  }
+
   const id = randomUUID();
   await db.insert(schema.reportesCiudadanos).values({
     id,
-    obraId: body?.obra_id ?? null,
-    descripcion,
-    contacto: body?.contacto ?? null,
-    evidenciaUrl: body?.evidencia_url ?? null,
+    obraId: parsed.data.obra_id ?? null,
+    descripcion: parsed.data.descripcion,
+    contacto: parsed.data.contacto ?? null,
+    evidenciaUrl: parsed.data.evidencia_url ?? null,
   });
   return c.json({ id, status: "pending" }, 201);
 });
