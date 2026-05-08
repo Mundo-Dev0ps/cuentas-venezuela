@@ -10,6 +10,13 @@ import "maplibre-gl/dist/maplibre-gl.css";
 
 const ROUTER_BASENAME = "/mapa-del-olvido";
 
+function resolveBasename(): string {
+  if (typeof window === "undefined") return ROUTER_BASENAME;
+  return window.location.pathname.startsWith(ROUTER_BASENAME)
+    ? ROUTER_BASENAME
+    : "";
+}
+
 /**
  * MapaRoot mounts the original mapa-olvido SPA inside a Next.js client
  * component. The internal BrowserRouter handles sub-routes
@@ -19,7 +26,7 @@ const ROUTER_BASENAME = "/mapa-del-olvido";
  */
 export default function MapaRoot() {
   return (
-    <BrowserRouter basename={ROUTER_BASENAME}>
+    <BrowserRouter basename={resolveBasename()}>
       <Routes>
         <Route path="/" element={<App />} />
         <Route path="/obra/:id" element={<App />} />

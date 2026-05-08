@@ -20,6 +20,8 @@ export interface SectorRow {
 }
 
 export function SectorPieChart({ data }: { data: SectorRow[] }) {
+  const total = data.reduce((a, r) => a + r.cotizantes, 0);
+
   return (
     <ResponsiveContainer width="100%" height={360}>
       <PieChart>
@@ -46,7 +48,10 @@ export function SectorPieChart({ data }: { data: SectorRow[] }) {
             fontSize: 12,
           }}
           itemStyle={{ color: "#e2e8f0" }}
-          formatter={(v: number) => v.toLocaleString("es-CL")}
+          formatter={(v: number) => {
+            const pct = total > 0 ? ((v / total) * 100).toFixed(1) : "0.0";
+            return `${v.toLocaleString("es-CL")} (${pct}%)`;
+          }}
         />
         <Legend wrapperStyle={{ color: "#cbd5e1", fontSize: 12 }} />
       </PieChart>

@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, Globe2 } from "lucide-react";
 import { Card, CardDescription, CardTitle } from "@/components/card";
 import { Stat } from "@/components/stat";
 import { SourcePill } from "@/components/source-pill";
@@ -37,11 +37,12 @@ export default async function ComparativaPage() {
     <main className="mx-auto max-w-6xl px-6 py-12">
       <Link
         href="/datos-chile/dashboards"
-        className="inline-flex items-center gap-1 text-sm text-slate-400 hover:text-slate-100"
+        className="inline-flex min-h-11 min-w-11 items-center gap-1 -ml-1 px-1 text-sm text-slate-400 hover:text-slate-100"
       >
         <ArrowLeft className="h-4 w-4" /> Dashboards
       </Link>
-      <h1 className="mt-4 text-3xl sm:text-4xl font-bold tracking-tight">
+      <h1 className="mt-4 flex items-center gap-3 text-3xl sm:text-4xl font-bold tracking-tight">
+        <Globe2 className="h-7 w-7 text-cyan-300" aria-hidden />
         Comparativa por nacionalidad
       </h1>
       <p className="mt-2 max-w-2xl text-slate-300">
@@ -85,23 +86,24 @@ export default async function ComparativaPage() {
 
           <Reveal className="mt-10">
             <Card>
-              <div className="flex items-baseline justify-between">
-                <div>
-                  <CardTitle>Stock legal por nacionalidad</CardTitle>
-                  <CardDescription>
-                    Serie {years.at(0)}–{years.at(-1)}. Permanencias vigentes
-                    al cierre de cada año.
-                  </CardDescription>
-                </div>
-                <SourcePill
-                  name="SERMIG (estimado)"
-                  url="https://serviciomigraciones.cl"
-                />
+              <div>
+                <CardTitle>Stock legal por nacionalidad</CardTitle>
+                <CardDescription>
+                  Serie {years.at(0)}–{years.at(-1)}. Permanencias vigentes
+                  al cierre de cada año.
+                </CardDescription>
               </div>
               <div className="mt-6">
                 <ComparativaChart
                   data={chartData}
                   nationalities={nationalities}
+                />
+              </div>
+              <div className="mt-4 flex flex-wrap items-center gap-2 border-t border-slate-700/40 pt-3 text-xs text-slate-400">
+                <span>[1]</span>
+                <SourcePill
+                  name="SERMIG (estimado)"
+                  url="https://serviciomigraciones.cl"
                 />
               </div>
             </Card>

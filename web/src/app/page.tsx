@@ -19,13 +19,30 @@ export default function HomePage() {
           venezolana en Chile. Auditables, comparables y citados desde fuentes
           oficiales.
         </p>
+        <div className="flex flex-wrap gap-3">
+          <Link
+            href="/mapa-del-olvido"
+            className="inline-flex min-h-11 items-center gap-1 rounded-md bg-cyan-500 px-4 py-2 text-sm font-semibold text-slate-950 transition hover:bg-cyan-400"
+          >
+            Explorar el Mapa →
+          </Link>
+          <Link
+            href="/datos-chile/dashboards"
+            className="inline-flex min-h-11 items-center gap-1 rounded-md border border-cyan-400 px-4 py-2 text-sm font-semibold text-cyan-300 transition hover:bg-cyan-400/10"
+          >
+            Ver dashboards →
+          </Link>
+        </div>
       </section>
 
       <section className="grid gap-6 md:grid-cols-2">
         <Link
           href="/mapa-del-olvido"
-          className="group rounded-xl border border-slate-700/40 bg-slate-900/80 p-8 transition hover:border-cyan-400/60 hover:shadow-lg"
+          className="group relative rounded-xl border border-slate-700/40 border-l-[3px] border-l-cyan-400 bg-slate-900/80 p-8 transition hover:border-cyan-400/60 hover:shadow-lg"
         >
+          <span className="absolute right-4 top-4 rounded-full border border-cyan-400/40 bg-cyan-400/10 px-2 py-0.5 text-[0.65rem] font-semibold uppercase tracking-wider text-cyan-300">
+            Destacado
+          </span>
           <div className="mb-3 flex items-center gap-2">
             <Map className="h-5 w-5 text-orange-400" />
             <h2 className="text-2xl font-semibold">Mapa del Olvido</h2>

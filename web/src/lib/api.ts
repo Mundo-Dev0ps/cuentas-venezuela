@@ -1,11 +1,11 @@
 // Server-side (RSC, Route Handlers) uses internal docker hostname.
-// Browser uses host-mapped port via NEXT_PUBLIC_API_URL.
+// Browser uses same-origin via Next rewrite (/api/* → API) to satisfy CSP.
 const API_URL =
   typeof window === "undefined"
     ? (process.env.INTERNAL_API_URL ??
         process.env.NEXT_PUBLIC_API_URL ??
         "http://api:8000")
-    : (process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8100");
+    : "";
 
 export interface Source {
   id: number;
