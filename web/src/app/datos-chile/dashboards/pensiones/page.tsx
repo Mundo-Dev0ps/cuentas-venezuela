@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, PiggyBank } from "lucide-react";
 import { Card, CardDescription, CardTitle } from "@/components/card";
 import { Stat } from "@/components/stat";
 import { SourcePill } from "@/components/source-pill";
@@ -19,11 +19,14 @@ export default async function PensionesPage() {
     <main className="mx-auto max-w-6xl px-6 py-12">
       <Link
         href="/datos-chile/dashboards"
-        className="inline-flex items-center gap-1 text-sm text-slate-400 hover:text-slate-100"
+        className="inline-flex min-h-11 min-w-11 items-center gap-1 -ml-1 px-1 text-sm text-slate-400 hover:text-slate-100"
       >
         <ArrowLeft className="h-4 w-4" /> Dashboards
       </Link>
-      <h1 className="mt-4 text-3xl sm:text-4xl font-bold tracking-tight">Pensiones</h1>
+      <h1 className="mt-4 flex items-center gap-3 text-3xl sm:text-4xl font-bold tracking-tight">
+        <PiggyBank className="h-7 w-7 text-cyan-300" aria-hidden />
+        Pensiones
+      </h1>
       <p className="mt-2 max-w-2xl text-slate-300">
         Cotizantes activos en el sistema de AFP, distribuidos por sector
         económico.
@@ -61,19 +64,13 @@ export default async function PensionesPage() {
 
           <Reveal className="mt-10">
             <Card>
-              <div className="flex items-baseline justify-between">
-                <div>
-                  <CardTitle>
-                    Distribución por sector · {latestYear}
-                  </CardTitle>
-                  <CardDescription>
-                    Cotizantes activos por rama de actividad económica.
-                  </CardDescription>
-                </div>
-                <SourcePill
-                  name="Superintendencia de Pensiones"
-                  url="https://www.spensiones.cl"
-                />
+              <div>
+                <CardTitle>
+                  Distribución por sector · {latestYear}
+                </CardTitle>
+                <CardDescription>
+                  Cotizantes activos por rama de actividad económica.
+                </CardDescription>
               </div>
               <div className="mt-6">
                 <SectorPieChart
@@ -81,6 +78,13 @@ export default async function PensionesPage() {
                     sector: r.sector,
                     cotizantes: r.cotizantes,
                   }))}
+                />
+              </div>
+              <div className="mt-4 flex flex-wrap items-center gap-2 border-t border-slate-700/40 pt-3 text-xs text-slate-400">
+                <span>[1]</span>
+                <SourcePill
+                  name="Superintendencia de Pensiones"
+                  url="https://www.spensiones.cl"
                 />
               </div>
             </Card>

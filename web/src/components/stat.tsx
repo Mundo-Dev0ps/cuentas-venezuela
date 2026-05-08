@@ -24,6 +24,13 @@ interface StatProps {
   className?: string;
   /** Animation duration in ms. */
   duration?: number;
+  /**
+   * Color tone for the value:
+   *  - "auto" (default): teal for neutral numerics, orange when prefix is "+"/"-"
+   *  - "accent": always orange (use for highlighted/featured stats)
+   *  - "neutral": always teal
+   */
+  tone?: "auto" | "accent" | "neutral";
 }
 
 export function Stat({
@@ -38,6 +45,7 @@ export function Stat({
   hint,
   className,
   duration = 800,
+  tone = "auto",
 }: StatProps) {
   const { ref, inView } = useInView<HTMLDivElement>({ threshold: 0.3 });
   const animated = useCountUp(numericValue ?? 0, duration, inView);
@@ -56,6 +64,16 @@ export function Stat({
     display = value ?? "";
   }
 
+  const isGrowth = prefix === "+" || prefix === "-";
+  const valueColor =
+    tone === "accent"
+      ? "text-orange-400"
+      : tone === "neutral"
+        ? "text-cyan-300"
+        : isGrowth
+          ? "text-orange-400"
+          : "text-cyan-300";
+
   return (
     <div
       ref={ref}
@@ -69,13 +87,16 @@ export function Stat({
       </div>
       <div
         className={cn(
-          "mt-2 font-bold tracking-tight text-orange-400 break-words leading-tight",
+          "mt-2 font-bold tracking-tight leading-tight overflow-hidden",
+          valueColor,
           numericValue !== undefined
-            ? "text-3xl font-mono"
-            : "text-xl sm:text-2xl",
+            ? "text-2xl sm:text-3xl font-mono tabular-nums"
+            : "text-lg sm:text-xl",
         )}
       >
-        {display}
+        <span className="block whitespace-nowrap truncate" title={display}>
+          {display}
+        </span>
       </div>
       {hint ? (
         <div className="mt-1 text-xs text-slate-400">{hint}</div>

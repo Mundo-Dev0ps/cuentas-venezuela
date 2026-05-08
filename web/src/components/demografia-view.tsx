@@ -200,31 +200,29 @@ export function DemografiaView({ rows }: { rows: StockRegionRow[] }) {
 
       <Reveal className="mt-10 grid gap-4 lg:grid-cols-2">
         <Card>
-          <div className="flex items-baseline justify-between">
-            <div>
-              <CardTitle>
-                Serie nacional {years.at(0)}-{years.at(-1)}
-              </CardTitle>
-              <CardDescription>
-                Stock legal vs estimado total (legal × 1.5).
-              </CardDescription>
-            </div>
-            <SourcePill name="SERMIG + SJM" url="https://serviciomigraciones.cl" />
+          <div>
+            <CardTitle>
+              Serie nacional {years.at(0)}-{years.at(-1)}
+            </CardTitle>
+            <CardDescription>
+              Stock legal vs estimado total (legal × 1.5).
+            </CardDescription>
           </div>
           <div className="mt-6">
             <StockChart data={stockByYear} />
           </div>
+          <div className="mt-4 flex flex-wrap items-center gap-2 border-t border-slate-700/40 pt-3 text-xs text-slate-400">
+            <span>[1]</span>
+            <SourcePill name="SERMIG + SJM" url="https://serviciomigraciones.cl" />
+          </div>
         </Card>
 
         <Card>
-          <div className="flex items-baseline justify-between">
-            <div>
-              <CardTitle>Distribución regional {year}</CardTitle>
-              <CardDescription>
-                Stock legal vigente por región seleccionada.
-              </CardDescription>
-            </div>
-            <SourcePill name="SERMIG" url="https://serviciomigraciones.cl" />
+          <div>
+            <CardTitle>Distribución regional {year}</CardTitle>
+            <CardDescription>
+              Stock legal vigente por región seleccionada.
+            </CardDescription>
           </div>
           <div className="mt-6">
             <RegionBarChart
@@ -234,22 +232,20 @@ export function DemografiaView({ rows }: { rows: StockRegionRow[] }) {
               }))}
             />
           </div>
+          <div className="mt-4 flex flex-wrap items-center gap-2 border-t border-slate-700/40 pt-3 text-xs text-slate-400">
+            <span>[2]</span>
+            <SourcePill name="SERMIG" url="https://serviciomigraciones.cl" />
+          </div>
         </Card>
       </Reveal>
 
       <Reveal className="mt-8">
         <Card>
-          <div className="flex items-baseline justify-between">
-            <div>
-              <CardTitle>Mapa nacional · {year}</CardTitle>
-              <CardDescription>
-                Tamaño del círculo proporcional al stock legal por región.
-              </CardDescription>
-            </div>
-            <SourcePill
-              name="OpenStreetMap + SERMIG"
-              url="https://www.openstreetmap.org/copyright"
-            />
+          <div>
+            <CardTitle>Mapa nacional · {year}</CardTitle>
+            <CardDescription>
+              Tamaño del círculo proporcional al stock legal por región.
+            </CardDescription>
           </div>
           <div className="mt-6">
             <ChileMapLoader
@@ -257,6 +253,13 @@ export function DemografiaView({ rows }: { rows: StockRegionRow[] }) {
                 region_code: r.region_code,
                 stock_legal: r.stock_legal,
               }))}
+            />
+          </div>
+          <div className="mt-4 flex flex-wrap items-center gap-2 border-t border-slate-700/40 pt-3 text-xs text-slate-400">
+            <span>[3]</span>
+            <SourcePill
+              name="OpenStreetMap + SERMIG"
+              url="https://www.openstreetmap.org/copyright"
             />
           </div>
         </Card>

@@ -1,6 +1,5 @@
 const W3F_KEY = process.env.NEXT_PUBLIC_WEB3FORMS_KEY as string | undefined;
 const W3F_URL = 'https://api.web3forms.com/submit';
-const API_BASE = (process.env.NEXT_PUBLIC_API_URL ?? "").replace(/\/$/, "");
 
 export interface ReportInput {
   tipo: string;
@@ -38,7 +37,7 @@ export async function submitReport(input: ReportInput): Promise<string> {
     `Mensaje: ${input.mensaje.slice(0, 4000)}`,
   ].join('\n');
 
-  const res = await fetch(`${API_BASE}/api/reportes`, {
+  const res = await fetch("/api/reportes", {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({

@@ -33,7 +33,7 @@ export function ComparativaChart({
 }) {
   return (
     <ResponsiveContainer width="100%" height={380}>
-      <LineChart data={data} margin={{ top: 8, right: 16, left: 0, bottom: 0 }}>
+      <LineChart data={data} margin={{ top: 8, right: 16, left: 0, bottom: 24 }}>
         <CartesianGrid stroke="#334155" strokeDasharray="3 3" />
         <XAxis dataKey="year" stroke="#94a3b8" />
         <YAxis
@@ -53,7 +53,15 @@ export function ComparativaChart({
           formatter={(v: number) => v.toLocaleString("es-CL")}
           labelFormatter={(l) => `Año ${l}`}
         />
-        <Legend wrapperStyle={{ color: "#cbd5e1", fontSize: 12 }} />
+        <Legend
+          verticalAlign="bottom"
+          align="center"
+          wrapperStyle={{
+            color: "#cbd5e1",
+            fontSize: 12,
+            paddingTop: 8,
+          }}
+        />
         {nationalities.map((nat) => (
           <Line
             key={nat}
