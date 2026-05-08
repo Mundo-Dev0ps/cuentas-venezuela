@@ -16,6 +16,7 @@ import { HeroStats } from './components/HeroStats/HeroStats';
 import { FiltersBar } from './components/FiltersBar/FiltersBar';
 import { Onboarding } from './components/Onboarding/Onboarding';
 import { MapSkeleton } from './components/UI/Skeleton';
+import { RotateHint } from './components/UI/RotateHint';
 import { MOCK_OBRAS } from './mocks/obras.mock';
 import type { ObraPublica, Estatus } from './types/obra';
 import type { PickingInfo } from '@deck.gl/core';
@@ -100,6 +101,7 @@ export default function App() {
     return !window.localStorage.getItem('mdo-onboarded');
   });
   const [choroplethMode, setChoroplethMode] = useState(false);
+  const [mobileView, setMobileView] = useState<'data' | 'map'>('data');
   const pulseExpanded = useMapPulse();
 
   useSeoHome();
@@ -172,30 +174,31 @@ export default function App() {
     setActiveEstatus(new Set());
   }, []);
 
-  const MAP_BASE = '/mapa-del-olvido';
-
+  // Paths are relative to the BrowserRouter basename ("/mapa-del-olvido" when
+  // mounted under that prefix, "" otherwise). react-router auto-prefixes the
+  // basename, so we must NOT include it manually here.
   const handleStateClick = useCallback((name: string | null) => {
     setSelectedState(name);
     setSelectedObra(null);
-    if (name) navigate(`${MAP_BASE}/estado/${toSlug(name)}${location.search}`);
-    else navigate(`${MAP_BASE}${location.search}`);
+    if (name) navigate(`/estado/${toSlug(name)}${location.search}`);
+    else navigate(`/${location.search}`);
   }, [navigate, location.search]);
 
   const handleSelectObra = useCallback((o: ObraPublica) => {
     setSelectedObra(o);
-    navigate(`${MAP_BASE}/obra/${o.id}${location.search}`);
+    navigate(`/obra/${o.id}${location.search}`);
   }, [navigate, location.search]);
 
   const handleCloseObra = useCallback(() => {
     setSelectedObra(null);
-    if (selectedState) navigate(`${MAP_BASE}/estado/${toSlug(selectedState)}${location.search}`);
-    else navigate(`${MAP_BASE}${location.search}`);
+    if (selectedState) navigate(`/estado/${toSlug(selectedState)}${location.search}`);
+    else navigate(`/${location.search}`);
   }, [navigate, selectedState, location.search]);
 
   const handleCloseState = useCallback(() => {
     setSelectedState(null);
     setSelectedObra(null);
-    navigate(`${MAP_BASE}${location.search}`);
+    navigate(`/${location.search}`);
   }, [navigate, location.search]);
 
   const closeOnboarding = useCallback(() => {
@@ -281,7 +284,11 @@ export default function App() {
   }, []);
 
   return (
-    <div className="relative h-screen w-screen overflow-hidden" style={{ backgroundColor: '#06102a' }}>
+    <div
+      className="relative h-screen w-screen overflow-hidden"
+      data-mdo-mobile-view={mobileView}
+      style={{ backgroundColor: '#06102a' }}
+    >
       <MapContainer
         layers={layers}
         onZoomChange={handleZoomChange}
@@ -338,6 +345,13 @@ export default function App() {
       {loading && <MapSkeleton />}
 
       {!isEmbed && showOnboarding && <Onboarding onClose={closeOnboarding} />}
+
+      {!isEmbed && (
+        <RotateHint
+          view={mobileView}
+          onToggle={() => setMobileView(v => (v === 'map' ? 'data' : 'map'))}
+        />
+      )}
     </div>
   );
 }

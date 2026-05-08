@@ -22,7 +22,7 @@ export function PageLayout({ title, eyebrow, children }: PageLayoutProps) {
     >
       <header className="border-b border-slate-700/40 px-4 sm:px-8 py-4 backdrop-blur-md bg-slate-900/80 sticky top-0 z-10">
         <div className="max-w-3xl mx-auto flex items-center justify-between">
-          <Link to="/mapa-del-olvido" className="text-orange-400 hover:text-orange-300 text-sm font-semibold flex items-center gap-2">
+          <Link to="/" className="text-orange-400 hover:text-orange-300 text-sm font-semibold flex items-center gap-2">
             <span>←</span>
             <span>Mapa del Olvido</span>
           </Link>
@@ -67,7 +67,7 @@ export function PageLayout({ title, eyebrow, children }: PageLayoutProps) {
               <span>☕</span>
               <span>Apoyar</span>
             </a>
-            <Link to="/mapa-del-olvido" className="text-orange-400 hover:text-orange-300">Volver al mapa →</Link>
+            <Link to="/" className="text-orange-400 hover:text-orange-300">Volver al mapa →</Link>
           </div>
         </div>
       </footer>

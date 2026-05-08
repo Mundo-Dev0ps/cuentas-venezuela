@@ -195,7 +195,7 @@ function Hero({ animTotal, animObras, animParalizadas, animEstados }: HeroProps)
 
         <div className="flex flex-col sm:flex-row gap-3 justify-center">
           <Link
-            to="/mapa-del-olvido"
+            to="/"
             className="bg-orange-500 hover:bg-orange-400 text-slate-900 font-bold py-3 px-7 rounded-lg transition-colors text-base sm:text-lg"
           >
             Explorar el mapa →
