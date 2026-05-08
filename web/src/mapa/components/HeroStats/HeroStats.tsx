@@ -29,7 +29,7 @@ export function HeroStats({ obras, selectedState, onClearState }: HeroStatsProps
   };
 
   return (
-    <div className="absolute top-3 left-1/2 -translate-x-1/2 z-20 max-w-[calc(100vw-1rem)]">
+    <div className="mdo-overlay absolute top-3 left-1/2 -translate-x-1/2 z-20 max-w-[calc(100vw-1rem)]">
       <div className="backdrop-blur-md bg-slate-900/80 border border-slate-700/50 rounded-xl px-3 sm:px-5 py-2 sm:py-3 shadow-xl animate-ui-slide-down">
         <div className="flex items-center gap-3 sm:gap-6">
           <div className="text-center min-w-0">

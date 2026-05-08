@@ -25,7 +25,7 @@ const SECURITY_HEADERS = [
       "style-src 'self' 'unsafe-inline'",
       "img-src 'self' data: blob: https:",
       "font-src 'self' data:",
-      "connect-src 'self' https://*.cartocdn.com https://basemaps.cartocdn.com https://nominatim.openstreetmap.org https://plausible.io https://api.web3forms.com",
+      "connect-src 'self' data: blob: https://*.cartocdn.com https://basemaps.cartocdn.com https://nominatim.openstreetmap.org https://plausible.io https://api.web3forms.com",
       "worker-src 'self' blob:",
       "frame-ancestors 'self'",
       "base-uri 'self'",
