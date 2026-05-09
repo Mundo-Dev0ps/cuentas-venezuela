@@ -9,6 +9,7 @@ services:
       - NEXT_PUBLIC_API_URL=${NEXT_PUBLIC_API_URL:-}
       - INTERNAL_API_URL=http://api:8000
       - NODE_ENV=development
+      - NEXT_PUBLIC_KOFI_URL=${NEXT_PUBLIC_KOFI_URL:-https://ko-fi.com/donjonny}
     volumes:
       - ./web:/app
       - web_node_modules:/app/node_modules
@@ -32,6 +33,7 @@ services:
       - S3_SECRET=${S3_SECRET}
       - S3_FORCE_PATH_STYLE=${S3_FORCE_PATH_STYLE}
       - API_LOG_LEVEL=${API_LOG_LEVEL:-info}
+      - KOFI_VERIFICATION_TOKEN=${KOFI_VERIFICATION_TOKEN:-}
     volumes:
       - ./api:/app
       - api_node_modules:/app/node_modules

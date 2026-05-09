@@ -158,3 +158,21 @@ CREATE TABLE IF NOT EXISTS migracion.acnur_ve (
     PRIMARY KEY (year, coa_iso3)
 );
 CREATE INDEX IF NOT EXISTS idx_acnur_year ON migracion.acnur_ve(year);
+
+-- Ko-fi supporters: populated by webhook from ko-fi.com on each donation.
+-- Only `is_public = TRUE` rows are exposed via /api/supporters.
+CREATE TABLE IF NOT EXISTS supporters (
+    id           UUID PRIMARY KEY,
+    kofi_txn_id  TEXT UNIQUE,                  -- dedupe webhook retries
+    display_name TEXT NOT NULL,
+    type         TEXT NOT NULL DEFAULT 'Donation', -- Donation, Subscription, Shop Order, Commission
+    amount       NUMERIC,
+    currency     TEXT,
+    message      TEXT,
+    is_public    BOOLEAN NOT NULL DEFAULT TRUE,
+    is_first     BOOLEAN NOT NULL DEFAULT FALSE,
+    raw          JSONB,                        -- full payload for forensics
+    created_at   TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+CREATE INDEX IF NOT EXISTS idx_supporters_created
+    ON supporters(created_at DESC);

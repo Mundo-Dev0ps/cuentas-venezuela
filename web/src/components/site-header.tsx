@@ -5,6 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { BarChart3, Menu, X } from "lucide-react";
 import { cn } from "@/lib/cn";
+import { KofiButton } from "@/components/kofi-button";
 
 const NAV = [
   { href: "/", label: "Inicio" },
@@ -61,6 +62,7 @@ export function SiteHeader() {
               {item.label}
             </Link>
           ))}
+          <KofiButton variant="header" source="site-header" />
         </nav>
 
         <button
@@ -91,6 +93,12 @@ export function SiteHeader() {
               {item.label}
             </Link>
           ))}
+          <Link
+            href="/apoyar"
+            className="block py-3 text-base text-pink-300 hover:text-pink-200"
+          >
+            ☕ Apoyar
+          </Link>
         </nav>
       ) : null}
     </header>
