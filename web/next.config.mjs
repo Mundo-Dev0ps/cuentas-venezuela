@@ -27,6 +27,7 @@ const SECURITY_HEADERS = [
       "font-src 'self' data:",
       "connect-src 'self' data: blob: https://*.cartocdn.com https://basemaps.cartocdn.com https://nominatim.openstreetmap.org https://plausible.io https://api.web3forms.com",
       "worker-src 'self' blob:",
+      "frame-src 'self' https://ko-fi.com https://*.ko-fi.com",
       "frame-ancestors 'self'",
       "base-uri 'self'",
       "form-action 'self'",

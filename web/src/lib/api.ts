@@ -190,6 +190,30 @@ export interface VeMacroRow {
   value: number | null;
 }
 
+export interface Supporter {
+  name: string;
+  amount: number | null;
+  currency: string | null;
+  message: string | null;
+  type: string;
+  at: string;
+}
+
+export async function getSupporters(limit = 50): Promise<Supporter[]> {
+  // Note: this endpoint lives at /api/supporters (Hono /api/* path), so on the
+  // browser it would resolve via the Next /api/:path* rewrite. From RSC we
+  // use the direct URL like every other helper here.
+  const path = `/api/supporters?limit=${limit}`;
+  try {
+    const res = await fetch(`${API_URL}${path}`, { cache: "no-store" });
+    if (!res.ok) return [];
+    const data = (await res.json()) as { items: Supporter[] };
+    return data.items;
+  } catch {
+    return [];
+  }
+}
+
 export async function getVeMacroIndicators(opts: {
   country?: string;
   code?: string;

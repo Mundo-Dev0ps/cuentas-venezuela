@@ -353,6 +353,92 @@ app.get("/api/obras/:id", async (c) => {
   return c.json(rowToObra(row));
 });
 
+// ===== Ko-fi: supporters =====
+
+interface KofiPayload {
+  verification_token: string;
+  message_id: string;
+  timestamp: string;
+  type: string; // "Donation" | "Subscription" | "Shop Order" | "Commission"
+  is_public: boolean;
+  from_name: string;
+  message: string | null;
+  amount: string;
+  currency: string;
+  is_first_subscription_payment?: boolean;
+}
+
+app.post("/api/kofi/webhook", async (c) => {
+  const expected = process.env.KOFI_VERIFICATION_TOKEN;
+  if (!expected) {
+    return c.json({ error: "kofi webhook not configured" }, 503);
+  }
+  // Ko-fi sends application/x-www-form-urlencoded with a single `data` field
+  // containing the JSON payload as a string.
+  let payload: KofiPayload;
+  try {
+    const form = await c.req.parseBody();
+    const raw = typeof form.data === "string" ? form.data : "";
+    payload = JSON.parse(raw) as KofiPayload;
+  } catch (e) {
+    return c.json({ error: "invalid payload", detail: (e as Error).message }, 400);
+  }
+  if (payload.verification_token !== expected) {
+    return c.json({ error: "invalid token" }, 401);
+  }
+
+  const id = randomUUID();
+  const amount = Number(payload.amount);
+  try {
+    await db.execute(sql`
+      INSERT INTO supporters
+        (id, kofi_txn_id, display_name, type, amount, currency, message,
+         is_public, is_first, raw)
+      VALUES
+        (${id}, ${payload.message_id},
+         ${payload.from_name || "Anónimo"}, ${payload.type},
+         ${Number.isFinite(amount) ? amount : null}, ${payload.currency},
+         ${payload.is_public ? (payload.message ?? null) : null},
+         ${payload.is_public}, ${payload.is_first_subscription_payment ?? false},
+         ${JSON.stringify(payload)})
+      ON CONFLICT (kofi_txn_id) DO NOTHING
+    `);
+  } catch (e) {
+    return c.json({ error: "db", detail: (e as Error).message }, 500);
+  }
+  return c.json({ ok: true });
+});
+
+app.get("/api/supporters", async (c) => {
+  const limit = Math.min(Number(c.req.query("limit") ?? 50), 200);
+  type Row = {
+    display_name: string;
+    amount: number | null;
+    currency: string | null;
+    message: string | null;
+    type: string;
+    created_at: string;
+  };
+  const rows = await db.execute(sql`
+    SELECT display_name, amount, currency, message, type, created_at
+    FROM supporters
+    WHERE is_public = TRUE
+    ORDER BY created_at DESC
+    LIMIT ${limit}
+  `);
+  c.header("Cache-Control", "public, max-age=60, s-maxage=300");
+  return c.json({
+    items: (rows as unknown as Row[]).map((r) => ({
+      name: r.display_name,
+      amount: r.amount == null ? null : Number(r.amount),
+      currency: r.currency,
+      message: r.message,
+      type: r.type,
+      at: r.created_at,
+    })),
+  });
+});
+
 // Strict input shape. Honeypot field 'website' must be empty (bots fill it).
 const ReportSchema = z.object({
   obra_id: z.string().min(1).max(64).optional(),
