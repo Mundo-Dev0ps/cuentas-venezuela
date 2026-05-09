@@ -1,5 +1,6 @@
 import { Coffee, Server, Database, Code, Heart } from "lucide-react";
 import { KofiButton } from "@/components/kofi-button";
+import { KofiFeed } from "@/components/kofi-feed";
 import { SupportersWall } from "@/components/supporters-wall";
 import { getSupporters } from "@/lib/api";
 
@@ -156,19 +157,12 @@ export default async function ApoyarPage() {
         </p>
       </section>
 
-      {/* Ko-fi embed */}
+      {/* Ko-fi embed (lazy-loaded behind click) */}
       <section className="mb-12">
         <h2 className="text-lg font-semibold text-slate-100 mb-4">
           Aportar directo
         </h2>
-        <div className="rounded-xl border border-slate-700/40 overflow-hidden bg-white">
-          <iframe
-            src={`${KOFI_URL}/?embedfeed`}
-            title="Ko-fi"
-            style={{ border: "none", width: "100%", minHeight: 600 }}
-            loading="lazy"
-          />
-        </div>
+        <KofiFeed url={KOFI_URL} height={600} />
         <p className="mt-2 text-xs text-slate-500 flex items-center gap-1">
           <Coffee className="h-3 w-3" aria-hidden />
           Pagos seguros vía Ko-fi (Stripe / PayPal). No guardamos tus datos de pago.
