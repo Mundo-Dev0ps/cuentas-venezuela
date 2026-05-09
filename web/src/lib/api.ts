@@ -182,6 +182,31 @@ export async function getAporteTributario(): Promise<AporteRow[]> {
   return res.items;
 }
 
+export interface FreedomHouseRow {
+  country: string;
+  year: number;
+  status: "F" | "PF" | "NF" | string | null;
+  prRating: number | null;
+  clRating: number | null;
+  prScore: number | null;
+  clScore: number | null;
+  total: number | null;
+}
+
+export async function getFreedomHouse(opts: {
+  country?: string;
+  from?: number;
+  to?: number;
+} = {}): Promise<FreedomHouseRow[]> {
+  const qs = new URLSearchParams();
+  if (opts.country) qs.set("country", opts.country);
+  if (opts.from != null) qs.set("from", String(opts.from));
+  if (opts.to != null) qs.set("to", String(opts.to));
+  const path = `/v1/ddhh/freedom-house${qs.size ? `?${qs.toString()}` : ""}`;
+  const res = await safeGet<{ items: FreedomHouseRow[] }>(path, { items: [] });
+  return res.items;
+}
+
 export interface VeMacroRow {
   country: string;
   code: string;
