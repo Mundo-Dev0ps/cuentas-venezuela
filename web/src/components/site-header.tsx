@@ -10,6 +10,7 @@ const NAV = [
   { href: "/", label: "Inicio" },
   { href: "/mapa-del-olvido", label: "Mapa del Olvido" },
   { href: "/datos-chile", label: "Datos Chile" },
+  { href: "/venezuela", label: "Venezuela" },
 ];
 
 export function SiteHeader() {

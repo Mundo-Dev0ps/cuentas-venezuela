@@ -103,3 +103,58 @@ CREATE TABLE IF NOT EXISTS reportes_ciudadanos (
     status        TEXT NOT NULL DEFAULT 'pending',
     created_at    TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
+
+-- ─────────────────────────────────────────────────────────────────────────────
+-- Cross-domain extension (added 2026-05): venezuela / migration / ddhh data.
+-- Each schema namespaces its own facts + dims. Keep `public` for legacy +
+-- shared dims (regions, comunas, sources, datasets, indicators, etl_runs).
+-- ─────────────────────────────────────────────────────────────────────────────
+CREATE SCHEMA IF NOT EXISTS chile;
+CREATE SCHEMA IF NOT EXISTS migracion;
+CREATE SCHEMA IF NOT EXISTS macro_ve;
+CREATE SCHEMA IF NOT EXISTS ddhh;
+
+-- World Bank indicators: long format (country × indicator × year).
+-- Source: api.worldbank.org/v2 (free, no auth).
+CREATE TABLE IF NOT EXISTS macro_ve.wb_indicators (
+    country_iso3   TEXT  NOT NULL,
+    indicator_code TEXT  NOT NULL,
+    indicator_name TEXT,
+    year           INT   NOT NULL,
+    value          DOUBLE PRECISION,
+    extracted_at   TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    PRIMARY KEY (country_iso3, indicator_code, year)
+);
+CREATE INDEX IF NOT EXISTS idx_wb_country_year
+    ON macro_ve.wb_indicators(country_iso3, year);
+CREATE INDEX IF NOT EXISTS idx_wb_indicator_year
+    ON macro_ve.wb_indicators(indicator_code, year);
+
+-- Freedom House: aggregated yearly score per country.
+-- Source: freedomhouse.org/sites/default/files/.../All_data_FIW_*.xlsx
+CREATE TABLE IF NOT EXISTS ddhh.freedom_house (
+    country_iso3 TEXT NOT NULL,
+    year         INT  NOT NULL,
+    status       TEXT,            -- F=Free, PF=Partly Free, NF=Not Free
+    pr_rating    NUMERIC,         -- political rights 1 (best) - 7 (worst)
+    cl_rating    NUMERIC,         -- civil liberties 1-7
+    pr_score     INT,             -- 0-40
+    cl_score     INT,             -- 0-60
+    total        INT,             -- 0-100
+    extracted_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    PRIMARY KEY (country_iso3, year)
+);
+
+-- ACNUR/UNHCR refugees + asylum seekers from Venezuela by country of asylum.
+-- Source: api.unhcr.org/population/v1/population/?coo_iso=VEN
+CREATE TABLE IF NOT EXISTS migracion.acnur_ve (
+    year           INT  NOT NULL,
+    coa_iso3       TEXT NOT NULL,           -- country of asylum
+    coa_name       TEXT,
+    refugees       BIGINT,
+    asylum_seekers BIGINT,
+    others_concern BIGINT,                  -- venezuelans displaced abroad
+    extracted_at   TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    PRIMARY KEY (year, coa_iso3)
+);
+CREATE INDEX IF NOT EXISTS idx_acnur_year ON migracion.acnur_ve(year);
