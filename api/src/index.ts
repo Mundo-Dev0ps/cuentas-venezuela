@@ -240,6 +240,53 @@ app.get("/v1/data/comparativa-nacionalidad", async (c) => {
   }
 });
 
+// Freedom House: yearly democracy/freedom scores per country.
+// Source: freedomhouse.org XLSX → ETL freedom_house.py → ddhh.freedom_house.
+app.get("/v1/ddhh/freedom-house", async (c) => {
+  try {
+    const country = c.req.query("country");
+    const yearFrom = c.req.query("from");
+    const yearTo = c.req.query("to");
+
+    type Row = {
+      country_iso3: string;
+      year: number;
+      status: string | null;
+      pr_rating: number | null;
+      cl_rating: number | null;
+      pr_score: number | null;
+      cl_score: number | null;
+      total: number | null;
+    };
+
+    const rows = await db.execute(sql`
+      SELECT country_iso3, year, status, pr_rating, cl_rating,
+             pr_score, cl_score, total
+      FROM ddhh.freedom_house
+      WHERE 1=1
+        ${country ? sql`AND country_iso3 = ${country}` : sql``}
+        ${yearFrom ? sql`AND year >= ${Number(yearFrom)}` : sql``}
+        ${yearTo ? sql`AND year <= ${Number(yearTo)}` : sql``}
+      ORDER BY country_iso3, year
+    `);
+
+    const items = (rows as unknown as Row[]).map((r) => ({
+      country: r.country_iso3,
+      year: r.year,
+      status: r.status,
+      prRating: r.pr_rating == null ? null : Number(r.pr_rating),
+      clRating: r.cl_rating == null ? null : Number(r.cl_rating),
+      prScore: r.pr_score,
+      clScore: r.cl_score,
+      total: r.total,
+    }));
+    c.header("Cache-Control", "public, max-age=300, s-maxage=3600");
+    return c.json({ items });
+  } catch (e) {
+    return c.json({ items: [], error: (e as Error).message }, 200);
+  }
+});
+
 // World Bank macro indicators for VE (and CHL comparator).
 // Source: api.worldbank.org/v2 → Postgres macro_ve.wb_indicators (ETL: ve_macro).
 app.get("/v1/ve-macro/indicators", async (c) => {

@@ -37,8 +37,8 @@ const SECTIONS = [
     icon: ShieldAlert,
     color: "text-orange-400",
     title: "Derechos humanos",
-    desc: "Libertad civil y política, prensa, presos políticos. Freedom House, V-Dem, Foro Penal.",
-    badge: "Próximamente",
+    desc: "Libertad civil y política según Freedom House (2013-2024) vs Chile y Uruguay.",
+    badge: "Disponible",
   },
 ];
 
