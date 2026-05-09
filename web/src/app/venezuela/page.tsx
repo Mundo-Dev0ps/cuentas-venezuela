@@ -1,5 +1,12 @@
 import Link from "next/link";
-import { TrendingDown, Activity, Users, ShieldAlert } from "lucide-react";
+import {
+  TrendingDown,
+  Activity,
+  Users,
+  ShieldAlert,
+  ShieldOff,
+  HeartPulse,
+} from "lucide-react";
 
 export const metadata = {
   title: "Venezuela — Cuentas Venezuela",
@@ -17,20 +24,28 @@ const SECTIONS = [
     badge: "Disponible",
   },
   {
-    href: "/venezuela/crisis-economica",
+    href: "/venezuela/economia",
     icon: Activity,
     color: "text-amber-400",
     title: "Crisis económica",
-    desc: "Caída del PIB, hiperinflación, salario USD, producción petrolera.",
-    badge: "Próximamente",
+    desc: "PIB, inflación, desempleo, deuda y comercio exterior 1998-2024.",
+    badge: "Disponible",
   },
   {
-    href: "/venezuela/diaspora",
-    icon: Users,
-    color: "text-cyan-400",
-    title: "Diáspora global",
-    desc: "Refugiados venezolanos por país de destino. Fuente: ACNUR.",
-    badge: "Próximamente",
+    href: "/venezuela/inseguridad",
+    icon: ShieldOff,
+    color: "text-rose-400",
+    title: "Inseguridad",
+    desc: "Tasa de homicidios por 100k habitantes según UNODC.",
+    badge: "Disponible",
+  },
+  {
+    href: "/venezuela/salud",
+    icon: HeartPulse,
+    color: "text-pink-400",
+    title: "Salud pública",
+    desc: "Esperanza de vida, mortalidad infantil/materna, médicos, gasto sanitario.",
+    badge: "Disponible",
   },
   {
     href: "/venezuela/ddhh",
@@ -38,6 +53,14 @@ const SECTIONS = [
     color: "text-orange-400",
     title: "Derechos humanos",
     desc: "Libertad civil y política según Freedom House (2013-2024) vs Chile y Uruguay.",
+    badge: "Disponible",
+  },
+  {
+    href: "/venezuela/diaspora",
+    icon: Users,
+    color: "text-cyan-400",
+    title: "Diáspora global",
+    desc: "Refugiados y solicitantes de asilo por país de destino. Fuente: ACNUR.",
     badge: "Disponible",
   },
 ];

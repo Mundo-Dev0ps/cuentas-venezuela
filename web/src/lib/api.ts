@@ -182,6 +182,32 @@ export async function getAporteTributario(): Promise<AporteRow[]> {
   return res.items;
 }
 
+export interface AcnurRow {
+  year: number;
+  country: string;
+  countryName: string | null;
+  refugees: number | null;
+  asylumSeekers: number | null;
+  othersConcern: number | null;
+  total: number;
+}
+
+export async function getAcnurVe(opts: {
+  year?: number;
+  from?: number;
+  to?: number;
+  country?: string;
+} = {}): Promise<AcnurRow[]> {
+  const qs = new URLSearchParams();
+  if (opts.year != null) qs.set("year", String(opts.year));
+  if (opts.from != null) qs.set("from", String(opts.from));
+  if (opts.to != null) qs.set("to", String(opts.to));
+  if (opts.country) qs.set("country", opts.country);
+  const path = `/v1/migracion/acnur-ve${qs.size ? `?${qs.toString()}` : ""}`;
+  const res = await safeGet<{ items: AcnurRow[] }>(path, { items: [] });
+  return res.items;
+}
+
 export interface FreedomHouseRow {
   country: string;
   year: number;

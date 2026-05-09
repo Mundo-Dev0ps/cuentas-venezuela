@@ -240,6 +240,55 @@ app.get("/v1/data/comparativa-nacionalidad", async (c) => {
   }
 });
 
+// ACNUR/UNHCR refugees + asylum seekers from Venezuela by country of asylum.
+// Source: api.unhcr.org → ETL acnur.py → migracion.acnur_ve.
+app.get("/v1/migracion/acnur-ve", async (c) => {
+  try {
+    const year = c.req.query("year");
+    const yearFrom = c.req.query("from");
+    const yearTo = c.req.query("to");
+    const country = c.req.query("country");
+
+    type Row = {
+      year: number;
+      coa_iso3: string;
+      coa_name: string | null;
+      refugees: number | null;
+      asylum_seekers: number | null;
+      others_concern: number | null;
+    };
+
+    const rows = await db.execute(sql`
+      SELECT year, coa_iso3, coa_name, refugees, asylum_seekers, others_concern
+      FROM migracion.acnur_ve
+      WHERE 1=1
+        ${year ? sql`AND year = ${Number(year)}` : sql``}
+        ${yearFrom ? sql`AND year >= ${Number(yearFrom)}` : sql``}
+        ${yearTo ? sql`AND year <= ${Number(yearTo)}` : sql``}
+        ${country ? sql`AND coa_iso3 = ${country}` : sql``}
+      ORDER BY year DESC,
+        (COALESCE(refugees,0) + COALESCE(asylum_seekers,0) + COALESCE(others_concern,0)) DESC
+    `);
+
+    const items = (rows as unknown as Row[]).map((r) => ({
+      year: r.year,
+      country: r.coa_iso3,
+      countryName: r.coa_name,
+      refugees: r.refugees == null ? null : Number(r.refugees),
+      asylumSeekers: r.asylum_seekers == null ? null : Number(r.asylum_seekers),
+      othersConcern: r.others_concern == null ? null : Number(r.others_concern),
+      total:
+        Number(r.refugees ?? 0) +
+        Number(r.asylum_seekers ?? 0) +
+        Number(r.others_concern ?? 0),
+    }));
+    c.header("Cache-Control", "public, max-age=300, s-maxage=3600");
+    return c.json({ items });
+  } catch (e) {
+    return c.json({ items: [], error: (e as Error).message }, 200);
+  }
+});
+
 // Freedom House: yearly democracy/freedom scores per country.
 // Source: freedomhouse.org XLSX → ETL freedom_house.py → ddhh.freedom_house.
 app.get("/v1/ddhh/freedom-house", async (c) => {
