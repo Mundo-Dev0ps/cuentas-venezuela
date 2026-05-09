@@ -181,3 +181,27 @@ export async function getAporteTributario(): Promise<AporteRow[]> {
   );
   return res.items;
 }
+
+export interface VeMacroRow {
+  country: string;
+  code: string;
+  name: string | null;
+  year: number;
+  value: number | null;
+}
+
+export async function getVeMacroIndicators(opts: {
+  country?: string;
+  code?: string;
+  from?: number;
+  to?: number;
+} = {}): Promise<VeMacroRow[]> {
+  const qs = new URLSearchParams();
+  if (opts.country) qs.set("country", opts.country);
+  if (opts.code) qs.set("code", opts.code);
+  if (opts.from != null) qs.set("from", String(opts.from));
+  if (opts.to != null) qs.set("to", String(opts.to));
+  const path = `/v1/ve-macro/indicators${qs.size ? `?${qs.toString()}` : ""}`;
+  const res = await safeGet<{ items: VeMacroRow[] }>(path, { items: [] });
+  return res.items;
+}

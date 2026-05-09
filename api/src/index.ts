@@ -240,6 +240,48 @@ app.get("/v1/data/comparativa-nacionalidad", async (c) => {
   }
 });
 
+// World Bank macro indicators for VE (and CHL comparator).
+// Source: api.worldbank.org/v2 → Postgres macro_ve.wb_indicators (ETL: ve_macro).
+app.get("/v1/ve-macro/indicators", async (c) => {
+  try {
+    const country = c.req.query("country");
+    const code = c.req.query("code");
+    const yearFrom = c.req.query("from");
+    const yearTo = c.req.query("to");
+
+    type Row = {
+      country_iso3: string;
+      indicator_code: string;
+      indicator_name: string | null;
+      year: number;
+      value: number | null;
+    };
+
+    const rows = await db.execute(sql`
+      SELECT country_iso3, indicator_code, indicator_name, year, value
+      FROM macro_ve.wb_indicators
+      WHERE 1=1
+        ${country ? sql`AND country_iso3 = ${country}` : sql``}
+        ${code ? sql`AND indicator_code = ${code}` : sql``}
+        ${yearFrom ? sql`AND year >= ${Number(yearFrom)}` : sql``}
+        ${yearTo ? sql`AND year <= ${Number(yearTo)}` : sql``}
+      ORDER BY country_iso3, indicator_code, year
+    `);
+
+    const items = (rows as unknown as Row[]).map((r) => ({
+      country: r.country_iso3,
+      code: r.indicator_code,
+      name: r.indicator_name,
+      year: r.year,
+      value: r.value == null ? null : Number(r.value),
+    }));
+    c.header("Cache-Control", "public, max-age=300, s-maxage=3600");
+    return c.json({ items });
+  } catch (e) {
+    return c.json({ items: [], error: (e as Error).message }, 200);
+  }
+});
+
 app.get("/v1/data/aporte-tributario", async (c) => {
   try {
     const rows = await duckdb.query<{
