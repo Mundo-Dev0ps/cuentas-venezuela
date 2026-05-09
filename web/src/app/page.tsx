@@ -1,10 +1,10 @@
 import Link from "next/link";
-import { Map, BarChart3 } from "lucide-react";
+import { Map, BarChart3, Globe2 } from "lucide-react";
 
 export const metadata = {
   title: "Cuentas Venezuela — Datos abiertos para venezolanos",
   description:
-    "Mapa de obras públicas en Venezuela y datos de migración venezolana en Chile.",
+    "Mapa de obras públicas en Venezuela, datos de migración venezolana en Chile y dashboards sobre Venezuela.",
 };
 
 export default function HomePage() {
@@ -35,7 +35,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="grid gap-6 md:grid-cols-2">
+      <section className="grid gap-6 md:grid-cols-3">
         <Link
           href="/mapa-del-olvido"
           className="group relative rounded-xl border border-slate-700/40 border-l-[3px] border-l-cyan-400 bg-slate-900/80 p-8 transition hover:border-cyan-400/60 hover:shadow-lg"
@@ -53,6 +53,23 @@ export default function HomePage() {
           </p>
           <span className="text-sm font-medium text-cyan-300 group-hover:underline">
             Explorar el mapa →
+          </span>
+        </Link>
+
+        <Link
+          href="/venezuela"
+          className="group rounded-xl border border-slate-700/40 bg-slate-900/80 p-8 transition hover:border-rose-400/60 hover:shadow-lg"
+        >
+          <div className="mb-3 flex items-center gap-2">
+            <Globe2 className="h-5 w-5 text-rose-400" />
+            <h2 className="text-2xl font-semibold">Venezuela</h2>
+          </div>
+          <p className="mb-4 text-slate-300">
+            Crisis económica, salud, inseguridad, derechos humanos y
+            comparativas antes/después con datos del Banco Mundial.
+          </p>
+          <span className="text-sm font-medium text-rose-300 group-hover:underline">
+            Ver dashboards →
           </span>
         </Link>
 

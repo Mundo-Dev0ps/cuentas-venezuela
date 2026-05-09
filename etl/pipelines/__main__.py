@@ -3,6 +3,7 @@
 import sys
 
 from pipelines import (
+    acnur,
     comparativa,
     extranjeria,
     freedom_house,
@@ -22,6 +23,7 @@ PIPELINES = {
     "obras": obras.main,
     "ve_macro": ve_macro.main,
     "freedom_house": freedom_house.main,
+    "acnur": acnur.main,
 }
 
 
