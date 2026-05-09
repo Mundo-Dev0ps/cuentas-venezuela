@@ -353,6 +353,43 @@ app.get("/api/obras/:id", async (c) => {
   return c.json(rowToObra(row));
 });
 
+// ===== Newsletter / alerts subscribers =====
+
+const SubscribeSchema = z.object({
+  email: z.string().email().max(254),
+  interest: z.string().max(64).optional(),
+  website: z.string().max(0).optional().default(""), // honeypot
+});
+
+const subscribeLimiter = rateLimit({ limit: 5, windowMs: 10 * 60 * 1000 });
+
+app.post("/api/subscribers", subscribeLimiter, async (c) => {
+  let body: unknown;
+  try {
+    body = await c.req.json();
+  } catch {
+    return c.json({ error: "invalid json" }, 400);
+  }
+  const parsed = SubscribeSchema.safeParse(body);
+  if (!parsed.success) {
+    return c.json({ error: "invalid", details: parsed.error.flatten() }, 400);
+  }
+  if (parsed.data.website && parsed.data.website.length > 0) {
+    return c.json({ ok: true }, 201); // honeypot tripped, silent ok
+  }
+  try {
+    await db.execute(sql`
+      INSERT INTO subscribers (email, interest)
+      VALUES (${parsed.data.email.toLowerCase()},
+              ${parsed.data.interest ?? null})
+      ON CONFLICT (email) DO NOTHING
+    `);
+  } catch (e) {
+    return c.json({ error: "db", detail: (e as Error).message }, 500);
+  }
+  return c.json({ ok: true }, 201);
+});
+
 // ===== Ko-fi: supporters =====
 
 interface KofiPayload {
