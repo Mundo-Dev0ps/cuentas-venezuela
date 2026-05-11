@@ -40,7 +40,7 @@ jobs:
 
       - name: Persist geocode cache
         if: success() && !inputs.dry_run
-        uses: stefanzweifel/git-auto-commit-action@v5
+        uses: stefanzweifel/git-auto-commit-action@v7
         with:
           file_pattern: "etl/data/geocode_cache.json"
           commit_message: "chore(etl): refresh geocode cache"
