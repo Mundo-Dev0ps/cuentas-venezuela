@@ -23,7 +23,7 @@
     "deck.gl": "^9.3.2",
     "leaflet": "^1.9.4",
     "lucide-react": "^0.469.0",
-    "maplibre-gl": "^4.7.1",
+    "maplibre-gl": "^5.24.0",
     "next": "^15.5.18",
     "react": "19.0.0",
     "react-dom": "19.0.0",
