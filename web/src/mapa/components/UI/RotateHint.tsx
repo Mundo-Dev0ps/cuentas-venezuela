@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 
 interface RotateHintProps {
   view: 'data' | 'map';
@@ -18,14 +18,68 @@ function useIsPortraitMobile(): boolean {
   return match;
 }
 
+/**
+ * Try the standards-compliant path first: fullscreen + Screen Orientation
+ * lock to landscape. Works on Chrome / Edge / most Android browsers.
+ *
+ * iOS Safari does NOT implement orientation.lock(), so we fall back to a
+ * CSS transform that rotates the SPA root 90° within the existing portrait
+ * viewport. The user keeps their phone vertical; the map renders sideways.
+ */
+function isOrientationLockSupported(): boolean {
+  if (typeof window === 'undefined') return false;
+  const so = (screen as unknown as { orientation?: { lock?: unknown } }).orientation;
+  return Boolean(so && typeof so.lock === 'function');
+}
+
+async function enterLandscape(): Promise<'native' | 'css'> {
+  const root = document.documentElement;
+  // Native path
+  if (isOrientationLockSupported()) {
+    try {
+      if (!document.fullscreenElement && root.requestFullscreen) {
+        await root.requestFullscreen();
+      }
+      const so = screen.orientation as unknown as {
+        lock: (orientation: 'landscape' | 'landscape-primary') => Promise<void>;
+      };
+      await so.lock('landscape');
+      return 'native';
+    } catch {
+      // fallthrough to CSS
+    }
+  }
+  // CSS fallback — applied via body class so the SPA root rotates 90°.
+  document.body.classList.add('mdo-force-landscape');
+  return 'css';
+}
+
+async function exitLandscape(mode: 'native' | 'css' | null): Promise<void> {
+  if (mode === 'native') {
+    try {
+      const so = screen.orientation as unknown as { unlock?: () => void };
+      if (so && typeof so.unlock === 'function') so.unlock();
+    } catch {
+      /* noop */
+    }
+    if (document.fullscreenElement && document.exitFullscreen) {
+      try {
+        await document.exitFullscreen();
+      } catch {
+        /* noop */
+      }
+    }
+  }
+  document.body.classList.remove('mdo-force-landscape');
+}
+
 export function RotateHint({ view, onToggle }: RotateHintProps) {
   const isPortraitMobile = useIsPortraitMobile();
   const [bannerOpen, setBannerOpen] = useState(false);
   const [hasShown, setHasShown] = useState(false);
+  const [landscapeMode, setLandscapeMode] = useState<null | 'native' | 'css'>(null);
 
-  // Show banner once per mount (when portrait+mobile and starting in data view).
-  // Toggling map↔data within the same mount does not retrigger it.
-  // Navigating away unmounts the component, so a fresh visit shows it again.
+  // Show banner once per mount when starting in portrait + data view.
   useEffect(() => {
     if (hasShown) return;
     if (isPortraitMobile && view === 'data') {
@@ -34,33 +88,65 @@ export function RotateHint({ view, onToggle }: RotateHintProps) {
     }
   }, [isPortraitMobile, view, hasShown]);
 
+  // If user physically rotates phone or hits browser back, undo CSS rotation.
+  useEffect(() => {
+    if (!isPortraitMobile && landscapeMode === 'css') {
+      document.body.classList.remove('mdo-force-landscape');
+      setLandscapeMode(null);
+    }
+  }, [isPortraitMobile, landscapeMode]);
+
+  // Cleanup on unmount.
+  useEffect(() => {
+    return () => {
+      document.body.classList.remove('mdo-force-landscape');
+    };
+  }, []);
+
   const closeBanner = () => setBannerOpen(false);
+
+  const handleRotate = useCallback(async () => {
+    if (landscapeMode) {
+      await exitLandscape(landscapeMode);
+      setLandscapeMode(null);
+    } else {
+      const m = await enterLandscape();
+      setLandscapeMode(m);
+    }
+    closeBanner();
+  }, [landscapeMode]);
 
   return (
     <>
       {bannerOpen && (
         <div
           role="dialog"
-          aria-label="Sugerencia de rotación"
+          aria-label="Sugerencia para mejorar visualización"
           className="fixed inset-x-3 top-16 z-50 sm:hidden rounded-xl border border-cyan-400/40 bg-slate-900/95 backdrop-blur-md px-4 py-3 shadow-xl animate-ui-slide-down"
         >
           <div className="flex items-start gap-3">
             <span aria-hidden className="text-2xl leading-none mt-0.5">📱↻</span>
             <div className="flex-1 min-w-0">
               <p className="text-slate-100 text-sm font-semibold">
-                Rota tu teléfono
+                Mapa más cómodo en horizontal
               </p>
               <p className="text-slate-400 text-xs mt-0.5">
-                El mapa se ve mejor en horizontal. O toca «Ver mapa»
+                Toca «Rotar mapa» (sin girar el teléfono) o «Ver mapa»
                 para ocultar paneles.
               </p>
-              <div className="mt-2 flex gap-2">
+              <div className="mt-2 flex flex-wrap gap-2">
+                <button
+                  onClick={handleRotate}
+                  className="rounded-md bg-cyan-500 hover:bg-cyan-400 text-slate-950 text-xs font-semibold px-3 py-1.5"
+                >
+                  ↺ Rotar mapa
+                </button>
                 <button
                   onClick={() => {
                     onToggle();
                     closeBanner();
                   }}
-                  className="rounded-md bg-cyan-500 hover:bg-cyan-400 text-slate-950 text-xs font-semibold px-3 py-1.5"
+                  className="rounded-md border border-cyan-400/40 hover:border-cyan-400/80 text-cyan-200 text-xs px-3 py-1.5"
                 >
                   Ver mapa
                 </button>
@@ -83,6 +169,19 @@ export function RotateHint({ view, onToggle }: RotateHintProps) {
         </div>
       )}
 
+      {/* Floating control: rotate (only on portrait mobile) */}
+      <button
+        type="button"
+        onClick={handleRotate}
+        aria-pressed={landscapeMode !== null}
+        aria-label={landscapeMode ? 'Volver a vertical' : 'Rotar mapa a horizontal'}
+        className="sm:hidden fixed bottom-40 right-3 z-40 inline-flex items-center gap-1.5 rounded-full border border-orange-400/60 bg-slate-900/95 backdrop-blur-md px-4 py-2.5 text-sm font-semibold text-orange-200 shadow-xl ring-1 ring-orange-400/30"
+      >
+        <span aria-hidden className="text-base leading-none">↺</span>
+        {landscapeMode ? 'Volver vertical' : 'Rotar mapa'}
+      </button>
+
+      {/* Floating control: data ↔ map (existing) */}
       <button
         type="button"
         onClick={onToggle}
