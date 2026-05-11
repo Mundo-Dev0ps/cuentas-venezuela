@@ -1,12 +1,19 @@
 -- Seed data for development. Idempotent (uses ON CONFLICT).
 
 INSERT INTO sources (slug, name, organization, url, license, description) VALUES
+  -- Chile
   ('sermig', 'Servicio Nacional de Migraciones', 'Servicio Nacional de Migraciones (SERMIG)', 'https://serviciomigraciones.cl', 'CC BY 4.0', 'Estadísticas oficiales de permanencias y residencias temporales/definitivas otorgadas en Chile.'),
   ('ine', 'Instituto Nacional de Estadísticas', 'INE Chile', 'https://www.ine.gob.cl', 'CC BY 4.0', 'Censo, encuestas de empleo, estimaciones intercensales y estadísticas de población.'),
   ('sii', 'Servicio de Impuestos Internos', 'SII', 'https://www.sii.cl', 'datos.gob.cl', 'Estadísticas de tributación: renta, IVA, contribuyentes activos.'),
   ('sp', 'Superintendencia de Pensiones', 'Superintendencia de Pensiones', 'https://www.spensiones.cl', 'CC BY 4.0', 'Cotizantes y afiliados al sistema de AFP por nacionalidad y región.'),
   ('mineduc', 'Ministerio de Educación', 'MINEDUC', 'https://datosabiertos.mineduc.cl', 'CC BY 4.0', 'Matrícula escolar y estadísticas educativas.'),
-  ('sjm', 'Servicio Jesuita a Migrantes', 'SJM Chile', 'https://www.migracionenchile.cl', 'CC BY-NC 4.0', 'Estimaciones de migración irregular e informes anuales sobre migración en Chile.')
+  ('sjm', 'Servicio Jesuita a Migrantes', 'SJM Chile', 'https://www.migracionenchile.cl', 'CC BY-NC 4.0', 'Estimaciones de migración irregular e informes anuales sobre migración en Chile.'),
+  -- Venezuela / global
+  ('world-bank', 'World Bank Open Data', 'Banco Mundial', 'https://data.worldbank.org/', 'CC BY 4.0', 'Indicadores macroeconómicos y de desarrollo consolidados de OMS, UNICEF, FMI, OIT y oficinas estadísticas nacionales. API JSON pública sin autenticación.'),
+  ('freedom-house', 'Freedom in the World', 'Freedom House', 'https://freedomhouse.org/report/freedom-world', 'citada con atribución', 'Evaluación anual de derechos políticos y libertades civiles para 195 países. Score 0-100 + estatus F/PF/NF, publicado en febrero cada año.'),
+  ('unhcr', 'UNHCR Population Statistics', 'Alto Comisionado de la ONU para los Refugiados (ACNUR)', 'https://www.unhcr.org/refugee-statistics/', 'CC BY 4.0', 'Refugiados, solicitantes de asilo y otros desplazados por país de origen y destino. Datos mensuales/anuales vía API JSON pública.'),
+  ('unodc', 'UN Office on Drugs and Crime', 'UNODC', 'https://dataunodc.un.org/', 'CC BY 4.0', 'Estadísticas mundiales de homicidios intencionales por 100k habitantes. Consolidado por el Banco Mundial.'),
+  ('mapa-olvido-base', 'Mapa del Olvido (datos comunitarios)', 'Cuentas Venezuela', 'https://cuentasvenezuela.org/mapa-del-olvido/metodologia', 'CC BY-SA 4.0', 'Catálogo abierto de obras públicas paralizadas, críticas o inoperativas en Venezuela. Compilado de informes oficiales, prensa y reportes ciudadanos. Cada obra cita su fuente primaria.')
 ON CONFLICT (slug) DO UPDATE SET
   name = EXCLUDED.name,
   organization = EXCLUDED.organization,

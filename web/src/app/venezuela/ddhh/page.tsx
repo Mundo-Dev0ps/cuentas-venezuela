@@ -5,6 +5,7 @@ import {
   FreedomTrendChart,
   type FreedomPoint,
 } from "@/components/freedom-trend-chart";
+import { SourceBadge } from "@/components/source-badge";
 
 export const metadata = {
   title: "Derechos humanos — Venezuela | Cuentas Venezuela",
@@ -86,6 +87,13 @@ export default async function DDHHPage() {
           Una caída sostenida del puntaje refleja restricciones a la prensa,
           oposición, justicia independiente, libertades de asociación.
         </p>
+        <div className="mt-4">
+          <SourceBadge
+            slug="freedom-house"
+            name="Freedom House — Freedom in the World"
+            url="https://freedomhouse.org/country/venezuela/freedom-world/2024"
+          />
+        </div>
       </header>
 
       {/* KPI top row */}

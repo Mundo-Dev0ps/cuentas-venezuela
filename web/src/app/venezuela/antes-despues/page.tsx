@@ -2,6 +2,7 @@ import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 import { getVeMacroIndicators } from "@/lib/api";
 import { IndicatorBlock } from "@/components/indicator-block";
+import { SourceBadge } from "@/components/source-badge";
 import type { VeUnit } from "@/components/ve-trend-chart";
 
 export const metadata = {
@@ -54,6 +55,13 @@ export default async function AntesDespuesPage() {
           Trayectoria de indicadores clave de Venezuela frente a Chile como
           comparador regional. Datos del Banco Mundial — actualizados anualmente.
         </p>
+        <div className="mt-4">
+          <SourceBadge
+            slug="world-bank"
+            name="World Bank Open Data"
+            url="https://data.worldbank.org/country/venezuela-rb"
+          />
+        </div>
       </header>
 
       <section className="grid gap-8">
