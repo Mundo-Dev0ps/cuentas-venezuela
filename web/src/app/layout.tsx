@@ -15,10 +15,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="es">
-      <body className="flex min-h-screen flex-col bg-white text-neutral-900 antialiased dark:bg-neutral-950 dark:text-neutral-100">
+    <html lang="es" className="dark" suppressHydrationWarning>
+      <body className="flex min-h-screen flex-col text-slate-100 antialiased animate-page-fade">
         <SiteHeader />
-        <div className="flex-1">{children}</div>
+        <div className="flex-1 animate-page-rise">{children}</div>
         <SiteFooter />
       </body>
     </html>

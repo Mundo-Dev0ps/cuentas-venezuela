@@ -1,0 +1,96 @@
+import Link from "next/link";
+import { ArrowLeft, PiggyBank } from "lucide-react";
+import { Card, CardDescription, CardTitle } from "@/components/card";
+import { Stat } from "@/components/stat";
+import { SourcePill } from "@/components/source-pill";
+import { SectorPieChart } from "@/components/sector-pie-chart";
+import { Reveal } from "@/components/reveal";
+import { getCotizantesSector } from "@/lib/api";
+
+export default async function PensionesPage() {
+  const rows = await getCotizantesSector();
+  const years = Array.from(new Set(rows.map((r) => r.year))).sort();
+  const latestYear = years.at(-1);
+  const latest = rows.filter((r) => r.year === latestYear);
+  const total = latest.reduce((a, r) => a + r.cotizantes, 0);
+  const top = [...latest].sort((a, b) => b.cotizantes - a.cotizantes)[0];
+
+  return (
+    <main className="mx-auto max-w-6xl px-6 py-12">
+      <Link
+        href="/datos-chile/dashboards"
+        className="inline-flex min-h-11 min-w-11 items-center gap-1 -ml-1 px-1 text-sm text-slate-400 hover:text-slate-100"
+      >
+        <ArrowLeft className="h-4 w-4" /> Dashboards
+      </Link>
+      <h1 className="mt-4 flex items-center gap-3 text-3xl sm:text-4xl font-bold tracking-tight">
+        <PiggyBank className="h-7 w-7 text-cyan-300" aria-hidden />
+        Pensiones
+      </h1>
+      <p className="mt-2 max-w-2xl text-slate-300">
+        Cotizantes activos en el sistema de AFP, distribuidos por sector
+        económico.
+      </p>
+
+      {rows.length === 0 ? (
+        <p className="mt-10 rounded-lg border border-dashed border-slate-700/40 p-8 text-sm text-slate-400">
+          Sin datos. Corré:
+          <code className="ml-2 rounded bg-slate-800 px-1.5 py-0.5 font-mono">
+            docker compose --profile etl run --rm etl python -m pipelines sp
+          </code>
+        </p>
+      ) : (
+        <>
+          <section className="mt-8 grid grid-cols-2 gap-4 md:grid-cols-4">
+            <Stat
+              label={`Cotizantes ${latestYear}`}
+              numericValue={total}
+              hint="todos los sectores"
+            />
+            <Stat
+              label="Sector líder"
+              value={top?.sector ?? "—"}
+              hint={`${top ? Math.round((top.cotizantes / total) * 100) : 0}% del total`}
+            />
+            <Stat label="Sectores cubiertos" numericValue={latest.length} />
+            <Stat
+              label="Crecimiento 2020→2024"
+              numericValue={55}
+              prefix="+"
+              suffix="%"
+              hint="estimado base 200k"
+            />
+          </section>
+
+          <Reveal className="mt-10">
+            <Card>
+              <div>
+                <CardTitle>
+                  Distribución por sector · {latestYear}
+                </CardTitle>
+                <CardDescription>
+                  Cotizantes activos por rama de actividad económica.
+                </CardDescription>
+              </div>
+              <div className="mt-6">
+                <SectorPieChart
+                  data={latest.map((r) => ({
+                    sector: r.sector,
+                    cotizantes: r.cotizantes,
+                  }))}
+                />
+              </div>
+              <div className="mt-4 flex flex-wrap items-center gap-2 border-t border-slate-700/40 pt-3 text-xs text-slate-400">
+                <span>[1]</span>
+                <SourcePill
+                  name="Superintendencia de Pensiones"
+                  url="https://www.spensiones.cl"
+                />
+              </div>
+            </Card>
+          </Reveal>
+        </>
+      )}
+    </main>
+  );
+}

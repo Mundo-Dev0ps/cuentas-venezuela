@@ -1,0 +1,56 @@
+name: db-migrate
+
+# Applies db/schema.sql + db/seeds.sql against the target Postgres
+# (Neon prod by default). Both files are idempotent:
+#   - schema.sql uses CREATE ... IF NOT EXISTS
+#   - seeds.sql uses INSERT ... ON CONFLICT DO UPDATE
+# Therefore re-running on every push to main is safe and keeps prod in
+# sync with the repo without manual psql commands.
+#
+# Replace with `drizzle-kit migrate` once we adopt versioned migrations.
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "db/schema.sql"
+      - "db/seeds.sql"
+      - ".github/workflows/db-migrate.yml"
+  workflow_dispatch:
+    inputs:
+      target:
+        description: "Target environment"
+        required: true
+        default: "prod"
+        type: choice
+        options: [prod, staging]
+
+concurrency:
+  group: db-migrate-${{ inputs.target || 'prod' }}
+  cancel-in-progress: false
+
+jobs:
+  apply:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    env:
+      DATABASE_URL: ${{ inputs.target == 'staging' && secrets.DATABASE_URL_STAGING || secrets.DATABASE_URL_PROD }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install psql
+        run: sudo apt-get update && sudo apt-get install -y --no-install-recommends postgresql-client
+
+      - name: Apply schema
+        run: psql "$DATABASE_URL" -v ON_ERROR_STOP=1 -f db/schema.sql
+
+      - name: Apply seeds (catalog metadata)
+        run: psql "$DATABASE_URL" -v ON_ERROR_STOP=1 -f db/seeds.sql
+
+      - name: Verify schemas + sources
+        run: |
+          psql "$DATABASE_URL" -v ON_ERROR_STOP=1 -c "
+            SELECT schema_name FROM information_schema.schemata
+            WHERE schema_name IN ('chile','migracion','macro_ve','ddhh');
+            SELECT slug FROM sources ORDER BY slug;
+          "

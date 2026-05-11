@@ -8,6 +8,7 @@ import { SourcePill } from "@/components/source-pill";
 import { ShareButton } from "@/components/share-button";
 import { StockChart, type StockPoint } from "@/components/stock-chart";
 import { RegionBarChart } from "@/components/region-bar-chart";
+import { Reveal } from "@/components/reveal";
 import { ChileMapLoader } from "@/components/chile-map-loader";
 import type { StockRegionRow } from "@/lib/api";
 
@@ -28,12 +29,12 @@ export function DemografiaView({ rows }: { rows: StockRegionRow[] }) {
   }, [rows]);
 
   const initialYear = (() => {
-    const raw = searchParams.get("year");
+    const raw = searchParams?.get("year") ?? null;
     const parsed = raw ? Number(raw) : NaN;
     return years.includes(parsed) ? parsed : (years.at(-1) ?? 0);
   })();
   const initialExcluded = (() => {
-    const raw = searchParams.get("exclude");
+    const raw = searchParams?.get("exclude") ?? null;
     if (!raw) return new Set<string>();
     const codes = raw.split(",").filter(Boolean);
     const valid = new Set(allRegions.map((r) => r.code));
@@ -52,8 +53,8 @@ export function DemografiaView({ rows }: { rows: StockRegionRow[] }) {
       }
       const qs = params.toString();
       const path = qs
-        ? `/dashboards/demografia?${qs}`
-        : "/dashboards/demografia";
+        ? `/datos-chile/dashboards/demografia?${qs}`
+        : "/datos-chile/dashboards/demografia";
       router.replace(path, { scroll: false });
     },
     [router, years],
@@ -116,13 +117,13 @@ export function DemografiaView({ rows }: { rows: StockRegionRow[] }) {
     <>
       <section className="mt-8 flex flex-col gap-4 md:flex-row md:flex-wrap md:items-end">
         <div>
-          <label className="block text-xs uppercase tracking-wider text-neutral-500">
+          <label className="block text-xs uppercase tracking-wider text-slate-400">
             Año
           </label>
           <select
             value={year}
             onChange={(e) => setYear(Number(e.target.value))}
-            className="mt-1 rounded-md border border-neutral-300 bg-white px-3 py-1.5 text-sm dark:border-neutral-700 dark:bg-neutral-900"
+            className="mt-1 rounded-md border border-slate-700/40 bg-slate-900/80 px-3 py-1.5 text-sm"
           >
             {years.map((y) => (
               <option key={y} value={y}>
@@ -132,7 +133,7 @@ export function DemografiaView({ rows }: { rows: StockRegionRow[] }) {
           </select>
         </div>
         <div className="flex-1">
-          <div className="text-xs uppercase tracking-wider text-neutral-500">
+          <div className="text-xs uppercase tracking-wider text-slate-400">
             Regiones (click para alternar)
           </div>
           <div className="mt-1 flex flex-wrap gap-1.5">
@@ -144,8 +145,8 @@ export function DemografiaView({ rows }: { rows: StockRegionRow[] }) {
                   onClick={() => toggleRegion(code)}
                   className={
                     active
-                      ? "rounded-full border border-emerald-600 bg-emerald-600 px-2.5 py-0.5 text-xs text-white hover:bg-emerald-700"
-                      : "rounded-full border border-neutral-300 px-2.5 py-0.5 text-xs text-neutral-500 hover:bg-neutral-100 dark:border-neutral-700 dark:hover:bg-neutral-800"
+                      ? "rounded-full border border-cyan-500 bg-cyan-500 px-2.5 py-0.5 text-xs text-slate-950 hover:bg-cyan-400"
+                      : "rounded-full border border-slate-700/40 px-2.5 py-0.5 text-xs text-slate-400 hover:bg-slate-800/80"
                   }
                 >
                   {name}
@@ -155,7 +156,7 @@ export function DemografiaView({ rows }: { rows: StockRegionRow[] }) {
             {excluded.size > 0 ? (
               <button
                 onClick={clearFilters}
-                className="ml-2 text-xs text-neutral-500 underline hover:text-neutral-900 dark:hover:text-white"
+                className="ml-2 text-xs text-slate-400 underline hover:text-slate-100"
               >
                 limpiar filtro
               </button>
@@ -169,8 +170,9 @@ export function DemografiaView({ rows }: { rows: StockRegionRow[] }) {
 
       <section className="mt-8 grid grid-cols-2 gap-4 md:grid-cols-4">
         <Stat
+          key={`stock-${year}-${totalLatest}`}
           label={`Stock legal ${year}`}
-          value={totalLatest.toLocaleString("es-CL")}
+          numericValue={totalLatest}
           hint={
             excluded.size > 0
               ? `excluyendo ${excluded.size} región(es)`
@@ -184,43 +186,43 @@ export function DemografiaView({ rows }: { rows: StockRegionRow[] }) {
         />
         <Stat
           label="Regiones con datos"
-          value={`${ranked.length}/16`}
+          numericValue={ranked.length}
+          suffix="/16"
           hint="cobertura DPA"
         />
         <Stat
+          key={`est-${year}-${totalLatest}`}
           label="Estimado total"
-          value={`${Math.round(totalLatest * 1.5).toLocaleString("es-CL")}`}
+          numericValue={Math.round(totalLatest * 1.5)}
           hint="incluye irregulares"
         />
       </section>
 
-      <section className="mt-10 grid gap-4 lg:grid-cols-2">
+      <Reveal className="mt-10 grid gap-4 lg:grid-cols-2">
         <Card>
-          <div className="flex items-baseline justify-between">
-            <div>
-              <CardTitle>
-                Serie nacional {years.at(0)}-{years.at(-1)}
-              </CardTitle>
-              <CardDescription>
-                Stock legal vs estimado total (legal × 1.5).
-              </CardDescription>
-            </div>
-            <SourcePill name="SERMIG + SJM" url="https://serviciomigraciones.cl" />
+          <div>
+            <CardTitle>
+              Serie nacional {years.at(0)}-{years.at(-1)}
+            </CardTitle>
+            <CardDescription>
+              Stock legal vs estimado total (legal × 1.5).
+            </CardDescription>
           </div>
           <div className="mt-6">
             <StockChart data={stockByYear} />
           </div>
+          <div className="mt-4 flex flex-wrap items-center gap-2 border-t border-slate-700/40 pt-3 text-xs text-slate-400">
+            <span>[1]</span>
+            <SourcePill name="SERMIG + SJM" url="https://serviciomigraciones.cl" />
+          </div>
         </Card>
 
         <Card>
-          <div className="flex items-baseline justify-between">
-            <div>
-              <CardTitle>Distribución regional {year}</CardTitle>
-              <CardDescription>
-                Stock legal vigente por región seleccionada.
-              </CardDescription>
-            </div>
-            <SourcePill name="SERMIG" url="https://serviciomigraciones.cl" />
+          <div>
+            <CardTitle>Distribución regional {year}</CardTitle>
+            <CardDescription>
+              Stock legal vigente por región seleccionada.
+            </CardDescription>
           </div>
           <div className="mt-6">
             <RegionBarChart
@@ -230,22 +232,20 @@ export function DemografiaView({ rows }: { rows: StockRegionRow[] }) {
               }))}
             />
           </div>
+          <div className="mt-4 flex flex-wrap items-center gap-2 border-t border-slate-700/40 pt-3 text-xs text-slate-400">
+            <span>[2]</span>
+            <SourcePill name="SERMIG" url="https://serviciomigraciones.cl" />
+          </div>
         </Card>
-      </section>
+      </Reveal>
 
-      <section className="mt-8">
+      <Reveal className="mt-8">
         <Card>
-          <div className="flex items-baseline justify-between">
-            <div>
-              <CardTitle>Mapa nacional · {year}</CardTitle>
-              <CardDescription>
-                Tamaño del círculo proporcional al stock legal por región.
-              </CardDescription>
-            </div>
-            <SourcePill
-              name="OpenStreetMap + SERMIG"
-              url="https://www.openstreetmap.org/copyright"
-            />
+          <div>
+            <CardTitle>Mapa nacional · {year}</CardTitle>
+            <CardDescription>
+              Tamaño del círculo proporcional al stock legal por región.
+            </CardDescription>
           </div>
           <div className="mt-6">
             <ChileMapLoader
@@ -255,8 +255,15 @@ export function DemografiaView({ rows }: { rows: StockRegionRow[] }) {
               }))}
             />
           </div>
+          <div className="mt-4 flex flex-wrap items-center gap-2 border-t border-slate-700/40 pt-3 text-xs text-slate-400">
+            <span>[3]</span>
+            <SourcePill
+              name="OpenStreetMap + SERMIG"
+              url="https://www.openstreetmap.org/copyright"
+            />
+          </div>
         </Card>
-      </section>
+      </Reveal>
     </>
   );
 }

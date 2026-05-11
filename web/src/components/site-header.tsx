@@ -1,22 +1,26 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
 import { BarChart3, Menu, X } from "lucide-react";
 import { cn } from "@/lib/cn";
+import { KofiButton } from "@/components/kofi-button";
 
 const NAV = [
   { href: "/", label: "Inicio" },
-  { href: "/fuentes", label: "Fuentes" },
-  { href: "/indicadores", label: "Indicadores" },
-  { href: "/dashboards", label: "Dashboards" },
-  { href: "/metodologia", label: "Metodología" },
+  { href: "/mapa-del-olvido", label: "Mapa del Olvido" },
+  { href: "/datos-chile", label: "Datos Chile" },
+  { href: "/venezuela", label: "Venezuela" },
 ];
 
 export function SiteHeader() {
-  const [open, setOpen] = useState(false);
   const pathname = usePathname();
+  const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    setOpen(false);
+  }, [pathname]);
 
   function isActive(href: string) {
     if (href === "/") return pathname === "/";
@@ -24,63 +28,77 @@ export function SiteHeader() {
   }
 
   return (
-    <header className="sticky top-0 z-40 border-b border-neutral-200 bg-white/80 backdrop-blur dark:border-neutral-800 dark:bg-neutral-950/80">
-      <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3 md:px-6 md:py-4">
+    <header className="sticky top-0 z-40 shrink-0 border-b border-slate-700/40 bg-slate-900/80 backdrop-blur-md text-sm">
+      <div className="mx-auto flex h-12 max-w-6xl items-center justify-between gap-4 px-4 md:px-6">
         <Link
           href="/"
-          onClick={() => setOpen(false)}
-          className="flex items-center gap-2 font-semibold"
+          aria-label="cuentas-venezuela"
+          className="inline-flex items-center gap-2 whitespace-nowrap"
         >
-          <BarChart3 className="h-5 w-5 text-emerald-600" />
-          <span>datos-chile</span>
+          <BarChart3 className="h-5 w-5 text-orange-400" />
+          <span className="flex flex-col leading-tight">
+            <span className="hidden sm:inline text-sm font-semibold">
+              cuentas-venezuela
+            </span>
+            <span className="sm:hidden text-[0.75rem] font-semibold text-slate-200">
+              Cuentas Venezuela
+            </span>
+          </span>
         </Link>
 
-        <nav className="hidden gap-5 text-sm text-neutral-600 dark:text-neutral-300 md:flex">
+        <nav
+          aria-label="primary"
+          className="hidden md:flex items-center gap-3 text-sm text-slate-300 sm:gap-5"
+        >
           {NAV.map((item) => (
             <Link
               key={item.href}
               href={item.href}
               className={cn(
-                "transition hover:text-neutral-900 dark:hover:text-white",
-                isActive(item.href) &&
-                  "font-semibold text-emerald-600 dark:text-emerald-400",
+                "whitespace-nowrap transition hover:text-cyan-300",
+                isActive(item.href) && "font-semibold text-cyan-300",
               )}
             >
               {item.label}
             </Link>
           ))}
+          <KofiButton variant="header" source="site-header" />
         </nav>
 
         <button
           type="button"
-          className="-mr-2 inline-flex h-10 w-10 items-center justify-center rounded-md text-neutral-700 hover:bg-neutral-100 md:hidden dark:text-neutral-200 dark:hover:bg-neutral-800"
           aria-label={open ? "Cerrar menú" : "Abrir menú"}
           aria-expanded={open}
           onClick={() => setOpen((v) => !v)}
+          className="inline-flex md:hidden h-11 w-11 items-center justify-center rounded-md text-slate-200 hover:text-cyan-300"
         >
           {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
         </button>
       </div>
 
       {open ? (
-        <nav className="border-t border-neutral-200 bg-white px-4 py-2 md:hidden dark:border-neutral-800 dark:bg-neutral-950">
-          <ul className="flex flex-col">
-            {NAV.map((item) => (
-              <li key={item.href}>
-                <Link
-                  href={item.href}
-                  onClick={() => setOpen(false)}
-                  className={cn(
-                    "block rounded-md px-3 py-2.5 text-sm text-neutral-700 hover:bg-neutral-100 dark:text-neutral-200 dark:hover:bg-neutral-800",
-                    isActive(item.href) &&
-                      "bg-emerald-50 font-semibold text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-300",
-                  )}
-                >
-                  {item.label}
-                </Link>
-              </li>
-            ))}
-          </ul>
+        <nav
+          aria-label="mobile"
+          className="md:hidden border-t border-slate-700/40 bg-slate-900/95 px-4 py-2"
+        >
+          {NAV.map((item) => (
+            <Link
+              key={item.href}
+              href={item.href}
+              className={cn(
+                "block py-3 text-base text-slate-200 hover:text-cyan-300",
+                isActive(item.href) && "font-semibold text-cyan-300",
+              )}
+            >
+              {item.label}
+            </Link>
+          ))}
+          <Link
+            href="/apoyar"
+            className="block py-3 text-base text-pink-300 hover:text-pink-200"
+          >
+            ☕ Apoyar
+          </Link>
         </nav>
       ) : null}
     </header>

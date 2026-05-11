@@ -7,15 +7,19 @@ __pycache__/
 
 # build
 .next/
+.vercel/
+.wrangler/
 dist/
 build/
 out/
+*.tsbuildinfo
 
 # data
 data/
 *.duckdb
 *.parquet
 !etl/fixtures/*.parquet
+!web/public/data/
 
 # env
 .env

@@ -1,16 +1,22 @@
 import { expect, test } from "@playwright/test";
 
 const PAGES = [
-  { path: "/", heading: /Migración venezolana en Chile/i },
-  { path: "/fuentes", heading: /Fuentes oficiales/i },
-  { path: "/fuentes/sermig", heading: /Servicio Nacional de Migraciones/i },
-  { path: "/indicadores", heading: /Indicadores/i },
-  { path: "/dashboards", heading: /Dashboards/i },
-  { path: "/dashboards/demografia", heading: /Demografía/i },
-  { path: "/dashboards/pensiones", heading: /Pensiones/i },
-  { path: "/dashboards/tributario", heading: /Aporte tributario/i },
-  { path: "/dashboards/comparativa", heading: /Comparativa por nacionalidad/i },
-  { path: "/metodologia", heading: /Metodología/i },
+  { path: "/datos-chile", heading: /Migración venezolana en Chile/i },
+  { path: "/datos-chile/fuentes", heading: /Fuentes oficiales/i },
+  {
+    path: "/datos-chile/fuentes/sermig",
+    heading: /Servicio Nacional de Migraciones/i,
+  },
+  { path: "/datos-chile/indicadores", heading: /Indicadores/i },
+  { path: "/datos-chile/dashboards", heading: /Dashboards/i },
+  { path: "/datos-chile/dashboards/demografia", heading: /Demografía/i },
+  { path: "/datos-chile/dashboards/pensiones", heading: /Pensiones/i },
+  { path: "/datos-chile/dashboards/tributario", heading: /Aporte tributario/i },
+  {
+    path: "/datos-chile/dashboards/comparativa",
+    heading: /Comparativa por nacionalidad/i,
+  },
+  { path: "/datos-chile/metodologia", heading: /Metodología/i },
 ];
 
 for (const { path, heading } of PAGES) {
@@ -23,14 +29,8 @@ for (const { path, heading } of PAGES) {
   });
 }
 
-test("nav links work", async ({ page }) => {
-  await page.goto("/");
-  await page.getByRole("link", { name: "Fuentes" }).first().click();
-  await expect(page).toHaveURL(/\/fuentes$/);
-});
-
 test("demografia year filter changes view", async ({ page }) => {
-  await page.goto("/dashboards/demografia");
+  await page.goto("/datos-chile/dashboards/demografia");
   const year = page.locator("select").first();
   await year.waitFor({ state: "visible", timeout: 10_000 });
   await year.selectOption("2024");
@@ -40,15 +40,12 @@ test("demografia year filter changes view", async ({ page }) => {
 test("demografia URL params seed filters and reflect changes", async ({
   page,
 }) => {
-  // Load with prefilled year + exclude.
-  await page.goto("/dashboards/demografia?year=2022&exclude=CL-RM");
+  await page.goto("/datos-chile/dashboards/demografia?year=2022&exclude=CL-RM");
   await expect(page.getByText("Stock legal 2022")).toBeVisible();
   await expect(page.getByText(/excluyendo 1 región/)).toBeVisible();
-  // The Metropolitana pill should be in excluded (inactive) state.
   const metro = page.getByRole("button", { name: "Metropolitana" });
-  await expect(metro).toHaveClass(/border-neutral-300/);
+  await expect(metro).toHaveClass(/border-slate-700/);
 
-  // Change year via select; URL should update.
   await page.locator("select").first().selectOption("2023");
   await expect(page).toHaveURL(/year=2023/);
 });
@@ -58,7 +55,7 @@ test("demografia share button copies current URL", async ({
   context,
 }) => {
   await context.grantPermissions(["clipboard-read", "clipboard-write"]);
-  await page.goto("/dashboards/demografia?year=2024");
+  await page.goto("/datos-chile/dashboards/demografia?year=2024");
   await page.getByRole("button", { name: "Copiar enlace" }).click();
   await expect(page.getByText("Copiado")).toBeVisible();
   const clip = await page.evaluate(() => navigator.clipboard.readText());

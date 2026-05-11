@@ -1,0 +1,46 @@
+name: ETL — obras (weekly)
+
+on:
+  schedule:
+    - cron: "0 6 * * 1" # Mondays 06:00 UTC (~02:00 Caracas)
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        type: boolean
+        default: false
+        description: "Print what would be upserted, don't write to DB"
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: "pip"
+          cache-dependency-path: etl/pyproject.toml
+
+      - name: Install ETL deps
+        working-directory: etl
+        run: |
+          pip install --upgrade pip
+          pip install -e .
+
+      - name: Run obras pipeline
+        working-directory: etl
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          OBRAS_LISTING_URL: ${{ vars.OBRAS_LISTING_URL }}
+          OBRAS_SOURCE_URLS: ${{ vars.OBRAS_SOURCE_URLS }}
+          DRY_RUN: ${{ inputs.dry_run && '1' || '' }}
+        run: python -m pipelines obras
+
+      - name: Persist geocode cache
+        if: success() && !inputs.dry_run
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          file_pattern: "etl/data/geocode_cache.json"
+          commit_message: "chore(etl): refresh geocode cache"
