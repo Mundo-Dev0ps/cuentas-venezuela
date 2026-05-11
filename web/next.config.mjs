@@ -78,7 +78,7 @@ const nextConfig = {
     remotePatterns: [
       { protocol: "https", hostname: "*.r2.dev" },
       { protocol: "https", hostname: "*.r2.cloudflarestorage.com" },
-      { protocol: "https", hostname: "cuentasvenezuela.com" },
+      { protocol: "https", hostname: "cuentasvenezuela.org" },
     ],
   },
   async rewrites() {
@@ -86,7 +86,7 @@ const nextConfig = {
       // Same-origin proxy from Next to the Hono backend so client code can use
       // /api/obras without CORS or hardcoded ports. In prod (Cloudflare Pages
       // serving Next + Fly hosting api), set INTERNAL_API_URL to the public
-      // api hostname (e.g. https://api.cuentasvenezuela.com).
+      // api hostname (e.g. https://api.cuentasvenezuela.org).
       {
         source: "/api/:path*",
         destination: `${API_INTERNAL_URL}/api/:path*`,
