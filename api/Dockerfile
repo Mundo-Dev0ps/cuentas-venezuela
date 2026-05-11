@@ -20,6 +20,6 @@ ENV NODE_ENV=development
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 EXPOSE 8000
-HEALTHCHECK --interval=30s --timeout=5s --start-period=10s --retries=3 \
+HEALTHCHECK --interval=15s --timeout=5s --start-period=90s --retries=5 \
     CMD wget --quiet --tries=1 --spider http://127.0.0.1:8000/health || exit 1
 CMD ["npm", "run", "dev"]
