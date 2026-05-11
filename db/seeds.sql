@@ -28,7 +28,12 @@ INSERT INTO datasets (slug, source_id, title, description, parquet_key, extracte
   ('sp-cotizantes',  (SELECT id FROM sources WHERE slug='sp'),  'Cotizantes AFP por nacionalidad y sector', 'Serie mensual de cotizantes activos', 'sp/cotizantes.parquet', NOW()),
   ('sii-aporte-tributario',  (SELECT id FROM sources WHERE slug='sii'),  'Aporte tributario estimado', 'Aporte de impuesto a la renta e IVA estimado', 'sii/aporte.parquet', NOW()),
   ('mineduc-matricula',  (SELECT id FROM sources WHERE slug='mineduc'),  'Matrícula escolar venezolana', 'Estudiantes matriculados por región', 'mineduc/matricula.parquet', NOW()),
-  ('sjm-irregularidad',  (SELECT id FROM sources WHERE slug='sjm'),  'Estimación de irregularidad', 'Estimación anual de migración irregular', 'sjm/irregularidad.parquet', NOW())
+  ('sjm-irregularidad',  (SELECT id FROM sources WHERE slug='sjm'),  'Estimación de irregularidad', 'Estimación anual de migración irregular', 'sjm/irregularidad.parquet', NOW()),
+  -- Venezuela / global
+  ('wb-ve-macro',        (SELECT id FROM sources WHERE slug='world-bank'),    'World Bank indicators — Venezuela + Chile', '29 indicadores macroeconómicos y sociales (PIB, esperanza vida, mortalidad, internet, electricidad, etc) para VEN y CHL, 1998-presente', 'macro_ve/wb_indicators.parquet', NOW()),
+  ('fh-freedom-world',   (SELECT id FROM sources WHERE slug='freedom-house'), 'Freedom in the World scores', 'Score combinado (PR + CL) + estatus F/PF/NF para 12 países LATAM, 2013-presente', 'ddhh/freedom_house.parquet', NOW()),
+  ('unhcr-ve-diaspora',  (SELECT id FROM sources WHERE slug='unhcr'),         'Diáspora venezolana por país de destino', 'Refugiados + solicitantes de asilo + otros desplazados por país de destino (COA), 2010-presente', 'migracion/acnur_ve.parquet', NOW()),
+  ('obras-ve',           (SELECT id FROM sources WHERE slug='mapa-olvido-base'), 'Obras públicas paralizadas — Venezuela', 'Catálogo de obras inauguradas, paralizadas, críticas o inoperativas en VE. Geolocalizadas con presupuesto, estatus y fuente primaria.', 'obras/obras.parquet', NOW())
 ON CONFLICT (slug) DO UPDATE SET
   title = EXCLUDED.title,
   description = EXCLUDED.description,
@@ -45,7 +50,18 @@ INSERT INTO indicators (slug, name, category, unit, description, dataset_id) VAL
   ('cotizantes-sector',      'Cotizantes por sector',            'Pensiones', 'personas',      'Distribución de cotizantes por sector económico',        (SELECT id FROM datasets WHERE slug='sp-cotizantes')),
   ('aporte-renta',           'Aporte impuesto a la renta',       'Tributario','CLP',           'Aporte estimado por impuesto a la renta',                (SELECT id FROM datasets WHERE slug='sii-aporte-tributario')),
   ('aporte-iva',             'Aporte IVA',                       'Tributario','CLP',           'Aporte estimado por IVA',                                (SELECT id FROM datasets WHERE slug='sii-aporte-tributario')),
-  ('matricula-escolar',      'Matrícula escolar',                'Educación', 'estudiantes',   'Estudiantes venezolanos matriculados',                   (SELECT id FROM datasets WHERE slug='mineduc-matricula'))
+  ('matricula-escolar',      'Matrícula escolar',                'Educación', 'estudiantes',   'Estudiantes venezolanos matriculados',                   (SELECT id FROM datasets WHERE slug='mineduc-matricula')),
+  -- Venezuela / global indicators (high-level pointers; full breakdown lives in macro_ve.wb_indicators)
+  ('ve-pib-pc',              'PIB per cápita (Venezuela vs Chile)','Economía',  'USD',          'Indicador WB NY.GDP.PCAP.CD para VEN y CHL',             (SELECT id FROM datasets WHERE slug='wb-ve-macro')),
+  ('ve-inflacion',           'Inflación IPC anual',              'Economía',  'porcentaje',    'Indicador WB FP.CPI.TOTL.ZG',                            (SELECT id FROM datasets WHERE slug='wb-ve-macro')),
+  ('ve-esperanza-vida',      'Esperanza de vida al nacer',       'Salud',     'años',          'Indicador WB SP.DYN.LE00.IN',                            (SELECT id FROM datasets WHERE slug='wb-ve-macro')),
+  ('ve-mortalidad-infantil', 'Mortalidad infantil (<1 año)',     'Salud',     'por mil n.v.',  'Indicador WB SP.DYN.IMRT.IN',                            (SELECT id FROM datasets WHERE slug='wb-ve-macro')),
+  ('ve-homicidios',          'Homicidios intencionales',         'Inseguridad','por 100k',     'Indicador WB VC.IHR.PSRC.P5 (fuente UNODC)',             (SELECT id FROM datasets WHERE slug='wb-ve-macro')),
+  ('ve-freedom-total',       'Freedom House — Score total',      'DDHH',      'puntos (0-100)','Score combinado PR+CL de Freedom House',                 (SELECT id FROM datasets WHERE slug='fh-freedom-world')),
+  ('ve-freedom-status',      'Freedom House — Estatus',          'DDHH',      'F/PF/NF',       'Clasificación cualitativa Free / Partly Free / Not Free',(SELECT id FROM datasets WHERE slug='fh-freedom-world')),
+  ('ve-diaspora-refugees',   'Refugiados venezolanos por destino','Migración','personas',      'Refugiados venezolanos reconocidos por país de destino', (SELECT id FROM datasets WHERE slug='unhcr-ve-diaspora')),
+  ('ve-diaspora-asylum',     'Solicitantes de asilo venezolanos','Migración','personas',       'Solicitantes de asilo pendientes por país de destino',   (SELECT id FROM datasets WHERE slug='unhcr-ve-diaspora')),
+  ('ve-obras-paralizadas',   'Obras públicas paralizadas',       'Infraestructura','obras',    'Obras inauguradas, paralizadas, críticas o inoperativas',(SELECT id FROM datasets WHERE slug='obras-ve'))
 ON CONFLICT (slug) DO UPDATE SET
   name = EXCLUDED.name,
   category = EXCLUDED.category,

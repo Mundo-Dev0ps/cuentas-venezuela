@@ -65,8 +65,10 @@ const nextConfig = {
     typedRoutes: true,
   },
   images: {
-    // R2 public URL pattern + any other image hosts. Adjust bucket subdomain
-    // to your actual R2 public dev URL or custom domain.
+    // Cloudflare Workers cannot run the Next image optimizer (sharp / WASM
+    // path is not available). Serve images as-is; size them server-side at
+    // upload time, or proxy via Cloudflare Images later.
+    unoptimized: true,
     remotePatterns: [
       { protocol: "https", hostname: "*.r2.dev" },
       { protocol: "https", hostname: "*.r2.cloudflarestorage.com" },
