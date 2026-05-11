@@ -10,9 +10,9 @@ const SCRIPT_SRC = [
   "https://plausible.io",
 ];
 
-// connect-src: APIs the browser may call. Add your Sentry ingest origin
-// (e.g. https://oXXXX.ingest.sentry.io) via env var below if/when configured.
-const SENTRY_INGEST = process.env.NEXT_PUBLIC_SENTRY_INGEST_URL ?? "";
+// connect-src: APIs the browser may call.
+// (Cloudflare Workers Observability collects errors server-side; no
+// browser-side error tracker is wired — keeps zero 3rd-party calls.)
 const CONNECT_SRC = [
   "'self'",
   "data:",
@@ -22,7 +22,6 @@ const CONNECT_SRC = [
   "https://nominatim.openstreetmap.org",
   "https://plausible.io",
   "https://api.web3forms.com",
-  ...(SENTRY_INGEST ? [SENTRY_INGEST] : []),
 ];
 
 const SECURITY_HEADERS = [

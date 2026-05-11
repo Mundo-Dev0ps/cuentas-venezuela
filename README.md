@@ -122,9 +122,18 @@ CLOUDFLARE_ACCOUNT_ID
 DATABASE_URL_PROD          # Neon prod connection string
 DATABASE_URL_STAGING       # Neon staging branch (opcional)
 S3_ENDPOINT, S3_REGION, S3_BUCKET, S3_KEY, S3_SECRET   # R2 credentials
-NEXT_PUBLIC_SENTRY_DSN     # opcional
-NEXT_PUBLIC_SENTRY_INGEST_URL  # opcional
 ```
+
+## Observabilidad
+
+Sin servicios externos. Todo dentro de Cloudflare:
+
+- **API errores + logs por request:** dashboard CF → Workers & Pages → cuentas-venezuela-api → Logs (gratis, 30d retención)
+- **Pages errores:** dashboard CF → cuentas-venezuela → Functions → Logs
+- **Live tail:** `cd api && npx wrangler tail` (stream consola en vivo)
+- **Métricas (req/s, errores, CPU):** dashboard CF → Workers & Pages → Analytics
+
+Sin SDK que cargar, sin tracking 3rd-party, sin tarjeta de crédito.
 
 ## Apoyar
 
