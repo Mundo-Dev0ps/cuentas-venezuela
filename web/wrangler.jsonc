@@ -1,0 +1,45 @@
+/**
+ * Cloudflare Workers config for the cuentas-venezuela WEB worker
+ * (Next.js compiled via @opennextjs/cloudflare).
+ *
+ * Build pipeline:
+ *   cd web/
+ *   npm run build:cf       # -> .open-next/worker.js + .open-next/assets/
+ *   npm run deploy:cf      # -> wrangler deploy (uses this file)
+ *
+ * Sister worker: api/wrangler.toml (cuentas-venezuela-api).
+ *
+ * Once the cuentasvenezuela.com zone is wired, the dashboard route
+ * binding below maps cuentasvenezuela.com/* to this worker.
+ */
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "cuentas-venezuela-web",
+  "main": ".open-next/worker.js",
+  "compatibility_date": "2026-05-01",
+  "compatibility_flags": ["nodejs_compat", "global_fetch_strictly_public"],
+  "assets": {
+    "directory": ".open-next/assets",
+    "binding": "ASSETS"
+  },
+  "observability": {
+    "enabled": true
+  },
+  "vars": {
+    "NEXT_PUBLIC_SITE_URL": "https://cuentasvenezuela.com",
+    "NEXT_PUBLIC_API_URL": "https://api.cuentasvenezuela.com",
+    "INTERNAL_API_URL": "https://api.cuentasvenezuela.com",
+    "NEXT_PUBLIC_KOFI_URL": "https://ko-fi.com/donjonny",
+    "NEXT_PUBLIC_REPO_URL": "https://github.com/donjonny/cuentas-venezuela"
+  },
+  "routes": [
+    {
+      "pattern": "cuentasvenezuela.com/*",
+      "zone_name": "cuentasvenezuela.com"
+    },
+    {
+      "pattern": "www.cuentasvenezuela.com/*",
+      "zone_name": "cuentasvenezuela.com"
+    }
+  ]
+}

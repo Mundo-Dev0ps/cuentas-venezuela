@@ -29,12 +29,12 @@ export function DemografiaView({ rows }: { rows: StockRegionRow[] }) {
   }, [rows]);
 
   const initialYear = (() => {
-    const raw = searchParams.get("year");
+    const raw = searchParams?.get("year") ?? null;
     const parsed = raw ? Number(raw) : NaN;
     return years.includes(parsed) ? parsed : (years.at(-1) ?? 0);
   })();
   const initialExcluded = (() => {
-    const raw = searchParams.get("exclude");
+    const raw = searchParams?.get("exclude") ?? null;
     if (!raw) return new Set<string>();
     const codes = raw.split(",").filter(Boolean);
     const valid = new Set(allRegions.map((r) => r.code));
