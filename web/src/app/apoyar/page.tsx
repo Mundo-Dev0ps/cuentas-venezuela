@@ -5,14 +5,12 @@ import {
   Lightbulb,
   Github,
   Languages,
-  Mail,
   Heart,
   ArrowRight,
 } from "lucide-react";
 import { KofiButton } from "@/components/kofi-button";
 import { SupportersWall } from "@/components/supporters-wall";
 import { ShareButtons } from "@/components/share-buttons";
-import { NewsletterSignup } from "@/components/newsletter-signup";
 import { getSupporters } from "@/lib/api";
 
 export const metadata = {
@@ -81,12 +79,6 @@ export default async function ApoyarPage() {
               url="https://cuentasvenezuela.org"
               text="Cuentas Venezuela: datos oficiales sobre Venezuela y la diáspora venezolana, sin tracking ni publicidad."
             />
-          </Row>
-
-          <Row icon={Mail} title="Avisarme novedades">
-            <div className="w-full sm:max-w-md">
-              <NewsletterSignup interest="general" helper="Email cuando publiquemos nuevos datos. Sin spam." />
-            </div>
           </Row>
 
           <Row icon={AlertTriangle} title="Reportar dato errado">
