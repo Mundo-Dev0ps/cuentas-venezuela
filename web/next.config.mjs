@@ -61,9 +61,15 @@ const SECURITY_HEADERS = [
 const nextConfig = {
   output: "standalone",
   reactStrictMode: true,
-  experimental: {
-    typedRoutes: true,
-  },
+  // typedRoutes is disabled until all callsites use Route<'/path'> typing.
+  // Pre-existing usages pass plain strings to <Link href> and break the
+  // production build under strict mode. Re-enable after a sweep.
+  typedRoutes: false,
+  // react-router-dom v7 + maplibre-gl get bundled into Next's shared chunks
+  // and trip the App-Router-can't-use-Html guard during /404 prerender.
+  // Treat them as external server components so prerender doesn't touch
+  // their evaluation paths.
+  serverExternalPackages: ["react-router-dom", "maplibre-gl", "@deck.gl/core", "@deck.gl/layers", "@deck.gl/react"],
   images: {
     // Cloudflare Workers cannot run the Next image optimizer (sharp / WASM
     // path is not available). Serve images as-is; size them server-side at
