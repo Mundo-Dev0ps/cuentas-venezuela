@@ -6,6 +6,20 @@ import { z } from "zod";
 import { schema, type Db } from "./db/client.js";
 import { rateLimit } from "./lib/rate-limit.js";
 
+// Drizzle's `db.execute(sql`...`)` returns different shapes per driver:
+//   - drizzle-orm/postgres-js: a plain array of rows
+//   - drizzle-orm/neon-http:   { rows: [...], rowCount, ... }
+// Normalize to a plain row array so route handlers don't care which
+// driver the entry file injected.
+function rowsOf<R = unknown>(result: unknown): R[] {
+  if (Array.isArray(result)) return result as R[];
+  if (result && typeof result === "object" && "rows" in result) {
+    const rows = (result as { rows: unknown }).rows;
+    if (Array.isArray(rows)) return rows as R[];
+  }
+  return [];
+}
+
 // =====================================================================
 // Hono bindings + per-request context shape.
 // Same routes run under Cloudflare Workers AND Node — each entry file
@@ -252,10 +266,9 @@ app.get("/v1/data/stock-region", async (c) => {
       FROM chile.sermig_stock_region
       ORDER BY year, region
     `);
+    type R = { year: number; region_code: string; region: string; stock_legal: number | null };
     return c.json({
-      items: (rows as unknown as Array<{
-        year: number; region_code: string; region: string; stock_legal: number | null;
-      }>).map((r) => ({
+      items: rowsOf<R>(rows).map((r) => ({
         year: r.year,
         region_code: r.region_code,
         region: r.region,
@@ -274,10 +287,9 @@ app.get("/v1/data/cotizantes-sector", async (c) => {
       FROM chile.sp_cotizantes
       ORDER BY year, sector
     `);
+    type R = { year: number; sector: string; cotizantes: number | null };
     return c.json({
-      items: (rows as unknown as Array<{
-        year: number; sector: string; cotizantes: number | null;
-      }>).map((r) => ({
+      items: rowsOf<R>(rows).map((r) => ({
         year: r.year,
         sector: r.sector,
         cotizantes: r.cotizantes == null ? 0 : Number(r.cotizantes),
@@ -295,10 +307,9 @@ app.get("/v1/data/comparativa-nacionalidad", async (c) => {
       FROM chile.comparativa
       ORDER BY year, nacionalidad
     `);
+    type R = { year: number; nacionalidad: string; stock_legal: number | null };
     return c.json({
-      items: (rows as unknown as Array<{
-        year: number; nacionalidad: string; stock_legal: number | null;
-      }>).map((r) => ({
+      items: rowsOf<R>(rows).map((r) => ({
         year: r.year,
         nacionalidad: r.nacionalidad,
         stock_legal: r.stock_legal == null ? 0 : Number(r.stock_legal),
@@ -316,10 +327,9 @@ app.get("/v1/data/aporte-tributario", async (c) => {
       FROM chile.sii_aporte
       ORDER BY year, concepto
     `);
+    type R = { year: number; concepto: string; monto_clp_millones: number | null };
     return c.json({
-      items: (rows as unknown as Array<{
-        year: number; concepto: string; monto_clp_millones: number | null;
-      }>).map((r) => ({
+      items: rowsOf<R>(rows).map((r) => ({
         year: r.year,
         concepto: r.concepto,
         monto_clp_millones: r.monto_clp_millones == null ? 0 : Number(r.monto_clp_millones),
@@ -359,7 +369,7 @@ app.get("/v1/ve-macro/indicators", async (c) => {
       ORDER BY country_iso3, indicator_code, year
     `);
 
-    const items = (rows as unknown as Row[]).map((r) => ({
+    const items = rowsOf<Row>(rows).map((r) => ({
       country: r.country_iso3,
       code: r.indicator_code,
       name: r.indicator_name,
@@ -401,7 +411,7 @@ app.get("/v1/migracion/acnur-ve", async (c) => {
         (COALESCE(refugees,0) + COALESCE(asylum_seekers,0) + COALESCE(others_concern,0)) DESC
     `);
 
-    const items = (rows as unknown as Row[]).map((r) => ({
+    const items = rowsOf<Row>(rows).map((r) => ({
       year: r.year,
       country: r.coa_iso3,
       countryName: r.coa_name,
@@ -448,7 +458,7 @@ app.get("/v1/ddhh/freedom-house", async (c) => {
       ORDER BY country_iso3, year
     `);
 
-    const items = (rows as unknown as Row[]).map((r) => ({
+    const items = rowsOf<Row>(rows).map((r) => ({
       country: r.country_iso3,
       year: r.year,
       status: r.status,
@@ -583,7 +593,7 @@ app.get("/api/supporters", async (c) => {
   `);
   c.header("Cache-Control", "public, max-age=60, s-maxage=300");
   return c.json({
-    items: (rows as unknown as Row[]).map((r) => ({
+    items: rowsOf<Row>(rows).map((r) => ({
       name: r.display_name,
       amount: r.amount == null ? null : Number(r.amount),
       currency: r.currency,
