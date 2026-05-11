@@ -43,8 +43,6 @@ jobs:
           INTERNAL_API_URL: https://api.cuentasvenezuela.com
           NEXT_PUBLIC_KOFI_URL: https://ko-fi.com/donjonny
           NEXT_PUBLIC_REPO_URL: https://github.com/${{ github.repository }}
-          NEXT_PUBLIC_SENTRY_DSN: ${{ secrets.NEXT_PUBLIC_SENTRY_DSN }}
-          NEXT_PUBLIC_SENTRY_INGEST_URL: ${{ secrets.NEXT_PUBLIC_SENTRY_INGEST_URL }}
           NEXT_TELEMETRY_DISABLED: "1"
         run: npm run build
 
