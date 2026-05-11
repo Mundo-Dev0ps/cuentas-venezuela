@@ -2,7 +2,7 @@
 
 Portal cívico independiente de datos abiertos sobre Venezuela y la diáspora venezolana. Sin anuncios, sin tracking, financiado por aportes voluntarios vía Ko-fi.
 
-Producción: <https://cuentasvenezuela.com>
+Producción: <https://cuentasvenezuela.org>
 
 ## Productos
 
