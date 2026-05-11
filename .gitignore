@@ -15,11 +15,13 @@ out/
 *.tsbuildinfo
 
 # data
-data/
+/data/
 *.duckdb
 *.parquet
 !etl/fixtures/*.parquet
 !web/public/data/
+# Keep source-code data dirs (e.g. web/src/mapa/data/*.ts).
+!web/src/**/data/
 
 # env
 .env

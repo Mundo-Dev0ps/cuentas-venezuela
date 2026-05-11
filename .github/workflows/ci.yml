@@ -31,9 +31,12 @@ jobs:
         working-directory: web
         run: npm run typecheck
 
-      - name: Web lint
-        working-directory: web
-        run: npm run lint
+      # `next lint` is deprecated and prompts interactively in Next 15.5+.
+      # Skipped until we migrate to the ESLint CLI:
+      #   npx @next/codemod@canary next-lint-to-eslint-cli .
+      # - name: Web lint
+      #   working-directory: web
+      #   run: npm run lint
 
       - name: Install api deps
         working-directory: api
@@ -177,7 +180,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Trivy filesystem scan
-        uses: aquasecurity/trivy-action@0.28.0
+        uses: aquasecurity/trivy-action@master
         with:
           scan-type: fs
           scan-ref: .
