@@ -1,0 +1,97 @@
+import Link from "next/link";
+import { notFound } from "next/navigation";
+import { ArrowLeft, ExternalLink } from "lucide-react";
+import { Card, CardDescription, CardTitle } from "@/components/card";
+import { PreviewTable } from "@/components/preview-table";
+import { Stat } from "@/components/stat";
+import { getIndicator } from "@/lib/api";
+
+export default async function IndicatorDetailPage({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
+  const { slug } = await params;
+  const data = await getIndicator(slug);
+  if (!data) notFound();
+
+  const { indicator, dataset, source, preview, previewError } = data;
+  const rowCount = preview.length;
+
+  return (
+    <main className="mx-auto max-w-5xl px-6 py-12">
+      <Link
+        href="/datos-chile/indicadores"
+        className="inline-flex items-center gap-1 text-sm text-slate-400 hover:text-slate-100"
+      >
+        <ArrowLeft className="h-4 w-4" /> Todos los indicadores
+      </Link>
+
+      <header className="mt-6">
+        <span className="text-xs font-semibold uppercase tracking-widest text-orange-400">
+          {indicator.category}
+        </span>
+        <h1 className="mt-1 text-3xl sm:text-4xl font-bold tracking-tight">
+          {indicator.name}
+        </h1>
+        {indicator.description ? (
+          <p className="mt-2 max-w-2xl text-slate-300">
+            {indicator.description}
+          </p>
+        ) : null}
+        <div className="mt-4 flex flex-wrap gap-2 text-xs">
+          <span className="rounded-md bg-slate-800 px-2.5 py-1 font-mono">
+            {indicator.slug}
+          </span>
+          <span className="rounded-md bg-slate-800 px-2.5 py-1">
+            unidad: {indicator.unit}
+          </span>
+        </div>
+      </header>
+
+      <section className="mt-8 grid grid-cols-2 gap-4 md:grid-cols-3">
+        <Stat label="Filas en preview" value={String(rowCount)} hint="máx 200" />
+        <Stat
+          label="Dataset"
+          value={dataset?.slug ?? "—"}
+          hint={dataset?.title}
+        />
+        <Stat
+          label="Fuente"
+          value={source?.slug ?? "—"}
+          hint={source?.name ?? undefined}
+        />
+      </section>
+
+      {source ? (
+        <div className="mt-6">
+          <Link
+            href={source.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-1.5 rounded-md border border-slate-700/40 px-3 py-1.5 text-sm hover:bg-slate-900/80"
+          >
+            Sitio fuente <ExternalLink className="h-3.5 w-3.5" />
+          </Link>
+        </div>
+      ) : null}
+
+      <section className="mt-10">
+        <Card>
+          <CardTitle>Preview de datos</CardTitle>
+          <CardDescription>
+            Primeras filas leídas directamente del Parquet en almacenamiento.
+          </CardDescription>
+          {previewError ? (
+            <p className="mt-4 rounded-md bg-amber-900/30 px-3 py-2 text-xs text-amber-200">
+              {previewError}
+            </p>
+          ) : null}
+          <div className="mt-4">
+            <PreviewTable rows={preview} />
+          </div>
+        </Card>
+      </section>
+    </main>
+  );
+}

@@ -11,6 +11,7 @@ import io
 import polars as pl
 import structlog
 
+from pipelines._pg import upsert
 from pipelines._storage import put_parquet
 
 log = structlog.get_logger(__name__)
@@ -75,7 +76,12 @@ def run() -> None:
     buf = io.BytesIO()
     df.write_parquet(buf, compression="zstd")
     put_parquet("comparativa/stock_nacionalidad.parquet", buf.getvalue())
-    log.info("pipeline.done", name="comparativa", rows=df.height)
+    n_db = upsert(
+        "chile.comparativa", df.to_dicts(), ["year", "nacionalidad"]
+    )
+    log.info(
+        "pipeline.done", name="comparativa", rows=df.height, db_rows=n_db
+    )
 
 
 if __name__ == "__main__":

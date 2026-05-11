@@ -1,11 +1,11 @@
 // Server-side (RSC, Route Handlers) uses internal docker hostname.
-// Browser uses host-mapped port via NEXT_PUBLIC_API_URL.
+// Browser uses same-origin via Next rewrite (/api/* → API) to satisfy CSP.
 const API_URL =
   typeof window === "undefined"
     ? (process.env.INTERNAL_API_URL ??
         process.env.NEXT_PUBLIC_API_URL ??
         "http://api:8000")
-    : (process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8100");
+    : "";
 
 export interface Source {
   id: number;
@@ -179,5 +179,104 @@ export async function getAporteTributario(): Promise<AporteRow[]> {
     "/v1/data/aporte-tributario",
     { items: [] },
   );
+  return res.items;
+}
+
+export interface AcnurRow {
+  year: number;
+  country: string;
+  countryName: string | null;
+  refugees: number | null;
+  asylumSeekers: number | null;
+  othersConcern: number | null;
+  total: number;
+}
+
+export async function getAcnurVe(opts: {
+  year?: number;
+  from?: number;
+  to?: number;
+  country?: string;
+} = {}): Promise<AcnurRow[]> {
+  const qs = new URLSearchParams();
+  if (opts.year != null) qs.set("year", String(opts.year));
+  if (opts.from != null) qs.set("from", String(opts.from));
+  if (opts.to != null) qs.set("to", String(opts.to));
+  if (opts.country) qs.set("country", opts.country);
+  const path = `/v1/migracion/acnur-ve${qs.size ? `?${qs.toString()}` : ""}`;
+  const res = await safeGet<{ items: AcnurRow[] }>(path, { items: [] });
+  return res.items;
+}
+
+export interface FreedomHouseRow {
+  country: string;
+  year: number;
+  status: "F" | "PF" | "NF" | string | null;
+  prRating: number | null;
+  clRating: number | null;
+  prScore: number | null;
+  clScore: number | null;
+  total: number | null;
+}
+
+export async function getFreedomHouse(opts: {
+  country?: string;
+  from?: number;
+  to?: number;
+} = {}): Promise<FreedomHouseRow[]> {
+  const qs = new URLSearchParams();
+  if (opts.country) qs.set("country", opts.country);
+  if (opts.from != null) qs.set("from", String(opts.from));
+  if (opts.to != null) qs.set("to", String(opts.to));
+  const path = `/v1/ddhh/freedom-house${qs.size ? `?${qs.toString()}` : ""}`;
+  const res = await safeGet<{ items: FreedomHouseRow[] }>(path, { items: [] });
+  return res.items;
+}
+
+export interface VeMacroRow {
+  country: string;
+  code: string;
+  name: string | null;
+  year: number;
+  value: number | null;
+}
+
+export interface Supporter {
+  name: string;
+  amount: number | null;
+  currency: string | null;
+  message: string | null;
+  type: string;
+  at: string;
+}
+
+export async function getSupporters(limit = 50): Promise<Supporter[]> {
+  // Note: this endpoint lives at /api/supporters (Hono /api/* path), so on the
+  // browser it would resolve via the Next /api/:path* rewrite. From RSC we
+  // use the direct URL like every other helper here.
+  const path = `/api/supporters?limit=${limit}`;
+  try {
+    const res = await fetch(`${API_URL}${path}`, { cache: "no-store" });
+    if (!res.ok) return [];
+    const data = (await res.json()) as { items: Supporter[] };
+    return data.items;
+  } catch {
+    return [];
+  }
+}
+
+export async function getVeMacroIndicators(opts: {
+  country?: string;
+  code?: string;
+  from?: number;
+  to?: number;
+} = {}): Promise<VeMacroRow[]> {
+  const qs = new URLSearchParams();
+  if (opts.country) qs.set("country", opts.country);
+  if (opts.code) qs.set("code", opts.code);
+  if (opts.from != null) qs.set("from", String(opts.from));
+  if (opts.to != null) qs.set("to", String(opts.to));
+  const path = `/v1/ve-macro/indicators${qs.size ? `?${qs.toString()}` : ""}`;
+  const res = await safeGet<{ items: VeMacroRow[] }>(path, { items: [] });
   return res.items;
 }

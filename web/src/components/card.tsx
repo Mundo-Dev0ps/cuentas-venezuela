@@ -10,7 +10,7 @@ export function Card({
   return (
     <div
       className={cn(
-        "rounded-xl border border-neutral-200 bg-white p-5 shadow-sm dark:border-neutral-800 dark:bg-neutral-900",
+        "rounded-xl border border-slate-700/40 bg-slate-900/80 backdrop-blur-md p-5 shadow-sm",
         className,
       )}
     >
@@ -24,9 +24,5 @@ export function CardTitle({ children }: { children: React.ReactNode }) {
 }
 
 export function CardDescription({ children }: { children: React.ReactNode }) {
-  return (
-    <p className="mt-1 text-sm text-neutral-600 dark:text-neutral-400">
-      {children}
-    </p>
-  );
+  return <p className="mt-1 text-sm text-slate-300">{children}</p>;
 }

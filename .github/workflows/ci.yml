@@ -1,0 +1,186 @@
+name: CI
+
+on:
+  push:
+    branches: [main, integracion]
+  pull_request:
+    branches: [main]
+
+env:
+  NODE_VERSION: "22"
+
+jobs:
+  lint-and-typecheck:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: "npm"
+          cache-dependency-path: |
+            web/package-lock.json
+            api/package-lock.json
+
+      - name: Install web deps
+        working-directory: web
+        run: npm ci --no-audit --prefer-offline
+
+      - name: Web typecheck
+        working-directory: web
+        run: npm run typecheck
+
+      - name: Web lint
+        working-directory: web
+        run: npm run lint
+
+      - name: Install api deps
+        working-directory: api
+        run: npm ci --no-audit --prefer-offline
+
+      - name: API typecheck
+        working-directory: api
+        run: npm run typecheck
+
+  unit-tests:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_USER: dev
+          POSTGRES_PASSWORD: dev
+          POSTGRES_DB: datos
+        ports: ["5432:5432"]
+        options: >-
+          --health-cmd "pg_isready -U dev -d datos"
+          --health-interval 5s
+          --health-timeout 3s
+          --health-retries 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: "npm"
+          cache-dependency-path: |
+            web/package-lock.json
+            api/package-lock.json
+
+      - name: Apply schema + seeds
+        env:
+          PGPASSWORD: dev
+        run: |
+          psql -h localhost -U dev -d datos -f db/schema.sql
+          psql -h localhost -U dev -d datos -f db/seeds.sql
+
+      - name: Install api deps
+        working-directory: api
+        run: npm ci --no-audit --prefer-offline
+
+      - name: Start API in background
+        working-directory: api
+        env:
+          DATABASE_URL: postgres://dev:dev@localhost:5432/datos
+        run: |
+          npm run dev &
+          for i in {1..20}; do
+            curl -fsS http://localhost:8000/health && break || sleep 1
+          done
+
+      - name: Run API tests
+        working-directory: api
+        env:
+          TEST_API_URL: http://localhost:8000
+          E2E_API_URL: http://localhost:8000
+        run: npm test
+
+  e2e:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: "npm"
+          cache-dependency-path: web/package-lock.json
+
+      - name: Bring up stack
+        run: docker compose up -d
+
+      - name: Wait for web :3100
+        run: |
+          for i in {1..60}; do
+            curl -fsS http://localhost:3100/ && exit 0
+            sleep 2
+          done
+          echo "web did not come up" >&2
+          docker compose logs web | tail -100 >&2
+          exit 1
+
+      - name: Install playwright browsers
+        working-directory: web
+        run: |
+          npm ci --no-audit --prefer-offline
+          npx playwright install --with-deps chromium
+
+      - name: Run E2E
+        working-directory: web
+        env:
+          E2E_BASE_URL: http://localhost:3100
+        run: npx playwright test
+
+      - name: Upload Playwright report
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: web/playwright-report
+          retention-days: 7
+
+  npm-audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: "${{ env.NODE_VERSION }}" }
+      - name: Audit web
+        working-directory: web
+        run: npm audit --omit=dev --audit-level=high || true
+      - name: Audit api
+        working-directory: api
+        run: npm audit --omit=dev --audit-level=high || true
+
+  pip-audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.12" }
+      - name: Install + audit ETL deps
+        working-directory: etl
+        run: |
+          pip install --upgrade pip pip-audit
+          pip install -e .
+          pip-audit --strict || true
+
+  trivy-fs:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - name: Trivy filesystem scan
+        uses: aquasecurity/trivy-action@0.28.0
+        with:
+          scan-type: fs
+          scan-ref: .
+          ignore-unfixed: true
+          severity: HIGH,CRITICAL
+          exit-code: "0"   # don't fail CI yet, surface findings only

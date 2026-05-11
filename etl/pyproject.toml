@@ -11,6 +11,9 @@ dependencies = [
     "psycopg[binary]>=3.2.3",
     "python-dotenv>=1.0.1",
     "structlog>=24.4.0",
+    "beautifulsoup4>=4.12",
+    "lxml>=5.3",
+    "fastexcel>=0.12",
 ]
 
 [project.optional-dependencies]

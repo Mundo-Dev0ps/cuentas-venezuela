@@ -1,0 +1,67 @@
+name: etl-cron
+
+on:
+  schedule:
+    # Mondays 06:00 UTC = 02:00 Chile (winter) / 03:00 (summer)
+    - cron: "0 6 * * 1"
+  workflow_dispatch:
+    inputs:
+      pipeline:
+        description: "Pipeline name (or 'all')"
+        required: false
+        default: "all"
+        type: choice
+        options:
+          - all
+          - ve_macro
+          - freedom_house
+          - acnur
+          - extranjeria
+          - sii
+          - sp
+          - comparativa
+          - ine
+      ve_macro_years:
+        description: "VE_MACRO_YEARS range (e.g. 1998:2026)"
+        required: false
+        default: "1998:2026"
+        type: string
+
+concurrency:
+  group: etl-cron
+  cancel-in-progress: false
+
+jobs:
+  run:
+    name: ${{ inputs.pipeline || 'all' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: etl/pyproject.toml
+
+      - name: Install ETL package
+        working-directory: etl
+        run: |
+          pip install --upgrade pip
+          pip install -e .
+
+      - name: Run pipeline
+        working-directory: etl
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL_PROD }}
+          S3_ENDPOINT: ${{ secrets.S3_ENDPOINT }}
+          S3_REGION: ${{ secrets.S3_REGION }}
+          S3_BUCKET: ${{ secrets.S3_BUCKET }}
+          S3_KEY: ${{ secrets.S3_KEY }}
+          S3_SECRET: ${{ secrets.S3_SECRET }}
+          S3_FORCE_PATH_STYLE: "true"
+          VE_MACRO_YEARS: ${{ inputs.ve_macro_years || '1998:2026' }}
+          ETL_LOG_LEVEL: INFO
+        run: |
+          python -m pipelines ${{ inputs.pipeline || 'all' }}
