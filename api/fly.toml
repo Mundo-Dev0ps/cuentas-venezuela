@@ -1,0 +1,52 @@
+# Fly.io config for the cuentas-venezuela Hono API.
+# Hobby plan, single shared CPU, region São Paulo (closest to LATAM users).
+#
+# First-time setup:
+#   cd api/
+#   fly launch --no-deploy --copy-config --name cuentas-venezuela-api
+#   fly secrets set DATABASE_URL=... S3_KEY=... S3_SECRET=... S3_ENDPOINT=... \
+#                   S3_BUCKET=cuentas-venezuela-prod S3_REGION=auto \
+#                   S3_FORCE_PATH_STYLE=true \
+#                   CORS_ORIGINS=https://cuentasvenezuela.com,https://www.cuentasvenezuela.com \
+#                   KOFI_VERIFICATION_TOKEN=... \
+#                   SENTRY_DSN=...
+#   fly deploy
+#
+# Subsequent deploys: handled by .github/workflows/deploy-api.yml on push to main.
+
+app = "cuentas-venezuela-api"
+primary_region = "gru"   # São Paulo. Alt: "scl" Santiago when GA, "mia" Miami.
+
+[build]
+  dockerfile = "Dockerfile"
+  build-target = "prod"
+
+[env]
+  PORT = "8000"
+  NODE_ENV = "production"
+  API_LOG_LEVEL = "info"
+  # INTERNAL_API_URL not needed here — only the web layer uses it.
+
+[http_service]
+  internal_port = 8000
+  force_https = true
+  auto_stop_machines = "stop"
+  auto_start_machines = true
+  min_machines_running = 0  # scale to zero when idle (saves $)
+  processes = ["app"]
+
+  [[http_service.checks]]
+    interval = "30s"
+    timeout = "5s"
+    grace_period = "10s"
+    method = "GET"
+    path = "/health"
+
+[[vm]]
+  cpu_kind = "shared"
+  cpus = 1
+  memory_mb = 256
+
+[deploy]
+  strategy = "rolling"
+  release_command = ""   # add `node dist/migrate.js` here if/when migrations move into the api image

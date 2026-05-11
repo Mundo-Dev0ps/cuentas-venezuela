@@ -4,7 +4,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends wget ca-certifi
 
 FROM base AS deps
 COPY package.json package-lock.json* ./
-RUN npm install
+RUN npm ci
 
 FROM base AS dev
 ENV NODE_ENV=development
@@ -27,4 +27,6 @@ COPY package.json ./
 USER app
 ENV NODE_ENV=production
 EXPOSE 8000
+HEALTHCHECK --interval=30s --timeout=5s --start-period=10s --retries=3 \
+    CMD wget --quiet --tries=1 --spider http://127.0.0.1:8000/health || exit 1
 CMD ["node", "dist/index.js"]

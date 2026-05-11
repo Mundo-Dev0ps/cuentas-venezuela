@@ -1,8 +1,32 @@
 /** @type {import('next').NextConfig} */
 const API_INTERNAL_URL = process.env.INTERNAL_API_URL || "http://api:8000";
+const isProd = process.env.NODE_ENV === "production";
+
+// `unsafe-eval` is required by Next.js dev HMR and turbopack; drop in prod.
+const SCRIPT_SRC = [
+  "'self'",
+  "'unsafe-inline'",
+  ...(isProd ? [] : ["'unsafe-eval'"]),
+  "https://plausible.io",
+];
+
+// connect-src: APIs the browser may call. Add your Sentry ingest origin
+// (e.g. https://oXXXX.ingest.sentry.io) via env var below if/when configured.
+const SENTRY_INGEST = process.env.NEXT_PUBLIC_SENTRY_INGEST_URL ?? "";
+const CONNECT_SRC = [
+  "'self'",
+  "data:",
+  "blob:",
+  "https://*.cartocdn.com",
+  "https://basemaps.cartocdn.com",
+  "https://nominatim.openstreetmap.org",
+  "https://plausible.io",
+  "https://api.web3forms.com",
+  ...(SENTRY_INGEST ? [SENTRY_INGEST] : []),
+];
 
 const SECURITY_HEADERS = [
-  ...(process.env.NODE_ENV === "production"
+  ...(isProd
     ? [
         {
           key: "Strict-Transport-Security",
@@ -21,11 +45,11 @@ const SECURITY_HEADERS = [
     key: "Content-Security-Policy",
     value: [
       "default-src 'self'",
-      "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://plausible.io",
+      `script-src ${SCRIPT_SRC.join(" ")}`,
       "style-src 'self' 'unsafe-inline'",
       "img-src 'self' data: blob: https:",
       "font-src 'self' data:",
-      "connect-src 'self' data: blob: https://*.cartocdn.com https://basemaps.cartocdn.com https://nominatim.openstreetmap.org https://plausible.io https://api.web3forms.com",
+      `connect-src ${CONNECT_SRC.join(" ")}`,
       "worker-src 'self' blob:",
       "frame-src 'self' https://ko-fi.com https://*.ko-fi.com",
       "frame-ancestors 'self'",
@@ -41,10 +65,21 @@ const nextConfig = {
   experimental: {
     typedRoutes: true,
   },
+  images: {
+    // R2 public URL pattern + any other image hosts. Adjust bucket subdomain
+    // to your actual R2 public dev URL or custom domain.
+    remotePatterns: [
+      { protocol: "https", hostname: "*.r2.dev" },
+      { protocol: "https", hostname: "*.r2.cloudflarestorage.com" },
+      { protocol: "https", hostname: "cuentasvenezuela.com" },
+    ],
+  },
   async rewrites() {
     return [
       // Same-origin proxy from Next to the Hono backend so client code can use
-      // /api/obras without CORS or hardcoded ports.
+      // /api/obras without CORS or hardcoded ports. In prod (Cloudflare Pages
+      // serving Next + Fly hosting api), set INTERNAL_API_URL to the public
+      // api hostname (e.g. https://api.cuentasvenezuela.com).
       {
         source: "/api/:path*",
         destination: `${API_INTERNAL_URL}/api/:path*`,

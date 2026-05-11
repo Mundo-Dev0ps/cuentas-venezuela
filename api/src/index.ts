@@ -12,7 +12,24 @@ import { rateLimit } from "./lib/rate-limit.js";
 const app = new Hono();
 
 app.use("*", logger());
-app.use("*", cors());
+
+// CORS: locked to env-listed origins in prod, wide-open only in dev.
+// Set CORS_ORIGINS=https://cuentasvenezuela.com,https://www.cuentasvenezuela.com
+// (comma-separated). Empty/unset → reflect any origin (dev convenience).
+const corsOrigins = (process.env.CORS_ORIGINS ?? "")
+  .split(",")
+  .map((s) => s.trim())
+  .filter(Boolean);
+app.use(
+  "*",
+  cors({
+    origin: corsOrigins.length === 0
+      ? (origin) => origin ?? "*"
+      : (origin) => (origin && corsOrigins.includes(origin) ? origin : null),
+    credentials: false,
+    maxAge: 600,
+  }),
+);
 
 app.get("/health", (c) =>
   c.json({ status: "ok", service: "api", ts: new Date().toISOString() }),

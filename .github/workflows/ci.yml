@@ -154,3 +154,33 @@ jobs:
       - name: Audit api
         working-directory: api
         run: npm audit --omit=dev --audit-level=high || true
+
+  pip-audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.12" }
+      - name: Install + audit ETL deps
+        working-directory: etl
+        run: |
+          pip install --upgrade pip pip-audit
+          pip install -e .
+          pip-audit --strict || true
+
+  trivy-fs:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - name: Trivy filesystem scan
+        uses: aquasecurity/trivy-action@0.28.0
+        with:
+          scan-type: fs
+          scan-ref: .
+          ignore-unfixed: true
+          severity: HIGH,CRITICAL
+          exit-code: "0"   # don't fail CI yet, surface findings only
