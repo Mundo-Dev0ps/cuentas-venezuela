@@ -87,3 +87,29 @@ body {
     display: none !important;
   }
 }
+
+/* CSS fallback for iOS Safari: when Screen Orientation API is missing,
+   the SPA root is rotated 90° within the existing portrait viewport so
+   the user keeps their phone vertical and sees the map sideways.
+   Touch coords get auto-adjusted by the rotation transform. */
+@media (max-width: 767px) and (orientation: portrait) {
+  body.mdo-force-landscape {
+    overflow: hidden;
+    height: 100vh;
+  }
+  body.mdo-force-landscape > div:not(header):not(footer),
+  body.mdo-force-landscape > div.flex-1 {
+    transform: rotate(90deg);
+    transform-origin: left top;
+    width: 100vh;
+    height: 100vw;
+    position: absolute;
+    top: 0;
+    left: 100vw;
+    overflow: hidden;
+  }
+  body.mdo-force-landscape header,
+  body.mdo-force-landscape footer {
+    display: none;
+  }
+}

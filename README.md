@@ -247,29 +247,6 @@ Sin SDK que cargar, sin tracking 3rd-party, sin tarjeta de crédito.
 
 ---
 
-## 👥 Multi-account GitHub (work + personal)
-
-Si tienes 2 cuentas de GitHub configuradas y NO quieres tocar la del trabajo:
-
-```bash
-# Usar el wrapper para cualquier acción gh contra el repo personal:
-./scripts/with-personal-gh.sh gh pr list --repo Mundo-Dev0ps/cuentas-venezuela
-./scripts/with-personal-gh.sh ./scripts/set-gh-secrets.sh
-
-# El wrapper:
-#   1. Detecta cuenta gh activa
-#   2. Switch a Mundo-Dev0ps
-#   3. Corre el comando
-#   4. trap → revierte a cuenta original (incluso si falla)
-```
-
-Para git push: usa SSH alias `github-personal` (ver `~/.ssh/config`):
-```bash
-git remote set-url origin git@github-personal:Mundo-Dev0ps/cuentas-venezuela.git
-```
-
----
-
 ## 🤝 Contribuir
 
 > No tienes que aportar dinero. Las acciones más útiles muchas veces no cuestan nada.
