@@ -1,10 +1,19 @@
 version: 2
+
+# Auto-update patch + minor only. Major bumps are breaking by definition
+# (TS 5→6, Tailwind 3→4, MapLibre 4→5 all break our build) — those go
+# through a human review or are pinned manually.
+
 updates:
   - package-ecosystem: npm
     directory: /web
     schedule:
       interval: weekly
     open-pull-requests-limit: 5
+    ignore:
+      # Block major bumps for every package (Dependabot still PRs minor/patch).
+      - dependency-name: "*"
+        update-types: ["version-update:semver-major"]
     groups:
       next:
         patterns: ["next", "@next/*"]
@@ -16,12 +25,41 @@ updates:
         patterns: ["maplibre-gl", "react-map-gl"]
       tailwind:
         patterns: ["tailwindcss", "autoprefixer", "postcss"]
+      cloudflare:
+        patterns: ["@cloudflare/*", "@opennextjs/*", "wrangler"]
+      types:
+        patterns: ["@types/*"]
+      testing:
+        patterns: ["vitest", "@vitest/*", "@testing-library/*", "@playwright/*", "playwright"]
 
   - package-ecosystem: npm
     directory: /api
     schedule:
       interval: weekly
     open-pull-requests-limit: 5
+    ignore:
+      - dependency-name: "*"
+        update-types: ["version-update:semver-major"]
+    groups:
+      cloudflare:
+        patterns: ["@cloudflare/*", "@opennextjs/*", "wrangler"]
+      drizzle:
+        patterns: ["drizzle-orm", "drizzle-kit"]
+      hono:
+        patterns: ["hono", "@hono/*"]
+      neon:
+        patterns: ["@neondatabase/*"]
+      types:
+        patterns: ["@types/*"]
+
+  - package-ecosystem: pip
+    directory: /etl
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 5
+    ignore:
+      - dependency-name: "*"
+        update-types: ["version-update:semver-major"]
 
   - package-ecosystem: github-actions
     directory: /
