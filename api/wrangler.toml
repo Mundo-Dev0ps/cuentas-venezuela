@@ -1,0 +1,31 @@
+# Cloudflare Workers config for cuentas-venezuela API.
+# Free plan: 100k requests/day, unlimited bandwidth, no card required.
+#
+# First-time setup (after wrangler login):
+#   cd api/
+#   wrangler secret put DATABASE_URL              # Neon HTTP connection string
+#   wrangler secret put KOFI_VERIFICATION_TOKEN
+#   wrangler deploy
+#
+# Optional Cloudflare Rate Limiting Rules (free) can be configured in the
+# CF dashboard at api.cuentasvenezuela.com instead of running rate-limit.ts
+# inside the worker.
+
+name = "cuentas-venezuela-api"
+main = "src/index.ts"
+compatibility_date = "2026-05-01"
+compatibility_flags = ["nodejs_compat"]
+
+# Plain string vars (non-secret). Override per environment as needed.
+[vars]
+API_LOG_LEVEL = "info"
+CORS_ORIGINS = "https://cuentasvenezuela.com,https://www.cuentasvenezuela.com"
+
+# Public route (after DNS + Cloudflare proxy on cuentasvenezuela.com):
+#   api.cuentasvenezuela.com/*   →   this worker
+[[routes]]
+pattern = "api.cuentasvenezuela.com/*"
+zone_name = "cuentasvenezuela.com"
+
+[observability]
+enabled = true

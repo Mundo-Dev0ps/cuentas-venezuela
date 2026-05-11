@@ -1,6 +1,15 @@
+# Dev-only image for docker compose. Prod runs on Cloudflare Workers
+# (see api/wrangler.toml + .github/workflows/deploy-api.yml).
+#
+# Dev uses tsx watch → src/dev-server.ts → @hono/node-server + postgres-js
+# (TCP to the local postgres container). Prod path in src/index.ts is the
+# Workers fetch handler using @neondatabase/serverless instead.
+
 FROM node:20-bookworm-slim AS base
 WORKDIR /app
-RUN apt-get update && apt-get install -y --no-install-recommends wget ca-certificates && rm -rf /var/lib/apt/lists/*
+RUN apt-get update && apt-get install -y --no-install-recommends \
+        ca-certificates wget \
+    && rm -rf /var/lib/apt/lists/*
 
 FROM base AS deps
 COPY package.json package-lock.json* ./
@@ -11,22 +20,6 @@ ENV NODE_ENV=development
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 EXPOSE 8000
-CMD ["npm", "run", "dev"]
-
-FROM base AS build
-COPY --from=deps /app/node_modules ./node_modules
-COPY . .
-RUN npm run build
-
-FROM node:20-bookworm-slim AS prod
-WORKDIR /app
-RUN apt-get update && apt-get install -y --no-install-recommends wget ca-certificates && rm -rf /var/lib/apt/lists/* && groupadd --system app && useradd --system --gid app app
-COPY --from=build /app/dist ./dist
-COPY --from=build /app/node_modules ./node_modules
-COPY package.json ./
-USER app
-ENV NODE_ENV=production
-EXPOSE 8000
 HEALTHCHECK --interval=30s --timeout=5s --start-period=10s --retries=3 \
     CMD wget --quiet --tries=1 --spider http://127.0.0.1:8000/health || exit 1
-CMD ["node", "dist/index.js"]
+CMD ["npm", "run", "dev"]
