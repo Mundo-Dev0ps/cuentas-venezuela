@@ -8,7 +8,7 @@
 #   wrangler deploy
 #
 # Optional Cloudflare Rate Limiting Rules (free) can be configured in the
-# CF dashboard at api.cuentasvenezuela.com instead of running rate-limit.ts
+# CF dashboard at api.cuentasvenezuela.org instead of running rate-limit.ts
 # inside the worker.
 
 name = "cuentas-venezuela-api"
@@ -19,13 +19,13 @@ compatibility_flags = ["nodejs_compat"]
 # Plain string vars (non-secret). Override per environment as needed.
 [vars]
 API_LOG_LEVEL = "info"
-CORS_ORIGINS = "https://cuentasvenezuela.com,https://www.cuentasvenezuela.com"
+CORS_ORIGINS = "https://cuentasvenezuela.org,https://www.cuentasvenezuela.org"
 
-# Public route (after DNS + Cloudflare proxy on cuentasvenezuela.com):
-#   api.cuentasvenezuela.com/*   →   this worker
+# Public route (after DNS + Cloudflare proxy on cuentasvenezuela.org):
+#   api.cuentasvenezuela.org/*   →   this worker
 [[routes]]
-pattern = "api.cuentasvenezuela.com/*"
-zone_name = "cuentasvenezuela.com"
+pattern = "api.cuentasvenezuela.org/*"
+zone_name = "cuentasvenezuela.org"
 
 [observability]
 enabled = true

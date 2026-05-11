@@ -9,8 +9,8 @@
  *
  * Sister worker: api/wrangler.toml (cuentas-venezuela-api).
  *
- * Once the cuentasvenezuela.com zone is wired, the dashboard route
- * binding below maps cuentasvenezuela.com/* to this worker.
+ * Once the cuentasvenezuela.org zone is wired, the dashboard route
+ * binding below maps cuentasvenezuela.org/* to this worker.
  */
 {
   "$schema": "node_modules/wrangler/config-schema.json",
@@ -26,20 +26,20 @@
     "enabled": true
   },
   "vars": {
-    "NEXT_PUBLIC_SITE_URL": "https://cuentasvenezuela.com",
-    "NEXT_PUBLIC_API_URL": "https://api.cuentasvenezuela.com",
-    "INTERNAL_API_URL": "https://api.cuentasvenezuela.com",
+    "NEXT_PUBLIC_SITE_URL": "https://cuentasvenezuela.org",
+    "NEXT_PUBLIC_API_URL": "https://api.cuentasvenezuela.org",
+    "INTERNAL_API_URL": "https://api.cuentasvenezuela.org",
     "NEXT_PUBLIC_KOFI_URL": "https://ko-fi.com/donjonny",
     "NEXT_PUBLIC_REPO_URL": "https://github.com/donjonny/cuentas-venezuela"
   },
   "routes": [
     {
-      "pattern": "cuentasvenezuela.com/*",
-      "zone_name": "cuentasvenezuela.com"
+      "pattern": "cuentasvenezuela.org/*",
+      "zone_name": "cuentasvenezuela.org"
     },
     {
-      "pattern": "www.cuentasvenezuela.com/*",
-      "zone_name": "cuentasvenezuela.com"
+      "pattern": "www.cuentasvenezuela.org/*",
+      "zone_name": "cuentasvenezuela.org"
     }
   ]
 }
