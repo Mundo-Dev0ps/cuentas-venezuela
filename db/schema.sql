@@ -159,6 +159,44 @@ CREATE TABLE IF NOT EXISTS migracion.acnur_ve (
 );
 CREATE INDEX IF NOT EXISTS idx_acnur_year ON migracion.acnur_ve(year);
 
+-- Chile-side fact tables — small (kilobytes) but live in Postgres so the
+-- API can query them without DuckDB (Workers runtime cannot host DuckDB).
+-- Parquet snapshots in R2 are kept as the immutable archive layer.
+
+CREATE TABLE IF NOT EXISTS chile.sermig_stock_region (
+    year         INT  NOT NULL,
+    region_code  TEXT NOT NULL,
+    region       TEXT NOT NULL,
+    stock_legal  BIGINT,
+    extracted_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    PRIMARY KEY (year, region_code)
+);
+CREATE INDEX IF NOT EXISTS idx_sermig_year ON chile.sermig_stock_region(year);
+
+CREATE TABLE IF NOT EXISTS chile.sp_cotizantes (
+    year         INT  NOT NULL,
+    sector       TEXT NOT NULL,
+    cotizantes   BIGINT,
+    extracted_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    PRIMARY KEY (year, sector)
+);
+
+CREATE TABLE IF NOT EXISTS chile.sii_aporte (
+    year                  INT  NOT NULL,
+    concepto              TEXT NOT NULL,
+    monto_clp_millones    BIGINT,
+    extracted_at          TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    PRIMARY KEY (year, concepto)
+);
+
+CREATE TABLE IF NOT EXISTS chile.comparativa (
+    year         INT  NOT NULL,
+    nacionalidad TEXT NOT NULL,
+    stock_legal  BIGINT,
+    extracted_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    PRIMARY KEY (year, nacionalidad)
+);
+
 -- Ko-fi supporters: populated by webhook from ko-fi.com on each donation.
 -- Only `is_public = TRUE` rows are exposed via /api/supporters.
 CREATE TABLE IF NOT EXISTS supporters (

@@ -19,6 +19,7 @@ import polars as pl
 import structlog
 
 from pipelines._http import fetch_bytes
+from pipelines._pg import upsert
 from pipelines._regions import REGIONS
 from pipelines._storage import put_parquet
 
@@ -125,7 +126,13 @@ def run() -> None:
     buf = io.BytesIO()
     df.write_parquet(buf, compression="zstd")
     put_parquet("sermig/stock_region.parquet", buf.getvalue())
-    log.info("pipeline.done", name="extranjeria", rows=df.height, source=used)
+    n_db = upsert(
+        "chile.sermig_stock_region", df.to_dicts(), ["year", "region_code"]
+    )
+    log.info(
+        "pipeline.done", name="extranjeria",
+        rows=df.height, db_rows=n_db, source=used,
+    )
 
 
 if __name__ == "__main__":

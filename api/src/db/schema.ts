@@ -49,10 +49,12 @@ export const indicators = pgTable("indicators", {
 export const obras = pgTable("obras", {
   id: text("id").primaryKey(),
   nombre: text("nombre").notNull(),
-  lat: numeric("lat", { mode: "number" }),
-  lng: numeric("lng", { mode: "number" }),
+  // numeric() returns string in drizzle 0.38+; the rowToObra helper in
+  // app.ts coerces to number via `num()`/`numOpt()`.
+  lat: numeric("lat"),
+  lng: numeric("lng"),
   geohash: text("geohash"),
-  presupuestoUsd: numeric("presupuesto_usd", { mode: "number" }),
+  presupuestoUsd: numeric("presupuesto_usd"),
   anioInicio: integer("anio_inicio"),
   categoria: text("categoria"),
   estadoVenezuela: text("estado_venezuela").notNull(),
@@ -61,9 +63,9 @@ export const obras = pgTable("obras", {
   fuenteUrl: text("fuente_url"),
   fotosUrl: jsonb("fotos_url").default([]),
   descripcion: text("descripcion"),
-  progresoPct: numeric("progreso_pct", { mode: "number" }),
-  sobrecostoPct: numeric("sobrecosto_pct", { mode: "number" }),
-  presupuestoOriginalUsd: numeric("presupuesto_original_usd", { mode: "number" }),
+  progresoPct: numeric("progreso_pct"),
+  sobrecostoPct: numeric("sobrecosto_pct"),
+  presupuestoOriginalUsd: numeric("presupuesto_original_usd"),
   responsablePolitico: text("responsable_politico"),
   partidoPolitico: text("partido_politico"),
   contratista: text("contratista"),
