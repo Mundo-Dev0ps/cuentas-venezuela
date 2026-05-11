@@ -108,8 +108,11 @@ docker compose exec -T -e E2E_BASE_URL=http://localhost:3000 web npx playwright 
 Cada `push` a `main` dispara, según paths cambiados:
 
 - `web/**` → `deploy-web.yml` → Cloudflare Pages
-- `api/**` → `deploy-api.yml` → Fly.io (`api/fly.toml`)
-- `db/schema.sql` → `db-migrate.yml` → `psql -f schema.sql` contra Neon
+- `api/**` → `deploy-api.yml` → `wrangler deploy` (Cloudflare Workers)
+- `db/schema.sql` o `db/seeds.sql` → `db-migrate.yml` → aplica ambos
+  contra Neon prod (idempotente vía `IF NOT EXISTS` + `ON CONFLICT`).
+  No usar `psql -c "INSERT ..."` ad-hoc: cualquier metadata permanente
+  (fuentes, datasets, indicadores) debe declararse en `db/seeds.sql`.
 
 ETL corre semanalmente (lunes 06:00 UTC) vía `etl-cron.yml`. Manual: GitHub → Actions → etl-cron → Run workflow.
 
