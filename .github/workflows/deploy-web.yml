@@ -1,5 +1,8 @@
 name: deploy-web
 
+# Build Next.js with @cloudflare/next-on-pages, then publish .vercel/output/static
+# to Cloudflare Pages. PR builds get preview URLs; main branch goes to prod.
+
 on:
   push:
     branches: [main]
@@ -22,6 +25,7 @@ jobs:
     permissions:
       contents: read
       deployments: write
+      pull-requests: write
     steps:
       - uses: actions/checkout@v4
 
@@ -35,7 +39,7 @@ jobs:
         working-directory: web
         run: npm ci
 
-      - name: Build
+      - name: Build (next-on-pages adapter)
         working-directory: web
         env:
           NEXT_PUBLIC_SITE_URL: https://cuentasvenezuela.com
@@ -44,7 +48,7 @@ jobs:
           NEXT_PUBLIC_KOFI_URL: https://ko-fi.com/donjonny
           NEXT_PUBLIC_REPO_URL: https://github.com/${{ github.repository }}
           NEXT_TELEMETRY_DISABLED: "1"
-        run: npm run build
+        run: npx @cloudflare/next-on-pages
 
       - name: Publish to Cloudflare Pages
         uses: cloudflare/pages-action@v1
@@ -52,6 +56,6 @@ jobs:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           projectName: cuentas-venezuela
-          directory: web/.next
+          directory: web/.vercel/output/static
           gitHubToken: ${{ secrets.GITHUB_TOKEN }}
           branch: ${{ github.head_ref || github.ref_name }}

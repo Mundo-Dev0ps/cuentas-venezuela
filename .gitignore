@@ -7,9 +7,12 @@ __pycache__/
 
 # build
 .next/
+.vercel/
+.wrangler/
 dist/
 build/
 out/
+*.tsbuildinfo
 
 # data
 data/
