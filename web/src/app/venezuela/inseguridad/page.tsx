@@ -2,6 +2,7 @@ import Link from "next/link";
 import { ArrowLeft, ShieldOff } from "lucide-react";
 import { getVeMacroIndicators } from "@/lib/api";
 import { IndicatorBlock } from "@/components/indicator-block";
+import { SourceBadge } from "@/components/source-badge";
 import type { VeUnit } from "@/components/ve-trend-chart";
 
 export const metadata = {
@@ -60,6 +61,18 @@ export default async function InseguridadPage() {
           letal. Venezuela registró durante años una de las tasas más altas de
           América Latina.
         </p>
+        <div className="mt-4 flex flex-wrap gap-2">
+          <SourceBadge
+            slug="unodc"
+            name="UNODC"
+            url="https://dataunodc.un.org/"
+          />
+          <SourceBadge
+            slug="world-bank"
+            name="World Bank"
+            url="https://data.worldbank.org/indicator/VC.IHR.PSRC.P5"
+          />
+        </div>
       </header>
 
       {/* KPI strip */}

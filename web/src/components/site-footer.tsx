@@ -38,7 +38,27 @@ export function SiteFooter() {
             </li>
           </ul>
         </div>
-        <div className="md:col-span-2">
+        <div>
+          <h4 className="mb-2 font-semibold text-slate-100">Transparencia</h4>
+          <ul className="space-y-1">
+            <li>
+              <Link href="/fuentes" className="hover:text-cyan-300">
+                Fuentes oficiales
+              </Link>
+            </li>
+            <li>
+              <Link href="/datos-chile/metodologia" className="hover:text-cyan-300">
+                Metodología (Chile)
+              </Link>
+            </li>
+            <li>
+              <Link href="/mapa-del-olvido/metodologia" className="hover:text-cyan-300">
+                Metodología (Mapa)
+              </Link>
+            </li>
+          </ul>
+        </div>
+        <div>
           <p>
             Datos oficiales agregados. Cada visualización cita su fuente y fecha
             de extracción. Sin datos personales identificables.

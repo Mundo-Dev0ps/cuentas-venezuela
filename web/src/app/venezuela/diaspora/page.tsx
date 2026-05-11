@@ -2,6 +2,7 @@ import Link from "next/link";
 import { ArrowLeft, Users } from "lucide-react";
 import { getAcnurVe } from "@/lib/api";
 import { DiasporaBarChart } from "@/components/diaspora-bar-chart";
+import { SourceBadge } from "@/components/source-badge";
 
 export const metadata = {
   title: "Diáspora venezolana — Venezuela | Cuentas Venezuela",
@@ -71,6 +72,13 @@ export default async function DiasporaPage() {
           colombiano) supera ampliamente lo aquí mostrado — la plataforma
           R4V de la ONU estima 7.7M+ venezolanos fuera del país.
         </p>
+        <div className="mt-4">
+          <SourceBadge
+            slug="unhcr"
+            name="UNHCR Population Statistics"
+            url="https://www.unhcr.org/refugee-statistics/download/?url=2bxU2f"
+          />
+        </div>
       </header>
 
       {/* KPI strip */}
