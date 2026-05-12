@@ -23,7 +23,7 @@ export const dynamic = "force-dynamic";
 
 const REPO_URL =
   process.env.NEXT_PUBLIC_REPO_URL ??
-  "https://github.com/donjonny/cuentas-venezuela";
+  "https://github.com/Mundo-Dev0ps/cuentas-venezuela";
 
 const TIERS = [
   { icon: "☕", label: "Café", amount: "$3.000 CLP", aprox: "≈ USD $3" },
