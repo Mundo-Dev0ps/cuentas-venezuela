@@ -159,6 +159,23 @@ CREATE TABLE IF NOT EXISTS migracion.acnur_ve (
 );
 CREATE INDEX IF NOT EXISTS idx_acnur_year ON migracion.acnur_ve(year);
 
+-- EMBI+ (Emerging Markets Bond Index Plus) — riesgo país en bps spread
+-- vs US Treasuries. Para Venezuela, valor congelado desde 2017 por
+-- suspensión de cotización (default). Fuente JP Morgan / Banco Central
+-- de Brasil API (futuro pipeline embi.py); mientras tanto snapshot en
+-- seeds.sql.
+CREATE TABLE IF NOT EXISTS macro_ve.embi_riesgo_pais (
+    country_iso3 TEXT NOT NULL,
+    country_name TEXT NOT NULL,
+    snapshot_date DATE NOT NULL,
+    value_bps    INT NOT NULL,
+    is_frozen    BOOLEAN NOT NULL DEFAULT FALSE,
+    note         TEXT,
+    extracted_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    PRIMARY KEY (country_iso3, snapshot_date)
+);
+CREATE INDEX IF NOT EXISTS idx_embi_country ON macro_ve.embi_riesgo_pais(country_iso3);
+
 -- Chile-side fact tables — small (kilobytes) but live in Postgres so the
 -- API can query them without DuckDB (Workers runtime cannot host DuckDB).
 -- Parquet snapshots in R2 are kept as the immutable archive layer.

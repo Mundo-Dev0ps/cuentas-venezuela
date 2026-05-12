@@ -533,3 +533,33 @@ ON CONFLICT (id) DO UPDATE SET
   presupuesto_usd = EXCLUDED.presupuesto_usd,
   estatus = EXCLUDED.estatus,
   updated_at = NOW();
+
+-- ─────────────────────────────────────────────────────────────────────
+-- EMBI+ snapshot (riesgo país en bps spread vs US Treasuries)
+-- Snapshot ~enero 2025 desde reportes JP Morgan / BCB / Ámbito Financiero.
+-- VEN último valor publicado por JPM antes del default soberano (2017);
+-- desde entonces los bonos no cotizan regularmente, por eso `is_frozen`.
+-- Reemplazar con pipeline embi.py (BCB API) cuando esté disponible.
+-- ─────────────────────────────────────────────────────────────────────
+INSERT INTO macro_ve.embi_riesgo_pais
+  (country_iso3, country_name, snapshot_date, value_bps, is_frozen, note) VALUES
+  ('VEN', 'Venezuela', '2017-12-31', 14620, TRUE,  'Último valor JPM antes de default soberano. Bonos en default selectivo desde noviembre 2017; spread real estimado mucho mayor.'),
+  ('ARG', 'Argentina', '2025-01-15',   695, FALSE, 'Estabilización post-Milei tras pico de 2533 en julio 2024.'),
+  ('BRA', 'Brasil',    '2025-01-15',   265, FALSE, 'Volatilidad por incertidumbre fiscal final 2024.'),
+  ('CHL', 'Chile',     '2025-01-15',   136, FALSE, 'Históricamente el spread más bajo de LATAM, junto con Uruguay.'),
+  ('COL', 'Colombia',  '2025-01-15',   315, FALSE, 'Presión por reformas fiscales 2024-2025.'),
+  ('ECU', 'Ecuador',   '2025-01-15',  1180, FALSE, 'Recuperación tras pico ~2000 bps de 2023; tensiones políticas persistentes.'),
+  ('MEX', 'México',    '2025-01-15',   325, FALSE, 'Subió tras reformas judiciales finales 2024.'),
+  ('PER', 'Perú',      '2025-01-15',   175, FALSE, 'Estable, segundo más bajo LATAM tras Chile/Uruguay.'),
+  ('URY', 'Uruguay',   '2025-01-15',   105, FALSE, 'Mantiene grado de inversión, spread más bajo región.'),
+  ('PRY', 'Paraguay',  '2025-01-15',   190, FALSE, 'Spread bajo por estabilidad macro.'),
+  ('SLV', 'El Salvador', '2025-01-15', 540, FALSE, 'Reducción notable tras restructura deuda 2023.'),
+  ('CRI', 'Costa Rica', '2025-01-15',  280, FALSE, 'Mejor calificación Centroamérica.'),
+  ('PAN', 'Panamá',    '2025-01-15',   295, FALSE, 'Presión por incertidumbre fiscal post-elecciones 2024.'),
+  ('DOM', 'Rep. Dominicana', '2025-01-15', 280, FALSE, 'Estable, grado de inversión.')
+ON CONFLICT (country_iso3, snapshot_date) DO UPDATE SET
+  country_name = EXCLUDED.country_name,
+  value_bps    = EXCLUDED.value_bps,
+  is_frozen    = EXCLUDED.is_frozen,
+  note         = EXCLUDED.note,
+  extracted_at = NOW();
