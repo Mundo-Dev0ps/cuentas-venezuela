@@ -48,7 +48,7 @@ export function SideDrawer({
     <div
       className={`mdo-overlay mdo-overlay-drawer absolute top-0 right-0 h-full z-30 transition-transform duration-300 ease-out animate-ui-slide-left animate-delay-400 ${
         collapsed ? 'translate-x-full sm:translate-x-[calc(100%-2rem)]' : 'translate-x-0'
-      } w-full sm:w-80 max-w-full`}
+      } w-[78vw] max-w-[20rem] sm:w-80`}
     >
       <button
         onClick={() => setCollapsed(c => !c)}
