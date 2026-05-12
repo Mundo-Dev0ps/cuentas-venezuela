@@ -30,7 +30,7 @@
     "NEXT_PUBLIC_API_URL": "https://api.cuentasvenezuela.org",
     "INTERNAL_API_URL": "https://api.cuentasvenezuela.org",
     "NEXT_PUBLIC_KOFI_URL": "https://ko-fi.com/donjonny",
-    "NEXT_PUBLIC_REPO_URL": "https://github.com/donjonny/cuentas-venezuela"
+    "NEXT_PUBLIC_REPO_URL": "https://github.com/Mundo-Dev0ps/cuentas-venezuela"
   },
   "routes": [
     {

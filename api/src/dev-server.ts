@@ -21,6 +21,7 @@ const env: Env = {
   CORS_ORIGINS: process.env.CORS_ORIGINS,
   KOFI_VERIFICATION_TOKEN: process.env.KOFI_VERIFICATION_TOKEN,
   API_LOG_LEVEL: process.env.API_LOG_LEVEL,
+  TURNSTILE_SECRET_KEY: process.env.TURNSTILE_SECRET_KEY,
 };
 
 const pgClient = postgres(url, { max: 5 });

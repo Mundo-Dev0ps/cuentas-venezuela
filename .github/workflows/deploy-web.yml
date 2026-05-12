@@ -46,6 +46,7 @@ jobs:
           INTERNAL_API_URL: https://api.cuentasvenezuela.org
           NEXT_PUBLIC_KOFI_URL: https://ko-fi.com/donjonny
           NEXT_PUBLIC_REPO_URL: https://github.com/${{ github.repository }}
+          NEXT_PUBLIC_TURNSTILE_SITE_KEY: ${{ secrets.NEXT_PUBLIC_TURNSTILE_SITE_KEY }}
           NEXT_TELEMETRY_DISABLED: "1"
         run: npx opennextjs-cloudflare build
 
