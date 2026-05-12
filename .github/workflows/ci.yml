@@ -160,6 +160,9 @@ jobs:
           docker compose logs web | tail -120 >&2
           exit 1
 
+      - name: Fix node_modules ownership (compose volume is root-owned)
+        run: sudo chown -R "$USER":"$USER" web/node_modules || true
+
       - name: Install playwright browsers
         working-directory: web
         run: |
