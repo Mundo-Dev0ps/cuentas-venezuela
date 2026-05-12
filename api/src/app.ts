@@ -5,6 +5,7 @@ import { eq, sql } from "drizzle-orm";
 import { z } from "zod";
 import { schema, type Db } from "./db/client.js";
 import { rateLimit } from "./lib/rate-limit.js";
+import { notify } from "./lib/mailer.js";
 
 // Drizzle's `db.execute(sql`...`)` returns different shapes per driver:
 //   - drizzle-orm/postgres-js: a plain array of rows
@@ -31,6 +32,12 @@ export interface Env {
   CORS_ORIGINS?: string;
   KOFI_VERIFICATION_TOKEN?: string;
   API_LOG_LEVEL?: string;
+  /**
+   * Cloudflare Email Workers binding (wrangler.toml [[send_email]]).
+   * Optional — when undefined the API still works, it just skips the
+   * notification step. Local Node dev never has it.
+   */
+  SEND_EMAIL?: { send: (message: unknown) => Promise<void> };
 }
 
 export type Variables = {
@@ -734,6 +741,26 @@ app.post("/api/reportes", reportLimiter, async (c) => {
     contacto: parsed.data.contacto ?? null,
     evidenciaUrl: parsed.data.evidencia_url ?? null,
   });
+
+  // Best-effort notification email. Failure does NOT roll back the insert.
+  await notify({
+    binding: c.env.SEND_EMAIL,
+    to: "hola@cuentasvenezuela.org",
+    subject: `Nuevo reporte ciudadano${parsed.data.obra_id ? ` · obra ${parsed.data.obra_id}` : ""}`,
+    body: [
+      `ID reporte: ${id}`,
+      `Obra: ${parsed.data.obra_id ?? "(sin asociar)"}`,
+      `Contacto: ${parsed.data.contacto ?? "(anónimo)"}`,
+      `Evidencia: ${parsed.data.evidencia_url ?? "(sin URL)"}`,
+      "",
+      "Descripción:",
+      parsed.data.descripcion,
+      "",
+      "—",
+      "Revisar en la tabla public.reportes_ciudadanos (status=pending).",
+    ].join("\n"),
+  });
+
   return c.json({ id, status: "pending" }, 201);
 });
 
