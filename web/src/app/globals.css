@@ -121,6 +121,24 @@ body {
      2. CSS-rotate fallback (body.mdo-force-landscape, iOS Safari)
    ───────────────────────────────────────────────────────────────────── */
 
+/* Real phone portrait (<640px): HeroStats + SideDrawer + filters smaller */
+@media (max-width: 639px) and (orientation: portrait) {
+  .mdo-overlay-stats {
+    transform: translateX(-50%) scale(0.85);
+    transform-origin: top center;
+  }
+  .mdo-overlay-drawer {
+    font-size: 0.8125rem;
+  }
+  .mdo-overlay-drawer * {
+    font-size: inherit;
+  }
+  .mdo-overlay-filters {
+    transform: scale(0.85);
+    transform-origin: bottom left;
+  }
+}
+
 /* Mobile portrait — Tailwind sm: breakpoint hits 640px so phones between
    640-768px (large phones / tablets) still trigger desktop overlays.
    Shrink them so the map breathes. */
