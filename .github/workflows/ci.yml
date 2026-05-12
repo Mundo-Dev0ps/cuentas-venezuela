@@ -112,16 +112,31 @@ jobs:
           cache-dependency-path: web/package-lock.json
 
       - name: Bring up stack
-        run: docker compose up -d
+        # Bring up postgres + minio + api + web. `--no-deps`-style: do NOT
+        # use `--wait` since api healthcheck cold-starts >2min on the GH
+        # runner and would abort the whole job. Instead let services start,
+        # then poll explicitly below.
+        run: docker compose up -d --no-recreate
+
+      - name: Wait for api :8100/health (cold start tolerant)
+        run: |
+          for i in {1..90}; do
+            code=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:8100/health || true)
+            [ "$code" = "200" ] && echo "api ready ($i tries)" && exit 0
+            sleep 4
+          done
+          echo "api did not become healthy in 6min" >&2
+          docker compose logs api | tail -120 >&2
+          exit 1
 
       - name: Wait for web :3100
         run: |
-          for i in {1..60}; do
-            curl -fsS http://localhost:3100/ && exit 0
-            sleep 2
+          for i in {1..90}; do
+            curl -fsS http://localhost:3100/ -o /dev/null && echo "web ready ($i tries)" && exit 0
+            sleep 4
           done
-          echo "web did not come up" >&2
-          docker compose logs web | tail -100 >&2
+          echo "web did not come up in 6min" >&2
+          docker compose logs web | tail -120 >&2
           exit 1
 
       - name: Install playwright browsers
