@@ -61,6 +61,8 @@ const SECURITY_HEADERS = [
 const nextConfig = {
   output: "standalone",
   reactStrictMode: true,
+  // Strip the `x-powered-by: Next.js` header — info disclosure, no upside.
+  poweredByHeader: false,
   // typedRoutes is disabled until all callsites use Route<'/path'> typing.
   // Pre-existing usages pass plain strings to <Link href> and break the
   // production build under strict mode. Re-enable after a sweep.
