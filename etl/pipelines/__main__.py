@@ -5,6 +5,7 @@ import sys
 from pipelines import (
     acnur,
     comparativa,
+    embi,
     extranjeria,
     freedom_house,
     ine,
@@ -24,6 +25,7 @@ PIPELINES = {
     "ve_macro": ve_macro.main,
     "freedom_house": freedom_house.main,
     "acnur": acnur.main,
+    "embi": embi.main,
 }
 
 
