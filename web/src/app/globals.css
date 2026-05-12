@@ -113,3 +113,46 @@ body {
     display: none;
   }
 }
+
+/* ─────────────────────────────────────────────────────────────────────
+   Mapa landscape compact mode — overlays don't dominate, mapa toma foco.
+   Triggers en 2 escenarios:
+     1. Native landscape, viewport bajo (rotated phone real)
+     2. CSS-rotate fallback (body.mdo-force-landscape, iOS Safari)
+   ───────────────────────────────────────────────────────────────────── */
+
+/* HeroStats: barra superior — escala 65% + ancla top */
+@media (orientation: landscape) and (max-height: 500px) {
+  .mdo-overlay-stats {
+    transform: translateX(-50%) scale(0.65);
+    transform-origin: top center;
+  }
+  .mdo-overlay-drawer {
+    width: 14rem !important;
+    max-width: 50vw !important;
+    font-size: 0.8125rem;
+  }
+  .mdo-overlay-drawer * {
+    font-size: inherit;
+  }
+  .mdo-overlay-filters {
+    transform: scale(0.75);
+    bottom: 4.5rem !important;
+  }
+}
+body.mdo-force-landscape .mdo-overlay-stats {
+  transform: translateX(-50%) scale(0.65);
+  transform-origin: top center;
+}
+body.mdo-force-landscape .mdo-overlay-drawer {
+  width: 14rem !important;
+  max-width: 50vw !important;
+  font-size: 0.8125rem;
+}
+body.mdo-force-landscape .mdo-overlay-drawer * {
+  font-size: inherit;
+}
+body.mdo-force-landscape .mdo-overlay-filters {
+  transform: scale(0.75);
+  bottom: 4.5rem !important;
+}
