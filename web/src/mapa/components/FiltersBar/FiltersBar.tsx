@@ -135,7 +135,7 @@ export function FiltersBar({
   return (
     <>
       {/* Desktop: always visible left panel */}
-      <div className="mdo-overlay mdo-overlay-filters-panel hidden sm:block absolute top-4 left-4 z-20 w-72 animate-ui-slide-right animate-delay-100">
+      <div className="mdo-overlay mdo-overlay-filters-panel hidden sm:block absolute top-4 left-4 z-20 w-60 lg:w-72 animate-ui-slide-right animate-delay-100">
         <div className="backdrop-blur-md bg-slate-900/80 border border-slate-700/50 rounded-xl p-3 shadow-xl">
           {panel}
         </div>
