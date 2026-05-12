@@ -233,6 +233,20 @@ export async function getFreedomHouse(opts: {
   return res.items;
 }
 
+export interface EmbiRow {
+  country: string;
+  countryName: string;
+  snapshotDate: string;
+  valueBps: number;
+  isFrozen: boolean;
+  note: string | null;
+}
+
+export async function getEmbi(): Promise<EmbiRow[]> {
+  const res = await safeGet<{ items: EmbiRow[] }>("/v1/ve-macro/embi", { items: [] });
+  return res.items;
+}
+
 export interface VeMacroRow {
   country: string;
   code: string;
