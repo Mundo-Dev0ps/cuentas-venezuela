@@ -343,6 +343,39 @@ app.get("/v1/data/aporte-tributario", async (c) => {
 // =====================================================================
 // VE macro / DDHH / Migración endpoints (raw SQL on schema-qualified tables)
 // =====================================================================
+app.get("/v1/ve-macro/embi", async (c) => {
+  try {
+    type Row = {
+      country_iso3: string;
+      country_name: string;
+      snapshot_date: string;
+      value_bps: number;
+      is_frozen: boolean;
+      note: string | null;
+    };
+    const rows = await c.get("db").execute(sql`
+      SELECT DISTINCT ON (country_iso3)
+        country_iso3, country_name, snapshot_date, value_bps, is_frozen, note
+      FROM macro_ve.embi_riesgo_pais
+      ORDER BY country_iso3, snapshot_date DESC
+    `);
+    const items = (rows as unknown as Row[])
+      .map((r) => ({
+        country: r.country_iso3,
+        countryName: r.country_name,
+        snapshotDate: r.snapshot_date,
+        valueBps: Number(r.value_bps),
+        isFrozen: r.is_frozen,
+        note: r.note,
+      }))
+      .sort((a, b) => b.valueBps - a.valueBps);
+    c.header("Cache-Control", "public, max-age=300, s-maxage=3600");
+    return c.json({ items });
+  } catch (e) {
+    return c.json({ items: [], error: (e as Error).message }, 200);
+  }
+});
+
 app.get("/v1/ve-macro/indicators", async (c) => {
   try {
     const country = c.req.query("country");
