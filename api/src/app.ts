@@ -61,6 +61,25 @@ export function createApp(injectDb: MiddlewareHandler): AppType {
 
   app.use("*", logger());
 
+  // Security headers on every response. API returns JSON only, so a strict
+  // CSP that bans all script execution is safe and defends against
+  // would-be browser injection if the JSON ever ends up rendered raw.
+  app.use("*", async (c, next) => {
+    await next();
+    c.header("Strict-Transport-Security", "max-age=63072000; includeSubDomains; preload");
+    c.header("X-Content-Type-Options", "nosniff");
+    c.header("X-Frame-Options", "DENY");
+    c.header("Referrer-Policy", "no-referrer");
+    c.header(
+      "Permissions-Policy",
+      "camera=(), microphone=(), geolocation=(), interest-cohort=()",
+    );
+    c.header(
+      "Content-Security-Policy",
+      "default-src 'none'; frame-ancestors 'none'; base-uri 'none'",
+    );
+  });
+
   app.use("*", async (c, next) => {
     const list = (c.env.CORS_ORIGINS ?? "")
       .split(",")
