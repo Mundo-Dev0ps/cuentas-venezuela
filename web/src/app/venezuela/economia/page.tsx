@@ -1,8 +1,9 @@
 import Link from "next/link";
-import { ArrowLeft, Activity } from "lucide-react";
-import { getVeMacroIndicators } from "@/lib/api";
+import { ArrowLeft, Activity, AlertTriangle } from "lucide-react";
+import { getVeMacroIndicators, getEmbi } from "@/lib/api";
 import { IndicatorBlock } from "@/components/indicator-block";
 import { SourceBadge } from "@/components/source-badge";
+import { EmbiBarChart } from "@/components/embi-bar-chart";
 import type { VeUnit } from "@/components/ve-trend-chart";
 
 export const metadata = {
@@ -32,9 +33,12 @@ const FEATURED: I[] = [
 ];
 
 export default async function EconomiaPage() {
-  const allRows = await Promise.all(
-    FEATURED.map((f) => getVeMacroIndicators({ code: f.code, from: 1998, to: 2024 })),
-  );
+  const [allRows, embi] = await Promise.all([
+    Promise.all(FEATURED.map((f) => getVeMacroIndicators({ code: f.code, from: 1998, to: 2024 }))),
+    getEmbi(),
+  ]);
+  const ven = embi.find((e) => e.country === "VEN");
+  const venVsChl = ven && embi.find((e) => e.country === "CHL");
 
   return (
     <div className="mx-auto max-w-6xl px-4 py-10 sm:px-6">
@@ -71,6 +75,53 @@ export default async function EconomiaPage() {
           />
         </div>
       </header>
+
+      {/* Riesgo país (EMBI+) — Venezuela vs LATAM */}
+      {embi.length > 0 && (
+        <section className="mb-10 rounded-xl border border-rose-500/30 bg-slate-900/80 p-5 sm:p-6">
+          <div className="flex flex-wrap items-baseline justify-between gap-2 mb-1">
+            <h2 className="text-xl font-semibold text-slate-100 flex items-center gap-2">
+              <AlertTriangle className="h-5 w-5 text-rose-400" aria-hidden />
+              Riesgo país — Venezuela vs LATAM
+            </h2>
+            <p className="text-xs text-slate-500">EMBI+ spread (bps vs US Treasuries)</p>
+          </div>
+          <p className="text-sm text-slate-400 mb-4 max-w-3xl leading-relaxed">
+            Spread sobre bonos del Tesoro de EE.UU. Venezuela registra el spread
+            más alto de la región — su último valor publicado por JP Morgan
+            (2017) fue <strong className="text-rose-300">{ven?.valueBps.toLocaleString("es-CL")} bps</strong>
+            {" "}({ven && venVsChl ? `${(ven.valueBps / venVsChl.valueBps).toFixed(0)}× peor que Chile` : ""}).
+            Los bonos venezolanos están en default selectivo desde noviembre 2017,
+            por lo que el indicador permanece congelado en esa fecha.
+          </p>
+          <EmbiBarChart
+            data={embi.map((e) => ({
+              country: e.country,
+              countryName: e.countryName,
+              valueBps: e.valueBps,
+              isFrozen: e.isFrozen,
+              snapshotDate: e.snapshotDate,
+            }))}
+            height={460}
+          />
+          <div className="mt-3 text-xs text-slate-500 grid gap-1">
+            <p>
+              <span className="inline-block w-3 h-3 rounded-sm bg-rose-500 mr-1.5 align-middle" />
+              Venezuela (congelado 2017)
+              <span className="inline-block w-3 h-3 rounded-sm bg-orange-400 mx-1.5 ml-4 align-middle" />
+              Crítico (&gt;1000 bps)
+              <span className="inline-block w-3 h-3 rounded-sm bg-yellow-300 mx-1.5 ml-4 align-middle" />
+              Moderado (300-1000)
+              <span className="inline-block w-3 h-3 rounded-sm bg-cyan-400 mx-1.5 ml-4 align-middle" />
+              Bajo (&lt;300)
+            </p>
+            <p className="italic">
+              EMBI+ {ven?.snapshotDate} (VEN) · resto: snapshot enero 2025.
+              Fuente: JP Morgan / Banco Central de Brasil / Ámbito Financiero.
+            </p>
+          </div>
+        </section>
+      )}
 
       <section className="grid gap-8">
         {FEATURED.map((cfg, i) => (
