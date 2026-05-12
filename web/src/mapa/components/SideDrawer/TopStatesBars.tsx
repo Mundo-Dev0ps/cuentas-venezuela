@@ -54,11 +54,11 @@ export function TopStatesBars({ obras, onSelectState, limit = 5 }: TopStatesBars
               className="group text-left bg-slate-800/40 hover:bg-slate-800/70 transition-colors rounded-md p-2 border border-slate-700/30"
             >
               <div className="flex items-center justify-between mb-1">
-                <span className="text-slate-100 text-xs font-semibold truncate flex items-center gap-2">
+                <span className="text-slate-100 text-xs font-semibold flex items-center gap-2 min-w-0 flex-1">
                   <span className="text-slate-500 font-mono w-4 shrink-0">#{i + 1}</span>
-                  {s.name}
+                  <span className="truncate">{s.name}</span>
                 </span>
-                <span className="text-rose-400 font-mono text-xs font-bold shrink-0 ml-2">
+                <span className="text-rose-400 font-mono text-[11px] font-bold shrink-0 ml-2 whitespace-nowrap">
                   {formatUSD(s.total)}<span className="text-rose-300/70 text-[9px] ml-0.5">USD</span>
                 </span>
               </div>
