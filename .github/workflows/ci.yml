@@ -111,11 +111,32 @@ jobs:
           cache: "npm"
           cache-dependency-path: web/package-lock.json
 
+      - name: Setup .env (CI defaults — postgres + minio local)
+        # Compose interpolates ${DATABASE_URL}, ${S3_*} from shell env.
+        # On a fresh GH runner those are empty; api dev-server then exits
+        # with "DATABASE_URL is required". Write a CI .env that points at
+        # the same containers compose itself starts.
+        run: |
+          cat > .env <<'ENV'
+          POSTGRES_USER=dev
+          POSTGRES_PASSWORD=dev
+          POSTGRES_DB=datos
+          DATABASE_URL=postgres://dev:dev@postgres:5432/datos
+          S3_ENDPOINT=http://minio:9000
+          S3_REGION=auto
+          S3_BUCKET=datasets
+          S3_KEY=minioadmin
+          S3_SECRET=minioadmin
+          S3_FORCE_PATH_STYLE=true
+          API_LOG_LEVEL=info
+          NEXT_PUBLIC_API_URL=
+          NEXT_PUBLIC_KOFI_URL=https://ko-fi.com/donjonny
+          ENV
+
       - name: Bring up stack
-        # Bring up postgres + minio + api + web. `--no-deps`-style: do NOT
-        # use `--wait` since api healthcheck cold-starts >2min on the GH
-        # runner and would abort the whole job. Instead let services start,
-        # then poll explicitly below.
+        # Do NOT use `--wait`: api cold-starts >2min on a fresh GH runner.
+        # Web's depends_on is service_started (not service_healthy) so up -d
+        # returns quickly. Poll explicitly below.
         run: docker compose up -d --no-recreate
 
       - name: Wait for api :8100/health (cold start tolerant)
