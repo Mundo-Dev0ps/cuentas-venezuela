@@ -13,17 +13,17 @@ const TICK_MS = 1400;
 export function TimeSlider({ value, onValueChange }: TimeSliderProps) {
   const [playing, setPlaying] = useState(false);
 
-  // Advance: keep start fixed, +1 year on end. Loop back to start when reaching max.
+  // Advance: keep start fixed, +1 year on end. Stop at MAX_YEAR (no loop).
   useEffect(() => {
     if (!playing) return;
     const id = window.setInterval(() => {
       const [start, end] = value;
       if (end >= MAX_YEAR) {
-        // Loop: restart from start year (single-year window)
-        onValueChange([start, start]);
-      } else {
-        onValueChange([start, end + 1]);
+        // Reached end — pause playback, leave range at full extent.
+        setPlaying(false);
+        return;
       }
+      onValueChange([start, end + 1]);
     }, TICK_MS);
     return () => clearInterval(id);
   }, [playing, value, onValueChange]);
