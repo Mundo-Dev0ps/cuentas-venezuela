@@ -144,7 +144,7 @@ export function FiltersBar({
       {/* Mobile: floating button + sheet */}
       <button
         onClick={() => setMobileOpen(true)}
-        className="mdo-overlay sm:hidden fixed bottom-32 left-3 z-20 w-12 h-12 rounded-full bg-slate-900/90 backdrop-blur-md border border-slate-700/50 shadow-xl text-slate-100 flex items-center justify-center"
+        className="mdo-overlay mdo-overlay-filters sm:hidden fixed bottom-32 left-3 z-20 w-12 h-12 rounded-full bg-slate-900/90 backdrop-blur-md border border-slate-700/50 shadow-xl text-slate-100 flex items-center justify-center"
         aria-label="Abrir filtros"
       >
         <span className="text-lg">⚲</span>
