@@ -29,3 +29,11 @@ zone_name = "cuentasvenezuela.org"
 
 [observability]
 enabled = true
+
+# Cloudflare Email Workers — sends notification mails when new ciudadano
+# reports land or Ko-fi donations come in. Destination must be a verified
+# address inside cuentasvenezuela.org Email Routing (set up in dashboard).
+# Free tier: 60 emails/day per destination.
+[[send_email]]
+name = "SEND_EMAIL"
+destination_address = "hola@cuentasvenezuela.org"
