@@ -29,6 +29,20 @@ function computeMinZoom(): number {
   return MIN_ZOOM_DESKTOP;
 }
 
+function computeInitialZoom(): number {
+  if (typeof window === 'undefined') return INITIAL_VIEW_STATE.zoom;
+  const w = window.innerWidth;
+  const h = window.innerHeight;
+  // Mobile portrait: zoom out so Venezuela fits well
+  if (w < 640) return 5.2;
+  // Rotated phone (landscape low height)
+  if (h <= 500 && w < 1024) return 5.6;
+  // Tablet portrait
+  if (w < 1024) return 5.8;
+  // Desktop
+  return INITIAL_VIEW_STATE.zoom;
+}
+
 interface MapContainerProps {
   layers: Layer[];
   onZoomChange?: (zoom: number) => void;
@@ -36,7 +50,10 @@ interface MapContainerProps {
 }
 
 export function MapContainer({ layers, onZoomChange, getTooltip }: MapContainerProps) {
-  const [viewState, setViewState] = useState<MapViewState>(INITIAL_VIEW_STATE);
+  const [viewState, setViewState] = useState<MapViewState>(() => ({
+    ...INITIAL_VIEW_STATE,
+    zoom: computeInitialZoom(),
+  }));
   const [minZoom, setMinZoom] = useState<number>(() => computeMinZoom());
 
   // Re-evaluate min zoom when the viewport changes (resize, orientation, fullscreen).
