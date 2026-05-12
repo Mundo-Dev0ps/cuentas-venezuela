@@ -57,4 +57,9 @@ push S3_SECRET                 "${R2_SECRET:-}"
 # Ko-fi (optional — empty value is skipped)
 push KOFI_VERIFICATION_TOKEN   "${KOFI_VERIFICATION_TOKEN:-}"
 
+# Turnstile (CAPTCHA)
+# Site key is needed at build-time by the web Worker; secret stays on
+# the api Worker (set separately via `wrangler secret put`).
+push NEXT_PUBLIC_TURNSTILE_SITE_KEY "${NEXT_PUBLIC_TURNSTILE_SITE_KEY:-}"
+
 echo "Done."

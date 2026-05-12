@@ -10,7 +10,7 @@ import {
 
 const REPO_URL =
   process.env.NEXT_PUBLIC_REPO_URL ??
-  "https://github.com/donjonny/cuentas-venezuela";
+  "https://github.com/Mundo-Dev0ps/cuentas-venezuela";
 
 const WAYS = [
   {

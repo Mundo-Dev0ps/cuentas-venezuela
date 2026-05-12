@@ -7,6 +7,8 @@ export interface ReportInput {
   estado: string;
   fuente: string;
   mensaje: string;
+  /** Cloudflare Turnstile verification token (sent to API for validation). */
+  turnstileToken?: string;
 }
 
 async function notifyEmail(subject: string, body: Record<string, string>): Promise<void> {
@@ -43,6 +45,7 @@ export async function submitReport(input: ReportInput): Promise<string> {
     body: JSON.stringify({
       descripcion,
       evidencia_url: input.fuente.slice(0, 500) || undefined,
+      turnstile_token: input.turnstileToken || undefined,
     }),
   });
   if (!res.ok) {

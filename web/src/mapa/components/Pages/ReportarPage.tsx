@@ -1,6 +1,7 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import { PageLayout } from './PageLayout';
 import { submitReport } from '../../lib/submissions';
+import { Turnstile } from '../../../components/turnstile';
 
 type Tipo = 'correccion' | 'nueva-obra' | 'foto' | 'otro';
 
@@ -19,18 +20,30 @@ export function ReportarPage() {
   const [fuente, setFuente] = useState('');
   const [status, setStatus] = useState<'idle' | 'sending' | 'ok' | 'error'>('idle');
   const [errorMsg, setErrorMsg] = useState('');
+  const [turnstileToken, setTurnstileToken] = useState<string>('');
+
+  const onToken = useCallback((t: string) => setTurnstileToken(t), []);
+  const onExpire = useCallback(() => setTurnstileToken(''), []);
+
+  const turnstileRequired = Boolean(process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (turnstileRequired && !turnstileToken) {
+      setStatus('error');
+      setErrorMsg('Completa la verificación anti-bot.');
+      return;
+    }
     setStatus('sending');
     setErrorMsg('');
     try {
-      await submitReport({ tipo, obra, estado, fuente, mensaje });
+      await submitReport({ tipo, obra, estado, fuente, mensaje, turnstileToken });
       setStatus('ok');
       setObra('');
       setEstado('');
       setFuente('');
       setMensaje('');
+      setTurnstileToken('');
     } catch (err) {
       console.error(err);
       setStatus('error');
@@ -113,13 +126,17 @@ export function ReportarPage() {
           />
         </Field>
 
+        <div className="pt-2">
+          <Turnstile onToken={onToken} onExpire={onExpire} className="mb-3" />
+        </div>
+
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-2">
           <p className="text-slate-500 text-xs">
             Tu reporte se guarda directamente. Lo revisamos antes de aplicarlo.
           </p>
           <button
             type="submit"
-            disabled={status === 'sending'}
+            disabled={status === 'sending' || (turnstileRequired && !turnstileToken)}
             className="bg-orange-500 hover:bg-orange-400 disabled:opacity-50 disabled:cursor-not-allowed text-slate-900 font-bold py-2.5 px-5 rounded-lg transition-colors"
           >
             {status === 'sending' ? 'Enviando...' : 'Enviar reporte →'}
