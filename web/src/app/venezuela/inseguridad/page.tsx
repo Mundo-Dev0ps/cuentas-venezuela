@@ -4,12 +4,19 @@ import { getVeMacroIndicators } from "@/lib/api";
 import { IndicatorBlock } from "@/components/indicator-block";
 import { SourceBadge } from "@/components/source-badge";
 import type { VeUnit } from "@/components/ve-trend-chart";
+import { pageMetadata } from "@/lib/seo";
+import {
+  JsonLd,
+  breadcrumbsJsonLd,
+  datasetJsonLd,
+} from "@/components/json-ld";
 
-export const metadata = {
-  title: "Inseguridad — Venezuela | Cuentas Venezuela",
+export const metadata = pageMetadata({
+  title: "Inseguridad en Venezuela",
   description:
-    "Tasa de homicidios intencionales en Venezuela vs Chile. Datos Banco Mundial / UNODC.",
-};
+    "Tasa de homicidios intencionales en Venezuela vs Chile y otros países LATAM. Datos Banco Mundial / UNODC.",
+  path: "/venezuela/inseguridad",
+});
 
 export const dynamic = "force-dynamic";
 
@@ -39,6 +46,32 @@ export default async function InseguridadPage() {
 
   return (
     <div className="mx-auto max-w-6xl px-4 py-10 sm:px-6">
+      <JsonLd
+        data={breadcrumbsJsonLd([
+          { name: "Inicio", path: "/" },
+          { name: "Venezuela", path: "/venezuela" },
+          { name: "Inseguridad", path: "/venezuela/inseguridad" },
+        ])}
+      />
+      <JsonLd
+        data={datasetJsonLd({
+          name: "Tasa de homicidios intencionales en Venezuela (1998-2024)",
+          description:
+            "Homicidios intencionales por 100.000 habitantes en Venezuela, comparados con Chile y otros países LATAM. Fuente: Banco Mundial / UNODC.",
+          path: "/venezuela/inseguridad",
+          keywords: [
+            "Venezuela",
+            "inseguridad",
+            "homicidios",
+            "UNODC",
+            "Banco Mundial",
+            "violencia",
+          ],
+          temporalCoverage: "1998/2024",
+          spatialCoverage: "Venezuela",
+          sameAs: "https://data.worldbank.org/indicator/VC.IHR.PSRC.P5",
+        })}
+      />
       <Link
         href="/venezuela"
         className="inline-flex items-center gap-1 text-cyan-300 hover:text-cyan-200 text-sm mb-6"

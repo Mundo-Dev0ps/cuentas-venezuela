@@ -1,6 +1,14 @@
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { Card, CardDescription, CardTitle } from "@/components/card";
+import { pageMetadata } from "@/lib/seo";
+
+export const metadata = pageMetadata({
+  title: "Dashboards · Datos Chile",
+  description:
+    "Panel de dashboards sobre la migración venezolana en Chile: demografía, pensiones, tributos y comparativa por nacionalidad.",
+  path: "/datos-chile/dashboards",
+});
 
 const CATEGORIES = [
   {

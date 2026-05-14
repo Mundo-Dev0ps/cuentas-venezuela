@@ -5,12 +5,19 @@ import { IndicatorBlock } from "@/components/indicator-block";
 import { SourceBadge } from "@/components/source-badge";
 import { EmbiBarChart } from "@/components/embi-bar-chart";
 import type { VeUnit } from "@/components/ve-trend-chart";
+import { pageMetadata } from "@/lib/seo";
+import {
+  JsonLd,
+  breadcrumbsJsonLd,
+  datasetJsonLd,
+} from "@/components/json-ld";
 
-export const metadata = {
-  title: "Crisis económica — Venezuela | Cuentas Venezuela",
+export const metadata = pageMetadata({
+  title: "Crisis económica de Venezuela",
   description:
-    "PIB, inflación, desempleo, deuda pública e inversión extranjera de Venezuela vs Chile. Datos Banco Mundial 1998-2024.",
-};
+    "PIB, inflación, desempleo, deuda pública, inversión extranjera y riesgo país (EMBI+) de Venezuela vs Chile y Latinoamérica. Datos Banco Mundial 1998-2024.",
+  path: "/venezuela/economia",
+});
 
 export const dynamic = "force-dynamic";
 
@@ -42,6 +49,33 @@ export default async function EconomiaPage() {
 
   return (
     <div className="mx-auto max-w-6xl px-4 py-10 sm:px-6">
+      <JsonLd
+        data={breadcrumbsJsonLd([
+          { name: "Inicio", path: "/" },
+          { name: "Venezuela", path: "/venezuela" },
+          { name: "Economía", path: "/venezuela/economia" },
+        ])}
+      />
+      <JsonLd
+        data={datasetJsonLd({
+          name: "Indicadores macroeconómicos de Venezuela (1998-2024)",
+          description:
+            "Serie histórica de PIB nominal, crecimiento, inflación, desempleo, deuda y comercio para Venezuela, con riesgo país EMBI+ comparado con LATAM.",
+          path: "/venezuela/economia",
+          keywords: [
+            "Venezuela",
+            "macroeconomía",
+            "PIB",
+            "inflación",
+            "EMBI",
+            "riesgo país",
+            "Banco Mundial",
+          ],
+          temporalCoverage: "1998/2024",
+          spatialCoverage: "Venezuela",
+          sameAs: "https://data.worldbank.org/country/venezuela-rb",
+        })}
+      />
       <Link
         href="/venezuela"
         className="inline-flex items-center gap-1 text-cyan-300 hover:text-cyan-200 text-sm mb-6"

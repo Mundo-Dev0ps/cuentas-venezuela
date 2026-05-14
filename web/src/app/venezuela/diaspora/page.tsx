@@ -3,12 +3,19 @@ import { ArrowLeft, Users } from "lucide-react";
 import { getAcnurVe } from "@/lib/api";
 import { DiasporaBarChart } from "@/components/diaspora-bar-chart";
 import { SourceBadge } from "@/components/source-badge";
+import { pageMetadata } from "@/lib/seo";
+import {
+  JsonLd,
+  breadcrumbsJsonLd,
+  datasetJsonLd,
+} from "@/components/json-ld";
 
-export const metadata = {
-  title: "Diáspora venezolana — Venezuela | Cuentas Venezuela",
+export const metadata = pageMetadata({
+  title: "Diáspora venezolana en el mundo",
   description:
     "Refugiados y solicitantes de asilo venezolanos por país de destino. Datos ACNUR/UNHCR.",
-};
+  path: "/venezuela/diaspora",
+});
 
 export const dynamic = "force-dynamic";
 
@@ -49,6 +56,32 @@ export default async function DiasporaPage() {
 
   return (
     <div className="mx-auto max-w-6xl px-4 py-10 sm:px-6">
+      <JsonLd
+        data={breadcrumbsJsonLd([
+          { name: "Inicio", path: "/" },
+          { name: "Venezuela", path: "/venezuela" },
+          { name: "Diáspora", path: "/venezuela/diaspora" },
+        ])}
+      />
+      <JsonLd
+        data={datasetJsonLd({
+          name: "Refugiados y solicitantes de asilo venezolanos por país",
+          description:
+            "Stock global de refugiados, solicitantes de asilo y personas con otra condición de protección, originarios de Venezuela. Datos ACNUR/UNHCR.",
+          path: "/venezuela/diaspora",
+          keywords: [
+            "Venezuela",
+            "diáspora venezolana",
+            "ACNUR",
+            "UNHCR",
+            "refugiados",
+            "migración venezolana",
+          ],
+          temporalCoverage: `${latestYear}`,
+          spatialCoverage: "Mundo",
+          sameAs: "https://www.unhcr.org/refugee-statistics/",
+        })}
+      />
       <Link
         href="/venezuela"
         className="inline-flex items-center gap-1 text-cyan-300 hover:text-cyan-200 text-sm mb-6"

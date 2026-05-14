@@ -6,6 +6,14 @@ import { SourcePill } from "@/components/source-pill";
 import { AporteBarChart, type AporteByYear } from "@/components/aporte-bar-chart";
 import { Reveal } from "@/components/reveal";
 import { getAporteTributario } from "@/lib/api";
+import { pageMetadata } from "@/lib/seo";
+
+export const metadata = pageMetadata({
+  title: "Aporte tributario · Datos Chile",
+  description:
+    "Aporte tributario de la migración venezolana en Chile por concepto y año. Fuente: Servicio de Impuestos Internos (SII).",
+  path: "/datos-chile/dashboards/tributario",
+});
 
 export default async function TributarioPage() {
   const rows = await getAporteTributario();
