@@ -1,5 +1,13 @@
 import Link from "next/link";
 import { listIndicators } from "@/lib/api";
+import { pageMetadata } from "@/lib/seo";
+
+export const metadata = pageMetadata({
+  title: "Indicadores · Datos Chile",
+  description:
+    "Catálogo de indicadores oficiales chilenos sobre migración venezolana, agrupados por categoría: demografía, pensiones, tributos y educación.",
+  path: "/datos-chile/indicadores",
+});
 
 export default async function IndicadoresPage() {
   const indicators = await listIndicators();

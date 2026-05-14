@@ -1,12 +1,14 @@
 import Link from "next/link";
 import { ExternalLink, Globe2, Flag } from "lucide-react";
 import { listSources, type Source } from "@/lib/api";
+import { pageMetadata } from "@/lib/seo";
 
-export const metadata = {
-  title: "Fuentes oficiales — Cuentas Venezuela",
+export const metadata = pageMetadata({
+  title: "Fuentes oficiales",
   description:
     "Listado de las fuentes oficiales usadas en todos los dashboards: organismo, licencia, URL original y descripción. Sin fuente, no publicamos el dato.",
-};
+  path: "/fuentes",
+});
 
 export const dynamic = "force-dynamic";
 
