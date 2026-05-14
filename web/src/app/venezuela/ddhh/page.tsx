@@ -6,12 +6,19 @@ import {
   type FreedomPoint,
 } from "@/components/freedom-trend-chart";
 import { SourceBadge } from "@/components/source-badge";
+import { pageMetadata } from "@/lib/seo";
+import {
+  JsonLd,
+  breadcrumbsJsonLd,
+  datasetJsonLd,
+} from "@/components/json-ld";
 
-export const metadata = {
-  title: "Derechos humanos — Venezuela | Cuentas Venezuela",
+export const metadata = pageMetadata({
+  title: "Derechos humanos en Venezuela",
   description:
     "Trayectoria de Venezuela en libertades civiles y políticas según Freedom House (2013-2024), comparada con Chile y Uruguay.",
-};
+  path: "/venezuela/ddhh",
+});
 
 export const dynamic = "force-dynamic";
 
@@ -65,6 +72,31 @@ export default async function DDHHPage() {
 
   return (
     <div className="mx-auto max-w-6xl px-4 py-10 sm:px-6">
+      <JsonLd
+        data={breadcrumbsJsonLd([
+          { name: "Inicio", path: "/" },
+          { name: "Venezuela", path: "/venezuela" },
+          { name: "Derechos humanos", path: "/venezuela/ddhh" },
+        ])}
+      />
+      <JsonLd
+        data={datasetJsonLd({
+          name: "Freedom in the World — Venezuela vs Chile/Uruguay (2013-2024)",
+          description:
+            "Puntajes anuales de Freedom House sobre derechos políticos y libertades civiles. Trayectoria de Venezuela, contrastada con Chile y Uruguay.",
+          path: "/venezuela/ddhh",
+          keywords: [
+            "Venezuela",
+            "derechos humanos",
+            "Freedom House",
+            "libertades civiles",
+            "derechos políticos",
+          ],
+          temporalCoverage: "2013/2024",
+          spatialCoverage: "Venezuela",
+          sameAs: "https://freedomhouse.org/countries/freedom-world/scores",
+        })}
+      />
       <Link
         href="/venezuela"
         className="inline-flex items-center gap-1 text-cyan-300 hover:text-cyan-200 text-sm mb-6"

@@ -6,6 +6,14 @@ import { SourcePill } from "@/components/source-pill";
 import { SectorPieChart } from "@/components/sector-pie-chart";
 import { Reveal } from "@/components/reveal";
 import { getCotizantesSector } from "@/lib/api";
+import { pageMetadata } from "@/lib/seo";
+
+export const metadata = pageMetadata({
+  title: "Pensiones · Datos Chile",
+  description:
+    "Cotizantes venezolanos al sistema previsional chileno por sector económico. Fuente: Superintendencia de Pensiones.",
+  path: "/datos-chile/dashboards/pensiones",
+});
 
 export default async function PensionesPage() {
   const rows = await getCotizantesSector();

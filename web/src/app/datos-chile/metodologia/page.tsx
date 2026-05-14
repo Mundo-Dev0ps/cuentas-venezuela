@@ -1,3 +1,12 @@
+import { pageMetadata } from "@/lib/seo";
+
+export const metadata = pageMetadata({
+  title: "Metodología · Datos Chile",
+  description:
+    "Cómo extraemos, procesamos y publicamos los datos sobre migración venezolana en Chile: fuentes, agregación, control de calidad.",
+  path: "/datos-chile/metodologia",
+});
+
 export default function MetodologiaPage() {
   return (
     <main className="mx-auto max-w-3xl px-6 py-12">

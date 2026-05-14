@@ -2,6 +2,14 @@ import Link from "next/link";
 import { ExternalLink } from "lucide-react";
 import { listSources } from "@/lib/api";
 import { Card, CardDescription, CardTitle } from "@/components/card";
+import { pageMetadata } from "@/lib/seo";
+
+export const metadata = pageMetadata({
+  title: "Fuentes · Datos Chile",
+  description:
+    "Fuentes oficiales chilenas (SERMIG, INE, SII, Superintendencia de Pensiones, Mineduc, SJM) usadas en los dashboards de migración venezolana en Chile.",
+  path: "/datos-chile/fuentes",
+});
 
 export default async function FuentesPage() {
   const sources = await listSources();

@@ -7,12 +7,14 @@ import {
   ShieldOff,
   HeartPulse,
 } from "lucide-react";
+import { pageMetadata } from "@/lib/seo";
 
-export const metadata = {
-  title: "Venezuela — Cuentas Venezuela",
+export const metadata = pageMetadata({
+  title: "Venezuela en datos",
   description:
-    "Datos sobre Venezuela: crisis económica, diáspora global, derechos humanos y comparativas antes/después.",
-};
+    "Crisis económica, diáspora global, derechos humanos, salud, inseguridad y comparativas antes/después. Datos oficiales agregados y citados.",
+  path: "/venezuela",
+});
 
 const SECTIONS = [
   {
