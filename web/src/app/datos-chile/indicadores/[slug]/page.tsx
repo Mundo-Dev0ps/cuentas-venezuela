@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowLeft, ExternalLink } from "lucide-react";
@@ -5,6 +6,31 @@ import { Card, CardDescription, CardTitle } from "@/components/card";
 import { PreviewTable } from "@/components/preview-table";
 import { Stat } from "@/components/stat";
 import { getIndicator } from "@/lib/api";
+import { pageMetadata } from "@/lib/seo";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}): Promise<Metadata> {
+  const { slug } = await params;
+  const data = await getIndicator(slug);
+  if (!data) {
+    return pageMetadata({
+      title: "Indicador no encontrado",
+      description: "El indicador solicitado no existe.",
+      path: `/datos-chile/indicadores/${slug}`,
+    });
+  }
+  const { indicator, source } = data;
+  return pageMetadata({
+    title: `${indicator.name} — ${indicator.category}`,
+    description:
+      indicator.description ??
+      `Indicador oficial sobre migración venezolana en Chile (${indicator.category}, unidad ${indicator.unit})${source ? `, fuente: ${source.name}` : ""}.`,
+    path: `/datos-chile/indicadores/${slug}`,
+  });
+}
 
 export default async function IndicatorDetailPage({
   params,

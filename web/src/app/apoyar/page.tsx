@@ -12,12 +12,14 @@ import { KofiButton } from "@/components/kofi-button";
 import { SupportersWall } from "@/components/supporters-wall";
 import { ShareButtons } from "@/components/share-buttons";
 import { getSupporters } from "@/lib/api";
+import { pageMetadata } from "@/lib/seo";
 
-export const metadata = {
-  title: "Apoyar — Cuentas Venezuela",
+export const metadata = pageMetadata({
+  title: "Apoyar el proyecto",
   description:
     "Cuentas Venezuela es un proyecto cívico independiente. Hay muchas formas de apoyar: compartir, reportar errores, suscribirse a novedades o aportar.",
-};
+  path: "/apoyar",
+});
 
 export const dynamic = "force-dynamic";
 

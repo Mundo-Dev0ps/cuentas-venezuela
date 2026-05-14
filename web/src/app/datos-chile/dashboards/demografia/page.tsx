@@ -3,6 +3,14 @@ import Link from "next/link";
 import { ArrowLeft, Users } from "lucide-react";
 import { DemografiaView } from "@/components/demografia-view";
 import { getStockRegion } from "@/lib/api";
+import { pageMetadata } from "@/lib/seo";
+
+export const metadata = pageMetadata({
+  title: "Demografía · Datos Chile",
+  description:
+    "Distribución regional del stock legal de migrantes venezolanos en Chile, con evolución por año. Fuente: SERMIG.",
+  path: "/datos-chile/dashboards/demografia",
+});
 
 export default async function DemografiaPage() {
   const rows = await getStockRegion();

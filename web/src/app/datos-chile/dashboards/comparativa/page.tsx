@@ -9,6 +9,14 @@ import {
 } from "@/components/comparativa-chart";
 import { Reveal } from "@/components/reveal";
 import { getComparativaNacionalidad } from "@/lib/api";
+import { pageMetadata } from "@/lib/seo";
+
+export const metadata = pageMetadata({
+  title: "Comparativa por nacionalidad · Datos Chile",
+  description:
+    "Stock legal de migrantes en Chile por nacionalidad y año. Venezuela vs Perú, Bolivia, Colombia y Haití. Fuente: SERMIG.",
+  path: "/datos-chile/dashboards/comparativa",
+});
 
 export default async function ComparativaPage() {
   const rows = await getComparativaNacionalidad();
