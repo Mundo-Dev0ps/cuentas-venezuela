@@ -4,7 +4,9 @@ import { ImageResponse } from "next/og";
 // generates the default OG image at /opengraph-image. Individual pages
 // can override by adding their own opengraph-image.tsx in their folder.
 
-export const runtime = "edge";
+// Runtime intentionally left default (nodejs). OpenNext+Cloudflare can't
+// bundle "edge" runtime image routes alongside the main worker — it
+// would need a separate bundle. nodejs runtime works fine for ImageResponse.
 export const alt = "Cuentas Venezuela — datos abiertos";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
