@@ -1,7 +1,7 @@
 import { ImageResponse } from "next/og";
 
 // iOS home-screen icon. 180x180 is the canonical size.
-export const runtime = "edge";
+// Default nodejs runtime — OpenNext+Cloudflare bundling rejects edge.
 export const size = { width: 180, height: 180 };
 export const contentType = "image/png";
 
