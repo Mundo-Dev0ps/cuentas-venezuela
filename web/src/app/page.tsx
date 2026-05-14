@@ -1,11 +1,13 @@
 import Link from "next/link";
 import { Map, BarChart3, Globe2 } from "lucide-react";
+import { pageMetadata } from "@/lib/seo";
 
-export const metadata = {
-  title: "Cuentas Venezuela — Datos abiertos para venezolanos",
+export const metadata = pageMetadata({
+  title: "Cuentas Venezuela — datos abiertos para venezolanos",
   description:
-    "Mapa de obras públicas en Venezuela, datos de migración venezolana en Chile y dashboards sobre Venezuela.",
-};
+    "Mapa interactivo + catálogo de obras públicas paralizadas en Venezuela, datos de migración venezolana en Chile, y dashboards sobre economía, salud, derechos humanos y diáspora.",
+  path: "/",
+});
 
 export default function HomePage() {
   return (
@@ -36,10 +38,7 @@ export default function HomePage() {
       </section>
 
       <section className="grid gap-6 md:grid-cols-3">
-        <Link
-          href="/mapa-del-olvido"
-          className="group relative rounded-xl border border-slate-700/40 border-l-[3px] border-l-cyan-400 bg-slate-900/80 p-8 transition hover:border-cyan-400/60 hover:shadow-lg"
-        >
+        <div className="group relative flex flex-col rounded-xl border border-slate-700/40 border-l-[3px] border-l-cyan-400 bg-slate-900/80 p-8 transition hover:border-cyan-400/60 hover:shadow-lg">
           <span className="absolute right-4 top-4 rounded-full border border-cyan-400/40 bg-cyan-400/10 px-2 py-0.5 text-[0.65rem] font-semibold uppercase tracking-wider text-cyan-300">
             Destacado
           </span>
@@ -51,10 +50,21 @@ export default function HomePage() {
             Mapa interactivo de obras públicas inauguradas, abandonadas o
             paralizadas en Venezuela.
           </p>
-          <span className="text-sm font-medium text-cyan-300 group-hover:underline">
-            Explorar el mapa →
-          </span>
-        </Link>
+          <div className="flex flex-col gap-1 text-sm">
+            <Link
+              href="/mapa-del-olvido"
+              className="font-medium text-cyan-300 hover:underline"
+            >
+              Explorar el mapa interactivo →
+            </Link>
+            <Link
+              href="/mapa-del-olvido/obras"
+              className="text-slate-400 hover:text-slate-200"
+            >
+              · Ver catálogo completo de obras
+            </Link>
+          </div>
+        </div>
 
         <Link
           href="/venezuela"
