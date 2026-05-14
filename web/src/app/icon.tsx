@@ -3,7 +3,8 @@ import { ImageResponse } from "next/og";
 // Next 15 file-route convention: app/icon.tsx generates /icon at runtime.
 // Browser uses this as favicon. 32x32 is the standard tab-bar size.
 
-export const runtime = "edge";
+// Default nodejs runtime — OpenNext+Cloudflare bundling rejects edge runtime
+// routes alongside the main worker.
 export const size = { width: 32, height: 32 };
 export const contentType = "image/png";
 
