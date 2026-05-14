@@ -31,7 +31,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const staticRoutes = [
     "",
     "/apoyar",
+    "/fuentes",
     "/mapa-del-olvido",
+    "/mapa-del-olvido/obras",
     "/mapa-del-olvido/sobre",
     "/mapa-del-olvido/metodologia",
     "/mapa-del-olvido/reportar",
@@ -39,6 +41,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     "/datos-chile/fuentes",
     "/datos-chile/indicadores",
     "/datos-chile/dashboards",
+    "/datos-chile/dashboards/comparativa",
+    "/datos-chile/dashboards/demografia",
+    "/datos-chile/dashboards/pensiones",
+    "/datos-chile/dashboards/tributario",
     "/datos-chile/metodologia",
     "/venezuela",
     "/venezuela/antes-despues",
@@ -49,9 +55,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     "/venezuela/diaspora",
   ].map((path) => ({ url: `${SITE}${path}`, lastModified }));
 
+  // Per-obra server-rendered detail pages at /mapa-del-olvido/obras/{id}.
+  // The old singular /obra/{id} path was retired (it was a phantom URL
+  // that only existed inside the SPA and never had an HTML page behind
+  // it; submitting it to Google produced "soft 404" noise).
   const obras = await fetchObrasForSitemap();
   const obraEntries = obras.map((o) => ({
-    url: `${SITE}/mapa-del-olvido/obra/${o.id}`,
+    url: `${SITE}/mapa-del-olvido/obras/${o.id}`,
     lastModified: o.updated_at ? new Date(o.updated_at) : lastModified,
   }));
 

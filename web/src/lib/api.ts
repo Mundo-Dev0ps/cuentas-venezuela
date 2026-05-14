@@ -279,6 +279,64 @@ export async function getSupporters(limit = 50): Promise<Supporter[]> {
   }
 }
 
+// =====================================================================
+// Mapa del Olvido — obras públicas paralizadas/críticas/inoperativas
+// =====================================================================
+// Re-declared here (instead of importing from src/mapa/types/obra.ts)
+// because that file lives inside the SPA tree and we want the server
+// helpers to stay agnostic of the SPA's internal types.
+export type ObraEstatus = "paralizada" | "critica" | "inoperativa";
+
+export interface ObraPublic {
+  id: string;
+  nombre: string;
+  coordenadas: { lat: number; lng: number };
+  geohash: string;
+  presupuesto_usd: number;
+  anio_inicio: number;
+  categoria: string;
+  estado_venezuela: string;
+  estatus: ObraEstatus;
+  ente_responsable: string;
+  fuente_url: string;
+  fotos_url: string[];
+  descripcion?: string;
+  progreso_pct?: number;
+  sobrecosto_pct?: number;
+  presupuesto_original_usd?: number;
+  responsable_politico?: string;
+  partido_politico?: string;
+  contratista?: string;
+}
+
+export async function listObras(): Promise<ObraPublic[]> {
+  try {
+    const res = await fetch(`${API_URL}/api/obras`, {
+      // 1h ISR-style cache — sitemap + list page should not hammer
+      // the API on every request.
+      next: { revalidate: 3600 },
+    });
+    if (!res.ok) return [];
+    const data = (await res.json()) as ObraPublic[];
+    return Array.isArray(data) ? data : [];
+  } catch {
+    return [];
+  }
+}
+
+export async function getObra(id: string): Promise<ObraPublic | null> {
+  try {
+    const res = await fetch(
+      `${API_URL}/api/obras/${encodeURIComponent(id)}`,
+      { next: { revalidate: 3600 } },
+    );
+    if (!res.ok) return null;
+    return (await res.json()) as ObraPublic;
+  } catch {
+    return null;
+  }
+}
+
 export async function getVeMacroIndicators(opts: {
   country?: string;
   code?: string;
