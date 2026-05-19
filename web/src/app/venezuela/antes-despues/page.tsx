@@ -4,12 +4,19 @@ import { getVeMacroIndicators } from "@/lib/api";
 import { IndicatorBlock } from "@/components/indicator-block";
 import { SourceBadge } from "@/components/source-badge";
 import type { VeUnit } from "@/components/ve-trend-chart";
+import { pageMetadata } from "@/lib/seo";
+import {
+  JsonLd,
+  breadcrumbsJsonLd,
+  datasetJsonLd,
+} from "@/components/json-ld";
 
-export const metadata = {
-  title: "Antes y después — Venezuela | Cuentas Venezuela",
+export const metadata = pageMetadata({
+  title: "Venezuela antes y después (1998-2024)",
   description:
     "Comparativa de indicadores macroeconómicos y sociales de Venezuela y Chile entre 1998 y 2024. Fuente: Banco Mundial.",
-};
+  path: "/venezuela/antes-despues",
+});
 
 export const dynamic = "force-dynamic";
 
@@ -36,6 +43,31 @@ export default async function AntesDespuesPage() {
 
   return (
     <div className="mx-auto max-w-6xl px-4 py-10 sm:px-6">
+      <JsonLd
+        data={breadcrumbsJsonLd([
+          { name: "Inicio", path: "/" },
+          { name: "Venezuela", path: "/venezuela" },
+          { name: "Antes y después", path: "/venezuela/antes-despues" },
+        ])}
+      />
+      <JsonLd
+        data={datasetJsonLd({
+          name: "Venezuela antes y después: indicadores macro y sociales (1998-2024)",
+          description:
+            "Comparativa longitudinal de PIB per cápita, esperanza de vida, mortalidad infantil, homicidios, acceso a internet y electricidad en Venezuela.",
+          path: "/venezuela/antes-despues",
+          keywords: [
+            "Venezuela",
+            "comparativa histórica",
+            "antes y después",
+            "PIB per cápita",
+            "Banco Mundial",
+          ],
+          temporalCoverage: "1998/2024",
+          spatialCoverage: "Venezuela",
+          sameAs: "https://data.worldbank.org/country/venezuela-rb",
+        })}
+      />
       <Link
         href="/venezuela"
         className="inline-flex items-center gap-1 text-cyan-300 hover:text-cyan-200 text-sm mb-6"

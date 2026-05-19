@@ -6,6 +6,14 @@ import { Card, CardDescription, CardTitle } from "@/components/card";
 import { StockChart, type StockPoint } from "@/components/stock-chart";
 import { SourcePill } from "@/components/source-pill";
 import { Reveal } from "@/components/reveal";
+import { pageMetadata } from "@/lib/seo";
+
+export const metadata = pageMetadata({
+  title: "Migración venezolana en Chile",
+  description:
+    "Datos oficiales agregados y comparables sobre la migración venezolana en Chile: demografía, pensiones, tributos y aportes al PIB.",
+  path: "/datos-chile",
+});
 
 const SAMPLE_STOCK: StockPoint[] = [
   { year: 2018, legal: 83000, estimado_total: 110000 },

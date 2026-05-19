@@ -5,6 +5,7 @@
 #   cd api/
 #   wrangler secret put DATABASE_URL              # Neon HTTP connection string
 #   wrangler secret put KOFI_VERIFICATION_TOKEN
+#   wrangler secret put TURNSTILE_SECRET_KEY      # CF Turnstile secret
 #   wrangler deploy
 #
 # Optional Cloudflare Rate Limiting Rules (free) can be configured in the

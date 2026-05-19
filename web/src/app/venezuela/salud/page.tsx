@@ -4,12 +4,19 @@ import { getVeMacroIndicators } from "@/lib/api";
 import { IndicatorBlock } from "@/components/indicator-block";
 import { SourceBadge } from "@/components/source-badge";
 import type { VeUnit } from "@/components/ve-trend-chart";
+import { pageMetadata } from "@/lib/seo";
+import {
+  JsonLd,
+  breadcrumbsJsonLd,
+  datasetJsonLd,
+} from "@/components/json-ld";
 
-export const metadata = {
-  title: "Salud — Venezuela | Cuentas Venezuela",
+export const metadata = pageMetadata({
+  title: "Salud en Venezuela",
   description:
     "Esperanza de vida, mortalidad infantil/materna, médicos por habitante y gasto en salud. Venezuela vs Chile, datos Banco Mundial.",
-};
+  path: "/venezuela/salud",
+});
 
 export const dynamic = "force-dynamic";
 
@@ -36,6 +43,33 @@ export default async function SaludPage() {
 
   return (
     <div className="mx-auto max-w-6xl px-4 py-10 sm:px-6">
+      <JsonLd
+        data={breadcrumbsJsonLd([
+          { name: "Inicio", path: "/" },
+          { name: "Venezuela", path: "/venezuela" },
+          { name: "Salud", path: "/venezuela/salud" },
+        ])}
+      />
+      <JsonLd
+        data={datasetJsonLd({
+          name: "Indicadores de salud de Venezuela (1998-2024)",
+          description:
+            "Esperanza de vida, mortalidad infantil, materna y menores de 5, médicos por mil habitantes y gasto en salud — Venezuela y comparativa con Chile.",
+          path: "/venezuela/salud",
+          keywords: [
+            "Venezuela",
+            "salud pública",
+            "esperanza de vida",
+            "mortalidad infantil",
+            "mortalidad materna",
+            "Banco Mundial",
+            "OMS",
+          ],
+          temporalCoverage: "1998/2024",
+          spatialCoverage: "Venezuela",
+          sameAs: "https://data.worldbank.org/country/venezuela-rb",
+        })}
+      />
       <Link
         href="/venezuela"
         className="inline-flex items-center gap-1 text-cyan-300 hover:text-cyan-200 text-sm mb-6"

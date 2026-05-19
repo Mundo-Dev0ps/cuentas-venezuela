@@ -1,8 +1,34 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowLeft, ExternalLink } from "lucide-react";
 import { Card, CardDescription, CardTitle } from "@/components/card";
 import { getSource } from "@/lib/api";
+import { pageMetadata } from "@/lib/seo";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}): Promise<Metadata> {
+  const { slug } = await params;
+  const data = await getSource(slug);
+  if (!data) {
+    return pageMetadata({
+      title: "Fuente no encontrada",
+      description: "La fuente solicitada no existe.",
+      path: `/datos-chile/fuentes/${slug}`,
+    });
+  }
+  const { source } = data;
+  return pageMetadata({
+    title: `${source.name} — fuente oficial`,
+    description:
+      source.description ??
+      `${source.name} (${source.organization}). Fuente oficial usada en Cuentas Venezuela.`,
+    path: `/datos-chile/fuentes/${slug}`,
+  });
+}
 
 export default async function SourceDetailPage({
   params,

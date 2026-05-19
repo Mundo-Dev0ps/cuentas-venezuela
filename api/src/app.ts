@@ -38,6 +38,12 @@ export interface Env {
    * notification step. Local Node dev never has it.
    */
   SEND_EMAIL?: { send: (message: unknown) => Promise<void> };
+  /**
+   * Cloudflare Turnstile secret key. When set, /api/reportes requires
+   * a valid `turnstile_token` in the payload. When unset, the endpoint
+   * accepts reports without CAPTCHA (dev convenience).
+   */
+  TURNSTILE_SECRET_KEY?: string;
 }
 
 export type Variables = {
@@ -54,6 +60,25 @@ export function createApp(injectDb: MiddlewareHandler): AppType {
   const app = new Hono<{ Bindings: Env; Variables: Variables }>();
 
   app.use("*", logger());
+
+  // Security headers on every response. API returns JSON only, so a strict
+  // CSP that bans all script execution is safe and defends against
+  // would-be browser injection if the JSON ever ends up rendered raw.
+  app.use("*", async (c, next) => {
+    await next();
+    c.header("Strict-Transport-Security", "max-age=63072000; includeSubDomains; preload");
+    c.header("X-Content-Type-Options", "nosniff");
+    c.header("X-Frame-Options", "DENY");
+    c.header("Referrer-Policy", "no-referrer");
+    c.header(
+      "Permissions-Policy",
+      "camera=(), microphone=(), geolocation=(), interest-cohort=()",
+    );
+    c.header(
+      "Content-Security-Policy",
+      "default-src 'none'; frame-ancestors 'none'; base-uri 'none'",
+    );
+  });
 
   app.use("*", async (c, next) => {
     const list = (c.env.CORS_ORIGINS ?? "")
@@ -715,9 +740,35 @@ const ReportSchema = z.object({
     .optional()
     .or(z.literal("").transform(() => undefined)),
   website: z.string().max(0).optional().default(""), // honeypot
+  turnstile_token: z.string().min(1).max(4096).optional(),
 });
 
 const reportLimiter = rateLimit({ limit: 5, windowMs: 10 * 60 * 1000 });
+
+/** Verify a Turnstile token with Cloudflare. Returns true on success. */
+async function verifyTurnstile(
+  secret: string | undefined,
+  token: string | undefined,
+  remoteip: string | undefined,
+): Promise<boolean> {
+  if (!secret) return true; // env not configured → skip verification
+  if (!token) return false;
+  try {
+    const form = new URLSearchParams();
+    form.set("secret", secret);
+    form.set("response", token);
+    if (remoteip) form.set("remoteip", remoteip);
+    const r = await fetch(
+      "https://challenges.cloudflare.com/turnstile/v0/siteverify",
+      { method: "POST", body: form },
+    );
+    if (!r.ok) return false;
+    const data = (await r.json()) as { success?: boolean };
+    return Boolean(data.success);
+  } catch {
+    return false;
+  }
+}
 
 app.post("/api/reportes", reportLimiter, async (c) => {
   let body: unknown;
@@ -731,8 +782,24 @@ app.post("/api/reportes", reportLimiter, async (c) => {
     return c.json({ error: "invalid", details: parsed.error.flatten() }, 400);
   }
   if (parsed.data.website && parsed.data.website.length > 0) {
+    // honeypot tripped — silent 201 so bots don't learn
     return c.json({ id: crypto.randomUUID(), status: "pending" }, 201);
   }
+
+  // Turnstile CAPTCHA verification (skipped when TURNSTILE_SECRET_KEY unset)
+  const ip =
+    c.req.header("cf-connecting-ip") ||
+    c.req.header("x-forwarded-for")?.split(",")[0]?.trim() ||
+    undefined;
+  const captchaOk = await verifyTurnstile(
+    c.env.TURNSTILE_SECRET_KEY,
+    parsed.data.turnstile_token,
+    ip,
+  );
+  if (!captchaOk) {
+    return c.json({ error: "captcha", message: "Verificación anti-bot fallida." }, 403);
+  }
+
   const id = crypto.randomUUID();
   await c.get("db").insert(schema.reportesCiudadanos).values({
     id,
@@ -742,8 +809,21 @@ app.post("/api/reportes", reportLimiter, async (c) => {
     evidenciaUrl: parsed.data.evidencia_url ?? null,
   });
 
+  // Dedupe email: if identical descripcion arrived in the last hour from
+  // any source, skip the notification to prevent spam-burst storms. The
+  // INSERT still happened for auditability.
+  type DupRow = { count: string };
+  const dupRows = (await c.get("db").execute(sql`
+    SELECT COUNT(*)::text AS count
+    FROM reportes_ciudadanos
+    WHERE descripcion = ${parsed.data.descripcion}
+      AND created_at > NOW() - INTERVAL '1 hour'
+  `)) as unknown as DupRow[];
+  const recentSameCount = Number(dupRows?.[0]?.count ?? "0");
+  const skipEmail = recentSameCount > 1; // > 1 because we already inserted this one
+
   // Best-effort notification email. Failure does NOT roll back the insert.
-  await notify({
+  if (!skipEmail) await notify({
     binding: c.env.SEND_EMAIL,
     to: "hola@cuentasvenezuela.org",
     subject: `Nuevo reporte ciudadano${parsed.data.obra_id ? ` · obra ${parsed.data.obra_id}` : ""}`,
