@@ -62,7 +62,9 @@ export async function generateMetadata({
   });
 }
 
-export const dynamic = "force-dynamic";
+// Pre-render every obra at build (generateStaticParams) and revalidate
+// hourly. Removing force-dynamic is what lets SSG + ISR kick in.
+export const revalidate = 3600;
 
 /**
  * Tell Next which ids to pre-render at build time. Returning all ids

@@ -18,7 +18,8 @@ export const metadata = pageMetadata({
   path: "/venezuela/salud",
 });
 
-export const dynamic = "force-dynamic";
+// World Bank health data is annual — edge-cache + hourly revalidate.
+export const revalidate = 3600;
 
 interface I {
   code: string;

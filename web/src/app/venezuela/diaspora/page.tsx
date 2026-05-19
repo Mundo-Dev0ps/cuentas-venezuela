@@ -17,7 +17,9 @@ export const metadata = pageMetadata({
   path: "/venezuela/diaspora",
 });
 
-export const dynamic = "force-dynamic";
+// ACNUR/UNHCR stock data updates at most a few times a year —
+// edge-cache + hourly revalidate.
+export const revalidate = 3600;
 
 const fmtN = (n: number) =>
   n >= 1_000_000

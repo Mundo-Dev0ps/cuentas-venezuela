@@ -18,7 +18,8 @@ export const metadata = pageMetadata({
   path: "/venezuela/antes-despues",
 });
 
-export const dynamic = "force-dynamic";
+// World Bank historical comparison — edge-cache + hourly revalidate.
+export const revalidate = 3600;
 
 interface FeaturedIndicator {
   code: string;

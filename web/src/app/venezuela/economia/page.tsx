@@ -19,7 +19,9 @@ export const metadata = pageMetadata({
   path: "/venezuela/economia",
 });
 
-export const dynamic = "force-dynamic";
+// World Bank macro data is annual at best — cache the rendered page at
+// the edge and revalidate hourly instead of rebuilding every request.
+export const revalidate = 3600;
 
 interface I {
   code: string;
