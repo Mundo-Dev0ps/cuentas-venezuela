@@ -16,7 +16,8 @@ export const metadata = pageMetadata({
   path: "/mapa-del-olvido/obras",
 });
 
-export const dynamic = "force-dynamic";
+// Obras dataset is curated/slow-changing — edge-cache + hourly revalidate.
+export const revalidate = 3600;
 
 const ESTATUS_LABEL: Record<ObraPublic["estatus"], { label: string; color: string }> = {
   paralizada: {

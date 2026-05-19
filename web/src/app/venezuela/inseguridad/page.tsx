@@ -18,7 +18,8 @@ export const metadata = pageMetadata({
   path: "/venezuela/inseguridad",
 });
 
-export const dynamic = "force-dynamic";
+// Homicide rate (World Bank/UNODC) is annual — edge-cache + hourly revalidate.
+export const revalidate = 3600;
 
 interface I {
   code: string;

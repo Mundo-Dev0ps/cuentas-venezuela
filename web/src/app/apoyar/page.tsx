@@ -21,7 +21,9 @@ export const metadata = pageMetadata({
   path: "/apoyar",
 });
 
-export const dynamic = "force-dynamic";
+// Supporters wall is user-generated (Ko-fi webhook). Keep it fresher
+// than the static data pages but still edge-cacheable: 5-minute ISR.
+export const revalidate = 300;
 
 const REPO_URL =
   process.env.NEXT_PUBLIC_REPO_URL ??

@@ -10,7 +10,8 @@ export const metadata = pageMetadata({
   path: "/fuentes",
 });
 
-export const dynamic = "force-dynamic";
+// Source catalog changes rarely — edge-cache + hourly revalidate.
+export const revalidate = 3600;
 
 // Tag each source as Chile-side or VE/global so we can group + filter.
 // Anything not in this set falls under "Otras".

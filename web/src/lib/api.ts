@@ -71,8 +71,16 @@ export interface AporteRow {
   monto_clp_millones: number;
 }
 
+// Default data path: World Bank / Freedom House / ACNUR / catalog
+// endpoints serve historical data that changes at most yearly. A
+// `no-store` here forced every consuming page into dynamic rendering
+// (TTFB 1–2.5s, no edge cache). 1h ISR keeps pages fast while still
+// picking up ETL refreshes within the hour. Callers that genuinely
+// need realtime can pass their own fetch options.
 async function get<T>(path: string): Promise<T> {
-  const res = await fetch(`${API_URL}${path}`, { cache: "no-store" });
+  const res = await fetch(`${API_URL}${path}`, {
+    next: { revalidate: 3600 },
+  });
   if (!res.ok) throw new Error(`API ${path} failed: ${res.status}`);
   return res.json() as Promise<T>;
 }
@@ -270,7 +278,11 @@ export async function getSupporters(limit = 50): Promise<Supporter[]> {
   // use the direct URL like every other helper here.
   const path = `/api/supporters?limit=${limit}`;
   try {
-    const res = await fetch(`${API_URL}${path}`, { cache: "no-store" });
+    // Ko-fi-driven; 5-minute ISR matches the /apoyar page revalidate
+    // so a new donation shows within ~5 min without per-request DB hits.
+    const res = await fetch(`${API_URL}${path}`, {
+      next: { revalidate: 300 },
+    });
     if (!res.ok) return [];
     const data = (await res.json()) as { items: Supporter[] };
     return data.items;

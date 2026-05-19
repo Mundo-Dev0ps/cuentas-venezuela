@@ -20,7 +20,8 @@ export const metadata = pageMetadata({
   path: "/venezuela/ddhh",
 });
 
-export const dynamic = "force-dynamic";
+// Freedom House publishes yearly — edge-cache + hourly revalidate.
+export const revalidate = 3600;
 
 const STATUS_LABEL: Record<string, { full: string; color: string }> = {
   F: { full: "Libre", color: "text-emerald-400 border-emerald-500/40 bg-emerald-500/5" },
