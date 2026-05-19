@@ -36,7 +36,7 @@ jobs:
     env:
       DATABASE_URL: ${{ inputs.target == 'staging' && secrets.DATABASE_URL_STAGING || secrets.DATABASE_URL_PROD }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
       - name: Install psql
         run: sudo apt-get update && sudo apt-get install -y --no-install-recommends postgresql-client
