@@ -9,7 +9,31 @@ import {
   JsonLd,
   breadcrumbsJsonLd,
   datasetJsonLd,
+  faqPageJsonLd,
 } from "@/components/json-ld";
+
+const ANTES_DESPUES_FAQS = [
+  {
+    question: "¿Cómo cambió el PIB per cápita de Venezuela entre 1998 y 2024?",
+    answer:
+      "El PIB per cápita de Venezuela pasó de aproximadamente USD 4.000 en 1998 a un pico cercano a USD 13.000 en 2012 (boom petrolero) y se contrajo hasta cerca de USD 3.000-3.500 hacia 2020-2024 — niveles similares o inferiores a los de 1998 en términos reales. Fuente: Banco Mundial (NY.GDP.PCAP.CD).",
+  },
+  {
+    question: "¿Cómo evolucionó la esperanza de vida en Venezuela versus Chile?",
+    answer:
+      "En 1998 la esperanza de vida en Venezuela era cercana a 72 años y en Chile 76. En 2024 Chile supera los 80 años mientras Venezuela está cerca de 72 — la brecha se amplió de 4 a casi 9 años. Es de los pocos países de la región donde la esperanza de vida se estancó o retrocedió. Fuente: Banco Mundial.",
+  },
+  {
+    question: "¿Subió o bajó el acceso a internet y electricidad en Venezuela?",
+    answer:
+      "El acceso a internet en Venezuela creció hasta cerca del 70% en 2017 y se estancó/retrocedió desde entonces, mientras Chile alcanzó >90%. El acceso a electricidad llegó a 100% reportado pero la calidad cayó drásticamente (apagones masivos sostenidos desde 2019). Fuente: Banco Mundial.",
+  },
+  {
+    question: "¿Cuál es el principal cambio estructural de Venezuela entre 1998 y 2024?",
+    answer:
+      "El cambio estructural más medible es la contracción acumulada del PIB (-78% nominal entre 2012 y 2020), la hiperinflación, la pérdida de población por emigración (~25%) y el colapso del aparato productivo. Países comparables de la región (Chile, Colombia, Perú) crecieron durante el mismo período. Fuente: Banco Mundial.",
+  },
+];
 
 export const metadata = pageMetadata({
   title: "Venezuela antes y después (1998-2024)",
@@ -108,6 +132,28 @@ export default async function AntesDespuesPage() {
             rows={allRows[i]}
           />
         ))}
+      </section>
+
+      <section className="mt-12 space-y-5">
+        <JsonLd data={faqPageJsonLd(ANTES_DESPUES_FAQS)} />
+        <h2 className="text-2xl font-bold tracking-tight">
+          Preguntas frecuentes sobre Venezuela 1998-2024
+        </h2>
+        <dl className="space-y-4">
+          {ANTES_DESPUES_FAQS.map((faq) => (
+            <div
+              key={faq.question}
+              className="rounded-xl border border-slate-700/40 bg-slate-900/50 p-5"
+            >
+              <dt className="text-base font-semibold text-slate-100">
+                {faq.question}
+              </dt>
+              <dd className="mt-2 text-sm leading-relaxed text-slate-300">
+                {faq.answer}
+              </dd>
+            </div>
+          ))}
+        </dl>
       </section>
 
       <footer className="mt-10 border-t border-slate-700/40 pt-6 text-xs text-slate-500">
