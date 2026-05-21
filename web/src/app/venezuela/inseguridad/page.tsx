@@ -9,7 +9,31 @@ import {
   JsonLd,
   breadcrumbsJsonLd,
   datasetJsonLd,
+  faqPageJsonLd,
 } from "@/components/json-ld";
+
+const INSEGURIDAD_FAQS = [
+  {
+    question: "¿Cuál es la tasa de homicidios en Venezuela?",
+    answer:
+      "Venezuela registró tasas de homicidios entre las más altas del mundo durante la última década, llegando a picos superiores a 60 homicidios por 100.000 habitantes según Banco Mundial y UNODC — más de 10 veces la tasa de Chile (~5/100k). La tasa ha descendido en años recientes, en parte por subregistro y por la emigración masiva.",
+  },
+  {
+    question: "¿Cómo se compara Venezuela con otros países latinoamericanos en homicidios?",
+    answer:
+      "Venezuela ha estado consistentemente entre los 5 países con mayor tasa de homicidios de América Latina, junto con El Salvador (antes de 2022), Honduras, Jamaica y Haití. Es 10-15 veces más alta que Chile, Argentina o Uruguay; 3-5 veces más alta que el promedio LATAM. Fuente: Banco Mundial (VC.IHR.PSRC.P5) / UNODC.",
+  },
+  {
+    question: "¿Por qué los datos oficiales de homicidios en Venezuela son discutidos?",
+    answer:
+      "Venezuela dejó de publicar estadísticas oficiales de homicidios sistemáticas a partir de 2005. Los datos del Banco Mundial y UNODC se completan con estimaciones del Observatorio Venezolano de Violencia (OVV), ONGs y centros académicos. Por eso, distintas fuentes pueden diferir entre sí en años recientes.",
+  },
+  {
+    question: "¿La inseguridad en Venezuela bajó realmente o solo el reporte?",
+    answer:
+      "La tendencia mostrada por el Banco Mundial es descendente en los últimos años, pero existen tres factores que complican la lectura: 1) subregistro creciente por colapso del sistema judicial, 2) emigración de ~25% de la población reduce denominador y víctimas potenciales, 3) cambio de patrón delictivo hacia extorsión y secuestro que no se contabilizan en homicidios.",
+  },
+];
 
 export const metadata = pageMetadata({
   title: "Inseguridad en Venezuela",
@@ -177,6 +201,28 @@ export default async function InseguridadPage() {
             triangular.
           </li>
         </ul>
+      </section>
+
+      <section className="mt-12 space-y-5">
+        <JsonLd data={faqPageJsonLd(INSEGURIDAD_FAQS)} />
+        <h2 className="text-2xl font-bold tracking-tight">
+          Preguntas frecuentes sobre inseguridad en Venezuela
+        </h2>
+        <dl className="space-y-4">
+          {INSEGURIDAD_FAQS.map((faq) => (
+            <div
+              key={faq.question}
+              className="rounded-xl border border-slate-700/40 bg-slate-900/50 p-5"
+            >
+              <dt className="text-base font-semibold text-slate-100">
+                {faq.question}
+              </dt>
+              <dd className="mt-2 text-sm leading-relaxed text-slate-300">
+                {faq.answer}
+              </dd>
+            </div>
+          ))}
+        </dl>
       </section>
 
       <footer className="mt-10 border-t border-slate-700/40 pt-6 text-xs text-slate-500">

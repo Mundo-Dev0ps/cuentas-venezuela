@@ -11,7 +11,31 @@ import {
   JsonLd,
   breadcrumbsJsonLd,
   datasetJsonLd,
+  faqPageJsonLd,
 } from "@/components/json-ld";
+
+const DDHH_FAQS = [
+  {
+    question: "¿Cuál es la clasificación de Venezuela en Freedom House?",
+    answer:
+      "Venezuela está clasificada como 'No Libre' (Not Free) por Freedom House desde 2017. En 2024 obtuvo un puntaje total de 15/100 (1/40 en derechos políticos, 14/60 en libertades civiles), una de las clasificaciones más bajas de América Latina, comparable con Cuba y Nicaragua.",
+  },
+  {
+    question: "¿Desde cuándo Venezuela perdió la clasificación de país libre?",
+    answer:
+      "Venezuela fue clasificada como 'Parcialmente Libre' (Partly Free) entre los años 90 y 2016. En 2017 Freedom House la rebajó a 'No Libre' tras el desconocimiento de la Asamblea Nacional electa, la instalación de la Asamblea Nacional Constituyente y la represión de protestas. La trayectoria desde 2013 muestra un deterioro continuo del puntaje agregado.",
+  },
+  {
+    question: "¿Cómo se compara Venezuela con Chile y Uruguay en derechos humanos?",
+    answer:
+      "Chile y Uruguay han sostenido clasificación 'Libre' (Free) durante todo el período medido, con puntajes consistentemente sobre 90/100. Venezuela arranca el período en 'Parcialmente Libre' y termina en 'No Libre' con menos de 20 puntos — una brecha de más de 75 puntos respecto a sus pares regionales democráticos.",
+  },
+  {
+    question: "¿Qué mide exactamente el índice de Freedom House?",
+    answer:
+      "Freedom House mide dos dimensiones: derechos políticos (proceso electoral, pluralismo político, funcionamiento del gobierno) sobre 40 puntos, y libertades civiles (libertad de expresión, asociación, estado de derecho, autonomía personal) sobre 60 puntos. La metodología es pública y se aplica a 195 países anualmente. Fuente: freedomhouse.org/countries/freedom-world/scores",
+  },
+];
 
 export const metadata = pageMetadata({
   title: "Derechos humanos en Venezuela",
@@ -230,6 +254,28 @@ export default async function DDHHPage() {
           </div>
         </section>
       )}
+
+      <section className="mt-12 space-y-5">
+        <JsonLd data={faqPageJsonLd(DDHH_FAQS)} />
+        <h2 className="text-2xl font-bold tracking-tight">
+          Preguntas frecuentes sobre derechos humanos en Venezuela
+        </h2>
+        <dl className="space-y-4">
+          {DDHH_FAQS.map((faq) => (
+            <div
+              key={faq.question}
+              className="rounded-xl border border-slate-700/40 bg-slate-900/50 p-5"
+            >
+              <dt className="text-base font-semibold text-slate-100">
+                {faq.question}
+              </dt>
+              <dd className="mt-2 text-sm leading-relaxed text-slate-300">
+                {faq.answer}
+              </dd>
+            </div>
+          ))}
+        </dl>
+      </section>
 
       <footer className="mt-10 border-t border-slate-700/40 pt-6 text-xs text-slate-500">
         <p>

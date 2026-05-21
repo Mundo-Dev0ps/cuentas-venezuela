@@ -9,7 +9,31 @@ import {
   JsonLd,
   breadcrumbsJsonLd,
   datasetJsonLd,
+  faqPageJsonLd,
 } from "@/components/json-ld";
+
+const SALUD_FAQS = [
+  {
+    question: "¿Cuál es la esperanza de vida en Venezuela?",
+    answer:
+      "La esperanza de vida al nacer en Venezuela alcanzó aproximadamente 75 años hacia 2013 y descendió de forma sostenida hasta cerca de 71 años en la pandemia, recuperándose parcialmente después. Es una de las pocas caídas sostenidas de esperanza de vida en América Latina fuera de un conflicto armado. Fuente: Banco Mundial (SP.DYN.LE00.IN).",
+  },
+  {
+    question: "¿Cómo está la mortalidad infantil y materna en Venezuela?",
+    answer:
+      "La mortalidad infantil (menores de 1 año) y la mortalidad materna en Venezuela revirtieron décadas de mejora entre 2012 y 2017. Venezuela es uno de los pocos países latinoamericanos donde la mortalidad materna aumentó en ese período, según datos del Banco Mundial y reportes complementarios de la OPS.",
+  },
+  {
+    question: "¿Cuántos médicos hay por habitante en Venezuela?",
+    answer:
+      "La tasa de médicos por mil habitantes en Venezuela cayó significativamente desde 2014 por la emigración masiva del personal sanitario. Estimaciones recientes indican una pérdida de más del 30% del personal médico activo respecto a 2012. Fuente: Banco Mundial (SH.MED.PHYS.ZS) más reportes de federaciones médicas venezolanas.",
+  },
+  {
+    question: "¿Cuánto gasta Venezuela en salud comparado con Chile?",
+    answer:
+      "El gasto en salud como porcentaje del PIB en Venezuela es históricamente bajo (~3-4%) comparado con Chile (~8-9%) y muy lejos del promedio OCDE (~10%). El indicador subestima la crisis real porque el PIB venezolano se contrajo más del 75% entre 2013 y 2020, reduciendo aún más el gasto absoluto en dólares.",
+  },
+];
 
 export const metadata = pageMetadata({
   title: "Salud en Venezuela",
@@ -113,6 +137,28 @@ export default async function SaludPage() {
             rows={allRows[i]}
           />
         ))}
+      </section>
+
+      <section className="mt-12 space-y-5">
+        <JsonLd data={faqPageJsonLd(SALUD_FAQS)} />
+        <h2 className="text-2xl font-bold tracking-tight">
+          Preguntas frecuentes sobre salud en Venezuela
+        </h2>
+        <dl className="space-y-4">
+          {SALUD_FAQS.map((faq) => (
+            <div
+              key={faq.question}
+              className="rounded-xl border border-slate-700/40 bg-slate-900/50 p-5"
+            >
+              <dt className="text-base font-semibold text-slate-100">
+                {faq.question}
+              </dt>
+              <dd className="mt-2 text-sm leading-relaxed text-slate-300">
+                {faq.answer}
+              </dd>
+            </div>
+          ))}
+        </dl>
       </section>
 
       <footer className="mt-10 border-t border-slate-700/40 pt-6 text-xs text-slate-500">
