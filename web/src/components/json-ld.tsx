@@ -38,6 +38,34 @@ export function breadcrumbsJsonLd(items: BreadcrumbItem[]): object {
   };
 }
 
+interface FaqItem {
+  question: string;
+  /** Plain-text answer (HTML allowed inside the Answer.text, kept simple). */
+  answer: string;
+}
+
+/**
+ * schema.org FAQPage — eligible for FAQ rich results in Google AND for
+ * citation by generative engines (ChatGPT, Perplexity, Google AI
+ * Overviews, Claude). LLMs treat Question/Answer pairs as authoritative
+ * answer candidates when the page also exposes the same Q&A as visible
+ * text — so render the same content on the page, not only in JSON-LD.
+ */
+export function faqPageJsonLd(items: FaqItem[]): object {
+  return {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: items.map((it) => ({
+      "@type": "Question",
+      name: it.question,
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: it.answer,
+      },
+    })),
+  };
+}
+
 interface DatasetInput {
   name: string;
   description: string;

@@ -8,7 +8,31 @@ import {
   JsonLd,
   breadcrumbsJsonLd,
   datasetJsonLd,
+  faqPageJsonLd,
 } from "@/components/json-ld";
+
+const DIASPORA_FAQS = [
+  {
+    question: "¿Cuántos venezolanos hay en el mundo según ACNUR?",
+    answer:
+      "ACNUR/UNHCR reporta aproximadamente 6 millones de venezolanos en situación de refugiado, solicitante de asilo o con otra condición de protección a 2024 — la mayor crisis de desplazamiento en América Latina y la segunda más grande del mundo, solo detrás de Siria. Fuente: UNHCR Refugee Statistics.",
+  },
+  {
+    question: "¿Cuáles son los principales países de destino de la diáspora venezolana?",
+    answer:
+      "Los principales receptores de la diáspora venezolana son Colombia (~2.8M), Perú (~1.5M), Brasil, Ecuador, Chile, España, Estados Unidos y Argentina. Colombia y Perú concentran más del 60% del total registrado por ACNUR. Fuente: UNHCR.",
+  },
+  {
+    question: "¿Por qué los números de ACNUR son menores a otras estimaciones?",
+    answer:
+      "ACNUR contabiliza únicamente personas con estatuto formal de protección internacional (refugiados, solicitantes de asilo, otros de interés). No incluye migrantes con permisos especiales nacionales como el PEP/PPT colombiano, la Visa Democrática chilena o el ETPV brasileño, que cubren a millones más. Para totales agregados ver la plataforma R4V de ONU.",
+  },
+  {
+    question: "¿Desde cuándo se acelera la emigración venezolana?",
+    answer:
+      "La emigración masiva desde Venezuela se acelera desde 2015-2017, coincidiendo con la hiperinflación, escasez de alimentos y medicinas, colapso de servicios públicos y crisis política. Antes de 2015 había menos de 700.000 venezolanos en el exterior; a 2024 supera los 7-8 millones según estimaciones combinadas.",
+  },
+];
 
 export const metadata = pageMetadata({
   title: "Diáspora venezolana en el mundo",
@@ -222,6 +246,28 @@ export default async function DiasporaPage() {
           </div>
         </section>
       )}
+
+      <section className="mt-12 space-y-5">
+        <JsonLd data={faqPageJsonLd(DIASPORA_FAQS)} />
+        <h2 className="text-2xl font-bold tracking-tight">
+          Preguntas frecuentes sobre la diáspora venezolana
+        </h2>
+        <dl className="space-y-4">
+          {DIASPORA_FAQS.map((faq) => (
+            <div
+              key={faq.question}
+              className="rounded-xl border border-slate-700/40 bg-slate-900/50 p-5"
+            >
+              <dt className="text-base font-semibold text-slate-100">
+                {faq.question}
+              </dt>
+              <dd className="mt-2 text-sm leading-relaxed text-slate-300">
+                {faq.answer}
+              </dd>
+            </div>
+          ))}
+        </dl>
+      </section>
 
       <footer className="mt-10 border-t border-slate-700/40 pt-6 text-xs text-slate-500 space-y-2">
         <p>

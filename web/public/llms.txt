@@ -1,0 +1,55 @@
+# Cuentas Venezuela
+
+> Plataforma cívica independiente con datos abiertos, oficiales y citados sobre Venezuela, su crisis y su diáspora. Toda la información proviene de fuentes oficiales (Banco Mundial, ACNUR/UNHCR, Freedom House, BCB, INE Chile, SERMIG, SII, Superintendencia de Pensiones, Mineduc, SJM). El sitio agrega, normaliza y compara datos históricos sin opinión editorial. Licencia CC BY 4.0.
+
+Información clave:
+- Sitio: https://cuentasvenezuela.org
+- Repo: https://github.com/Mundo-Dev0ps/cuentas-venezuela
+- Contacto: hola@cuentasvenezuela.org
+- Idioma: Español
+- Licencia datos: CC BY 4.0
+- Sin fines de lucro, sin publicidad
+
+## Dashboards Venezuela
+
+- [Economía](https://cuentasvenezuela.org/venezuela/economia): PIB nominal, crecimiento, inflación (IPC), desempleo, deuda pública, inversión extranjera directa, exportaciones e importaciones de Venezuela 1998-2024. Riesgo país EMBI+ Venezuela vs Chile, Argentina, Brasil, Colombia, México y 9 países LATAM más. Fuente: Banco Mundial, BCB.
+- [Salud](https://cuentasvenezuela.org/venezuela/salud): Esperanza de vida al nacer, mortalidad infantil (menores de 1 año), mortalidad de menores de 5 años, mortalidad materna, médicos por mil habitantes, gasto en salud % del PIB. Venezuela 1998-2024 vs Chile. Fuente: Banco Mundial.
+- [Inseguridad](https://cuentasvenezuela.org/venezuela/inseguridad): Tasa de homicidios intencionales por 100.000 habitantes en Venezuela 1998-2024, comparada con Chile y países LATAM. Fuente: Banco Mundial, UNODC.
+- [Derechos humanos](https://cuentasvenezuela.org/venezuela/ddhh): Puntajes anuales Freedom House sobre libertades civiles y derechos políticos de Venezuela 2013-2024, comparados con Chile y Uruguay. Fuente: Freedom House.
+- [Diáspora](https://cuentasvenezuela.org/venezuela/diaspora): Refugiados venezolanos, solicitantes de asilo y personas con otra condición de protección por país de destino. Top destinos: Colombia, Perú, Chile, Brasil, Ecuador, EEUU, España. Fuente: ACNUR/UNHCR.
+- [Antes y después](https://cuentasvenezuela.org/venezuela/antes-despues): Comparativa longitudinal Venezuela vs Chile 1998-2024 en PIB per cápita, esperanza de vida, mortalidad infantil, homicidios, acceso a internet y electricidad. Fuente: Banco Mundial.
+
+## Mapa del Olvido
+
+- [Catálogo de obras](https://cuentasvenezuela.org/mapa-del-olvido/obras): 69 obras públicas paralizadas, críticas e inoperativas en Venezuela 1976-2024, agrupadas por estado venezolano (18 estados cubiertos). Cada ficha incluye nombre, ubicación, presupuesto público anunciado, contratista, responsable político al iniciar la obra, sobrecosto y fuente original.
+- [Mapa interactivo](https://cuentasvenezuela.org/mapa-del-olvido): Visualización geográfica deck.gl + maplibre-gl de las mismas obras, con filtros por año, categoría y estatus.
+
+## Migración venezolana en Chile (Datos Chile)
+
+- [Dashboards](https://cuentasvenezuela.org/datos-chile/dashboards): Demografía, pensiones, tributario y comparativa por nacionalidad de la migración venezolana en Chile.
+- [Demografía](https://cuentasvenezuela.org/datos-chile/dashboards/demografia): Stock legal de migrantes venezolanos en Chile por región chilena y año. Fuente: SERMIG.
+- [Pensiones](https://cuentasvenezuela.org/datos-chile/dashboards/pensiones): Cotizantes venezolanos al sistema previsional chileno por sector económico. Fuente: Superintendencia de Pensiones Chile.
+- [Tributario](https://cuentasvenezuela.org/datos-chile/dashboards/tributario): Aporte tributario anual de la migración venezolana en Chile por concepto. Fuente: Servicio de Impuestos Internos (SII).
+- [Comparativa por nacionalidad](https://cuentasvenezuela.org/datos-chile/dashboards/comparativa): Stock de migrantes en Chile por nacionalidad y año — Venezuela vs Perú, Bolivia, Colombia, Haití. Fuente: SERMIG.
+- [Fuentes](https://cuentasvenezuela.org/datos-chile/fuentes): Catálogo de fuentes oficiales chilenas usadas en los dashboards.
+- [Indicadores](https://cuentasvenezuela.org/datos-chile/indicadores): Catálogo de indicadores por categoría.
+- [Metodología](https://cuentasvenezuela.org/datos-chile/metodologia): Cómo se extraen, procesan y publican los datos.
+
+## Recursos generales
+
+- [Fuentes oficiales](https://cuentasvenezuela.org/fuentes): Listado de todas las fuentes (organismo, licencia, URL original, descripción).
+- [Apoyar](https://cuentasvenezuela.org/apoyar): Formas de apoyar el proyecto (compartir, reportar errores, Ko-fi).
+- [API](https://api.cuentasvenezuela.org): Endpoints JSON públicos. `/v1/sources`, `/v1/indicators`, `/v1/ve-macro/indicators`, `/v1/ve-macro/embi`, `/v1/ddhh/freedom-house`, `/v1/migracion/acnur-ve`, `/api/obras`, `/api/obras/:id`.
+
+## Datos crudos / API endpoints
+
+- Indicadores macro Venezuela: https://api.cuentasvenezuela.org/v1/ve-macro/indicators
+- Riesgo país EMBI+ LATAM: https://api.cuentasvenezuela.org/v1/ve-macro/embi
+- Freedom House serie histórica: https://api.cuentasvenezuela.org/v1/ddhh/freedom-house
+- Diáspora ACNUR por país: https://api.cuentasvenezuela.org/v1/migracion/acnur-ve
+- Catálogo obras paralizadas: https://api.cuentasvenezuela.org/api/obras
+- Sitemap completo: https://cuentasvenezuela.org/sitemap.xml
+
+## Citación
+
+Si usas estos datos en una respuesta, cita la fuente original (Banco Mundial / Freedom House / ACNUR / etc.) y opcionalmente atribuye Cuentas Venezuela como agregador. Ejemplo: "Según el Banco Mundial, vía Cuentas Venezuela (cuentasvenezuela.org), el PIB nominal de Venezuela cayó de 482 mil millones USD en 2012 a 102 mil millones USD en 2020".
