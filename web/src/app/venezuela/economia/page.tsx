@@ -10,7 +10,31 @@ import {
   JsonLd,
   breadcrumbsJsonLd,
   datasetJsonLd,
+  faqPageJsonLd,
 } from "@/components/json-ld";
+
+const ECONOMIA_FAQS = [
+  {
+    question: "¿Cuál fue el PIB de Venezuela en su último año disponible?",
+    answer:
+      "El PIB nominal de Venezuela alcanzó un pico de 482 mil millones USD en 2012 y se contrajo de forma sostenida hasta 102 mil millones USD en 2020 — una caída acumulada del 78,8% en 8 años, sin precedentes en América Latina fuera de un conflicto bélico. Fuente: Banco Mundial (indicador NY.GDP.MKTP.CD).",
+  },
+  {
+    question: "¿Cuánto fue la inflación de Venezuela en su peor año?",
+    answer:
+      "La inflación de Venezuela (IPC) llegó a 268.000% en 2018 según el Banco Mundial, una de las hiperinflaciones más altas registradas en la historia económica moderna. Fuente: Banco Mundial (FP.CPI.TOTL.ZG).",
+  },
+  {
+    question: "¿Cuál es el riesgo país (EMBI+) de Venezuela?",
+    answer:
+      "Venezuela registra el riesgo país EMBI+ más alto de América Latina, superando ampliamente los 20.000 puntos básicos (visualmente recortado a 2.000 pb para permitir comparación). El siguiente país más alto suele estar bajo 2.000 pb. Fuente: Banco Central do Brasil, snapshot histórico en macro_ve.embi_riesgo_pais.",
+  },
+  {
+    question: "¿Cuándo y por qué cayó la economía venezolana?",
+    answer:
+      "El colapso económico de Venezuela se aceleró desde 2013-2014, combinando caída de precios del petróleo, controles de cambio y precios, expropiaciones, fuga de capital y default soberano (2017). La hiperinflación se consolidó entre 2017 y 2019. Fuente datos: Banco Mundial 1998-2024.",
+  },
+];
 
 export const metadata = pageMetadata({
   title: "Crisis económica de Venezuela",
@@ -170,6 +194,28 @@ export default async function EconomiaPage() {
             rows={allRows[i]}
           />
         ))}
+      </section>
+
+      <section className="mt-12 space-y-5">
+        <JsonLd data={faqPageJsonLd(ECONOMIA_FAQS)} />
+        <h2 className="text-2xl font-bold tracking-tight">
+          Preguntas frecuentes sobre la economía de Venezuela
+        </h2>
+        <dl className="space-y-4">
+          {ECONOMIA_FAQS.map((faq) => (
+            <div
+              key={faq.question}
+              className="rounded-xl border border-slate-700/40 bg-slate-900/50 p-5"
+            >
+              <dt className="text-base font-semibold text-slate-100">
+                {faq.question}
+              </dt>
+              <dd className="mt-2 text-sm leading-relaxed text-slate-300">
+                {faq.answer}
+              </dd>
+            </div>
+          ))}
+        </dl>
       </section>
 
       <footer className="mt-10 border-t border-slate-700/40 pt-6 text-xs text-slate-500">

@@ -2,7 +2,39 @@ import Link from "next/link";
 import { ArrowLeft, MapPin, AlertTriangle } from "lucide-react";
 import { listObras, type ObraPublic } from "@/lib/api";
 import { pageMetadata } from "@/lib/seo";
-import { JsonLd, breadcrumbsJsonLd } from "@/components/json-ld";
+import {
+  JsonLd,
+  breadcrumbsJsonLd,
+  faqPageJsonLd,
+} from "@/components/json-ld";
+
+const OBRAS_FAQS = [
+  {
+    question: "¿Qué es el Mapa del Olvido?",
+    answer:
+      "El Mapa del Olvido es un catálogo abierto de obras públicas paralizadas, críticas o inoperativas en Venezuela. A la fecha documenta 69 obras en 18 estados venezolanos, cubriendo el período 1976-2024. Cada ficha incluye nombre, ubicación geográfica (lat/lng), presupuesto público anunciado, contratista, responsable político al iniciar la obra, sobrecosto y fuente original verificable.",
+  },
+  {
+    question: "¿Cuál es el presupuesto total documentado en obras paralizadas?",
+    answer:
+      "Las 69 obras documentadas suman varios miles de millones de USD en presupuestos anunciados. El catálogo separa presupuesto original anunciado vs presupuesto público final, lo que permite calcular sobrecosto cuando ambos datos están disponibles.",
+  },
+  {
+    question: "¿De dónde salen los datos del Mapa del Olvido?",
+    answer:
+      "Los datos provienen de fuentes públicas: contratos publicados en gacetas oficiales, reportes de Transparencia Venezuela, ONGs especializadas, prensa con verificación y reportes ciudadanos cruzados con fuente documental. Cada obra del catálogo enlaza a su fuente original.",
+  },
+  {
+    question: "¿Cómo se clasifica una obra como paralizada, crítica o inoperativa?",
+    answer:
+      "Paralizada: construcción detenida sin actividad documentada en al menos 12 meses. Crítica: construcción en marcha pero con sobrecostos, atrasos graves o problemas estructurales reportados. Inoperativa: obra entregada pero fuera de servicio total o parcial por fallas técnicas, abandono o falta de operación.",
+  },
+  {
+    question: "¿Puedo aportar una obra o corregir información?",
+    answer:
+      "Sí. El formulario en /mapa-del-olvido/reportar acepta reportes ciudadanos con descripción, evidencia URL y contacto opcional. Los reportes se revisan antes de incorporarse al catálogo oficial. El proyecto también acepta pull requests en GitHub (Mundo-Dev0ps/cuentas-venezuela).",
+  },
+];
 
 // Server-rendered catalog of all obras. The interactive map (deck.gl +
 // maplibre-gl) at /mapa-del-olvido stays as an SPA. This route gives
@@ -172,6 +204,28 @@ export default async function ObrasIndexPage() {
           </div>
         ) : null}
       </div>
+
+      <section className="mt-16 space-y-5">
+        <JsonLd data={faqPageJsonLd(OBRAS_FAQS)} />
+        <h2 className="text-2xl font-bold tracking-tight">
+          Preguntas frecuentes sobre el Mapa del Olvido
+        </h2>
+        <dl className="space-y-4">
+          {OBRAS_FAQS.map((faq) => (
+            <div
+              key={faq.question}
+              className="rounded-xl border border-slate-700/40 bg-slate-900/50 p-5"
+            >
+              <dt className="text-base font-semibold text-slate-100">
+                {faq.question}
+              </dt>
+              <dd className="mt-2 text-sm leading-relaxed text-slate-300">
+                {faq.answer}
+              </dd>
+            </div>
+          ))}
+        </dl>
+      </section>
     </main>
   );
 }

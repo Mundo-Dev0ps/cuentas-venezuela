@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Map, BarChart3, Globe2 } from "lucide-react";
 import { pageMetadata } from "@/lib/seo";
+import { JsonLd, faqPageJsonLd } from "@/components/json-ld";
 
 export const metadata = pageMetadata({
   title: "Cuentas Venezuela — datos abiertos para venezolanos",
@@ -9,9 +10,41 @@ export const metadata = pageMetadata({
   path: "/",
 });
 
+// Surface the most-asked questions about the site itself as a FAQPage.
+// Same Q&A is rendered visibly below (LLMs cite Q&A pairs that match
+// the page DOM, not only the JSON-LD).
+const HOME_FAQS = [
+  {
+    question: "¿Qué es Cuentas Venezuela?",
+    answer:
+      "Cuentas Venezuela es una plataforma cívica independiente y sin fines de lucro que publica datos abiertos, oficiales y citados sobre Venezuela, su crisis multifactorial y su diáspora. Los datos provienen de Banco Mundial, ACNUR/UNHCR, Freedom House, BCB, UNODC y, para la migración venezolana en Chile, de SERMIG, INE, SII y la Superintendencia de Pensiones.",
+  },
+  {
+    question: "¿Quién publica los datos y de dónde vienen?",
+    answer:
+      "Cada dashboard cita su fuente oficial. La plataforma agrega, normaliza y compara datos públicos sin opinión editorial. El código y los pipelines ETL están abiertos en GitHub (Mundo-Dev0ps/cuentas-venezuela). Los datos se publican bajo licencia Creative Commons CC BY 4.0.",
+  },
+  {
+    question: "¿Qué cubre el Mapa del Olvido?",
+    answer:
+      "El Mapa del Olvido documenta 69 obras públicas paralizadas, críticas o inoperativas en Venezuela entre 1976 y 2024, distribuidas en 18 estados. Cada obra incluye ubicación geográfica, presupuesto público anunciado, contratista, responsable político al momento de iniciar la obra, sobrecosto y fuente original verificable.",
+  },
+  {
+    question: "¿Puedo usar los datos en mi investigación, nota periodística o app?",
+    answer:
+      "Sí. Los datos están bajo licencia Creative Commons CC BY 4.0: uso libre con atribución a la fuente original (Banco Mundial, Freedom House, ACNUR, etc.) y, opcionalmente, a Cuentas Venezuela como agregador. La API pública está en https://api.cuentasvenezuela.org y el sitemap completo en https://cuentasvenezuela.org/sitemap.xml.",
+  },
+  {
+    question: "¿El sitio tiene publicidad o cobra suscripción?",
+    answer:
+      "No. Cuentas Venezuela es 100% gratuito, sin publicidad, sin tracking de terceros y sin paywall. El proyecto se sostiene con donaciones voluntarias vía Ko-fi y trabajo abierto en GitHub.",
+  },
+];
+
 export default function HomePage() {
   return (
     <div className="mx-auto max-w-6xl px-6 py-12 space-y-16">
+      <JsonLd data={faqPageJsonLd(HOME_FAQS)} />
       <section className="space-y-6">
         <h1 className="text-3xl sm:text-4xl font-bold tracking-tight">
           Cuentas Venezuela
@@ -99,6 +132,27 @@ export default function HomePage() {
             Ver dashboards →
           </span>
         </Link>
+      </section>
+
+      <section className="space-y-6">
+        <h2 className="text-2xl font-bold tracking-tight">
+          Preguntas frecuentes
+        </h2>
+        <dl className="space-y-5">
+          {HOME_FAQS.map((faq) => (
+            <div
+              key={faq.question}
+              className="rounded-xl border border-slate-700/40 bg-slate-900/50 p-5"
+            >
+              <dt className="text-base font-semibold text-slate-100">
+                {faq.question}
+              </dt>
+              <dd className="mt-2 text-sm leading-relaxed text-slate-300">
+                {faq.answer}
+              </dd>
+            </div>
+          ))}
+        </dl>
       </section>
     </div>
   );
