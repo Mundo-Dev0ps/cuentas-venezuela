@@ -566,6 +566,13 @@ app.get("/v1/corrupcion/sancionados", async (c) => {
       first_sanctioned_at: string | null;
       wallet_count: string | number | null;
     };
+    // Same WHERE for the count and the page query — built once via a
+    // common fragment so they cannot drift.
+    const whereSql = sql`
+      ${partyType ? sql`AND s.party_type = ${partyType}` : sql``}
+      ${program ? sql`AND ${program} = ANY(s.programs)` : sql``}
+      ${hasCrypto ? sql`AND EXISTS (SELECT 1 FROM corrupcion.wallets w WHERE w.sancionado_id = s.id)` : sql``}
+    `;
     const rows = await c.get("db").execute(sql`
       SELECT s.id, s.source, s.source_id, s.name, s.party_type, s.aliases,
              s.programs, s.jurisdictions, s.role, s.first_sanctioned_at,
@@ -573,14 +580,24 @@ app.get("/v1/corrupcion/sancionados", async (c) => {
               WHERE w.sancionado_id = s.id) AS wallet_count
       FROM corrupcion.sancionados s
       WHERE 1=1
-        ${partyType ? sql`AND s.party_type = ${partyType}` : sql``}
-        ${program ? sql`AND ${program} = ANY(s.programs)` : sql``}
-        ${hasCrypto ? sql`AND EXISTS (SELECT 1 FROM corrupcion.wallets w WHERE w.sancionado_id = s.id)` : sql``}
+        ${whereSql}
       ORDER BY s.name
       LIMIT ${limit} OFFSET ${offset}
     `);
+    const totalRows = (await c.get("db").execute(sql`
+      SELECT COUNT(*)::text AS total
+      FROM corrupcion.sancionados s
+      WHERE 1=1
+        ${whereSql}
+    `)) as unknown;
+    const total = Number(
+      (rowsOf<{ total: string }>(totalRows)[0] ?? { total: "0" }).total,
+    );
     c.header("Cache-Control", "public, max-age=600, s-maxage=3600");
     return c.json({
+      total,
+      limit,
+      offset,
       items: rowsOf<Row>(rows).map((r) => ({
         id: r.id,
         source: r.source,
