@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowLeft, ExternalLink, AlertTriangle, Bitcoin, Database } from "lucide-react";
+import { ArrowLeft, ArrowRight, ExternalLink, AlertTriangle, Bitcoin, Database } from "lucide-react";
 import { pageMetadata } from "@/lib/seo";
 import {
   JsonLd,
@@ -88,10 +88,28 @@ const FAQS = [
   },
 ];
 
-export default async function CorrupcionPage() {
-  // Fetch live OFAC SDN data via /v1/corrupcion/sancionados. Falls back
-  // to an empty list if the ETL has not run yet — page still renders.
-  const ofacRows = await getSancionados({ limit: 200 });
+const PAGE_SIZE = 50;
+
+function parsePage(input: string | string[] | undefined): number {
+  const raw = Array.isArray(input) ? input[0] : input;
+  const n = Number(raw ?? "1");
+  return Number.isFinite(n) && n >= 1 ? Math.floor(n) : 1;
+}
+
+export default async function CorrupcionPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ page?: string | string[] }>;
+}) {
+  const params = await searchParams;
+  const page = parsePage(params.page);
+  const offset = (page - 1) * PAGE_SIZE;
+
+  // Fetch one OFAC SDN page via /v1/corrupcion/sancionados. Falls back
+  // to an empty page if the ETL has not run yet — page still renders.
+  const ofacPage = await getSancionados({ limit: PAGE_SIZE, offset });
+  const ofacRows = ofacPage.items;
+  const totalPages = Math.max(1, Math.ceil(ofacPage.total / PAGE_SIZE));
 
   return (
     <main className="mx-auto max-w-5xl px-4 py-10 sm:px-6">
@@ -294,7 +312,7 @@ export default async function CorrupcionPage() {
       {/* Live OFAC SDN data — populated by etl/pipelines/sanciones.py.
           If the ETL has not run yet the list is empty and the section
           renders an explanatory placeholder. */}
-      <section className="mb-16 space-y-5">
+      <section id="ofac-list" className="mb-16 scroll-mt-20 space-y-5">
         <div className="flex items-center gap-2">
           <Database className="h-5 w-5 text-cyan-300" />
           <h2 className="text-2xl font-bold tracking-tight">
@@ -306,7 +324,7 @@ export default async function CorrupcionPage() {
           (Tesoro de EEUU). Programas: VENEZUELA, VENEZUELA-EO13692,
           VENEZUELA-EO13850, VENEZUELA-EO13884.
         </p>
-        {ofacRows.length === 0 ? (
+        {ofacPage.total === 0 ? (
           <div className="rounded-xl border border-slate-700/40 bg-slate-900/40 p-5 text-sm text-slate-400">
             <AlertTriangle className="mr-2 inline h-4 w-4 text-amber-400" />
             Los datos del feed OFAC aún no están cargados. El pipeline
@@ -315,12 +333,16 @@ export default async function CorrupcionPage() {
           </div>
         ) : (
           <>
-            <div className="text-sm text-slate-400">
-              {ofacRows.length} entrada(s),{" "}
-              <strong className="text-slate-200">
-                {ofacRows.filter((r) => r.walletCount > 0).length}
-              </strong>{" "}
-              con wallets cripto registradas.
+            <div className="flex flex-wrap items-baseline justify-between gap-2 text-sm text-slate-400">
+              <div>
+                <strong className="text-slate-200">{ofacPage.total}</strong>{" "}
+                entradas totales · página{" "}
+                <strong className="text-slate-200">{page}</strong> de{" "}
+                <strong className="text-slate-200">{totalPages}</strong>
+              </div>
+              <div className="text-xs text-slate-500">
+                mostrando {offset + 1}–{offset + ofacRows.length}
+              </div>
             </div>
             <div className="overflow-hidden rounded-xl border border-slate-700/40 bg-slate-900/40">
               <table className="w-full text-sm">
@@ -362,6 +384,14 @@ export default async function CorrupcionPage() {
                 </tbody>
               </table>
             </div>
+
+            <Pagination
+              page={page}
+              totalPages={totalPages}
+              baseHref="/venezuela/corrupcion"
+              hash="#ofac-list"
+            />
+
             <p className="text-xs text-slate-500">
               Fuente: API <code className="font-mono">/v1/corrupcion/sancionados</code>{" "}
               · raw upstream{" "}
@@ -439,5 +469,87 @@ export default async function CorrupcionPage() {
         </p>
       </footer>
     </main>
+  );
+}
+
+// =====================================================================
+// Server-only pagination control. Renders ?page=N links so the next
+// navigation stays cacheable at the edge (no client JS needed). For
+// large totals we keep a compact strip: first / prev / 5 numbered /
+// next / last + jump-by-100 helpers (one click ≈ 2 pages of 50).
+// =====================================================================
+function Pagination({
+  page,
+  totalPages,
+  baseHref,
+  hash = "",
+}: {
+  page: number;
+  totalPages: number;
+  baseHref: string;
+  hash?: string;
+}) {
+  if (totalPages <= 1) return null;
+
+  const href = (p: number) =>
+    p === 1 ? `${baseHref}${hash}` : `${baseHref}?page=${p}${hash}`;
+
+  // Compact numbered range — show up to 5 numbers around the current page.
+  const range: number[] = [];
+  const start = Math.max(1, Math.min(page - 2, totalPages - 4));
+  const end = Math.min(totalPages, start + 4);
+  for (let i = start; i <= end; i += 1) range.push(i);
+
+  const disabled =
+    "pointer-events-none cursor-not-allowed border-slate-800 bg-slate-900/40 text-slate-600";
+  const enabled =
+    "border-slate-700/50 bg-slate-900/60 text-slate-300 hover:border-cyan-500/40 hover:text-cyan-200";
+  const active = "border-cyan-500/60 bg-cyan-500/10 text-cyan-200";
+  const btn = "inline-flex h-9 min-w-9 items-center justify-center rounded-md border px-2 text-xs font-medium";
+
+  return (
+    <nav
+      aria-label="Paginación de sancionados OFAC"
+      className="flex flex-wrap items-center justify-center gap-2 pt-2"
+    >
+      <Link
+        aria-label="Primera página"
+        href={href(1)}
+        className={`${btn} ${page === 1 ? disabled : enabled}`}
+      >
+        «
+      </Link>
+      <Link
+        aria-label="Página anterior"
+        href={href(Math.max(1, page - 1))}
+        className={`${btn} ${page === 1 ? disabled : enabled}`}
+      >
+        <ArrowLeft className="h-3.5 w-3.5" />
+      </Link>
+      {range.map((p) => (
+        <Link
+          key={p}
+          href={href(p)}
+          aria-current={p === page ? "page" : undefined}
+          className={`${btn} ${p === page ? active : enabled}`}
+        >
+          {p}
+        </Link>
+      ))}
+      <Link
+        aria-label="Página siguiente"
+        href={href(Math.min(totalPages, page + 1))}
+        className={`${btn} ${page === totalPages ? disabled : enabled}`}
+      >
+        <ArrowRight className="h-3.5 w-3.5" />
+      </Link>
+      <Link
+        aria-label="Última página"
+        href={href(totalPages)}
+        className={`${btn} ${page === totalPages ? disabled : enabled}`}
+      >
+        »
+      </Link>
+    </nav>
   );
 }

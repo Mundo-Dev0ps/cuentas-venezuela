@@ -375,13 +375,20 @@ export interface WalletRow {
   source: string;
 }
 
+export interface SancionadosPage {
+  items: SancionadoRow[];
+  total: number;
+  limit: number;
+  offset: number;
+}
+
 export async function getSancionados(opts: {
   limit?: number;
   offset?: number;
   partyType?: string;
   program?: string;
   hasCrypto?: boolean;
-} = {}): Promise<SancionadoRow[]> {
+} = {}): Promise<SancionadosPage> {
   const qs = new URLSearchParams();
   if (opts.limit != null) qs.set("limit", String(opts.limit));
   if (opts.offset != null) qs.set("offset", String(opts.offset));
@@ -389,8 +396,12 @@ export async function getSancionados(opts: {
   if (opts.program) qs.set("program", opts.program);
   if (opts.hasCrypto) qs.set("has_crypto", "true");
   const path = `/v1/corrupcion/sancionados${qs.size ? `?${qs.toString()}` : ""}`;
-  const res = await safeGet<{ items: SancionadoRow[] }>(path, { items: [] });
-  return res.items;
+  return await safeGet<SancionadosPage>(path, {
+    items: [],
+    total: 0,
+    limit: opts.limit ?? 100,
+    offset: opts.offset ?? 0,
+  });
 }
 
 export async function getWallets(opts: {
