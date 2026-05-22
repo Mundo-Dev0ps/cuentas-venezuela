@@ -10,6 +10,7 @@ from pipelines import (
     freedom_house,
     ine,
     obras,
+    sanciones,
     sii,
     sp,
     ve_macro,
@@ -26,6 +27,7 @@ PIPELINES = {
     "freedom_house": freedom_house.main,
     "acnur": acnur.main,
     "embi": embi.main,
+    "sanciones": sanciones.main,
 }
 
 
