@@ -32,17 +32,12 @@ export function SiteHeader() {
       <div className="mx-auto flex h-12 max-w-6xl items-center justify-between gap-4 px-4 md:px-6">
         <Link
           href="/"
-          aria-label="cuentas-venezuela"
+          aria-label="Cuentas Venezuela"
           className="inline-flex items-center gap-2 whitespace-nowrap"
         >
           <BarChart3 className="h-5 w-5 text-orange-400" />
-          <span className="flex flex-col leading-tight">
-            <span className="hidden sm:inline text-sm font-semibold">
-              cuentas-venezuela
-            </span>
-            <span className="sm:hidden text-[0.75rem] font-semibold text-slate-200">
-              Cuentas Venezuela
-            </span>
+          <span className="text-sm font-semibold text-slate-100">
+            Cuentas Venezuela
           </span>
         </Link>
 

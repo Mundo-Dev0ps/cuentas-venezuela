@@ -64,7 +64,7 @@ export function SiteFooter() {
             de extracción. Sin datos personales identificables.
           </p>
           <p className="mt-2 text-xs">
-            © {new Date().getFullYear()} cuentas-venezuela · proyecto cívico
+            © {new Date().getFullYear()} Cuentas Venezuela · proyecto cívico
             independiente
           </p>
         </div>
