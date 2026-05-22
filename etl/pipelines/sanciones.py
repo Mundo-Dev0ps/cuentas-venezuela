@@ -123,15 +123,6 @@ def parse_sdn(raw_xml: bytes) -> list[dict]:
             if pid:
                 sp_id_to_name[pid] = text_of(sp)
 
-    # LegalBasis ID -> SanctionsProgram ID (via attribute)
-    lb_id_to_sp_id: dict[str, str] = {}
-    for lb in root.iter():
-        if localname(lb.tag) == "LegalBasis":
-            lid = lb.get("ID")
-            spid = lb.get("SanctionsProgramID")
-            if lid and spid:
-                lb_id_to_sp_id[lid] = spid
-
     # FeatureType ID -> name (for Digital Currency Address detection)
     ft_id_to_name: dict[str, str] = {}
     for ft in root.iter():
@@ -144,7 +135,12 @@ def parse_sdn(raw_xml: bytes) -> list[dict]:
         if n.startswith("Digital Currency Address")
     }
 
-    # --- profile -> set(programs) via SanctionsEntry/EntryEvent ----------
+    # --- profile -> set(programs) via SanctionsEntry/SanctionsMeasure ----
+    # OFAC stores the program code (e.g. "VENEZUELA", "VENEZUELA-EO13850")
+    # as the <Comment> text of a <SanctionsMeasure SanctionsTypeID="1">
+    # ("Block" measure) child of <SanctionsEntry>. The SanctionsProgram
+    # lookup table exists but is NOT what entries reference — they use
+    # the comment text directly.
     profile_programs: dict[str, set[str]] = defaultdict(set)
     for se in root.iter():
         if localname(se.tag) != "SanctionsEntry":
@@ -152,15 +148,14 @@ def parse_sdn(raw_xml: bytes) -> list[dict]:
         pid = se.get("ProfileID")
         if not pid:
             continue
-        # SanctionsEntry's children include EntryEvent and SanctionsMeasure.
-        # The link to the sanction program is via EntryEvent's LegalBasisID.
-        for ev in se.iter():
-            if localname(ev.tag) == "EntryEvent":
-                lb_id = ev.get("LegalBasisID")
-                sp_id = lb_id_to_sp_id.get(lb_id or "")
-                prog = sp_id_to_name.get(sp_id or "", "")
-                if prog:
-                    profile_programs[pid].add(prog)
+        for sm in se.iter():
+            if localname(sm.tag) != "SanctionsMeasure":
+                continue
+            for child in sm:
+                if localname(child.tag) == "Comment" and child.text:
+                    code = child.text.strip()
+                    if code:
+                        profile_programs[pid].add(code)
 
     ve_profile_ids = {
         pid for pid, progs in profile_programs.items()
