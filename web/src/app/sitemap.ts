@@ -53,6 +53,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     "/venezuela/salud",
     "/venezuela/ddhh",
     "/venezuela/diaspora",
+    "/venezuela/corrupcion",
   ].map((path) => ({ url: `${SITE}${path}`, lastModified }));
 
   // Per-obra server-rendered detail pages at /mapa-del-olvido/obras/{id}.
