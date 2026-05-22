@@ -349,6 +349,64 @@ export async function getObra(id: string): Promise<ObraPublic | null> {
   }
 }
 
+// =====================================================================
+// corrupcion — OFAC SDN (ingested via etl/pipelines/sanciones.py)
+// =====================================================================
+export interface SancionadoRow {
+  id: number;
+  source: string;
+  sourceId: string;
+  name: string;
+  partyType: string | null;
+  aliases: string[];
+  programs: string[];
+  jurisdictions: string[];
+  role: string | null;
+  firstSanctionedAt: string | null;
+  walletCount: number;
+}
+
+export interface WalletRow {
+  id: number;
+  currency: string;
+  address: string;
+  sancionadoId: number;
+  sancionadoName: string;
+  source: string;
+}
+
+export async function getSancionados(opts: {
+  limit?: number;
+  offset?: number;
+  partyType?: string;
+  program?: string;
+  hasCrypto?: boolean;
+} = {}): Promise<SancionadoRow[]> {
+  const qs = new URLSearchParams();
+  if (opts.limit != null) qs.set("limit", String(opts.limit));
+  if (opts.offset != null) qs.set("offset", String(opts.offset));
+  if (opts.partyType) qs.set("party_type", opts.partyType);
+  if (opts.program) qs.set("program", opts.program);
+  if (opts.hasCrypto) qs.set("has_crypto", "true");
+  const path = `/v1/corrupcion/sancionados${qs.size ? `?${qs.toString()}` : ""}`;
+  const res = await safeGet<{ items: SancionadoRow[] }>(path, { items: [] });
+  return res.items;
+}
+
+export async function getWallets(opts: {
+  limit?: number;
+  offset?: number;
+  currency?: string;
+} = {}): Promise<WalletRow[]> {
+  const qs = new URLSearchParams();
+  if (opts.limit != null) qs.set("limit", String(opts.limit));
+  if (opts.offset != null) qs.set("offset", String(opts.offset));
+  if (opts.currency) qs.set("currency", opts.currency);
+  const path = `/v1/corrupcion/wallets${qs.size ? `?${qs.toString()}` : ""}`;
+  const res = await safeGet<{ items: WalletRow[] }>(path, { items: [] });
+  return res.items;
+}
+
 export async function getVeMacroIndicators(opts: {
   country?: string;
   code?: string;

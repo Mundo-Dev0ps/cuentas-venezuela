@@ -126,6 +126,8 @@ app.get("/", (c) =>
       "/v1/ve-macro/indicators",
       "/v1/ddhh/freedom-house",
       "/v1/migracion/acnur-ve",
+      "/v1/corrupcion/sancionados",
+      "/v1/corrupcion/wallets",
       "/api/obras",
       "/api/obras/:id",
       "/api/reportes",
@@ -535,6 +537,103 @@ app.get("/v1/ddhh/freedom-house", async (c) => {
     }));
     c.header("Cache-Control", "public, max-age=300, s-maxage=3600");
     return c.json({ items });
+  } catch (e) {
+    return c.json({ items: [], error: (e as Error).message }, 200);
+  }
+});
+
+// =====================================================================
+// corrupcion — sanctioned individuals + crypto wallets
+// Populated by etl/pipelines/sanciones.py (OFAC SDN nightly).
+// =====================================================================
+app.get("/v1/corrupcion/sancionados", async (c) => {
+  try {
+    const limit = Math.min(Number(c.req.query("limit") ?? 100), 500);
+    const offset = Math.max(Number(c.req.query("offset") ?? 0), 0);
+    const partyType = c.req.query("party_type");
+    const program = c.req.query("program");
+    const hasCrypto = c.req.query("has_crypto") === "true";
+    type Row = {
+      id: number;
+      source: string;
+      source_id: string;
+      name: string;
+      party_type: string | null;
+      aliases: string[] | null;
+      programs: string[] | null;
+      jurisdictions: string[] | null;
+      role: string | null;
+      first_sanctioned_at: string | null;
+      wallet_count: string | number | null;
+    };
+    const rows = await c.get("db").execute(sql`
+      SELECT s.id, s.source, s.source_id, s.name, s.party_type, s.aliases,
+             s.programs, s.jurisdictions, s.role, s.first_sanctioned_at,
+             (SELECT COUNT(*) FROM corrupcion.wallets w
+              WHERE w.sancionado_id = s.id) AS wallet_count
+      FROM corrupcion.sancionados s
+      WHERE 1=1
+        ${partyType ? sql`AND s.party_type = ${partyType}` : sql``}
+        ${program ? sql`AND ${program} = ANY(s.programs)` : sql``}
+        ${hasCrypto ? sql`AND EXISTS (SELECT 1 FROM corrupcion.wallets w WHERE w.sancionado_id = s.id)` : sql``}
+      ORDER BY s.name
+      LIMIT ${limit} OFFSET ${offset}
+    `);
+    c.header("Cache-Control", "public, max-age=600, s-maxage=3600");
+    return c.json({
+      items: rowsOf<Row>(rows).map((r) => ({
+        id: r.id,
+        source: r.source,
+        sourceId: r.source_id,
+        name: r.name,
+        partyType: r.party_type,
+        aliases: r.aliases ?? [],
+        programs: r.programs ?? [],
+        jurisdictions: r.jurisdictions ?? [],
+        role: r.role,
+        firstSanctionedAt: r.first_sanctioned_at,
+        walletCount: r.wallet_count == null ? 0 : Number(r.wallet_count),
+      })),
+    });
+  } catch (e) {
+    return c.json({ items: [], error: (e as Error).message }, 200);
+  }
+});
+
+app.get("/v1/corrupcion/wallets", async (c) => {
+  try {
+    const limit = Math.min(Number(c.req.query("limit") ?? 100), 500);
+    const offset = Math.max(Number(c.req.query("offset") ?? 0), 0);
+    const currency = c.req.query("currency");
+    type Row = {
+      id: number;
+      currency: string;
+      address: string;
+      sancionado_id: number;
+      sancionado_name: string;
+      source: string;
+    };
+    const rows = await c.get("db").execute(sql`
+      SELECT w.id, w.currency, w.address, w.sancionado_id,
+             s.name AS sancionado_name, w.source
+      FROM corrupcion.wallets w
+      JOIN corrupcion.sancionados s ON s.id = w.sancionado_id
+      WHERE 1=1
+        ${currency ? sql`AND w.currency = ${currency}` : sql``}
+      ORDER BY s.name, w.currency
+      LIMIT ${limit} OFFSET ${offset}
+    `);
+    c.header("Cache-Control", "public, max-age=600, s-maxage=3600");
+    return c.json({
+      items: rowsOf<Row>(rows).map((r) => ({
+        id: r.id,
+        currency: r.currency,
+        address: r.address,
+        sancionadoId: r.sancionado_id,
+        sancionadoName: r.sancionado_name,
+        source: r.source,
+      })),
+    });
   } catch (e) {
     return c.json({ items: [], error: (e as Error).message }, 200);
   }

@@ -1,12 +1,19 @@
 import Link from "next/link";
-import { ArrowLeft, ExternalLink, AlertTriangle, Bitcoin } from "lucide-react";
+import { ArrowLeft, ExternalLink, AlertTriangle, Bitcoin, Database } from "lucide-react";
 import { pageMetadata } from "@/lib/seo";
 import {
   JsonLd,
   breadcrumbsJsonLd,
   faqPageJsonLd,
 } from "@/components/json-ld";
+import { Reveal } from "@/components/reveal";
+import { getSancionados } from "@/lib/api";
 import { CASES, INDIVIDUALS, type SancionEstado } from "./data";
+
+// Stagger delay rotation — keeps the reveal animation interesting on
+// long sections without overwhelming the user. 5 buckets so adjacent
+// cards animate at slightly different times.
+const DELAYS: Array<0 | 100 | 200 | 300 | 400> = [0, 100, 200, 300, 400];
 
 export const metadata = pageMetadata({
   title: "Corrupción y sanciones — Venezuela",
@@ -81,7 +88,11 @@ const FAQS = [
   },
 ];
 
-export default function CorrupcionPage() {
+export default async function CorrupcionPage() {
+  // Fetch live OFAC SDN data via /v1/corrupcion/sancionados. Falls back
+  // to an empty list if the ETL has not run yet — page still renders.
+  const ofacRows = await getSancionados({ limit: 200 });
+
   return (
     <main className="mx-auto max-w-5xl px-4 py-10 sm:px-6">
       <JsonLd
@@ -135,9 +146,9 @@ export default function CorrupcionPage() {
         <h2 className="text-2xl font-bold tracking-tight">
           Casos mayores documentados
         </h2>
-        {CASES.map((c) => (
+        {CASES.map((c, idx) => (
+          <Reveal key={c.id} delay={DELAYS[idx % DELAYS.length]}>
           <article
-            key={c.id}
             id={c.id}
             className="rounded-xl border border-slate-700/40 bg-slate-900/50 p-6"
           >
@@ -182,6 +193,7 @@ export default function CorrupcionPage() {
               ))}
             </div>
           </article>
+          </Reveal>
         ))}
       </section>
 
@@ -204,11 +216,11 @@ export default function CorrupcionPage() {
           .
         </p>
         <div className="space-y-5">
-          {INDIVIDUALS.map((p) => {
+          {INDIVIDUALS.map((p, idx) => {
             const state = ESTADO_LABEL[p.estado];
             return (
+              <Reveal key={p.name} delay={DELAYS[idx % DELAYS.length]}>
               <article
-                key={p.name}
                 className="rounded-xl border border-slate-700/40 bg-slate-900/50 p-5"
               >
                 <div className="mb-2 flex flex-wrap items-center gap-2">
@@ -273,9 +285,98 @@ export default function CorrupcionPage() {
                   ))}
                 </div>
               </article>
+              </Reveal>
             );
           })}
         </div>
+      </section>
+
+      {/* Live OFAC SDN data — populated by etl/pipelines/sanciones.py.
+          If the ETL has not run yet the list is empty and the section
+          renders an explanatory placeholder. */}
+      <section className="mb-16 space-y-5">
+        <div className="flex items-center gap-2">
+          <Database className="h-5 w-5 text-cyan-300" />
+          <h2 className="text-2xl font-bold tracking-tight">
+            Lista completa OFAC SDN — Venezuela
+          </h2>
+        </div>
+        <p className="text-sm text-slate-400">
+          Sincronizado diariamente desde el SDN Advanced XML de OFAC
+          (Tesoro de EEUU). Programas: VENEZUELA, VENEZUELA-EO13692,
+          VENEZUELA-EO13850, VENEZUELA-EO13884.
+        </p>
+        {ofacRows.length === 0 ? (
+          <div className="rounded-xl border border-slate-700/40 bg-slate-900/40 p-5 text-sm text-slate-400">
+            <AlertTriangle className="mr-2 inline h-4 w-4 text-amber-400" />
+            Los datos del feed OFAC aún no están cargados. El pipeline
+            ETL <code className="font-mono text-slate-300">etl/pipelines/sanciones.py</code>
+            {" "}corre nightly. Mientras tanto, ver la sección curada arriba.
+          </div>
+        ) : (
+          <>
+            <div className="text-sm text-slate-400">
+              {ofacRows.length} entrada(s),{" "}
+              <strong className="text-slate-200">
+                {ofacRows.filter((r) => r.walletCount > 0).length}
+              </strong>{" "}
+              con wallets cripto registradas.
+            </div>
+            <div className="overflow-hidden rounded-xl border border-slate-700/40 bg-slate-900/40">
+              <table className="w-full text-sm">
+                <thead className="bg-slate-800/60 text-xs uppercase tracking-wider text-slate-400">
+                  <tr>
+                    <th className="px-4 py-2 text-left">Nombre</th>
+                    <th className="px-4 py-2 text-left">Tipo</th>
+                    <th className="px-4 py-2 text-left">Programas</th>
+                    <th className="px-4 py-2 text-right">Wallets</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-slate-700/40">
+                  {ofacRows.map((r) => (
+                    <tr key={r.id} className="hover:bg-slate-900/60">
+                      <td className="px-4 py-2 text-slate-200">
+                        {r.name}
+                        {r.role ? (
+                          <div className="text-xs text-slate-500">{r.role}</div>
+                        ) : null}
+                      </td>
+                      <td className="px-4 py-2 text-xs text-slate-400">
+                        {r.partyType ?? "—"}
+                      </td>
+                      <td className="px-4 py-2 text-xs text-slate-400">
+                        {r.programs.join(", ")}
+                      </td>
+                      <td className="px-4 py-2 text-right">
+                        {r.walletCount > 0 ? (
+                          <span className="inline-flex items-center gap-1 rounded-md border border-orange-500/40 bg-orange-500/5 px-2 py-0.5 text-xs font-mono text-orange-300">
+                            <Bitcoin className="h-3 w-3" />
+                            {r.walletCount}
+                          </span>
+                        ) : (
+                          <span className="text-xs text-slate-600">—</span>
+                        )}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+            <p className="text-xs text-slate-500">
+              Fuente: API <code className="font-mono">/v1/corrupcion/sancionados</code>{" "}
+              · raw upstream{" "}
+              <a
+                className="text-cyan-300 hover:text-cyan-200"
+                href="https://sanctionslistservice.ofac.treas.gov/api/publicationpreview/exports/SDN_ADVANCED.XML"
+                target="_blank"
+                rel="noreferrer"
+              >
+                OFAC SDN Advanced XML
+              </a>
+              .
+            </p>
+          </>
+        )}
       </section>
 
       {/* FAQ */}
@@ -284,9 +385,9 @@ export default function CorrupcionPage() {
           Preguntas frecuentes
         </h2>
         <dl className="space-y-4">
-          {FAQS.map((faq) => (
+          {FAQS.map((faq, idx) => (
+            <Reveal key={faq.question} delay={DELAYS[idx % DELAYS.length]}>
             <div
-              key={faq.question}
               className="rounded-xl border border-slate-700/40 bg-slate-900/50 p-5"
             >
               <dt className="text-base font-semibold text-slate-100">
@@ -296,6 +397,7 @@ export default function CorrupcionPage() {
                 {faq.answer}
               </dd>
             </div>
+            </Reveal>
           ))}
         </dl>
       </section>

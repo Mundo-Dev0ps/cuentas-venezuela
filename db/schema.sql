@@ -231,3 +231,51 @@ CREATE TABLE IF NOT EXISTS supporters (
 );
 CREATE INDEX IF NOT EXISTS idx_supporters_created
     ON supporters(created_at DESC);
+
+-- =====================================================================
+-- corrupcion schema — sanctioned individuals + disclosed crypto wallets
+-- Populated by etl/pipelines/sanciones.py from OFAC SDN (US Treasury).
+-- Curated cases live in web/src/app/venezuela/corrupcion/data.ts and
+-- are NOT mirrored here — they are editorial content, this schema is
+-- the machine-ingested mirror of public sanctions lists.
+-- =====================================================================
+CREATE SCHEMA IF NOT EXISTS corrupcion;
+
+CREATE TABLE IF NOT EXISTS corrupcion.sancionados (
+    id                  SERIAL PRIMARY KEY,
+    source              TEXT NOT NULL,      -- 'ofac_sdn' | 'opensanctions'
+    source_id           TEXT NOT NULL,      -- OFAC ProfileID or OS id
+    name                TEXT NOT NULL,
+    party_type          TEXT,               -- Individual | Entity | Vessel | Aircraft
+    aliases             TEXT[] DEFAULT '{}',
+    programs            TEXT[] DEFAULT '{}',-- VENEZUELA, VENEZUELA-EO13850, ...
+    jurisdictions       TEXT[] DEFAULT '{}',-- USA, EU, UK, ...
+    role                TEXT,               -- role/title at designation, when present
+    nationality         TEXT,               -- ISO2 best-effort
+    first_sanctioned_at DATE,
+    last_seen_at        TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    raw                 JSONB,
+    UNIQUE (source, source_id)
+);
+CREATE INDEX IF NOT EXISTS idx_sancionados_party_type
+    ON corrupcion.sancionados(party_type);
+CREATE INDEX IF NOT EXISTS idx_sancionados_programs
+    ON corrupcion.sancionados USING GIN (programs);
+CREATE INDEX IF NOT EXISTS idx_sancionados_jurisdictions
+    ON corrupcion.sancionados USING GIN (jurisdictions);
+CREATE INDEX IF NOT EXISTS idx_sancionados_name_trgm
+    ON corrupcion.sancionados(name text_pattern_ops);
+
+CREATE TABLE IF NOT EXISTS corrupcion.wallets (
+    id            SERIAL PRIMARY KEY,
+    sancionado_id INT NOT NULL REFERENCES corrupcion.sancionados(id) ON DELETE CASCADE,
+    currency      TEXT NOT NULL,            -- BTC, ETH, USDT, USDC, TRX, XMR, ...
+    address       TEXT NOT NULL,
+    source        TEXT NOT NULL DEFAULT 'ofac_sdn',
+    added_at      TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    UNIQUE (currency, address)
+);
+CREATE INDEX IF NOT EXISTS idx_wallets_sancionado
+    ON corrupcion.wallets(sancionado_id);
+CREATE INDEX IF NOT EXISTS idx_wallets_currency
+    ON corrupcion.wallets(currency);

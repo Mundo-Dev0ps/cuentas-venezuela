@@ -2,6 +2,9 @@ import Link from "next/link";
 import { Map, BarChart3, Globe2 } from "lucide-react";
 import { pageMetadata } from "@/lib/seo";
 import { JsonLd, faqPageJsonLd } from "@/components/json-ld";
+import { Reveal } from "@/components/reveal";
+
+const DELAYS: Array<0 | 100 | 200 | 300 | 400> = [0, 100, 200, 300, 400];
 
 export const metadata = pageMetadata({
   title: "Cuentas Venezuela — datos abiertos para venezolanos",
@@ -139,9 +142,9 @@ export default function HomePage() {
           Preguntas frecuentes
         </h2>
         <dl className="space-y-5">
-          {HOME_FAQS.map((faq) => (
+          {HOME_FAQS.map((faq, idx) => (
+            <Reveal key={faq.question} delay={DELAYS[idx % DELAYS.length]}>
             <div
-              key={faq.question}
               className="rounded-xl border border-slate-700/40 bg-slate-900/50 p-5"
             >
               <dt className="text-base font-semibold text-slate-100">
@@ -151,6 +154,7 @@ export default function HomePage() {
                 {faq.answer}
               </dd>
             </div>
+            </Reveal>
           ))}
         </dl>
       </section>
