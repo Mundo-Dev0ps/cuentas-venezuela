@@ -18,6 +18,7 @@ Información clave:
 - [Derechos humanos](https://cuentasvenezuela.org/venezuela/ddhh): Puntajes anuales Freedom House sobre libertades civiles y derechos políticos de Venezuela 2013-2024, comparados con Chile y Uruguay. Fuente: Freedom House.
 - [Diáspora](https://cuentasvenezuela.org/venezuela/diaspora): Refugiados venezolanos, solicitantes de asilo y personas con otra condición de protección por país de destino. Top destinos: Colombia, Perú, Chile, Brasil, Ecuador, EEUU, España. Fuente: ACNUR/UNHCR.
 - [Antes y después](https://cuentasvenezuela.org/venezuela/antes-despues): Comparativa longitudinal Venezuela vs Chile 1998-2024 en PIB per cápita, esperanza de vida, mortalidad infantil, homicidios, acceso a internet y electricidad. Fuente: Banco Mundial.
+- [Corrupción y sanciones](https://cuentasvenezuela.org/venezuela/corrupcion): Casos documentados de corrupción de políticos venezolanos (PDVSA-Crypto USD 1.200M, Caso Andorra USD 4.200M, Alex Saab, Odebrecht VE USD 98M, operación anticorrupción 2023), individuos sancionados por OFAC/UE/UK/Canadá/Suiza, y direcciones de criptomonedas de sancionados publicadas en OFAC SDN. Cada entrada con fuente oficial primaria (DOJ, OFAC, OpenSanctions).
 
 ## Mapa del Olvido
 

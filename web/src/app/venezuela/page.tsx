@@ -6,6 +6,7 @@ import {
   ShieldAlert,
   ShieldOff,
   HeartPulse,
+  Scale,
 } from "lucide-react";
 import { pageMetadata } from "@/lib/seo";
 
@@ -63,6 +64,14 @@ const SECTIONS = [
     color: "text-cyan-400",
     title: "Diáspora global",
     desc: "Refugiados y solicitantes de asilo por país de destino. Fuente: ACNUR.",
+    badge: "Disponible",
+  },
+  {
+    href: "/venezuela/corrupcion",
+    icon: Scale,
+    color: "text-rose-400",
+    title: "Corrupción y sanciones",
+    desc: "Casos documentados, individuos sancionados (OFAC/UE/UK) y direcciones cripto SDN. Cada entrada con fuente oficial.",
     badge: "Disponible",
   },
 ];
