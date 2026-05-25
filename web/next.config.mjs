@@ -95,6 +95,38 @@ const nextConfig = {
       },
     ];
   },
+  async redirects() {
+    // Bare-prefix aliases that Google or external backlinks discovered.
+    // Permanent so GSC drops the 404 entries and consolidates link equity
+    // on the canonical paths.
+    return [
+      {
+        source: "/reportar",
+        destination: "/mapa-del-olvido/reportar",
+        permanent: true,
+      },
+      {
+        source: "/metodologia",
+        destination: "/datos-chile/metodologia",
+        permanent: true,
+      },
+      {
+        source: "/sobre",
+        destination: "/mapa-del-olvido/sobre",
+        permanent: true,
+      },
+      {
+        source: "/obras",
+        destination: "/mapa-del-olvido/obras",
+        permanent: true,
+      },
+      {
+        source: "/obras/:id",
+        destination: "/mapa-del-olvido/obras/:id",
+        permanent: true,
+      },
+    ];
+  },
   async headers() {
     return [{ source: "/:path*", headers: SECURITY_HEADERS }];
   },
