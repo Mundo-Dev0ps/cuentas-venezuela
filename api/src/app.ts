@@ -565,12 +565,28 @@ app.get("/v1/ddhh/vdem", async (c) => {
       indicator_name: string | null;
       value: number | null;
     };
+    // `= ANY(${jsArray})` does not bind cleanly under neon-http. Build an
+    // explicit IN list with individually-parameterized values via sql.join.
+    const countriesFilter =
+      countries.length > 0
+        ? sql`AND country_iso3 IN (${sql.join(
+            countries.map((v) => sql`${v}`),
+            sql`, `,
+          )})`
+        : sql``;
+    const indicatorsFilter =
+      indicators.length > 0
+        ? sql`AND indicator_code IN (${sql.join(
+            indicators.map((v) => sql`${v}`),
+            sql`, `,
+          )})`
+        : sql``;
     const rows = await c.get("db").execute(sql`
       SELECT country_iso3, year, indicator_code, indicator_name, value
       FROM ddhh.vdem_scores
       WHERE 1=1
-        ${countries.length ? sql`AND country_iso3 = ANY(${countries})` : sql``}
-        ${indicators.length ? sql`AND indicator_code = ANY(${indicators})` : sql``}
+        ${countriesFilter}
+        ${indicatorsFilter}
         ${yearFrom ? sql`AND year >= ${Number(yearFrom)}` : sql``}
         ${yearTo ? sql`AND year <= ${Number(yearTo)}` : sql``}
       ORDER BY country_iso3, indicator_code, year
