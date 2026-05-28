@@ -418,6 +418,33 @@ export async function getWallets(opts: {
   return res.items;
 }
 
+// =====================================================================
+// V-Dem — Liberal Democracy Index and related governance scores
+// =====================================================================
+export interface VDemRow {
+  country: string;
+  year: number;
+  indicatorCode: string;
+  indicatorName: string | null;
+  value: number | null;
+}
+
+export async function getVDem(opts: {
+  countries?: string[];
+  indicators?: string[];
+  from?: number;
+  to?: number;
+} = {}): Promise<VDemRow[]> {
+  const qs = new URLSearchParams();
+  if (opts.countries?.length) qs.set("countries", opts.countries.join(","));
+  if (opts.indicators?.length) qs.set("indicators", opts.indicators.join(","));
+  if (opts.from != null) qs.set("from", String(opts.from));
+  if (opts.to != null) qs.set("to", String(opts.to));
+  const path = `/v1/ddhh/vdem${qs.size ? `?${qs.toString()}` : ""}`;
+  const res = await safeGet<{ items: VDemRow[] }>(path, { items: [] });
+  return res.items;
+}
+
 export async function getVeMacroIndicators(opts: {
   country?: string;
   code?: string;

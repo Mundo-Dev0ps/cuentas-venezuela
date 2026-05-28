@@ -13,6 +13,7 @@ from pipelines import (
     sanciones,
     sii,
     sp,
+    vdem,
     ve_macro,
 )
 
@@ -28,6 +29,7 @@ PIPELINES = {
     "acnur": acnur.main,
     "embi": embi.main,
     "sanciones": sanciones.main,
+    "vdem": vdem.main,
 }
 
 

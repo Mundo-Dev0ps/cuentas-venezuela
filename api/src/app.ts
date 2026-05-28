@@ -126,6 +126,7 @@ app.get("/", (c) =>
       "/v1/ve-macro/indicators",
       "/v1/ddhh/freedom-house",
       "/v1/migracion/acnur-ve",
+      "/v1/ddhh/vdem",
       "/v1/corrupcion/sancionados",
       "/v1/corrupcion/wallets",
       "/api/obras",
@@ -537,6 +538,53 @@ app.get("/v1/ddhh/freedom-house", async (c) => {
     }));
     c.header("Cache-Control", "public, max-age=300, s-maxage=3600");
     return c.json({ items });
+  } catch (e) {
+    return c.json({ items: [], error: (e as Error).message }, 200);
+  }
+});
+
+// =====================================================================
+// V-Dem — annual democracy scores per country/indicator.
+// =====================================================================
+app.get("/v1/ddhh/vdem", async (c) => {
+  try {
+    const countriesParam = c.req.query("countries");
+    const indicatorsParam = c.req.query("indicators");
+    const yearFrom = c.req.query("from");
+    const yearTo = c.req.query("to");
+    const countries = countriesParam
+      ? countriesParam.split(",").map((s) => s.trim()).filter(Boolean)
+      : [];
+    const indicators = indicatorsParam
+      ? indicatorsParam.split(",").map((s) => s.trim()).filter(Boolean)
+      : [];
+    type Row = {
+      country_iso3: string;
+      year: number;
+      indicator_code: string;
+      indicator_name: string | null;
+      value: number | null;
+    };
+    const rows = await c.get("db").execute(sql`
+      SELECT country_iso3, year, indicator_code, indicator_name, value
+      FROM ddhh.vdem_scores
+      WHERE 1=1
+        ${countries.length ? sql`AND country_iso3 = ANY(${countries})` : sql``}
+        ${indicators.length ? sql`AND indicator_code = ANY(${indicators})` : sql``}
+        ${yearFrom ? sql`AND year >= ${Number(yearFrom)}` : sql``}
+        ${yearTo ? sql`AND year <= ${Number(yearTo)}` : sql``}
+      ORDER BY country_iso3, indicator_code, year
+    `);
+    c.header("Cache-Control", "public, max-age=300, s-maxage=3600");
+    return c.json({
+      items: rowsOf<Row>(rows).map((r) => ({
+        country: r.country_iso3,
+        year: r.year,
+        indicatorCode: r.indicator_code,
+        indicatorName: r.indicator_name,
+        value: r.value == null ? null : Number(r.value),
+      })),
+    });
   } catch (e) {
     return c.json({ items: [], error: (e as Error).message }, 200);
   }

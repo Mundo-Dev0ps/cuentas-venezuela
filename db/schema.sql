@@ -279,3 +279,22 @@ CREATE INDEX IF NOT EXISTS idx_wallets_sancionado
     ON corrupcion.wallets(sancionado_id);
 CREATE INDEX IF NOT EXISTS idx_wallets_currency
     ON corrupcion.wallets(currency);
+
+-- =====================================================================
+-- V-Dem (Varieties of Democracy) — annual governance scores by country.
+-- Populated by etl/pipelines/vdem.py from the Our World in Data mirror
+-- of V-Dem v14 (CC BY 4.0). Compact slice — 0.1 = autocracy, 1 = full
+-- democracy.
+-- =====================================================================
+CREATE TABLE IF NOT EXISTS ddhh.vdem_scores (
+    country_iso3   TEXT NOT NULL,
+    year           INT  NOT NULL,
+    indicator_code TEXT NOT NULL,    -- v2x_libdem, v2x_polyarchy, v2x_egal...
+    indicator_name TEXT,
+    value          DOUBLE PRECISION,
+    extracted_at   TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    PRIMARY KEY (country_iso3, year, indicator_code)
+);
+CREATE INDEX IF NOT EXISTS idx_vdem_country ON ddhh.vdem_scores(country_iso3);
+CREATE INDEX IF NOT EXISTS idx_vdem_year ON ddhh.vdem_scores(year);
+CREATE INDEX IF NOT EXISTS idx_vdem_indicator ON ddhh.vdem_scores(indicator_code);
