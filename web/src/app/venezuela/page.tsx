@@ -7,6 +7,7 @@ import {
   ShieldOff,
   HeartPulse,
   Scale,
+  History,
 } from "lucide-react";
 import { pageMetadata } from "@/lib/seo";
 
@@ -72,6 +73,14 @@ const SECTIONS = [
     color: "text-rose-400",
     title: "Corrupción y sanciones",
     desc: "Casos documentados, individuos sancionados (OFAC/UE/UK) y direcciones cripto SDN. Cada entrada con fuente oficial.",
+    badge: "Disponible",
+  },
+  {
+    href: "/venezuela/cronologia",
+    icon: History,
+    color: "text-amber-400",
+    title: "Cronología del quiebre democrático",
+    desc: "Eventos clave 1999-2024 que erosionaron la república. V-Dem Liberal Democracy Index Venezuela vs Chile y Uruguay. Fuentes: CIDH, ONU FFM, OEA, Foro Penal.",
     badge: "Disponible",
   },
 ];
