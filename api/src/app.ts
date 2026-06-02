@@ -727,6 +727,7 @@ const SubscribeSchema = z.object({
   email: z.string().email().max(254),
   interest: z.string().max(64).optional(),
   website: z.string().max(0).optional().default(""), // honeypot
+  turnstile_token: z.string().min(1).max(4096).optional(),
 });
 
 const subscribeLimiter = rateLimit({ limit: 5, windowMs: 10 * 60 * 1000 });
@@ -745,6 +746,23 @@ app.post("/api/subscribers", subscribeLimiter, async (c) => {
   if (parsed.data.website && parsed.data.website.length > 0) {
     return c.json({ ok: true }, 201);
   }
+
+  // Turnstile CAPTCHA — same gate already in /api/reportes. When
+  // TURNSTILE_SECRET_KEY is unset (local dev), verifyTurnstile returns
+  // true so the endpoint stays usable without the widget.
+  const ip =
+    c.req.header("cf-connecting-ip") ||
+    c.req.header("x-forwarded-for")?.split(",")[0]?.trim() ||
+    undefined;
+  const captchaOk = await verifyTurnstile(
+    c.env.TURNSTILE_SECRET_KEY,
+    parsed.data.turnstile_token,
+    ip,
+  );
+  if (!captchaOk) {
+    return c.json({ error: "captcha", message: "Verificación anti-bot fallida." }, 403);
+  }
+
   try {
     await c.get("db").execute(sql`
       INSERT INTO subscribers (email, interest)
