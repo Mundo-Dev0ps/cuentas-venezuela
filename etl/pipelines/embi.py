@@ -95,7 +95,9 @@ def _parse_bcb_date(d: str) -> datetime.date | None:
 def fetch_series_last(series_id: int) -> tuple[datetime.date, int] | None:
     """Returns (date, value_bps) of the most recent observation, or None."""
     url = f"{API_BASE}.{series_id}/dados/ultimos/30?formato=json"
-    raw = fetch_bytes(url)
+    # Short timeout + few retries: BCB SGS is frequently flaky. When it is
+    # fully down we must fail fast so we do not blow the CI job budget.
+    raw = fetch_bytes(url, retries=2, timeout=10.0)
     if not raw:
         log.warning("embi fetch failed series=%s", series_id)
         return None
@@ -118,15 +120,34 @@ def fetch_series_last(series_id: int) -> tuple[datetime.date, int] | None:
     return (d, v)
 
 
+# Circuit breaker: if BCB returns nothing this many times in a row, assume
+# the whole API is down and stop hammering the remaining series. Prevents a
+# BCB outage from eating the entire `all` job budget (14 series x retries).
+MAX_CONSECUTIVE_FAILS = 3
+
+
 def fetch_all() -> list[dict]:
     rows: list[dict] = []
     today = datetime.date.today()
     threshold = today - datetime.timedelta(days=_lookback_days())
+    consecutive_fails = 0
     for iso3, name, series_id in COUNTRIES:
         result = fetch_series_last(series_id)
         if result is None:
-            log.warning("embi.skip iso3=%s series=%s", iso3, series_id)
+            consecutive_fails += 1
+            log.warning(
+                "embi.skip iso3=%s series=%s consecutive_fails=%d",
+                iso3, series_id, consecutive_fails,
+            )
+            if consecutive_fails >= MAX_CONSECUTIVE_FAILS:
+                log.error(
+                    "embi.circuit_open — %d consecutive failures, BCB likely "
+                    "down; aborting remaining series. Seed snapshot remains "
+                    "source of truth.", consecutive_fails,
+                )
+                break
             continue
+        consecutive_fails = 0
         date, value = result
         is_frozen = date < threshold
         note = (

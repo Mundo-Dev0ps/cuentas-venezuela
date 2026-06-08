@@ -8,6 +8,8 @@ import {
   HeartPulse,
   Scale,
   History,
+  Newspaper,
+  Globe2,
 } from "lucide-react";
 import { pageMetadata } from "@/lib/seo";
 
@@ -81,6 +83,22 @@ const SECTIONS = [
     color: "text-amber-400",
     title: "Cronología del quiebre democrático",
     desc: "Eventos clave 1999-2024 que erosionaron la república. V-Dem Liberal Democracy Index Venezuela vs Chile y Uruguay. Fuentes: CIDH, ONU FFM, OEA, Foro Penal.",
+    badge: "Disponible",
+  },
+  {
+    href: "/venezuela/coyuntura",
+    icon: Newspaper,
+    color: "text-amber-400",
+    title: "Coyuntura 2025-2026",
+    desc: "Indicadores recientes: presos políticos (Foro Penal), inflación mensual (OVF), tipo de cambio BCV vs paralelo y producción petrolera. Cada cifra fechada y citada.",
+    badge: "Disponible",
+  },
+  {
+    href: "/venezuela/esequibo",
+    icon: Globe2,
+    color: "text-emerald-400",
+    title: "Controversia del Esequibo",
+    desc: "Cronología de la disputa territorial con Guyana: Laudo de París 1899, Acuerdo de Ginebra, caso ante la CIJ, referendo 2023 y estado Guayana Esequiba.",
     badge: "Disponible",
   },
 ];

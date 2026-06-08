@@ -17,6 +17,9 @@ from pipelines import (
     ve_macro,
 )
 
+# Order matters for `all`: flaky / network-heavy pipelines (embi hits BCB,
+# which is frequently down) run LAST so they cannot starve the others of the
+# CI job time budget.
 PIPELINES = {
     "extranjeria": extranjeria.run,
     "ine": ine.run,
@@ -27,9 +30,9 @@ PIPELINES = {
     "ve_macro": ve_macro.main,
     "freedom_house": freedom_house.main,
     "acnur": acnur.main,
-    "embi": embi.main,
     "sanciones": sanciones.main,
     "vdem": vdem.main,
+    "embi": embi.main,
 }
 
 
@@ -38,9 +41,18 @@ def main() -> None:
         PIPELINES[sys.argv[1]]()
         return
     if len(sys.argv) > 1 and sys.argv[1] == "all":
+        failures: list[str] = []
         for name, fn in PIPELINES.items():
             print(f"running {name}...")
-            fn()
+            try:
+                fn()
+            except Exception as exc:  # noqa: BLE001 — isolate per-pipeline
+                # One pipeline failing must not abort the rest of `all`.
+                failures.append(name)
+                print(f"ERROR pipeline {name} failed: {exc}", file=sys.stderr)
+        if failures:
+            print(f"completed with failures: {', '.join(failures)}", file=sys.stderr)
+            sys.exit(1)
         return
     print("registered pipelines:")
     for name in PIPELINES:
