@@ -16,7 +16,7 @@ const INSEGURIDAD_FAQS = [
   {
     question: "¿Cuál es la tasa de homicidios en Venezuela?",
     answer:
-      "Venezuela registró tasas de homicidios entre las más altas del mundo durante la última década, llegando a picos superiores a 60 homicidios por 100.000 habitantes según Banco Mundial y UNODC — más de 10 veces la tasa de Chile (~5/100k). La tasa ha descendido en años recientes, en parte por subregistro y por la emigración masiva.",
+      "Venezuela registró tasas de homicidios entre las más altas del mundo durante la última década, llegando a picos superiores a 60 homicidios por 100.000 habitantes según Banco Mundial y UNODC — más de 10 veces la tasa de Chile (~5 por 100k). La tasa ha descendido en años recientes, en parte por subregistro y por la emigración masiva.",
   },
   {
     question: "¿Cómo se compara Venezuela con otros países latinoamericanos en homicidios?",
