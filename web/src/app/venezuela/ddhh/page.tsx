@@ -170,7 +170,7 @@ export default async function DDHHPage() {
               Score total {venLatest.year}
             </p>
             <p className="text-2xl font-bold text-slate-100 font-mono">
-              {venLatest.total ?? "—"}<span className="text-sm text-slate-500">/100</span>
+              {venLatest.total ?? "—"}<span className="text-sm text-slate-500"> de 100</span>
             </p>
             <p className="text-xs text-slate-500 mt-1">
               PR {venLatest.prScore ?? "—"}/40 · CL {venLatest.clScore ?? "—"}/60

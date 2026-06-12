@@ -142,7 +142,7 @@ export default async function InseguridadPage() {
             </p>
             <p className="text-3xl font-bold text-rose-400 font-mono">
               {ven.value.toFixed(1)}
-              <span className="text-sm text-rose-300/70 ml-1">/100k</span>
+              <span className="text-sm text-rose-300/70 ml-1">por 100k</span>
             </p>
           </div>
           <div className="rounded-xl border border-cyan-500/30 bg-cyan-500/5 p-4">
@@ -151,7 +151,7 @@ export default async function InseguridadPage() {
             </p>
             <p className="text-3xl font-bold text-cyan-300 font-mono">
               {chl.value.toFixed(1)}
-              <span className="text-sm text-cyan-300/70 ml-1">/100k</span>
+              <span className="text-sm text-cyan-300/70 ml-1">por 100k</span>
             </p>
           </div>
           <div className="rounded-xl border border-slate-700/40 bg-slate-900/60 p-4">
