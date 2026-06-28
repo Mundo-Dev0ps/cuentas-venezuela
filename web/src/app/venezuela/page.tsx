@@ -10,6 +10,7 @@ import {
   History,
   Newspaper,
   Globe2,
+  AlertTriangle,
 } from "lucide-react";
 import { pageMetadata } from "@/lib/seo";
 
@@ -21,6 +22,14 @@ export const metadata = pageMetadata({
 });
 
 const SECTIONS = [
+  {
+    href: "/venezuela/sismo-2026",
+    icon: AlertTriangle,
+    color: "text-red-400",
+    title: "Terremoto 2026",
+    desc: "Doble sismo Mw 7,5 y 7,2 del 24 de junio de 2026. ≥1.430 muertos, ≥3.238 heridos, estados afectados y daños PNUD $4,7–8,7 mil millones. Fuentes: USGS, OCHA, PNUD.",
+    badge: "Disponible",
+  },
   {
     href: "/venezuela/antes-despues",
     icon: TrendingDown,
