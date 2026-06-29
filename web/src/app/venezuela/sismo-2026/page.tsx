@@ -17,6 +17,7 @@ import {
   datasetJsonLd,
 } from "@/components/json-ld";
 import { Reveal } from "@/components/reveal";
+import { AffectedStates } from "./affected-states";
 import {
   SEISMIC_EVENTS,
   DAMAGE,
@@ -25,7 +26,6 @@ import {
   SISMO_FAQS,
   type Source,
   type SeismicEvent,
-  type AffectedState,
 } from "./data";
 
 export const metadata = pageMetadata({
@@ -52,24 +52,6 @@ function fmtDate(iso: string): string {
   const d = new Date(iso + "T00:00:00Z");
   return `${d.getUTCDate()} de ${MONTHS[d.getUTCMonth()]} de ${d.getUTCFullYear()}`;
 }
-
-const SEVERITY: Record<
-  AffectedState["severity"],
-  { label: string; color: string }
-> = {
-  critical: {
-    label: "Crítico",
-    color: "border-rose-500/50 bg-rose-500/10 text-rose-200",
-  },
-  high: {
-    label: "Alto",
-    color: "border-amber-500/50 bg-amber-500/10 text-amber-200",
-  },
-  moderate: {
-    label: "Moderado",
-    color: "border-slate-600/50 bg-slate-700/20 text-slate-300",
-  },
-};
 
 function SourceLinks({ sources }: { sources: Source[] }) {
   return (
@@ -305,31 +287,10 @@ export default function SismoPage() {
           </div>
           <p className="mb-5 text-sm text-slate-400">
             El sismo se sintió en gran parte del norte y centro del país. La
-            Guaira y Yaracuy concentraron los mayores daños.
+            Guaira y Yaracuy concentraron los mayores daños. Toca un estado para
+            ver el detalle.
           </p>
-          <div className="grid gap-3 sm:grid-cols-2">
-            {AFFECTED_STATES.map((st) => {
-              const sev = SEVERITY[st.severity];
-              return (
-                <div
-                  key={st.name}
-                  className="rounded-xl border border-slate-700/40 bg-slate-900/50 p-4"
-                >
-                  <div className="mb-1.5 flex items-center justify-between gap-2">
-                    <h3 className="font-semibold text-slate-100">{st.name}</h3>
-                    <span
-                      className={`rounded-md border px-1.5 py-0.5 text-[10px] font-medium uppercase tracking-wider ${sev.color}`}
-                    >
-                      {sev.label}
-                    </span>
-                  </div>
-                  <p className="text-sm leading-relaxed text-slate-400">
-                    {st.notes}
-                  </p>
-                </div>
-              );
-            })}
-          </div>
+          <AffectedStates states={AFFECTED_STATES} />
         </section>
       </Reveal>
 
