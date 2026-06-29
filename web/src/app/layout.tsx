@@ -89,6 +89,19 @@ const ORGANIZATION_JSONLD = {
   sameAs: ["https://github.com/Mundo-Dev0ps/cuentas-venezuela"],
   description:
     "Plataforma ciudadana de datos abiertos sobre Venezuela y su diáspora.",
+  // E-E-A-T: declare expertise area + sourcing posture for YMYL topics
+  // (deaths, politics, human rights), where Google weighs trust heavily.
+  knowsAbout: [
+    "Venezuela",
+    "diáspora venezolana",
+    "derechos humanos en Venezuela",
+    "economía de Venezuela",
+    "migración venezolana",
+    "datos abiertos",
+  ],
+  areaServed: "VE",
+  knowsLanguage: "es",
+  publishingPrinciples: `${SITE_URL}/fuentes`,
 };
 
 const WEBSITE_JSONLD = {
