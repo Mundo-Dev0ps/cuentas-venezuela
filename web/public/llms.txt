@@ -9,6 +9,7 @@ Información clave:
 - Idioma: Español
 - Licencia datos: CC BY 4.0
 - Sin fines de lucro, sin publicidad
+- Versión extendida (texto completo): https://cuentasvenezuela.org/llms-full.txt
 
 ## Dashboards Venezuela
 

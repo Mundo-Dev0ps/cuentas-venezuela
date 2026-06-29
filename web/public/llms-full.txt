@@ -1,0 +1,96 @@
+# Cuentas Venezuela — versión extendida (texto completo)
+
+> Plataforma cívica independiente con datos abiertos, oficiales y citados sobre Venezuela, su crisis y su diáspora. Toda la información proviene de fuentes oficiales (Banco Mundial, ACNUR/UNHCR, Freedom House, V-Dem, OCHA, PNUD, USGS, Foro Penal, OVF, BCV, OPEP/EIA, UNODC, INE Chile, SERMIG, SII, Superintendencia de Pensiones). El sitio agrega, normaliza y compara datos sin opinión editorial. Licencia CC BY 4.0.
+
+Esta es la versión de texto completo (`llms-full.txt`). El índice resumido está en https://cuentasvenezuela.org/llms.txt
+
+- Sitio: https://cuentasvenezuela.org
+- Contacto: hola@cuentasvenezuela.org
+- Idioma: Español · Licencia datos: CC BY 4.0 · Sin fines de lucro, sin publicidad
+- Editor: Cuentas Venezuela. Metodología y fuentes: https://cuentasvenezuela.org/fuentes
+
+---
+
+## Terremotos de Venezuela de 2026 — texto completo
+
+URL: https://cuentasvenezuela.org/venezuela/sismo-2026
+Publicado: 24 de junio de 2026. Última actualización de cifras: 27 de junio de 2026.
+
+El 24 de junio de 2026, a las 18:04:33 hora local (VET), un sismo de magnitud Mw 7,2 con epicentro a 23 km al noroeste de San Felipe (Yaracuy), profundidad 20,3 km, actuó como precursor. 39 segundos después, un sismo principal de magnitud Mw 7,5, más superficial (profundidad 10 km), con epicentro a 28 km al sureste de Yumare (Yaracuy), sacudió el norte y centro de Venezuela. Ambos de tipo desgarre (strike-slip). Fue el terremoto más fuerte en Venezuela desde el sismo de San Narciso de 1900 (~Mw 7,6). Ocurrió durante la conmemoración de la Batalla de Carabobo, con muchos comercios cerrados. En septiembre de 2025 ya se había registrado un doblete previo (Mw 6,2 y 6,3) con daños en Zulia y Lara.
+
+Víctimas (al 27 de junio de 2026): al menos 1.430 muertos, más de 3.238 heridos, más de 12.721 desplazados. La cifra de desaparecidos está disputada: el gobierno la sitúa en "cientos", mientras un sitio independiente de seguimiento reporta más de 68.900 personas no localizadas. El colapso de telecomunicaciones y el acceso difícil a zonas con derrumbes complican el conteo.
+
+Estados afectados: La Guaira (crítico: más de 1.400 edificios destruidos, aeropuerto internacional Simón Bolívar dañado y cerrado temporalmente) y Yaracuy (crítico: epicentro, San Felipe y Yumare). También Carabobo (alto, Valencia), Aragua (alto), Miranda (alto), Distrito Capital/Caracas (alto), Trujillo (moderado), Lara (moderado), Falcón (moderado) y Mérida (moderado).
+
+Daño estructural: 189 edificios colapsados según conteo oficial; ~60.000 edificios dañados o destruidos según análisis satelital de Oregon State University; 383 edificios, 13 hospitales, 25 centros comerciales y 1.002 otras estructuras catalogadas como afectadas. Servicios interrumpidos: electricidad, agua, saneamiento, transporte y telecomunicaciones.
+
+Daño económico: el PNUD estimó pérdidas en vivienda y activos económicos entre 4.700 y 8.700 millones de dólares, aproximadamente 4–8% del PIB de Venezuela. La estimación excluye daños a infraestructura y disrupción de largo plazo; el costo real podría ser entre 1,5 y 3 veces mayor.
+
+Fuentes: USGS, OCHA/ReliefWeb, PNUD, PAHO/OPS, UN News, Oregon State University.
+
+Preguntas frecuentes:
+P: ¿Cuántas personas murieron en el terremoto de Venezuela de 2026?
+R: Al 27 de junio de 2026, las autoridades reportaban al menos 1.430 muertos y más de 3.238 heridos por el doble terremoto del 24 de junio. La cifra siguió subiendo durante los días posteriores. Más de 12.700 personas resultaron desplazadas.
+
+P: ¿Cuál fue la magnitud del terremoto y dónde estuvo el epicentro?
+R: Dos sismos con 39 segundos de diferencia: primero Mw 7,2 a 23 km de San Felipe (Yaracuy, profundidad 20,3 km), luego el principal de Mw 7,5 a 28 km al sureste de Yumare (profundidad 10 km). El más fuerte en Venezuela desde el sismo de San Narciso de 1900.
+
+P: ¿Cuáles fueron los estados más afectados?
+R: La Guaira y Yaracuy. La Guaira sufrió más de 1.400 edificios destruidos y el cierre del aeropuerto Simón Bolívar. También Carabobo, Aragua, Miranda, Distrito Capital (Caracas), Trujillo, Lara, Falcón y Mérida.
+
+P: ¿Cuánto costaron los daños materiales?
+R: El PNUD estimó entre 4.700 y 8.700 millones de dólares (≈4–8% del PIB), sin contar infraestructura ni reconstrucción; el costo real podría ser 1,5 a 3 veces mayor. Análisis satelital de Oregon State University calculó cerca de 60.000 edificios dañados o destruidos.
+
+---
+
+## Coyuntura 2025-2026 — texto completo
+
+URL: https://cuentasvenezuela.org/venezuela/coyuntura
+
+Presos políticos (Foro Penal): pico superior a 2.400 detenidos tras la elección del 28 de julio de 2024; 687 al 3 de febrero de 2026; 526 al 2 de marzo de 2026; 404 al 3 de junio de 2026 (369 hombres, 35 mujeres; 225 civiles, 179 militares; 167 condenados, 237 sin sentencia) tras las excarcelaciones del proceso de amnistía iniciado el 8 de enero de 2026. Más de 19.000 detenciones con fines políticos registradas desde 2014.
+
+Inflación mensual 2025 (Observatorio Venezolano de Finanzas, OVF): enero 7,9%, febrero 12,8%, marzo 13,1%, abril 18,4%, mayo 26%. Acumulada enero–mayo 2025: 105,5%. Interanual a mayo: 229%. El BCV dejó de publicar el IPC con regularidad.
+
+Tipo de cambio (3 de junio de 2026): oficial BCV 557,97 Bs/USD; paralelo (Binance P2P) ~726,5 Bs/USD; brecha ~30%.
+
+Producción petrolera: ~934.000 bpd en noviembre de 2025 (fuentes secundarias OPEP); estimaciones de cierre 2025 entre 800.000 y 1,1 millones de bpd; proyección Goldman Sachs ~900.000 bpd para 2026, hasta 1,2 millones si se levantan sanciones de EE. UU.
+
+Fuentes: Foro Penal, OVF, BCV, OPEP/EIA, CFR.
+
+---
+
+## Controversia del Esequibo — texto completo
+
+URL: https://cuentasvenezuela.org/venezuela/esequibo
+
+Disputa territorial entre Venezuela y Guyana por la Guayana Esequiba (~160.000 km² al oeste del río Esequibo). Hitos: Laudo Arbitral de París (1899), Acuerdo de Ginebra (1966), demanda de Guyana ante la Corte Internacional de Justicia (CIJ, 2018), convocatoria del referendo consultivo (2023), medidas provisionales de la CIJ (1 dic 2023), referendo del 3 dic 2023 (gobierno reportó 95% a favor; participación disputada), Declaración de Argyle entre Maduro e Irfaan Ali comprometiéndose a no usar la fuerza (14 dic 2023), ley de creación del estado Guayana Esequiba (2024), primera elección de gobernador y legisladores para ese estado (2025), presentación de documentos a la CIJ y rechazo del fallo por Venezuela (ago 2025). Venezuela reclama la nulidad del Laudo de 1899; Guyana sostiene que fijó la frontera de forma definitiva y administra el territorio.
+
+Fuentes: Acuerdo de Ginebra, CIJ, CNN, Infobae, Bloomberg Línea, VOA, IRI.
+
+---
+
+## Resto de dashboards (resumen)
+
+- Economía (https://cuentasvenezuela.org/venezuela/economia): PIB, inflación, desempleo, deuda, IED, comercio exterior 1998-2024; riesgo país EMBI+ Venezuela vs LATAM. Fuente: Banco Mundial, BCB.
+- Salud (https://cuentasvenezuela.org/venezuela/salud): esperanza de vida, mortalidad infantil/menores de 5/materna, médicos por mil, gasto en salud % PIB. Fuente: Banco Mundial.
+- Inseguridad (https://cuentasvenezuela.org/venezuela/inseguridad): homicidios por 100.000 hab. 1998-2024 vs Chile/LATAM. Picos superiores a 60 por 100k. Fuente: Banco Mundial, UNODC.
+- Derechos humanos (https://cuentasvenezuela.org/venezuela/ddhh): Freedom House 2013-2024. Venezuela "No Libre" desde 2017; 2024 score 15/100 (PR 1/40, CL 14/60). Fuente: Freedom House.
+- Diáspora (https://cuentasvenezuela.org/venezuela/diaspora): refugiados y solicitantes de asilo por destino (Colombia, Perú, Chile, Brasil, Ecuador, EEUU, España). Fuente: ACNUR/UNHCR.
+- Antes y después (https://cuentasvenezuela.org/venezuela/antes-despues): comparativa Venezuela vs Chile 1998-2024. Fuente: Banco Mundial.
+- Corrupción y sanciones (https://cuentasvenezuela.org/venezuela/corrupcion): PDVSA-Crypto USD 1.200M, Andorra USD 4.200M, Alex Saab, Odebrecht VE USD 98M; sancionados OFAC/UE/UK; direcciones cripto SDN. Fuentes: DOJ, OFAC, OpenSanctions.
+- Cronología del quiebre democrático (https://cuentasvenezuela.org/venezuela/cronologia): eventos 1999-2024; elección 28 julio 2024 con actas opositoras mostrando 67% sin publicación del CNE, represión postelectoral (27 muertos, 2000+ detenidos). Índice V-Dem vs Chile/Uruguay. Fuentes: CIDH, ONU FFM, OEA, HRW, Foro Penal, Centro Carter, V-Dem.
+- Mapa del Olvido (https://cuentasvenezuela.org/mapa-del-olvido): 69 obras públicas paralizadas 1976-2024 en 18 estados, con presupuesto, contratista, responsable político y sobrecosto.
+- Datos Chile (https://cuentasvenezuela.org/datos-chile): migración venezolana en Chile — demografía (SERMIG), pensiones (Superintendencia de Pensiones), tributario (SII), comparativa por nacionalidad.
+
+## API
+
+- Indicadores macro: https://api.cuentasvenezuela.org/v1/ve-macro/indicators
+- EMBI+ LATAM: https://api.cuentasvenezuela.org/v1/ve-macro/embi
+- Freedom House: https://api.cuentasvenezuela.org/v1/ddhh/freedom-house
+- Diáspora ACNUR: https://api.cuentasvenezuela.org/v1/migracion/acnur-ve
+- Obras: https://api.cuentasvenezuela.org/api/obras
+- Sitemap: https://cuentasvenezuela.org/sitemap.xml
+
+## Citación
+
+Cita la fuente original (Banco Mundial / Freedom House / ACNUR / USGS / PNUD / OCHA / Foro Penal / OVF / etc.) y opcionalmente atribuye Cuentas Venezuela como agregador. Ejemplo: "Según el PNUD, vía Cuentas Venezuela (cuentasvenezuela.org), el terremoto del 24 de junio de 2026 causó daños por USD 4,7–8,7 mil millones, ~4–8% del PIB de Venezuela".

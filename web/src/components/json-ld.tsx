@@ -132,3 +132,69 @@ export function datasetJsonLd({
     ...(sameAs ? { sameAs } : {}),
   };
 }
+
+interface NewsArticleInput {
+  headline: string;
+  description: string;
+  /** Path of the article page. */
+  path: string;
+  /** ISO-8601 datetime the article was first published. */
+  datePublished: string;
+  /** ISO-8601 datetime of the last substantive update. */
+  dateModified: string;
+  /** OG-style image path (absolute path starting with "/"). */
+  image?: string;
+  /** Comma-separated keyword tags. */
+  keywords?: string[];
+  /** External primary sources backing the article (E-E-A-T). */
+  citations?: string[];
+  /** Section, e.g. "Venezuela", "Sismología". */
+  section?: string;
+}
+
+/**
+ * schema.org NewsArticle — eligible for Google News / Top Stories and a
+ * strong E-E-A-T signal for time-sensitive YMYL coverage (deaths, crises).
+ * Carries explicit author + publisher + datePublished/dateModified so Google
+ * and generative engines can attribute and date the reporting.
+ */
+export function newsArticleJsonLd({
+  headline,
+  description,
+  path,
+  datePublished,
+  dateModified,
+  image,
+  keywords,
+  citations,
+  section,
+}: NewsArticleInput): object {
+  const url = `${SITE_URL}${path}`;
+  const publisher = {
+    "@type": "Organization",
+    name: "Cuentas Venezuela",
+    url: SITE_URL,
+    logo: {
+      "@type": "ImageObject",
+      url: `${SITE_URL}/icon.svg`,
+    },
+  };
+  return {
+    "@context": "https://schema.org",
+    "@type": "NewsArticle",
+    headline,
+    description,
+    url,
+    mainEntityOfPage: { "@type": "WebPage", "@id": url },
+    inLanguage: "es",
+    isAccessibleForFree: true,
+    datePublished,
+    dateModified,
+    author: publisher,
+    publisher,
+    image: image ? `${SITE_URL}${image}` : `${SITE_URL}/opengraph-image`,
+    ...(keywords ? { keywords: keywords.join(", ") } : {}),
+    ...(section ? { articleSection: section } : {}),
+    ...(citations && citations.length ? { citation: citations } : {}),
+  };
+}

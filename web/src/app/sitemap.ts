@@ -25,40 +25,49 @@ async function fetchObrasForSitemap(): Promise<ObraSitemap[]> {
   }
 }
 
-export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const lastModified = new Date();
+// Real last-modified date per route. Reporting `new Date()` for every page
+// on every crawl is a noisy signal — Google learns the dates are
+// meaningless and ignores them. These reflect the last substantive content
+// change; bump a route's date when you actually edit that page.
+const ROUTE_LASTMOD: Record<string, string> = {
+  "": "2026-06-28",
+  "/apoyar": "2026-05-11",
+  "/fuentes": "2026-06-08",
+  "/mapa-del-olvido": "2026-05-11",
+  "/mapa-del-olvido/obras": "2026-05-11",
+  "/mapa-del-olvido/sobre": "2026-05-11",
+  "/mapa-del-olvido/metodologia": "2026-05-11",
+  "/mapa-del-olvido/reportar": "2026-06-08",
+  "/datos-chile": "2026-05-11",
+  "/datos-chile/fuentes": "2026-05-11",
+  "/datos-chile/indicadores": "2026-05-11",
+  "/datos-chile/dashboards": "2026-05-11",
+  "/datos-chile/dashboards/comparativa": "2026-05-11",
+  "/datos-chile/dashboards/demografia": "2026-05-11",
+  "/datos-chile/dashboards/pensiones": "2026-05-11",
+  "/datos-chile/dashboards/tributario": "2026-05-11",
+  "/datos-chile/metodologia": "2026-05-11",
+  "/venezuela": "2026-06-28",
+  "/venezuela/antes-despues": "2026-05-11",
+  "/venezuela/economia": "2026-05-11",
+  "/venezuela/inseguridad": "2026-06-08",
+  "/venezuela/salud": "2026-05-11",
+  "/venezuela/ddhh": "2026-06-08",
+  "/venezuela/diaspora": "2026-05-11",
+  "/venezuela/corrupcion": "2026-05-11",
+  "/venezuela/cronologia": "2026-05-11",
+  "/venezuela/coyuntura": "2026-06-08",
+  "/venezuela/esequibo": "2026-06-08",
+  "/venezuela/sismo-2026": "2026-06-28",
+};
 
-  const staticRoutes = [
-    "",
-    "/apoyar",
-    "/fuentes",
-    "/mapa-del-olvido",
-    "/mapa-del-olvido/obras",
-    "/mapa-del-olvido/sobre",
-    "/mapa-del-olvido/metodologia",
-    "/mapa-del-olvido/reportar",
-    "/datos-chile",
-    "/datos-chile/fuentes",
-    "/datos-chile/indicadores",
-    "/datos-chile/dashboards",
-    "/datos-chile/dashboards/comparativa",
-    "/datos-chile/dashboards/demografia",
-    "/datos-chile/dashboards/pensiones",
-    "/datos-chile/dashboards/tributario",
-    "/datos-chile/metodologia",
-    "/venezuela",
-    "/venezuela/antes-despues",
-    "/venezuela/economia",
-    "/venezuela/inseguridad",
-    "/venezuela/salud",
-    "/venezuela/ddhh",
-    "/venezuela/diaspora",
-    "/venezuela/corrupcion",
-    "/venezuela/cronologia",
-    "/venezuela/coyuntura",
-    "/venezuela/esequibo",
-    "/venezuela/sismo-2026",
-  ].map((path) => ({ url: `${SITE}${path}`, lastModified }));
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  const fallback = new Date();
+
+  const staticRoutes = Object.entries(ROUTE_LASTMOD).map(([path, date]) => ({
+    url: `${SITE}${path}`,
+    lastModified: new Date(`${date}T00:00:00Z`),
+  }));
 
   // Per-obra server-rendered detail pages at /mapa-del-olvido/obras/{id}.
   // The old singular /obra/{id} path was retired (it was a phantom URL
@@ -67,7 +76,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const obras = await fetchObrasForSitemap();
   const obraEntries = obras.map((o) => ({
     url: `${SITE}/mapa-del-olvido/obras/${o.id}`,
-    lastModified: o.updated_at ? new Date(o.updated_at) : lastModified,
+    lastModified: o.updated_at ? new Date(o.updated_at) : fallback,
   }));
 
   return [...staticRoutes, ...obraEntries];

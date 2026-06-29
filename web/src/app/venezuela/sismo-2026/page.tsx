@@ -15,6 +15,7 @@ import {
   breadcrumbsJsonLd,
   faqPageJsonLd,
   datasetJsonLd,
+  newsArticleJsonLd,
 } from "@/components/json-ld";
 import { Reveal } from "@/components/reveal";
 import { AffectedStates } from "./affected-states";
@@ -165,6 +166,32 @@ export default function SismoPage() {
           sameAs: "https://es.wikipedia.org/wiki/Terremotos_de_Venezuela_de_2026",
         })}
       />
+      <JsonLd
+        data={newsArticleJsonLd({
+          headline:
+            "Terremotos de Venezuela de 2026: muertos, daños y estados afectados",
+          description:
+            "Doble sismo Mw 7,2 y 7,5 del 24 de junio de 2026 en Venezuela. Resumen de víctimas, desaparecidos, estados afectados, daño estructural y costo económico, con cada cifra citada a su fuente.",
+          path: "/venezuela/sismo-2026",
+          datePublished: SEISMIC_EVENTS[0].datetimeUtc,
+          dateModified: `${DAMAGE.asOf}T12:00:00Z`,
+          image: "/venezuela/sismo-2026/opengraph-image",
+          section: "Venezuela",
+          keywords: [
+            "terremoto Venezuela 2026",
+            "sismo Venezuela",
+            "muertos terremoto Venezuela",
+            "La Guaira",
+            "Yaracuy",
+          ],
+          citations: [
+            "https://earthquake.usgs.gov/earthquakes/eventpage/us6000t7zp",
+            "https://es.wikipedia.org/wiki/Terremotos_de_Venezuela_de_2026",
+            "https://news.un.org/en/story/2026/06/1167815",
+            "https://www.paho.org/en/earthquakes-venezuela-2026",
+          ],
+        })}
+      />
 
       <Link
         href="/venezuela"
@@ -188,6 +215,25 @@ export default function SismoPage() {
           estados afectados, daño estructural y costo económico, con cada cifra
           citada a su fuente.
         </p>
+        <div className="mt-4 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-slate-500">
+          <span>
+            Por <span className="text-slate-300">Cuentas Venezuela</span>
+          </span>
+          <span aria-hidden>·</span>
+          <span>
+            Publicado{" "}
+            <time dateTime={SEISMIC_EVENTS[0].datetimeUtc}>24 jun 2026</time>
+          </span>
+          <span aria-hidden>·</span>
+          <span>
+            Actualizado{" "}
+            <time dateTime={DAMAGE.asOf}>{fmtDate(DAMAGE.asOf)}</time>
+          </span>
+          <span aria-hidden>·</span>
+          <Link href="/fuentes" className="text-cyan-400 hover:text-cyan-300">
+            Fuentes y metodología
+          </Link>
+        </div>
       </header>
 
       <aside className="mb-10 rounded-xl border border-red-500/30 bg-red-500/5 p-5 text-sm text-red-200">
