@@ -1,8 +1,9 @@
 import Link from "next/link";
-import { Map, BarChart3, Globe2 } from "lucide-react";
+import { Map, BarChart3, Globe2, AlertTriangle, ArrowRight } from "lucide-react";
 import { pageMetadata } from "@/lib/seo";
 import { JsonLd, faqPageJsonLd } from "@/components/json-ld";
 import { Reveal } from "@/components/reveal";
+import { DAMAGE, fmtNum } from "./venezuela/sismo-2026/data";
 
 const DELAYS: Array<0 | 100 | 200 | 300 | 400> = [0, 100, 200, 300, 400];
 
@@ -72,6 +73,42 @@ export default function HomePage() {
           </Link>
         </div>
       </section>
+
+      {/* Contingencia — terremoto 2026. Banner prioritario mientras dure la
+          emergencia; retirar o degradar cuando pase la fase aguda. */}
+      <Link
+        href="/venezuela/sismo-2026"
+        className="group block rounded-2xl border border-red-500/40 bg-gradient-to-br from-red-500/10 via-rose-500/5 to-slate-900/40 p-5 sm:p-6 transition hover:border-red-400/70"
+      >
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+          <div className="flex items-start gap-3">
+            <AlertTriangle className="mt-0.5 h-6 w-6 shrink-0 text-red-400" />
+            <div>
+              <p className="text-[0.7rem] font-semibold uppercase tracking-widest text-red-400">
+                Emergencia · cobertura en vivo
+              </p>
+              <h2 className="mt-1 text-xl font-bold text-slate-100 sm:text-2xl">
+                Terremotos de Venezuela de 2026
+              </h2>
+              <p className="mt-1 text-sm text-slate-300">
+                Doble sismo Mw 7,5 y 7,2 del 24 de junio.{" "}
+                <span className="font-semibold text-slate-100">
+                  {fmtNum(DAMAGE.dead)}+ muertos
+                </span>
+                ,{" "}
+                <span className="font-semibold text-slate-100">
+                  {fmtNum(DAMAGE.injured)}+ heridos
+                </span>
+                . Víctimas, estados afectados, mapa de daños y costo económico.
+              </p>
+            </div>
+          </div>
+          <span className="inline-flex shrink-0 items-center gap-1 self-start rounded-md bg-red-500 px-4 py-2 text-sm font-semibold text-slate-950 transition group-hover:bg-red-400 sm:self-center">
+            Ver cobertura
+            <ArrowRight className="h-4 w-4" />
+          </span>
+        </div>
+      </Link>
 
       <section className="grid gap-6 md:grid-cols-3">
         <div className="group relative flex flex-col rounded-xl border border-slate-700/40 border-l-[3px] border-l-cyan-400 bg-slate-900/80 p-8 transition hover:border-cyan-400/60 hover:shadow-lg">

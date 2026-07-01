@@ -26,6 +26,7 @@ import {
   AFFECTED_STATES,
   ECONOMIC_DAMAGE,
   SISMO_FAQS,
+  fmtNum,
   type Source,
   type SeismicEvent,
 } from "./data";
@@ -105,17 +106,17 @@ function eventJsonLd(ev: SeismicEvent) {
 const KPIS = [
   {
     label: "Muertos",
-    value: `${DAMAGE.dead.toLocaleString("es")}+`,
+    value: `${fmtNum(DAMAGE.dead)}+`,
     color: "border-rose-500/40 bg-rose-500/5 text-rose-300",
   },
   {
     label: "Heridos",
-    value: `${DAMAGE.injured.toLocaleString("es")}+`,
+    value: `${fmtNum(DAMAGE.injured)}+`,
     color: "border-orange-500/40 bg-orange-500/5 text-orange-300",
   },
   {
     label: "Desplazados",
-    value: `${DAMAGE.displaced.toLocaleString("es")}+`,
+    value: `${fmtNum(DAMAGE.displaced)}+`,
     color: "border-amber-500/40 bg-amber-500/5 text-amber-300",
   },
   {
@@ -126,9 +127,9 @@ const KPIS = [
 ];
 
 const DAMAGE_FACTS = [
-  `Edificios colapsados por completo (conteo oficial): ${DAMAGE.buildingsCollapsedOfficial.toLocaleString("es")}.`,
-  `Edificios dañados o destruidos (análisis satelital, NASA): ~${DAMAGE.buildingsDamagedSatellite.toLocaleString("es")}.`,
-  `Infraestructuras afectadas en total (conteo humanitario OCHA): ${DAMAGE.infrastructureAffected.toLocaleString("es")}, incluidos ${DAMAGE.hospitalsAffected} hospitales.`,
+  `Edificios colapsados por completo (conteo oficial): ${fmtNum(DAMAGE.buildingsCollapsedOfficial)}.`,
+  `Edificios dañados o destruidos (análisis satelital, NASA): ~${fmtNum(DAMAGE.buildingsDamagedSatellite)}.`,
+  `Infraestructuras afectadas en total (conteo humanitario OCHA): ${fmtNum(DAMAGE.infrastructureAffected)}, incluidos ${DAMAGE.hospitalsAffected} hospitales.`,
   "Aeropuerto internacional Simón Bolívar (Maiquetía): infraestructura dañada y cierre temporal.",
   "Servicios interrumpidos: electricidad, agua, saneamiento, transporte y telecomunicaciones, lo que complica la atención hospitalaria y los traslados de emergencia.",
 ];
@@ -410,9 +411,9 @@ export default function SismoPage() {
               fuente. El gobierno la reporta como{" "}
               <strong>{DAMAGE.missingGov}</strong>; un sitio independiente de
               seguimiento (venezuelatebusca.com) registra más de{" "}
-              <strong>{DAMAGE.missingTracker.toLocaleString("es")}</strong>{" "}
+              <strong>{fmtNum(DAMAGE.missingTracker)}</strong>{" "}
               personas no localizadas, y la ONU estima en torno a{" "}
-              <strong>{DAMAGE.missingUn.toLocaleString("es")}</strong> los
+              <strong>{fmtNum(DAMAGE.missingUn)}</strong> los
               desaparecidos. El colapso de las telecomunicaciones y la
               dificultad para acceder a zonas con edificios derrumbados complican
               el conteo. Registramos las distintas versiones sin tomar partido.

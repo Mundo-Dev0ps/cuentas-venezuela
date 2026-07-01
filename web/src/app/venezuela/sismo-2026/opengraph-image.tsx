@@ -1,5 +1,5 @@
 import { ImageResponse } from "next/og";
-import { DAMAGE, SEISMIC_EVENTS } from "./data";
+import { DAMAGE, SEISMIC_EVENTS, fmtNum } from "./data";
 
 // Page-level OG image override for /venezuela/sismo-2026. Surfaces the
 // headline figures (deaths + max magnitude) so social/SERP previews carry
@@ -76,11 +76,11 @@ export default function Image() {
         <div style={{ display: "flex", gap: 24 }}>
           <Stat value={`${maxMag}`} label="Magnitud Mw" />
           <Stat
-            value={`${DAMAGE.dead.toLocaleString("es")}+`}
+            value={`${fmtNum(DAMAGE.dead)}+`}
             label="Muertos"
           />
           <Stat
-            value={`${DAMAGE.injured.toLocaleString("es")}+`}
+            value={`${fmtNum(DAMAGE.injured)}+`}
             label="Heridos"
           />
           <Stat value="$4,7–8,7 MM" label="Daño (PNUD)" />
