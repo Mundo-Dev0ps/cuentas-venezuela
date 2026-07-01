@@ -44,16 +44,17 @@ export interface DamageStats {
   missingGov: string;
   /** Versión de tracker independiente de desaparecidos. */
   missingTracker: number;
+  /** Estimación de personas desaparecidas según la ONU. */
+  missingUn: number;
   displaced: number;
-  /** Edificios colapsados según conteo oficial. */
+  /** Edificios colapsados por completo según conteo oficial. */
   buildingsCollapsedOfficial: number;
-  /** Edificios dañados/destruidos según análisis satelital (Oregon State). */
+  /** Edificios dañados/destruidos según análisis satelital (NASA). */
   buildingsDamagedSatellite: number;
-  /** Edificios singularmente catalogados como afectados. */
-  buildingsAffected: number;
+  /** Infraestructuras afectadas en total (conteo humanitario OCHA). */
+  infrastructureAffected: number;
+  /** Hospitales afectados (OCHA). */
   hospitalsAffected: number;
-  shoppingCentersAffected: number;
-  otherStructuresAffected: number;
   sources: Source[];
 }
 
@@ -89,16 +90,16 @@ export const SOURCES = {
     url: "https://en.wikipedia.org/wiki/2026_Venezuela_earthquakes",
   },
   reliefweb: {
-    label: "ReliefWeb / OCHA — Panorama 25 jun 2026",
-    url: "https://reliefweb.int/report/venezuela-bolivarian-republic/terremoto-en-venezuela-panorama-de-la-situacion-25-de-junio-de-2026",
+    label: "OCHA — Situation Report No. 5 (28 jun 2026)",
+    url: "https://www.unocha.org/publications/report/venezuela-bolivarian-republic/earthquakes-venezuela-situation-report-no-5-28-june-2026-time-500-pm",
   },
   paho: {
     label: "PAHO/OPS — Earthquake Response 2026",
     url: "https://www.paho.org/en/earthquakes-venezuela-2026",
   },
   un_news: {
-    label: "UN News — Death toll rises",
-    url: "https://news.un.org/en/story/2026/06/1167815",
+    label: "UN News — Death toll passes 1,700",
+    url: "https://news.un.org/en/story/2026/06/1167837",
   },
   abc_news: {
     label: "ABC News — live updates",
@@ -140,19 +141,18 @@ export const SEISMIC_EVENTS: SeismicEvent[] = [
 ];
 
 export const DAMAGE: DamageStats = {
-  asOf: "2026-06-27",
-  dead: 1430,
-  injured: 3238,
-  missingGov: "cientos",
-  missingTracker: 68900,
-  displaced: 12721,
+  asOf: "2026-06-30",
+  dead: 1943,
+  injured: 10571,
+  missingGov: "miles (sin cifra oficial)",
+  missingTracker: 43251,
+  missingUn: 50000,
+  displaced: 15800,
   buildingsCollapsedOfficial: 189,
-  buildingsDamagedSatellite: 60000,
-  buildingsAffected: 383,
-  hospitalsAffected: 13,
-  shoppingCentersAffected: 25,
-  otherStructuresAffected: 1002,
-  sources: [SOURCES.un_news, SOURCES.abc_news, SOURCES.reliefweb, SOURCES.paho],
+  buildingsDamagedSatellite: 59000,
+  infrastructureAffected: 2501,
+  hospitalsAffected: 38,
+  sources: [SOURCES.un_news, SOURCES.reliefweb, SOURCES.paho, SOURCES.wikipedia_es],
 };
 
 export const AFFECTED_STATES: AffectedState[] = [
@@ -224,7 +224,7 @@ export const SISMO_FAQS: SismoFaq[] = [
   {
     question: "¿Cuántas personas murieron en el terremoto de Venezuela de 2026?",
     answer:
-      "Al 27 de junio de 2026, las autoridades reportaban al menos 1.430 muertos y más de 3.238 heridos por el doble terremoto del 24 de junio. La cifra siguió subiendo durante los días posteriores conforme avanzaban las labores de rescate. Más de 12.700 personas resultaron desplazadas.",
+      "Al 30 de junio de 2026, los reportes consolidados situaban la cifra en más de 1.943 muertos y más de 10.571 heridos por el doble terremoto del 24 de junio. La cifra siguió subiendo durante los días posteriores conforme avanzaban las labores de rescate. Más de 15.800 personas resultaron desplazadas.",
   },
   {
     question: "¿Cuál fue la magnitud del terremoto y dónde estuvo el epicentro?",
@@ -239,6 +239,6 @@ export const SISMO_FAQS: SismoFaq[] = [
   {
     question: "¿Cuánto costaron los daños materiales del terremoto de Venezuela?",
     answer:
-      "El PNUD estimó las pérdidas en vivienda y activos económicos entre 4.700 y 8.700 millones de dólares, aproximadamente entre 4% y 8% del PIB de Venezuela. La estimación excluye daños a infraestructura y disrupción económica de largo plazo; el costo real podría ser entre 1,5 y 3 veces mayor. Análisis satelital de Oregon State University calculó cerca de 60.000 edificios dañados o destruidos.",
+      "El PNUD estimó las pérdidas en vivienda y activos económicos entre 4.700 y 8.700 millones de dólares, aproximadamente entre 4% y 8% del PIB de Venezuela. La estimación excluye daños a infraestructura y disrupción económica de largo plazo; el costo real podría ser entre 1,5 y 3 veces mayor. Análisis satelital de la NASA calculó cerca de 59.000 edificios dañados o destruidos.",
   },
 ];
