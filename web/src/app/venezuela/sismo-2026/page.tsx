@@ -19,6 +19,7 @@ import {
 } from "@/components/json-ld";
 import { Reveal } from "@/components/reveal";
 import { AffectedStates } from "./affected-states";
+import { DamageMap } from "./damage-map";
 import {
   SEISMIC_EVENTS,
   DAMAGE,
@@ -333,9 +334,12 @@ export default function SismoPage() {
           </div>
           <p className="mb-5 text-sm text-slate-400">
             El sismo se sintió en gran parte del norte y centro del país. La
-            Guaira y Yaracuy concentraron los mayores daños. Toca un estado para
-            ver el detalle.
+            Guaira y Yaracuy concentraron los mayores daños. Explora el mapa o
+            la lista para ver el detalle por estado.
           </p>
+          <div className="mb-6">
+            <DamageMap states={AFFECTED_STATES} />
+          </div>
           <AffectedStates states={AFFECTED_STATES} />
         </section>
       </Reveal>
