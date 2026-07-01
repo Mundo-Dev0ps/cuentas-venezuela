@@ -8,6 +8,14 @@
 //    versiones (gobierno vs. tracker independiente), no una conclusión.
 //  - Sin opinión editorial: registramos hechos y magnitudes, no juicios.
 
+// Spanish number formatter with forced grouping, so 4-digit counts render
+// as "1.943" / "2.501" (matching the prose and news convention) instead of
+// the locale default "1943" that toLocaleString("es") produces.
+const NUM_FMT = new Intl.NumberFormat("es-ES", { useGrouping: "always" });
+export function fmtNum(n: number): string {
+  return NUM_FMT.format(n);
+}
+
 export interface Source {
   label: string;
   url: string;
