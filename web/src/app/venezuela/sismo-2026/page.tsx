@@ -125,9 +125,9 @@ const KPIS = [
 ];
 
 const DAMAGE_FACTS = [
-  `Edificios colapsados (conteo oficial): ${DAMAGE.buildingsCollapsedOfficial.toLocaleString("es")}.`,
-  `Edificios dañados o destruidos (análisis satelital, Oregon State University): ~${DAMAGE.buildingsDamagedSatellite.toLocaleString("es")}.`,
-  `Estructuras catalogadas como afectadas: ${DAMAGE.buildingsAffected.toLocaleString("es")} edificios, ${DAMAGE.hospitalsAffected} hospitales, ${DAMAGE.shoppingCentersAffected} centros comerciales y ${DAMAGE.otherStructuresAffected.toLocaleString("es")} otras estructuras.`,
+  `Edificios colapsados por completo (conteo oficial): ${DAMAGE.buildingsCollapsedOfficial.toLocaleString("es")}.`,
+  `Edificios dañados o destruidos (análisis satelital, NASA): ~${DAMAGE.buildingsDamagedSatellite.toLocaleString("es")}.`,
+  `Infraestructuras afectadas en total (conteo humanitario OCHA): ${DAMAGE.infrastructureAffected.toLocaleString("es")}, incluidos ${DAMAGE.hospitalsAffected} hospitales.`,
   "Aeropuerto internacional Simón Bolívar (Maiquetía): infraestructura dañada y cierre temporal.",
   "Servicios interrumpidos: electricidad, agua, saneamiento, transporte y telecomunicaciones, lo que complica la atención hospitalaria y los traslados de emergencia.",
 ];
@@ -403,14 +403,15 @@ export default function SismoPage() {
             </p>
             <p className="leading-relaxed">
               El número de personas desaparecidas varía drásticamente según la
-              fuente. El gobierno la sitúa en{" "}
-              <strong>{DAMAGE.missingGov}</strong>, mientras que un sitio
-              independiente de seguimiento de desaparecidos reporta más de{" "}
+              fuente. El gobierno la reporta como{" "}
+              <strong>{DAMAGE.missingGov}</strong>; un sitio independiente de
+              seguimiento (venezuelatebusca.com) registra más de{" "}
               <strong>{DAMAGE.missingTracker.toLocaleString("es")}</strong>{" "}
-              personas no localizadas. El colapso de las telecomunicaciones y la
-              dificultad para acceder a zonas con edificios derrumbados
-              complican el conteo. Registramos ambas versiones sin tomar
-              partido.
+              personas no localizadas, y la ONU estima en torno a{" "}
+              <strong>{DAMAGE.missingUn.toLocaleString("es")}</strong> los
+              desaparecidos. El colapso de las telecomunicaciones y la
+              dificultad para acceder a zonas con edificios derrumbados complican
+              el conteo. Registramos las distintas versiones sin tomar partido.
             </p>
           </aside>
         </section>
@@ -444,7 +445,7 @@ export default function SismoPage() {
         <p>
           Fuentes principales: USGS, OCHA / ReliefWeb, Programa de las Naciones
           Unidas para el Desarrollo (PNUD), Organización Panamericana de la
-          Salud (PAHO/OPS), UN News, Oregon State University. Cronología de
+          Salud (PAHO/OPS), UN News, NASA. Cronología de
           referencia en Wikipedia.
         </p>
         <p>
