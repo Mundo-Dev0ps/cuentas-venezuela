@@ -18,8 +18,7 @@ import {
   newsArticleJsonLd,
 } from "@/components/json-ld";
 import { Reveal } from "@/components/reveal";
-import { AffectedStates } from "./affected-states";
-import { DamageMap } from "./damage-map";
+import { StatesExplorer } from "./states-explorer";
 import {
   SEISMIC_EVENTS,
   DAMAGE,
@@ -338,10 +337,7 @@ export default function SismoPage() {
             Guaira y Yaracuy concentraron los mayores daños. Explora el mapa o
             la lista para ver el detalle por estado.
           </p>
-          <div className="mb-6">
-            <DamageMap states={AFFECTED_STATES} />
-          </div>
-          <AffectedStates states={AFFECTED_STATES} />
+          <StatesExplorer states={AFFECTED_STATES} />
         </section>
       </Reveal>
 

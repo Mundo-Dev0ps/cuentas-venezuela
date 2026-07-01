@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import type { AffectedState } from "./data";
 import { MAP_VIEWBOX, STATE_PATHS } from "./map-paths";
 
@@ -25,9 +24,17 @@ const LEGEND: Array<{ key: keyof typeof FILL; label: string }> = [
   { key: "none", label: "Sin daños mayores" },
 ];
 
-export function DamageMap({ states }: { states: AffectedState[] }) {
+export function DamageMap({
+  states,
+  selected,
+  onSelect,
+}: {
+  states: AffectedState[];
+  selected: string;
+  /** scroll=true when the interaction should jump to the detail list. */
+  onSelect: (name: string, opts?: { scroll?: boolean }) => void;
+}) {
   const byName = new Map(states.map((s) => [s.name, s]));
-  const [selected, setSelected] = useState<string>(states[0]?.name ?? "");
   const sel = byName.get(selected);
 
   return (
@@ -57,13 +64,11 @@ export function DamageMap({ states }: { states: AffectedState[] }) {
                   cursor: isAffected ? "pointer" : "default",
                   transition: "fill-opacity 120ms",
                 }}
-                onMouseEnter={() => isAffected && setSelected(name)}
-                onClick={() => isAffected && setSelected(name)}
+                onMouseEnter={() => isAffected && onSelect(name)}
+                onClick={() => isAffected && onSelect(name, { scroll: true })}
                 tabIndex={isAffected ? 0 : -1}
-                onFocus={() => isAffected && setSelected(name)}
-                aria-label={
-                  st ? `${name}: ${SEV_LABEL[st.severity]}` : name
-                }
+                onFocus={() => isAffected && onSelect(name)}
+                aria-label={st ? `${name}: ${SEV_LABEL[st.severity]}` : name}
               >
                 <title>
                   {st ? `${name} — ${SEV_LABEL[st.severity]}` : name}
@@ -95,7 +100,7 @@ export function DamageMap({ states }: { states: AffectedState[] }) {
       >
         {sel ? (
           <>
-            <div className="mb-1.5 flex items-center justify-between gap-2">
+            <div className="mb-2 flex items-center justify-between gap-2">
               <h3 className="text-lg font-semibold text-slate-100">
                 {sel.name}
               </h3>
@@ -110,6 +115,27 @@ export function DamageMap({ states }: { states: AffectedState[] }) {
                 {SEV_LABEL[sel.severity]}
               </span>
             </div>
+            <dl className="mb-3 grid grid-cols-2 gap-2 text-sm">
+              <div className="rounded-lg border border-slate-700/40 bg-slate-950/40 px-3 py-2">
+                <dt className="text-[11px] uppercase tracking-wider text-slate-500">
+                  Capital
+                </dt>
+                <dd className="mt-0.5 font-medium text-slate-200">
+                  {sel.capital}
+                </dd>
+              </div>
+              <div className="rounded-lg border border-slate-700/40 bg-slate-950/40 px-3 py-2">
+                <dt className="text-[11px] uppercase tracking-wider text-slate-500">
+                  Severidad
+                </dt>
+                <dd
+                  className="mt-0.5 font-medium"
+                  style={{ color: FILL[sel.severity] }}
+                >
+                  {SEV_LABEL[sel.severity]}
+                </dd>
+              </div>
+            </dl>
             <p className="text-sm leading-relaxed text-slate-400">
               {sel.notes}
             </p>
