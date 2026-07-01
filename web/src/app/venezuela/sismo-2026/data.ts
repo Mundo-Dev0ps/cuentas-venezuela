@@ -40,6 +40,8 @@ export interface SeismicEvent {
 export interface AffectedState {
   name: string;
   severity: "critical" | "high" | "moderate";
+  /** Capital del estado. */
+  capital: string;
   notes: string;
 }
 
@@ -167,53 +169,63 @@ export const AFFECTED_STATES: AffectedState[] = [
   {
     name: "La Guaira",
     severity: "critical",
+    capital: "La Guaira",
     notes:
       "Zona más golpeada al norte de Caracas. Más de 1.400 edificios destruidos; aeropuerto internacional Simón Bolívar dañado y cerrado temporalmente.",
   },
   {
     name: "Yaracuy",
     severity: "critical",
+    capital: "San Felipe",
     notes:
       "Epicentro del doblete (San Felipe y Yumare). Colapsos generalizados en viviendas e infraestructura.",
   },
   {
     name: "Carabobo",
     severity: "high",
+    capital: "Valencia",
     notes: "Edificios colapsados. Valencia entre las ciudades con más daños.",
   },
   {
     name: "Aragua",
     severity: "high",
+    capital: "Maracay",
     notes: "Estructuras colapsadas y daños en viviendas.",
   },
   {
     name: "Miranda",
     severity: "high",
+    capital: "Los Teques",
     notes: "Daños estructurales en el área metropolitana de Caracas.",
   },
   {
     name: "Distrito Capital",
     severity: "high",
+    capital: "Caracas",
     notes: "Caracas: edificios históricos y estructuras dañadas; servicios interrumpidos.",
   },
   {
     name: "Trujillo",
     severity: "moderate",
+    capital: "Trujillo",
     notes: "Edificios colapsados en zonas andinas.",
   },
   {
     name: "Lara",
     severity: "moderate",
+    capital: "Barquisimeto",
     notes: "Sismo sentido con fuerza; daños menores reportados.",
   },
   {
     name: "Falcón",
     severity: "moderate",
+    capital: "Coro",
     notes: "Movimiento sentido en la costa; daños menores.",
   },
   {
     name: "Mérida",
     severity: "moderate",
+    capital: "Mérida",
     notes: "Sismo percibido en los Andes; sin víctimas mayores reportadas.",
   },
 ];

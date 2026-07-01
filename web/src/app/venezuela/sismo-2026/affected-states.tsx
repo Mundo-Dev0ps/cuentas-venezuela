@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import { ChevronDown } from "lucide-react";
 import type { AffectedState } from "./data";
 
@@ -25,30 +24,35 @@ const SEVERITY: Record<
   },
 };
 
-export function AffectedStates({ states }: { states: AffectedState[] }) {
-  // First state open by default; the rest collapse on load.
-  const [open, setOpen] = useState<Record<string, boolean>>(() =>
-    states.length > 0 ? { [states[0].name]: true } : {},
-  );
+export function stateItemId(name: string): string {
+  return `state-item-${name.replace(/\s+/g, "-").toLowerCase()}`;
+}
 
-  function toggle(name: string) {
-    setOpen((prev) => ({ ...prev, [name]: !prev[name] }));
-  }
-
+export function AffectedStates({
+  states,
+  selected,
+  onSelect,
+}: {
+  states: AffectedState[];
+  /** Currently open/selected state, shared with the map. */
+  selected: string;
+  onSelect: (name: string) => void;
+}) {
   return (
     <ul className="space-y-2">
       {states.map((st) => {
         const sev = SEVERITY[st.severity];
-        const isOpen = !!open[st.name];
+        const isOpen = st.name === selected;
         const panelId = `state-panel-${st.name.replace(/\s+/g, "-").toLowerCase()}`;
         return (
           <li
             key={st.name}
-            className="overflow-hidden rounded-xl border border-slate-700/40 bg-slate-900/50"
+            id={stateItemId(st.name)}
+            className="scroll-mt-24 overflow-hidden rounded-xl border border-slate-700/40 bg-slate-900/50"
           >
             <button
               type="button"
-              onClick={() => toggle(st.name)}
+              onClick={() => onSelect(st.name)}
               aria-expanded={isOpen}
               aria-controls={panelId}
               className="flex w-full items-center gap-3 px-4 py-3 text-left transition hover:bg-slate-800/40"
@@ -75,6 +79,9 @@ export function AffectedStates({ states }: { states: AffectedState[] }) {
               hidden={!isOpen}
               className="border-t border-slate-700/40 px-4 py-3 text-sm leading-relaxed text-slate-400"
             >
+              <p className="mb-1 text-xs text-slate-500">
+                Capital: <span className="text-slate-300">{st.capital}</span>
+              </p>
               {st.notes}
             </div>
           </li>
