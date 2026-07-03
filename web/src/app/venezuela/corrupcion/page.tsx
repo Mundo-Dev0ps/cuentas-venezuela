@@ -393,7 +393,7 @@ export default async function CorrupcionPage({
             />
 
             <p className="text-xs text-slate-500">
-              Fuente: API <code className="font-mono">/v1/corrupcion/sancionados</code>{" "}
+              Fuente: API <code className="font-mono">api.cuentasvenezuela.org/v1/corrupcion/sancionados</code>{" "}
               · raw upstream{" "}
               <a
                 className="text-cyan-300 hover:text-cyan-200"
