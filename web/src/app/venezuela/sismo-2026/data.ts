@@ -100,8 +100,8 @@ export const SOURCES = {
     url: "https://en.wikipedia.org/wiki/2026_Venezuela_earthquakes",
   },
   reliefweb: {
-    label: "OCHA — Situation Report No. 5 (28 jun 2026)",
-    url: "https://www.unocha.org/publications/report/venezuela-bolivarian-republic/earthquakes-venezuela-situation-report-no-5-28-june-2026-time-500-pm",
+    label: "OCHA — Situation Report No. 8 (1 jul 2026)",
+    url: "https://www.unocha.org/publications/report/venezuela-bolivarian-republic/earthquakes-venezuela-situation-report-no-8-01-july-2026-time-0700-pm",
   },
   paho: {
     label: "PAHO/OPS — Earthquake Response 2026",
@@ -151,11 +151,11 @@ export const SEISMIC_EVENTS: SeismicEvent[] = [
 ];
 
 export const DAMAGE: DamageStats = {
-  asOf: "2026-06-30",
-  dead: 1943,
-  injured: 10571,
+  asOf: "2026-07-02",
+  dead: 2595,
+  injured: 12500,
   missingGov: "miles (sin cifra oficial)",
-  missingTracker: 43251,
+  missingTracker: 38500,
   missingUn: 50000,
   displaced: 15800,
   buildingsCollapsedOfficial: 189,
@@ -236,7 +236,7 @@ export const ECONOMIC_DAMAGE: EconomicDamage = {
   pctGdpLow: 4,
   pctGdpHigh: 8,
   note:
-    "Estimación del PNUD sobre pérdidas en vivienda y activos económicos. Excluye daños a infraestructura, disrupción económica prolongada y reconstrucción; el costo real podría ser entre 1,5 y 3 veces esta cifra.",
+    "Estimación del PNUD sobre pérdidas en vivienda y activos económicos. Excluye daños a infraestructura, disrupción económica prolongada y reconstrucción; el costo real podría ser entre 1,5 y 3 veces esta cifra. Una evaluación posterior de la UNDRR situó los daños directos en unos USD 37 mil millones (24 mil millones en edificaciones y 13 mil millones en infraestructura).",
   sources: [SOURCES.un_news, SOURCES.reliefweb],
 };
 
@@ -244,7 +244,7 @@ export const SISMO_FAQS: SismoFaq[] = [
   {
     question: "¿Cuántas personas murieron en el terremoto de Venezuela de 2026?",
     answer:
-      "Al 30 de junio de 2026, los reportes consolidados situaban la cifra en más de 1.943 muertos y más de 10.571 heridos por el doble terremoto del 24 de junio. La cifra siguió subiendo durante los días posteriores conforme avanzaban las labores de rescate. Más de 15.800 personas resultaron desplazadas.",
+      "Al 2 de julio de 2026, las autoridades reportaban al menos 2.595 muertos y más de 12.500 heridos por el doble terremoto del 24 de junio, con más de 6.400 personas rescatadas. La cifra siguió subiendo conforme avanzaban las labores de rescate. Más de 15.800 personas resultaron desplazadas y cerca de 50.000 seguían sin localizar.",
   },
   {
     question: "¿Cuál fue la magnitud del terremoto y dónde estuvo el epicentro?",
@@ -259,6 +259,6 @@ export const SISMO_FAQS: SismoFaq[] = [
   {
     question: "¿Cuánto costaron los daños materiales del terremoto de Venezuela?",
     answer:
-      "El PNUD estimó las pérdidas en vivienda y activos económicos entre 4.700 y 8.700 millones de dólares, aproximadamente entre 4% y 8% del PIB de Venezuela. La estimación excluye daños a infraestructura y disrupción económica de largo plazo; el costo real podría ser entre 1,5 y 3 veces mayor. Análisis satelital de la NASA calculó cerca de 59.000 edificios dañados o destruidos.",
+      "El PNUD estimó las pérdidas en vivienda y activos económicos entre 4.700 y 8.700 millones de dólares, aproximadamente entre 4% y 8% del PIB de Venezuela. Una evaluación posterior de la UNDRR elevó los daños directos a unos 37 mil millones de dólares (24 mil millones en edificaciones y 13 mil millones en infraestructura). Análisis satelital de la NASA calculó cerca de 59.000 edificios dañados o destruidos.",
   },
 ];

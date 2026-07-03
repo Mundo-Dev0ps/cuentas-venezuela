@@ -14,23 +14,23 @@ Esta es la versión de texto completo (`llms-full.txt`). El índice resumido est
 ## Terremotos de Venezuela de 2026 — texto completo
 
 URL: https://cuentasvenezuela.org/venezuela/sismo-2026
-Publicado: 24 de junio de 2026. Última actualización de cifras: 30 de junio de 2026.
+Publicado: 24 de junio de 2026. Última actualización de cifras: 2 de julio de 2026.
 
 El 24 de junio de 2026, a las 18:04:33 hora local (VET), un sismo de magnitud Mw 7,2 con epicentro a 23 km al noroeste de San Felipe (Yaracuy), profundidad 20,3 km, actuó como precursor. 39 segundos después, un sismo principal de magnitud Mw 7,5, más superficial (profundidad 10 km), con epicentro a 28 km al sureste de Yumare (Yaracuy), sacudió el norte y centro de Venezuela. Ambos de tipo desgarre (strike-slip). Fue el terremoto más fuerte en Venezuela desde el sismo de San Narciso de 1900 (~Mw 7,6). Ocurrió durante la conmemoración de la Batalla de Carabobo, con muchos comercios cerrados. En septiembre de 2025 ya se había registrado un doblete previo (Mw 6,2 y 6,3) con daños en Zulia y Lara.
 
-Víctimas (al 30 de junio de 2026): al menos 1.943 muertos, más de 10.571 heridos, más de 15.800 desplazados. La cifra de desaparecidos está disputada: el gobierno la reporta como "miles", un sitio independiente de seguimiento (venezuelatebusca.com) registra más de 43.251 personas no localizadas y la ONU estima en torno a 50.000. El colapso de telecomunicaciones y el acceso difícil a zonas con derrumbes complican el conteo.
+Víctimas (al 2 de julio de 2026): al menos 2.595 muertos, más de 12.500 heridos, más de 15.800 desplazados y más de 6.400 personas rescatadas. La cifra de desaparecidos está disputada: el gobierno la reporta como "miles", un sitio independiente de seguimiento (venezuelatebusca.com) registra más de 38.500 personas no localizadas y la ONU estima en torno a 50.000. El colapso de telecomunicaciones y el acceso difícil a zonas con derrumbes complican el conteo.
 
 Estados afectados: La Guaira (crítico: más de 1.400 edificios destruidos, aeropuerto internacional Simón Bolívar dañado y cerrado temporalmente) y Yaracuy (crítico: epicentro, San Felipe y Yumare). También Carabobo (alto, Valencia), Aragua (alto), Miranda (alto), Distrito Capital/Caracas (alto), Trujillo (moderado), Lara (moderado), Falcón (moderado) y Mérida (moderado).
 
 Daño estructural: 189 edificios colapsados por completo según conteo oficial; ~59.000 edificios dañados o destruidos según análisis satelital de la NASA; 2.501 infraestructuras afectadas en total según OCHA, incluidos 38 hospitales. Servicios interrumpidos: electricidad, agua, saneamiento, transporte y telecomunicaciones.
 
-Daño económico: el PNUD estimó pérdidas en vivienda y activos económicos entre 4.700 y 8.700 millones de dólares, aproximadamente 4–8% del PIB de Venezuela. La estimación excluye daños a infraestructura y disrupción de largo plazo; el costo real podría ser entre 1,5 y 3 veces mayor.
+Daño económico: el PNUD estimó pérdidas en vivienda y activos económicos entre 4.700 y 8.700 millones de dólares, aproximadamente 4–8% del PIB de Venezuela. Una evaluación posterior de la UNDRR situó los daños directos en unos 37 mil millones de dólares (24 mil millones en edificaciones y 13 mil millones en infraestructura).
 
 Fuentes: USGS, OCHA/ReliefWeb, PNUD, PAHO/OPS, UN News, NASA.
 
 Preguntas frecuentes:
 P: ¿Cuántas personas murieron en el terremoto de Venezuela de 2026?
-R: Al 30 de junio de 2026, los reportes consolidados situaban la cifra en más de 1.943 muertos y más de 10.571 heridos por el doble terremoto del 24 de junio. La cifra siguió subiendo durante los días posteriores. Más de 15.800 personas resultaron desplazadas.
+R: Al 2 de julio de 2026, las autoridades reportaban al menos 2.595 muertos y más de 12.500 heridos por el doble terremoto del 24 de junio, con más de 6.400 rescatados. La cifra siguió subiendo durante los días posteriores. Más de 15.800 personas resultaron desplazadas y cerca de 50.000 seguían sin localizar.
 
 P: ¿Cuál fue la magnitud del terremoto y dónde estuvo el epicentro?
 R: Dos sismos con 39 segundos de diferencia: primero Mw 7,2 a 23 km de San Felipe (Yaracuy, profundidad 20,3 km), luego el principal de Mw 7,5 a 28 km al sureste de Yumare (profundidad 10 km). El más fuerte en Venezuela desde el sismo de San Narciso de 1900.
@@ -39,7 +39,7 @@ P: ¿Cuáles fueron los estados más afectados?
 R: La Guaira y Yaracuy. La Guaira sufrió más de 1.400 edificios destruidos y el cierre del aeropuerto Simón Bolívar. También Carabobo, Aragua, Miranda, Distrito Capital (Caracas), Trujillo, Lara, Falcón y Mérida.
 
 P: ¿Cuánto costaron los daños materiales?
-R: El PNUD estimó entre 4.700 y 8.700 millones de dólares (≈4–8% del PIB), sin contar infraestructura ni reconstrucción; el costo real podría ser 1,5 a 3 veces mayor. Análisis satelital de la NASA calculó cerca de 59.000 edificios dañados o destruidos.
+R: El PNUD estimó entre 4.700 y 8.700 millones de dólares (≈4–8% del PIB) en vivienda y activos; una evaluación posterior de la UNDRR elevó los daños directos a unos 37 mil millones de dólares (24 mil millones en edificaciones, 13 mil millones en infraestructura). Análisis satelital de la NASA calculó cerca de 59.000 edificios dañados o destruidos.
 
 ---
 
