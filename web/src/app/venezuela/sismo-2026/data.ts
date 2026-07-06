@@ -151,13 +151,13 @@ export const SEISMIC_EVENTS: SeismicEvent[] = [
 ];
 
 export const DAMAGE: DamageStats = {
-  asOf: "2026-07-02",
-  dead: 2595,
-  injured: 12500,
+  asOf: "2026-07-05",
+  dead: 3342,
+  injured: 16470,
   missingGov: "miles (sin cifra oficial)",
-  missingTracker: 38500,
+  missingTracker: 31000,
   missingUn: 50000,
-  displaced: 15800,
+  displaced: 16300,
   buildingsCollapsedOfficial: 189,
   buildingsDamagedSatellite: 59000,
   infrastructureAffected: 2501,
@@ -244,7 +244,7 @@ export const SISMO_FAQS: SismoFaq[] = [
   {
     question: "¿Cuántas personas murieron en el terremoto de Venezuela de 2026?",
     answer:
-      "Al 2 de julio de 2026, las autoridades reportaban al menos 2.595 muertos y más de 12.500 heridos por el doble terremoto del 24 de junio, con más de 6.400 personas rescatadas. La cifra siguió subiendo conforme avanzaban las labores de rescate. Más de 15.800 personas resultaron desplazadas y cerca de 50.000 seguían sin localizar.",
+      "Al 5 de julio de 2026, las autoridades reportaban al menos 3.342 muertos y más de 16.470 heridos por el doble terremoto del 24 de junio, con más de 6.400 personas rescatadas. La cifra siguió subiendo conforme avanzaban las labores de rescate. Más de 16.300 personas perdieron su vivienda y cerca de 50.000 seguían sin localizar.",
   },
   {
     question: "¿Cuál fue la magnitud del terremoto y dónde estuvo el epicentro?",
