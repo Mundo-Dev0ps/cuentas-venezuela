@@ -329,6 +329,143 @@ export const FIGURES: Figure[] = [
       },
     ],
   },
+  {
+    id: "rafael-ramirez",
+    name: "Rafael Ramírez",
+    summary:
+      "Ministro de Energía y Petróleo y presidente de PDVSA durante más de una década, además de vicepresidente del área económica, canciller y embajador ante la ONU. Fijó como meta elevar la producción petrolera a 6 millones de barriles diarios. Sobre él pesa una orden de captura por el caso PDVSA.",
+    offices: [
+      {
+        title: "Ministro de Energía y Petróleo",
+        start: "2002",
+        end: "2014",
+        source: {
+          label: "Wikipedia — Rafael Ramírez Carreño",
+          url: "https://es.wikipedia.org/wiki/Rafael_Ram%C3%ADrez_Carre%C3%B1o",
+        },
+      },
+      {
+        title: "Presidente de PDVSA",
+        org: "PDVSA",
+        start: "2004",
+        end: "2014",
+        source: {
+          label: "Wikipedia — Rafael Ramírez Carreño",
+          url: "https://es.wikipedia.org/wiki/Rafael_Ram%C3%ADrez_Carre%C3%B1o",
+        },
+      },
+      {
+        title: "Vicepresidente para el Área Económica",
+        start: "2013",
+        end: "2014",
+        source: {
+          label: "Transparencia Venezuela — Rafael Ramírez, rojo rojito",
+          url: "https://transparenciave.org/project/petroleo-historia-7/",
+        },
+      },
+      {
+        title: "Ministro de Relaciones Exteriores (canciller)",
+        start: "2014",
+        end: "2014",
+        source: {
+          label: "Wikipedia — Rafael Ramírez Carreño",
+          url: "https://es.wikipedia.org/wiki/Rafael_Ram%C3%ADrez_Carre%C3%B1o",
+        },
+      },
+      {
+        title: "Embajador de Venezuela ante la ONU",
+        start: "2014",
+        end: "2017",
+        source: {
+          label: "Wikipedia — Rafael Ramírez Carreño",
+          url: "https://es.wikipedia.org/wiki/Rafael_Ram%C3%ADrez_Carre%C3%B1o",
+        },
+      },
+    ],
+    promises: [
+      {
+        text: "Elevar la producción petrolera a 6 millones de barriles diarios mediante el Plan Siembra Petrolera. Ocurrió lo contrario: dejó la industria en torno a 3 millones de bpd y la producción siguió cayendo hasta poco más de 1 millón.",
+        madeDate: "2005",
+        office: "Ministro de Energía y Petróleo",
+        status: "incumplido",
+        promiseSource: {
+          label: "Transparencia Venezuela — Plan Siembra Petrolera (meta 6M bpd)",
+          url: "https://transparenciave.org/project/petroleo-historia-7/",
+        },
+        statusSource: {
+          label: "France 24 — Ramírez y la caída de la producción de PDVSA",
+          url: "https://www.france24.com/es/20190226-entrevista-rafael-ramirez-pdvsa-petroleo-venezuela",
+        },
+      },
+    ],
+    sources: [
+      PODEROPEDIA("rafael-ramirez", "Rafael Ramírez"),
+      {
+        label: "Euronews — orden de captura internacional (caso PDVSA)",
+        url: "https://es.euronews.com/2022/08/31/venezuela-orden-de-captura-internacional-contra-el-exministro-de-petroleo-rafael-ramirez",
+        date: "2022-08-31",
+      },
+    ],
+  },
+  {
+    id: "nestor-reverol",
+    name: "Néstor Reverol",
+    summary:
+      "General de la Guardia Nacional que dirigió la Oficina Nacional Antidrogas y fue ministro de Interior, Justicia y Paz antes de pasar al Ministerio de Energía Eléctrica. Asumió el sector eléctrico con el mandato de frenar los apagones; los cortes y el racionamiento continuaron. Está sancionado por EE. UU., la UE, Canadá y Suiza.",
+    offices: [
+      {
+        title: "Director de la Oficina Nacional Antidrogas (ONA)",
+        org: "ONA",
+        start: "2008",
+        end: "2010",
+        source: PODEROPEDIA("nestor-reverol", "Néstor Reverol"),
+      },
+      {
+        title: "Comandante General de la Guardia Nacional Bolivariana",
+        start: "2014",
+        end: "2016",
+        source: {
+          label: "Wikipedia — Néstor Reverol",
+          url: "https://es.wikipedia.org/wiki/N%C3%A9stor_Reverol",
+        },
+      },
+      {
+        title: "Ministro de Interior, Justicia y Paz",
+        start: "2016-08",
+        end: "2020",
+        source: {
+          label: "Wikipedia — Néstor Reverol",
+          url: "https://es.wikipedia.org/wiki/N%C3%A9stor_Reverol",
+        },
+      },
+      {
+        title: "Ministro de Energía Eléctrica",
+        start: "2020",
+        end: "2023",
+        source: {
+          label: "El Nacional — Reverol designado ministro de Energía Eléctrica",
+          url: "https://www.elnacional.com/venezuela/designan-a-nestor-reverol-como-ministro-de-energia-electrica/",
+        },
+      },
+    ],
+    promises: [
+      {
+        text: "Dar respuesta a la llamada 'guerra eléctrica' y frenar los apagones al frente del Ministerio de Energía Eléctrica. Durante su gestión continuaron los cortes, el racionamiento y las fluctuaciones del servicio.",
+        madeDate: "2020",
+        office: "Ministro de Energía Eléctrica",
+        status: "incumplido",
+        promiseSource: {
+          label: "SWI swissinfo — Maduro cambia al ministro para responder a la 'guerra eléctrica'",
+          url: "https://www.swissinfo.ch/spa/maduro-cambia-a-ministro-de-energ%C3%ADa-el%C3%A9ctrica-para-dar-respuesta-a-la-%22guerra-el%C3%A9ctrica%22/76252870",
+        },
+        statusSource: {
+          label: "Runrun.es — Reverol, una pasantía de bajo voltaje",
+          url: "https://runrun.es/noticias/528567/reverol-una-pasantia-de-bajo-voltaje-frente-al-ministerio-de-energia-electrica/",
+        },
+      },
+    ],
+    sources: [PODEROPEDIA("nestor-reverol", "Néstor Reverol")],
+  },
 ];
 
 export const REPLICA_EMAIL = "hola@cuentasvenezuela.org";
