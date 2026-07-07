@@ -69,6 +69,17 @@ Fuentes: Acuerdo de Ginebra, CIJ, CNN, Infobae, Bloomberg Línea, VOA, IRI.
 
 ---
 
+## Puerta giratoria — texto completo
+
+URL: https://cuentasvenezuela.org/venezuela/puerta-giratoria
+
+Registro factual y citado de funcionarios venezolanos que rotaron por múltiples cargos públicos dejando promesas o mandatos sin cumplimiento documentado. Ordenado por número de promesas con estado "incumplido". Cada promesa lleva doble fuente (dónde se hizo y evidencia del estado). Sin opinión editorial; derecho a réplica a hola@cuentasvenezuela.org.
+
+- Haiman El Troudi: ministro de Planificación y Desarrollo, del Despacho de la Presidencia y de Transporte Terrestre y Obras Públicas, y diputado a la Asamblea Nacional. Promesas incumplidas: entregar el Metro Caracas-Guarenas-Guatire (previsto 2012, ~27% de avance; presupuesto de 1.303 a 8.981 millones de dólares), poner en servicio la Línea 5 del Metro de Caracas y culminar el Cabletren Bolivariano de Petare. Fuentes: Runrun.es, Convoca, Wikipedia, Poderopedia.
+- Jacqueline Faría: presidenta de Hidrocapital, ministra del Ambiente, jefa de Gobierno del Distrito Capital (dos periodos), ministra de Comunicación; el 6 de julio de 2026 fue designada para coordinar la reconstrucción tras los terremotos. Promesa incumplida: sanear y recuperar el río Guaire (financiado con +100M USD, incluido crédito del BID), que quedó incompleto. Fuentes: El Venezolano News, Efecto Cocuyo, Infobae, Martí Noticias, Poderopedia.
+- Jesse Chacón: ministro de Interior y Justicia, de Comunicación, de Ciencia y Tecnología y de Energía Eléctrica (presidente de Corpoelec), luego embajador en Austria. Promesa incumplida: estabilizar el Sistema Eléctrico Nacional en 100 días (con compromiso de renunciar); permaneció ~24 meses sin resolver la crisis. Fuentes: El Cooperante, Transparencia Venezuela, Runrun.es, Poderopedia.
+- Luis Motta Domínguez: ministro de Energía Eléctrica y presidente de Corpoelec (2015-2019). Promesa incumplida: acabar con los apagones en 100 días; los cortes se incrementaron y en marzo de 2019 ocurrió el peor apagón del país. Destituido en abril de 2019 y sancionado por la OFAC el 27 de junio de 2019. Fuentes: TalCual, El Estímulo, El Impulso, OFAC, Poderopedia.
+
 ## Resto de dashboards (resumen)
 
 - Economía (https://cuentasvenezuela.org/venezuela/economia): PIB, inflación, desempleo, deuda, IED, comercio exterior 1998-2024; riesgo país EMBI+ Venezuela vs LATAM. Fuente: Banco Mundial, BCB.

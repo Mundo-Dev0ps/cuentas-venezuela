@@ -59,6 +59,7 @@ const ROUTE_LASTMOD: Record<string, string> = {
   "/venezuela/coyuntura": "2026-06-08",
   "/venezuela/esequibo": "2026-06-08",
   "/venezuela/sismo-2026": "2026-07-06",
+  "/venezuela/puerta-giratoria": "2026-07-07",
 };
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
