@@ -11,6 +11,7 @@ import {
   Newspaper,
   Globe2,
   AlertTriangle,
+  RefreshCw,
 } from "lucide-react";
 import { pageMetadata } from "@/lib/seo";
 
@@ -84,6 +85,14 @@ const SECTIONS = [
     color: "text-rose-400",
     title: "Corrupción y sanciones",
     desc: "Casos documentados, individuos sancionados (OFAC/UE/UK) y direcciones cripto SDN. Cada entrada con fuente oficial.",
+    badge: "Disponible",
+  },
+  {
+    href: "/venezuela/puerta-giratoria",
+    icon: RefreshCw,
+    color: "text-amber-400",
+    title: "Puerta giratoria",
+    desc: "Funcionarios que rotan por múltiples cargos públicos dejando promesas y mandatos sin cumplimiento documentado. Ordenados por promesas incumplidas, cada una citada. Fuentes: Poderopedia, Transparencia Venezuela y prensa.",
     badge: "Disponible",
   },
   {
