@@ -3,7 +3,13 @@ import { ArrowLeft, AlertTriangle, RefreshCw } from "lucide-react";
 import { pageMetadata } from "@/lib/seo";
 import { JsonLd, breadcrumbsJsonLd, faqPageJsonLd } from "@/components/json-ld";
 import { RankingList } from "./ranking-list";
-import { FIGURES, unfulfilledCount, rankFigures, REPLICA_EMAIL } from "./data";
+import {
+  FIGURES,
+  unfulfilledCount,
+  officeCount,
+  rankFigures,
+  REPLICA_EMAIL,
+} from "./data";
 
 export const metadata = pageMetadata({
   title: "Puerta giratoria: cargos que rotan, promesas que no se cumplen",
@@ -39,6 +45,13 @@ const FAQS = [
 export default function PuertaGiratoriaPage() {
   const ranked = rankFigures(FIGURES);
   const totalUnmet = FIGURES.reduce((n, f) => n + unfulfilledCount(f), 0);
+  const totalOffices = FIGURES.reduce((n, f) => n + officeCount(f), 0);
+
+  const STATS = [
+    { value: FIGURES.length, label: "Figuras documentadas", color: "text-slate-100" },
+    { value: totalOffices, label: "Cargos públicos sumados", color: "text-cyan-300" },
+    { value: totalUnmet, label: "Promesas sin cumplir", color: "text-rose-300" },
+  ];
 
   return (
     <main className="mx-auto max-w-4xl px-4 py-10 sm:px-6">
@@ -73,18 +86,23 @@ export default function PuertaGiratoriaPage() {
           de promesas incumplidas. Cada cargo y cada promesa cita su fuente:
           dónde se hizo y la evidencia de su estado.
         </p>
-        <div className="mt-4 flex flex-wrap gap-3 text-xs text-slate-500">
-          <span>
-            <strong className="text-slate-300">{FIGURES.length}</strong> figuras
-            documentadas
-          </span>
-          <span aria-hidden>·</span>
-          <span>
-            <strong className="text-rose-300">{totalUnmet}</strong> promesas sin
-            cumplimiento documentado
-          </span>
-        </div>
       </header>
+
+      <section className="mb-8 grid grid-cols-3 gap-3" aria-label="Resumen">
+        {STATS.map((s) => (
+          <div
+            key={s.label}
+            className="rounded-xl border border-slate-700/40 bg-slate-900/50 p-4 text-center"
+          >
+            <p className={`text-2xl font-bold sm:text-3xl ${s.color}`}>
+              {s.value}
+            </p>
+            <p className="mt-1 text-[11px] leading-tight text-slate-500 sm:text-xs">
+              {s.label}
+            </p>
+          </div>
+        ))}
+      </section>
 
       <aside className="mb-10 rounded-xl border border-amber-500/30 bg-amber-500/5 p-5 text-sm text-amber-200">
         <p className="flex gap-2">

@@ -56,15 +56,23 @@ function SourceLink({ source }: { source: Source }) {
   );
 }
 
+const RANK_STYLE = [
+  "border-amber-400/60 bg-amber-400/15 text-amber-200", // #1
+  "border-slate-300/50 bg-slate-300/10 text-slate-200", // #2
+  "border-orange-500/50 bg-orange-500/15 text-orange-200", // #3
+];
+
 export function RankingList({ figures }: { figures: Figure[] }) {
   const ranked = rankFigures(figures);
   const [open, setOpen] = useState<string>(ranked[0]?.id ?? "");
+  const maxUnmet = Math.max(1, ...ranked.map(unfulfilledCount));
 
   return (
     <ol className="space-y-3">
       {ranked.map((f, idx) => {
         const isOpen = f.id === open;
         const unmet = unfulfilledCount(f);
+        const offices = officeCount(f);
         const panelId = `figure-${f.id}`;
         const sortedOffices = [...f.offices].sort((a, b) =>
           a.start.localeCompare(b.start),
@@ -81,18 +89,41 @@ export function RankingList({ figures }: { figures: Figure[] }) {
               aria-controls={panelId}
               className="flex w-full items-center gap-3 px-4 py-3 text-left transition hover:bg-slate-800/40"
             >
-              <span className="grid h-7 w-7 shrink-0 place-items-center rounded-full border border-slate-600/50 bg-slate-800/60 font-mono text-sm text-slate-300">
+              <span
+                className={`grid h-8 w-8 shrink-0 place-items-center rounded-full border font-mono text-sm font-bold ${
+                  RANK_STYLE[idx] ??
+                  "border-slate-600/50 bg-slate-800/60 text-slate-300"
+                }`}
+              >
                 {idx + 1}
               </span>
-              <span className="flex-1">
-                <span className="block font-semibold text-slate-100">
-                  {f.name}
-                </span>
-                <span className="text-xs text-slate-500">
-                  {officeCount(f)} cargos ·{" "}
-                  <span className="text-rose-300">
-                    {unmet} promesa{unmet === 1 ? "" : "s"} sin cumplir
+              <span className="min-w-0 flex-1">
+                <span className="flex items-baseline justify-between gap-2">
+                  <span className="truncate font-semibold text-slate-100">
+                    {f.name}
                   </span>
+                  <span className="shrink-0 font-mono text-sm font-bold text-rose-300">
+                    {unmet}
+                  </span>
+                </span>
+                {/* Barra proporcional a promesas sin cumplir */}
+                <span className="mt-1.5 flex h-1.5 w-full overflow-hidden rounded-full bg-slate-800/70">
+                  <span
+                    className="h-full rounded-full bg-gradient-to-r from-rose-500/70 to-rose-400"
+                    style={{ width: `${(unmet / maxUnmet) * 100}%` }}
+                  />
+                </span>
+                <span className="mt-1 flex items-center gap-2 text-xs text-slate-500">
+                  <span className="inline-flex items-center gap-0.5" aria-hidden>
+                    {Array.from({ length: Math.min(offices, 8) }).map((_, i) => (
+                      <span
+                        key={i}
+                        className="h-1.5 w-1.5 rounded-full bg-cyan-400/70"
+                      />
+                    ))}
+                  </span>
+                  {offices} cargos ·{" "}
+                  {unmet} promesa{unmet === 1 ? "" : "s"} sin cumplir
                 </span>
               </span>
               <ChevronDown
