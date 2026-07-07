@@ -672,6 +672,269 @@ export const FIGURES: Figure[] = [
     ],
     sources: [PODEROPEDIA("ernesto-villegas", "Ernesto Villegas")],
   },
+  {
+    id: "carlos-osorio",
+    name: "Carlos Osorio",
+    summary:
+      "General de división que presidió PDVAL y CASA y fue varias veces ministro de Alimentación, además de ministro de la Secretaría de la Presidencia y presidente de la Corporación Venezolana de Minería. Prometió resolver la escasez de alimentos; la Asamblea Nacional declaró su responsabilidad política por la gestión del ministerio.",
+    offices: [
+      {
+        title: "Presidente de PDVAL y de CASA",
+        org: "PDVAL",
+        start: "2010",
+        source: PODEROPEDIA("carlos-osorio", "Carlos Osorio"),
+      },
+      {
+        title: "Ministro de Alimentación",
+        start: "2010",
+        end: "2013",
+        source: {
+          label: "Wikipedia — Carlos Osorio",
+          url: "https://es.wikipedia.org/wiki/Carlos_Osorio",
+        },
+      },
+      {
+        title: "Ministro de Alimentación (segundo periodo)",
+        start: "2015",
+        source: {
+          label: "Analítica — regreso de Carlos Osorio al Ministerio de Alimentación",
+          url: "https://www.analitica.com/actualidad/actualidad-nacional/oficializado-regreso-de-carlos-osorio-al-ministerio-de-alimentacion/",
+        },
+      },
+      {
+        title: "Presidente de la Corporación Venezolana de Minería",
+        start: "2019",
+        source: {
+          label: "Cuentas Claras Digital — Osorio designado presidente de la CVM",
+          url: "https://www.cuentasclarasdigital.org/2019/07/carlos-osorio-designado-presidente-de-cvm/",
+        },
+      },
+    ],
+    promises: [
+      {
+        text: "Resolver la escasez de alimentos del país. La Asamblea Nacional le declaró responsabilidad política por su gestión, y en almacenes de PDVAL se hallaron miles de toneladas de alimentos descompuestos.",
+        madeDate: "2015",
+        office: "Ministro de Alimentación (segundo periodo)",
+        status: "incumplido",
+        promiseSource: {
+          label: "Wikipedia — Carlos Osorio (gestión en Alimentación)",
+          url: "https://es.wikipedia.org/wiki/Carlos_Osorio",
+        },
+        statusSource: {
+          label: "Armando.info — el Ministerio de Alimentación, un cuartel de amigos",
+          url: "https://armando.info/el-ministerio-de-alimentacion-es-un-cuartel-de-amigos/",
+        },
+      },
+    ],
+    sources: [PODEROPEDIA("carlos-osorio", "Carlos Osorio")],
+  },
+  {
+    id: "rodolfo-marco-torres",
+    name: "Rodolfo Marco Torres",
+    summary:
+      "General que dirigió el Ministerio de Economía, Finanzas y Banca Pública y el de Alimentación, presidió tres bancos estatales, fue gobernador de Aragua y luego presidente de la Corporación Venezolana de Minería. Como ministro de Alimentación fue objeto de una moción de censura de la Asamblea Nacional por la crisis de desabastecimiento.",
+    offices: [
+      {
+        title: "Ministro de Economía, Finanzas y Banca Pública",
+        start: "2014",
+        end: "2016",
+        source: {
+          label: "Legis — Marco Torres, ministro de Economía, Finanzas y Banca Pública",
+          url: "http://www.legis.com.ve/BancoConocimiento/N/noticia200114/noticia200114.asp?Miga=1&CodSeccion=25",
+        },
+      },
+      {
+        title: "Ministro de Alimentación",
+        start: "2016-01",
+        end: "2016-04",
+        source: {
+          label: "Wikipedia — Rodolfo Marco Torres",
+          url: "https://es.wikipedia.org/wiki/Rodolfo_Marco_Torres",
+        },
+      },
+      {
+        title: "Gobernador del estado Aragua",
+        start: "2017",
+        end: "2021",
+        source: {
+          label: "Wikipedia — Rodolfo Marco Torres",
+          url: "https://es.wikipedia.org/wiki/Rodolfo_Marco_Torres",
+        },
+      },
+      {
+        title: "Presidente de la Corporación Venezolana de Minería",
+        start: "2024-11",
+        source: {
+          label: "LosTubazos — Marco Torres, nuevo presidente de la CVM",
+          url: "https://n24.lostubazos.com/2024/12/11/rodolfo-marco-torres-nuevo-presidente-de-la-cvm/",
+        },
+      },
+    ],
+    promises: [
+      {
+        text: "Garantizar el abastecimiento de alimentos como ministro de Alimentación. Tres meses después de asumir, la Asamblea Nacional aprobó una moción de censura en su contra por la crisis de desabastecimiento y fue removido del cargo.",
+        madeDate: "2016-01",
+        office: "Ministro de Alimentación",
+        status: "incumplido",
+        promiseSource: {
+          label: "Wikipedia — Marco Torres, ministro de Alimentación",
+          url: "https://es.wikipedia.org/wiki/Rodolfo_Marco_Torres",
+        },
+        statusSource: {
+          label: "Wikipedia — moción de censura de la Asamblea Nacional (abr 2016)",
+          url: "https://es.wikipedia.org/wiki/Rodolfo_Marco_Torres",
+        },
+      },
+    ],
+    sources: [PODEROPEDIA("rodolfo-marco-torres", "Rodolfo Marco Torres")],
+  },
+  {
+    id: "freddy-bernal",
+    name: "Freddy Bernal",
+    summary:
+      "Comisario policial que fue alcalde del municipio Libertador, ministro de Agricultura Urbana, comisario del Sebin, jefe nacional de los CLAP, 'protector' del Táchira y gobernador de ese estado. En 2014 fue puesto al frente de una comisión presidencial para reorganizar los cuerpos policiales.",
+    offices: [
+      {
+        title: "Alcalde del municipio Libertador (Caracas)",
+        start: "2000",
+        end: "2008",
+        source: PODEROPEDIA("freddy-bernal", "Freddy Bernal"),
+      },
+      {
+        title: "Jefe de la Comisión Presidencial para la reorganización policial",
+        start: "2014-10",
+        end: "2015-04",
+        source: {
+          label: "Analítica — Bernal y la intervención de policías",
+          url: "https://www.analitica.com/actualidad/actualidad-nacional/sucesos/bernal-estan-intervenidas-tres-policias-municipales/",
+        },
+      },
+      {
+        title: "Jefe Nacional de los CLAP",
+        start: "2016-05",
+        source: {
+          label: "Wikipedia — Freddy Bernal",
+          url: "https://en.wikipedia.org/wiki/Freddy_Bernal",
+        },
+      },
+      {
+        title: "Protector y luego gobernador del estado Táchira",
+        start: "2017",
+        source: {
+          label: "El Tiempo — Freddy Bernal, protector del Táchira",
+          url: "https://www.eltiempo.com/mundo/venezuela/quien-es-freddy-bernal-el-protector-del-tachira-denunciado-en-la-oea-411634",
+        },
+      },
+    ],
+    promises: [
+      {
+        text: "Reorganizar y depurar los cuerpos policiales al frente de la comisión presidencial creada en 2014. La reforma policial derivó en mayor militarización de la seguridad y la participación de funcionarios en delitos siguió siendo un problema documentado.",
+        madeDate: "2014-10",
+        office: "Jefe de la Comisión Presidencial para la reorganización policial",
+        status: "incumplido",
+        promiseSource: {
+          label: "Analítica — Bernal al frente de la reorganización policial",
+          url: "https://www.analitica.com/actualidad/actualidad-nacional/sucesos/bernal-estan-intervenidas-tres-policias-municipales/",
+        },
+        statusSource: {
+          label: "Efecto Cocuyo — ¿qué pasó con la reforma policial en Venezuela?",
+          url: "https://efectococuyo.com/opinion/que-paso-con-la-reforma-policial-en-venezuela-i/",
+        },
+      },
+    ],
+    sources: [PODEROPEDIA("freddy-bernal", "Freddy Bernal")],
+  },
+  {
+    id: "william-contreras",
+    name: "William Contreras",
+    summary:
+      "Militar y economista que dirigió la Superintendencia para la Defensa de los Derechos Socioeconómicos (Sundde), encargada del control de 'precios justos'. Los controles de precios que aplicó coincidieron con un agravamiento de la escasez y el contrabando. Está sancionado por Estados Unidos.",
+    offices: [
+      {
+        title: "Superintendente de la Sundde (Costos y Precios Justos)",
+        org: "Sundde",
+        start: "2016-02",
+        source: {
+          label: "TalCual — perfil de William Contreras, el fiscalizador de 'precios justos'",
+          url: "https://talcualdigital.com/perfil-william-contreras-el-fiscalizador-de-precios-justos/",
+        },
+      },
+    ],
+    promises: [
+      {
+        text: "Garantizar 'precios justos' y frenar la especulación mediante inspecciones y controles de precios. Los controles coincidieron con un agravamiento de la escasez, el acaparamiento y el contrabando de extracción.",
+        madeDate: "2016",
+        office: "Superintendente de la Sundde",
+        status: "incumplido",
+        promiseSource: {
+          label: "Sundde — mandato de la Ley de Precios Justos",
+          url: "https://es.wikipedia.org/wiki/Superintendencia_Nacional_para_la_Defensa_para_los_Derechos_Socioecon%C3%B3micos",
+        },
+        statusSource: {
+          label: "TalCual — perfil de William Contreras y los efectos del control de precios",
+          url: "https://talcualdigital.com/perfil-william-contreras-el-fiscalizador-de-precios-justos/",
+        },
+      },
+    ],
+    sources: [PODEROPEDIA("william-antonio-contreras", "William Contreras")],
+  },
+  {
+    id: "aristobulo-isturiz",
+    name: "Aristóbulo Istúriz",
+    summary:
+      "Dirigente y docente (fallecido en 2021) que rotó por la Alcaldía de Libertador, el Ministerio de Educación, la Gobernación de Anzoátegui, la Vicepresidencia de la República y la vicepresidencia de la Asamblea Nacional. En 2005 declaró a Venezuela 'territorio libre de analfabetismo'; la Unesco no certificó la declaración y estudios independientes estimaron un impacto mucho menor.",
+    offices: [
+      {
+        title: "Ministro de Educación",
+        start: "2001",
+        end: "2007",
+        source: {
+          label: "Wikipedia — Aristóbulo Istúriz",
+          url: "https://es.wikipedia.org/wiki/Aristobulo_Isturiz",
+        },
+      },
+      {
+        title: "Gobernador del estado Anzoátegui",
+        start: "2012",
+        end: "2016",
+        source: {
+          label: "Wikipedia — Aristóbulo Istúriz",
+          url: "https://es.wikipedia.org/wiki/Aristobulo_Isturiz",
+        },
+      },
+      {
+        title: "Vicepresidente de la República",
+        start: "2016",
+        end: "2017",
+        source: {
+          label: "Wikipedia — Aristóbulo Istúriz",
+          url: "https://es.wikipedia.org/wiki/Aristobulo_Isturiz",
+        },
+      },
+    ],
+    promises: [
+      {
+        text: "Declaró a Venezuela 'territorio libre de analfabetismo' en octubre de 2005 mediante la Misión Robinson, cifrando en 1,5 millones las personas alfabetizadas. La Unesco no certificó la declaración y un estudio independiente estimó que apenas unas 48.000 personas aprendieron a leer y escribir con el programa.",
+        madeDate: "2005-10",
+        office: "Ministro de Educación",
+        status: "en-disputa",
+        promiseSource: {
+          label: "Wikipedia — Aristóbulo Istúriz y la declaración a la Unesco",
+          url: "https://es.wikipedia.org/wiki/Aristobulo_Isturiz",
+        },
+        statusSource: {
+          label: "ProDavinci — ¿Venezuela libre de analfabetismo? Lo que dicen las cifras de la Unesco",
+          url: "https://historico.prodavinci.com/blogs/venezuela-libre-de-analfabetismo-que-es-lo-que-dicen-las-cifras-de-unesco-prodavincidatos/",
+        },
+      },
+    ],
+    sources: [
+      {
+        label: "Wikipedia — Aristóbulo Istúriz",
+        url: "https://es.wikipedia.org/wiki/Aristobulo_Isturiz",
+      },
+    ],
+  },
 ];
 
 export const REPLICA_EMAIL = "hola@cuentasvenezuela.org";
