@@ -27,7 +27,7 @@ const SECTIONS = [
     icon: AlertTriangle,
     color: "text-red-400",
     title: "Terremoto 2026",
-    desc: "Doble sismo Mw 7,5 y 7,2 del 24 de junio de 2026. ≥3.342 muertos, ≥16.470 heridos, estados afectados y daños PNUD $4,7–8,7 mil millones. Fuentes: USGS, OCHA, PNUD.",
+    desc: "Doble sismo Mw 7,5 y 7,2 del 24 de junio de 2026. ≥3.535 muertos, ≥16.700 heridos, estados afectados y daños PNUD $4,7–8,7 mil millones. Fuentes: USGS, OCHA, PNUD.",
     badge: "Disponible",
   },
   {
