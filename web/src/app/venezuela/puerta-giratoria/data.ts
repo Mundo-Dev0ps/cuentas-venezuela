@@ -22,8 +22,11 @@ export interface PublicOffice {
   org?: string;
   /** ISO ("2005" | "2005-01" | "2005-01-15"). */
   start: string;
-  /** ISO; omitir si en curso. */
+  /** ISO de cese. Omitir si el cargo sigue vigente (`current`) o si se
+   *  desconoce la fecha exacta de salida. */
   end?: string;
+  /** true solo si la persona ocupa el cargo actualmente. */
+  current?: boolean;
   source: Source;
 }
 
@@ -172,6 +175,7 @@ export const FIGURES: Figure[] = [
         title: "Presidenta de Hidrocapital",
         org: "Hidrocapital",
         start: "1999",
+        end: "2005",
         source: {
           label: "El Venezolano News — trayectoria de Jacqueline Faría",
           url: "https://elvenezolanonewspaper.com/2026/07/jacqueline-faria-asume-la-reconstruccion-de-venezuela-tras-los-terremotos-con-una-trayectoria-marcada-por-altos-cargos-publicos/",
@@ -189,6 +193,7 @@ export const FIGURES: Figure[] = [
       {
         title: "Jefa de Gobierno del Distrito Capital",
         start: "2009",
+        end: "2010",
         source: {
           label: "Efecto Cocuyo — Faría en la Jefatura de Gobierno del Distrito Capital",
           url: "https://efectococuyo.com/politica/jacqueline-faria-vuelve-a-la-jefatura-de-gobierno-del-distrito-capital/",
@@ -197,6 +202,7 @@ export const FIGURES: Figure[] = [
       {
         title: "Jefa de Gobierno del Distrito Capital (segundo periodo)",
         start: "2020-08",
+        end: "2026",
         source: {
           label: "Mppcomunas — designación como Jefa de Gobierno del Distrito Capital",
           url: "https://www.mpcomunas.gob.ve/2020/08/18/designada-jacqueline-faria-como-jefa-de-gobierno-de-distrito-capital/",
@@ -205,6 +211,7 @@ export const FIGURES: Figure[] = [
       {
         title: "Coordinadora de la reconstrucción tras los terremotos",
         start: "2026-07-06",
+        current: true,
         source: {
           label: "Infobae — Faría designada para coordinar la reconstrucción",
           url: "https://www.infobae.com/venezuela/2026/07/06/delcy-rodriguez-nombro-a-jacqueline-faria-para-coordinar-la-reconstruccion-tras-los-terremotos-en-venezuela/",
@@ -583,6 +590,7 @@ export const FIGURES: Figure[] = [
       {
         title: "Ministro de la Defensa",
         start: "2014",
+        current: true,
         source: {
           label: "CNN en Español — quién es Vladimir Padrino López",
           url: "https://cnnespanol.cnn.com/2026/01/03/venezuela/quien-es-vladimir-padrino-lopez-orix",
@@ -591,6 +599,7 @@ export const FIGURES: Figure[] = [
       {
         title: "Jefe de la Gran Misión Abastecimiento Soberano",
         start: "2016-07",
+        end: "2019",
         source: {
           label: "ProDavinci — la visión de Padrino López sobre los alimentos",
           url: "https://historico.prodavinci.com/2016/07/12/actualidad/cual-es-la-vision-de-padrino-lopez-sobre-el-tema-de-los-alimentos-en-venezuela/",
@@ -648,6 +657,7 @@ export const FIGURES: Figure[] = [
       {
         title: "Embajador de Venezuela ante la Unesco",
         start: "2026-05",
+        current: true,
         source: {
           label: "Alba Ciudad — AN designó a Villegas embajador ante la Unesco",
           url: "https://albaciudad.org/2026/05/asamblea-nacional-ernesto-villegas-embajador-unesco/",
@@ -682,6 +692,7 @@ export const FIGURES: Figure[] = [
         title: "Presidente de PDVAL y de CASA",
         org: "PDVAL",
         start: "2010",
+        end: "2013",
         source: PODEROPEDIA("carlos-osorio", "Carlos Osorio"),
       },
       {
@@ -696,6 +707,7 @@ export const FIGURES: Figure[] = [
       {
         title: "Ministro de Alimentación (segundo periodo)",
         start: "2015",
+        end: "2016",
         source: {
           label: "Analítica — regreso de Carlos Osorio al Ministerio de Alimentación",
           url: "https://www.analitica.com/actualidad/actualidad-nacional/oficializado-regreso-de-carlos-osorio-al-ministerio-de-alimentacion/",
@@ -704,6 +716,7 @@ export const FIGURES: Figure[] = [
       {
         title: "Presidente de la Corporación Venezolana de Minería",
         start: "2019",
+        end: "2024",
         source: {
           label: "Cuentas Claras Digital — Osorio designado presidente de la CVM",
           url: "https://www.cuentasclarasdigital.org/2019/07/carlos-osorio-designado-presidente-de-cvm/",
@@ -764,6 +777,7 @@ export const FIGURES: Figure[] = [
       {
         title: "Presidente de la Corporación Venezolana de Minería",
         start: "2024-11",
+        current: true,
         source: {
           label: "LosTubazos — Marco Torres, nuevo presidente de la CVM",
           url: "https://n24.lostubazos.com/2024/12/11/rodolfo-marco-torres-nuevo-presidente-de-la-cvm/",
@@ -812,6 +826,7 @@ export const FIGURES: Figure[] = [
       {
         title: "Jefe Nacional de los CLAP",
         start: "2016-05",
+        end: "2017",
         source: {
           label: "Wikipedia — Freddy Bernal",
           url: "https://en.wikipedia.org/wiki/Freddy_Bernal",
@@ -820,6 +835,7 @@ export const FIGURES: Figure[] = [
       {
         title: "Protector y luego gobernador del estado Táchira",
         start: "2017",
+        current: true,
         source: {
           label: "El Tiempo — Freddy Bernal, protector del Táchira",
           url: "https://www.eltiempo.com/mundo/venezuela/quien-es-freddy-bernal-el-protector-del-tachira-denunciado-en-la-oea-411634",

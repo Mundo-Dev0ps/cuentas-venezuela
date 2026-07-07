@@ -157,7 +157,11 @@ export function RankingList({ figures }: { figures: Figure[] }) {
                       <div className="flex flex-wrap items-baseline gap-x-2 text-sm">
                         <span className="font-mono text-xs text-slate-500">
                           {fmtDate(o.start)}
-                          {o.end ? `–${fmtDate(o.end)}` : "–actualidad"}
+                          {o.end
+                            ? `–${fmtDate(o.end)}`
+                            : o.current
+                              ? "–actualidad"
+                              : ""}
                         </span>
                         <span className="text-slate-200">{o.title}</span>
                         <a
