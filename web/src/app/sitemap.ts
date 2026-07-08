@@ -56,7 +56,7 @@ const ROUTE_LASTMOD: Record<string, string> = {
   "/venezuela/diaspora": "2026-05-11",
   "/venezuela/corrupcion": "2026-05-11",
   "/venezuela/cronologia": "2026-05-11",
-  "/venezuela/coyuntura": "2026-06-08",
+  "/venezuela/coyuntura": "2026-07-08",
   "/venezuela/esequibo": "2026-06-08",
   "/venezuela/sismo-2026": "2026-07-07",
   "/venezuela/puerta-giratoria": "2026-07-07",

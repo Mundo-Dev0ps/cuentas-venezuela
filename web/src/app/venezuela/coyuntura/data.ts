@@ -16,7 +16,7 @@
  *     fast-moving data — readers must see exactly when it was last
  *     updated. Do not present these numbers as "live".
  *
- * Last manual review: 2026-06-08.
+ * Last manual review: 2026-07-08.
  */
 
 export interface Source {
@@ -74,6 +74,15 @@ export const POLITICAL_PRISONERS: PrisonerCount[] = [
     sources: [
       { label: "Infobae — 404 presos políticos", url: "https://www.infobae.com/venezuela/2026/06/03/venezuela-registra-404-presos-politicos-segun-la-ong-foro-penal/" },
       { label: "La Patilla — 404, 39 extranjeros", url: "https://lapatilla.com/2026/06/03/foro-penal-contabiliza-404-presos-politicos-39-de-ellos-con-nacionalidad-extranjera/" },
+    ],
+  },
+  {
+    date: "2026-07-06",
+    count: 372,
+    note: "214 civiles y 159 militares; 214 aún sin condena. Foro Penal denunció que el proceso de excarcelaciones se detuvo tras los terremotos de finales de junio de 2026.",
+    sources: [
+      { label: "Foro Penal — la represión en cifras", url: "https://foropenal.com/represion-en-cifras" },
+      { label: "TalCual — Foro Penal pide retomar las excarcelaciones", url: "https://talcualdigital.com/foro-penal-pide-que-excarcelaciones-de-presos-politicos-sean-retomadas/" },
     ],
   },
 ];
@@ -151,6 +160,19 @@ export const INFLATION_SOURCE: Source = {
   url: "https://observatoriodefinanzas.com/",
 };
 
+/**
+ * En 2026 el OVF redujo la publicación regular del IPC mensual ante la
+ * presión sobre las fuentes independientes, por lo que la serie mensual
+ * detallada se detiene en 2025. Como referencia anual se citan las
+ * proyecciones del FMI.
+ */
+export const INFLATION_NOTE =
+  "En 2026, el OVF redujo la publicación regular del IPC mensual ante la presión sobre las fuentes independientes de datos. Como referencia anual, el FMI proyecta una inflación de ~270% para el cierre de 2025 y ~682% para 2026.";
+export const INFLATION_PROJECTION_SOURCE: Source = {
+  label: "Bloomberg Línea — proyección de inflación del FMI (682% en 2026)",
+  url: "https://www.bloomberglinea.com/latinoamerica/venezuela/fmi-proyecta-inflacion-de-682-en-venezuela-en-2026-ademas-de-contraccion-en-su-economia/",
+};
+
 /* ── Tipo de cambio (BCV vs paralelo) ──────────────────────────────── */
 
 export interface ExchangeSnapshot {
@@ -169,12 +191,12 @@ export interface ExchangeSnapshot {
  * rate and the parallel/Binance rate signals exchange-market pressure.
  */
 export const EXCHANGE_RATE: ExchangeSnapshot = {
-  date: "2026-06-03",
-  bcv: 557.97,
-  parallel: 726.5,
+  date: "2026-07-08",
+  bcv: 685.94,
+  parallel: 762.4,
   sources: [
-    { label: "RPP — dólar BCV y paralelo 3 jun 2026", url: "https://rpp.pe/mundo/venezuela/dolar-bcv-hoy-cotizacion-oficial-venezuela-1-de-junio-2026-noticia-1691023" },
     { label: "BCV — tipo de cambio oficial", url: "https://www.bcv.org.ve/seccionportal/tipo-de-cambio-oficial-del-bcv" },
+    { label: "Monitor Dólar Venezuela — mercado paralelo", url: "https://exchangemonitor.net/venezuela/monitor-dolar" },
   ],
 };
 
@@ -212,11 +234,12 @@ export const OIL_PRODUCTION: OilPoint[] = [
     ],
   },
   {
-    period: "2026 (proyección Goldman Sachs)",
-    kbpd: 900,
-    note: "Goldman Sachs proyecta producción estable en ~900.000 bpd; potencial de 1,2 millones de bpd a fin de 2026 si se levantan sanciones de EE. UU.",
+    period: "Mayo 2026",
+    kbpd: 1120,
+    note: "La producción creció en 2026: estimaciones de la OPEP entre ~1,07 y ~1,17 millones de bpd según la metodología (fuentes secundarias vs comunicación directa), un alza cercana al 28% frente a los ~924.000 bpd de enero. Chevron apunta a 300.000 bpd tras un nuevo acuerdo con el gobierno.",
     sources: [
-      { label: "The National — escenarios 2026", url: "https://www.thenationalnews.com/business/energy/2026/01/05/venezuelan-oil-output-could-reach-12-million-bpd-by-end-of-2026-if-sanctions-are-lifted/" },
+      { label: "La Patilla — producción crece a 1,17 millones de bpd (OPEP)", url: "https://lapatilla.com/2026/06/11/produccion-de-crudo-venezolano-crecio-hasta-117-millones-de-barriles-diarios-segun-la-opep/" },
+      { label: "Vanguardia — producción crece 22,9% en cuatro meses (OPEP)", url: "https://www.vanguardia.com/mundo/2026/05/13/la-produccion-petrolera-de-venezuela-crece-229-en-cuatro-meses-segun-la-opep/" },
     ],
   },
 ];
