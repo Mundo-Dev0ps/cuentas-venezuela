@@ -47,7 +47,7 @@ const ROUTE_LASTMOD: Record<string, string> = {
   "/datos-chile/dashboards/pensiones": "2026-05-11",
   "/datos-chile/dashboards/tributario": "2026-05-11",
   "/datos-chile/metodologia": "2026-05-11",
-  "/venezuela": "2026-07-06",
+  "/venezuela": "2026-07-07",
   "/venezuela/antes-despues": "2026-05-11",
   "/venezuela/economia": "2026-05-11",
   "/venezuela/inseguridad": "2026-06-08",
@@ -58,7 +58,7 @@ const ROUTE_LASTMOD: Record<string, string> = {
   "/venezuela/cronologia": "2026-05-11",
   "/venezuela/coyuntura": "2026-06-08",
   "/venezuela/esequibo": "2026-06-08",
-  "/venezuela/sismo-2026": "2026-07-06",
+  "/venezuela/sismo-2026": "2026-07-07",
   "/venezuela/puerta-giratoria": "2026-07-07",
 };
 
