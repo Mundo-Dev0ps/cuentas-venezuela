@@ -23,6 +23,8 @@ import {
   INFLATION_2025,
   INFLATION_2025_YTD,
   INFLATION_SOURCE,
+  INFLATION_NOTE,
+  INFLATION_PROJECTION_SOURCE,
   EXCHANGE_RATE,
   OIL_PRODUCTION,
   OIL_CONTEXT,
@@ -79,22 +81,22 @@ const FAQS = [
   {
     question: "¿Cuántos presos políticos hay en Venezuela en 2026?",
     answer:
-      "Según Foro Penal, al 3 de junio de 2026 había 404 presos políticos en Venezuela: 369 hombres y 35 mujeres, 225 civiles y 179 militares, de los cuales 167 estaban condenados y 237 esperaban sentencia. La cifra cayó desde un pico superior a 2.400 detenidos tras la elección del 28 de julio de 2024, en el marco del proceso de excarcelaciones iniciado el 8 de enero de 2026. Foro Penal ha registrado más de 19.000 detenciones con fines políticos desde 2014.",
+      "Según Foro Penal, al 6 de julio de 2026 había 372 presos políticos en Venezuela: 214 civiles y 159 militares, de los cuales 214 seguían sin condena. La cifra cayó desde un pico superior a 2.400 detenidos tras la elección del 28 de julio de 2024, en el marco de las excarcelaciones iniciadas el 8 de enero de 2026, aunque Foro Penal denunció que el proceso se detuvo tras los terremotos de finales de junio. La ONG ha registrado más de 19.000 detenciones con fines políticos desde 2014.",
   },
   {
-    question: "¿Cuál fue la inflación de Venezuela en 2025?",
+    question: "¿Cuál es la inflación de Venezuela?",
     answer:
-      "Según el Observatorio Venezolano de Finanzas (OVF), la inflación mensual en 2025 fue: enero 7,9%, febrero 12,8%, marzo 13,1%, abril 18,4% y mayo 26%. La inflación acumulada en los primeros cinco meses de 2025 alcanzó 105,5% y la variación interanual a mayo se ubicó en 229%. El BCV dejó de publicar el IPC con regularidad, por lo que el OVF es la medición independiente más citada.",
+      "Según el Observatorio Venezolano de Finanzas (OVF), la inflación mensual en 2025 fue: enero 7,9%, febrero 12,8%, marzo 13,1%, abril 18,4% y mayo 26%; la acumulada enero–mayo alcanzó 105,5% y la interanual a mayo, 229%. En 2026 el OVF redujo la publicación regular del IPC mensual ante la presión sobre las fuentes independientes. Como referencia anual, el FMI proyecta una inflación de ~270% para el cierre de 2025 y ~682% para 2026.",
   },
   {
     question: "¿A cuánto está el dólar en Venezuela (BCV y paralelo)?",
     answer:
-      "Al 3 de junio de 2026, la tasa oficial del BCV era de 557,97 bolívares por dólar y la tasa paralela (Binance P2P) rondaba los 726,5 bolívares, una brecha cercana al 30%. Es un valor de referencia puntual: el tipo de cambio se mueve a diario.",
+      "Al 8 de julio de 2026, la tasa oficial del BCV era de 685,94 bolívares por dólar y la paralela rondaba los 762,4 bolívares, una brecha cercana al 11%. Es un valor de referencia puntual: el tipo de cambio se mueve a diario y se aceleró su depreciación tras el mayor gasto público por los terremotos.",
   },
   {
     question: "¿Cuánto petróleo produce Venezuela?",
     answer:
-      "Según fuentes secundarias de la OPEP, Venezuela produjo unos 934.000 barriles diarios en noviembre de 2025; las estimaciones de cierre de 2025 van de ~800.000 a ~1,1 millones de bpd según la fuente. Goldman Sachs proyecta producción estable en ~900.000 bpd para 2026, con potencial de hasta 1,2 millones de bpd si se levantan las sanciones de EE. UU. Chevron opera mediante empresas mixtas con PDVSA.",
+      "La producción creció en 2026: la OPEP la estima entre ~1,07 y ~1,17 millones de barriles diarios en mayo de 2026 (según fuentes secundarias o comunicación directa), un alza cercana al 28% frente a los ~924.000 bpd de enero. Chevron apunta a 300.000 bpd tras un nuevo acuerdo con el gobierno y opera mediante empresas mixtas con PDVSA.",
   },
 ];
 
@@ -160,7 +162,7 @@ export default function CoyunturaPage() {
           <span>
             <strong>Datos de actualización manual.</strong> Estos indicadores se
             mueven semanal o mensualmente y no tienen una API pública. Se
-            actualizan a mano desde la fuente. Última revisión: 8 de junio de
+            actualizan a mano desde la fuente. Última revisión: 8 de julio de
             2026. Cada bloque indica la fecha exacta del dato.
           </span>
         </p>
@@ -286,6 +288,20 @@ export default function CoyunturaPage() {
               </a>
             ))}
           </div>
+          <div className="mt-4 rounded-lg border border-slate-700/40 bg-slate-900/50 p-4 text-sm text-slate-400">
+            <p>{INFLATION_NOTE}</p>
+            <div className="mt-2">
+              <a
+                href={INFLATION_PROJECTION_SOURCE.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1 rounded-md border border-cyan-500/40 bg-cyan-500/5 px-2 py-0.5 text-[11px] text-cyan-200 hover:bg-cyan-500/10"
+              >
+                {INFLATION_PROJECTION_SOURCE.label}
+                <ExternalLink className="h-3 w-3" />
+              </a>
+            </div>
+          </div>
         </section>
       </Reveal>
 
@@ -407,7 +423,7 @@ export default function CoyunturaPage() {
           Information Administration (EIA), Council on Foreign Relations (CFR).
         </p>
         <p>
-          Indicador más reciente al 3 de junio de 2026:{" "}
+          Indicador más reciente ({fmtDate(latestPrisoners.date)}):{" "}
           {latestPrisoners.count} presos políticos.
         </p>
       </footer>
