@@ -22,23 +22,23 @@ export const revalidate = 3600;
 
 const FAQS = [
   {
-    question: "¿Qué es la puerta giratoria en el sector público venezolano?",
+    question: "¿Qué es la puerta giratoria?",
     answer:
-      "Se refiere al patrón por el cual algunos funcionarios rotan de un cargo público a otro durante años, sin que las promesas o mandatos de gestiones anteriores se hayan cumplido. Esta página documenta casos con fuentes, ordenados por el número de promesas públicas concretas sin cumplimiento documentado.",
+      "Funcionarios que rotan de un cargo público a otro durante años, dejando promesas sin cumplir. Aquí se documentan con fuentes.",
   },
   {
     question: "¿Cómo se ordena el ranking?",
     answer:
-      "Se ordena por el número de promesas o mandatos públicos con estado 'incumplido', y en caso de empate por el número de cargos públicos ocupados. Es un conteo verificable de hechos citados, no una calificación de opinión. Cada promesa incluye la fuente donde se hizo y la evidencia de su estado.",
+      "Por número de promesas incumplidas; si hay empate, por cantidad de cargos. Es un conteo de hechos citados, no una opinión.",
   },
   {
-    question: "¿Esto es una acusación de corrupción?",
+    question: "¿Es una acusación de corrupción?",
     answer:
-      "No. Es un registro factual de cargos ocupados y de promesas públicas y su estado, con fuentes primarias y periodísticas. No se emiten calificaciones de valor ni acusaciones propias; se describen hechos documentados. Cuando existen versiones encontradas, la promesa se marca como 'en disputa'.",
+      "No. Solo hechos con fuente: cargos ocupados y promesas con su estado. Sin juicios propios. Si hay versiones distintas, se marca 'en disputa'.",
   },
   {
-    question: "¿Cómo se corrige un dato o se ejerce derecho a réplica?",
-    answer: `Si detecta un error o desea aportar información que documente el cumplimiento de una promesa, escriba a ${REPLICA_EMAIL}. Las correcciones documentadas se incorporan y las réplicas se publican.`,
+    question: "¿Cómo corrijo un dato o pido réplica?",
+    answer: `Escribe a ${REPLICA_EMAIL}. Corregimos lo que esté documentado y publicamos las réplicas.`,
   },
 ];
 
@@ -80,11 +80,9 @@ export default function PuertaGiratoriaPage() {
         <h1 className="text-3xl sm:text-4xl font-bold tracking-tight">
           Puerta giratoria: cargos que rotan, promesas que no se cumplen
         </h1>
-        <p className="mt-4 max-w-3xl text-slate-300">
-          Funcionarios que rotaron por múltiples cargos públicos dejando
-          promesas o mandatos sin cumplimiento documentado. Ordenados por número
-          de promesas incumplidas. Cada cargo y cada promesa cita su fuente:
-          dónde se hizo y la evidencia de su estado.
+        <p className="mt-4 max-w-2xl text-slate-300">
+          Funcionarios que saltan de un cargo a otro dejando promesas sin
+          cumplir. Ordenados por promesas incumplidas. Cada dato con su fuente.
         </p>
       </header>
 
@@ -108,11 +106,8 @@ export default function PuertaGiratoriaPage() {
         <p className="flex gap-2">
           <AlertTriangle className="h-5 w-5 shrink-0" />
           <span>
-            <strong>Registro factual, no opinión.</strong> Esta página documenta
-            hechos citados —cargos ocupados y promesas públicas con su estado— sin
-            emitir calificaciones de valor ni acusaciones propias. Cada promesa
-            lleva la fuente donde se hizo y la evidencia de su estado. Para
-            correcciones o derecho a réplica:{" "}
+            <strong>Registro factual, no opinión.</strong> Solo hechos con
+            fuente: cargos y promesas con su estado. Correcciones o réplica:{" "}
             <a
               href={`mailto:${REPLICA_EMAIL}`}
               className="underline hover:text-amber-100"
