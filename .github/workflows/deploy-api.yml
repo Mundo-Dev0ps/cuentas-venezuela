@@ -1,11 +1,8 @@
 name: deploy-api
 
+# Prod deploys are release-gated: dispatched by release-please on a new
+# release, or manually. No longer triggered by every push to main.
 on:
-  push:
-    branches: [main]
-    paths:
-      - "api/**"
-      - ".github/workflows/deploy-api.yml"
   workflow_dispatch:
 
 concurrency:

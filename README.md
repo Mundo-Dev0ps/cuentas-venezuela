@@ -16,7 +16,11 @@
 | 🗺️ **Mapa del Olvido** | `/mapa-del-olvido` | Mapa interactivo de obras públicas paralizadas / críticas / inoperativas en Venezuela |
 | 📊 **Datos Chile** | `/datos-chile` | Dashboards sobre venezolanos en Chile: demografía, pensiones, tributario, regional |
 | 📈 **Venezuela** | `/venezuela` | Crisis económica, salud, inseguridad, derechos humanos, diáspora global, antes/después |
-| 📚 **Fuentes** | `/fuentes` | Catálogo de las 11 fuentes oficiales que alimentan los dashboards |
+| 🌊 **Terremoto 2026** | `/venezuela/sismo-2026` | Doble sismo Mw 7,5 + 7,2 del 24 jun 2026: víctimas, mapa de daños por estado, costo económico. **Cifras auto-refrescadas a diario** |
+| 🔁 **Puerta giratoria** | `/venezuela/puerta-giratoria` | Ranking factual de funcionarios que rotan por cargos dejando promesas incumplidas, cada una con doble fuente |
+| 📰 **Coyuntura 2025-2026** | `/venezuela/coyuntura` | Presos políticos (Foro Penal), inflación (OVF), dólar BCV/paralelo, producción petrolera |
+| 🌍 **Esequibo** | `/venezuela/esequibo` | Cronología factual de la controversia territorial con Guyana |
+| 📚 **Fuentes** | `/fuentes` | Catálogo de las fuentes oficiales que alimentan los dashboards |
 | ☕ **Apoyar** | `/apoyar` | Cómo colaborar (no solo dinero — compartir, reportar, traducir, contribuir código) |
 
 ---
@@ -178,18 +182,33 @@ docker compose down -v
 
 > 🤖 Cron: lunes 06:00 UTC vía `etl-cron.yml`. Manual: GitHub → Actions → etl-cron → Run workflow → pipeline `all` o uno específico.
 
+### 🌊 Auto-refresh del terremoto 2026
+
+`sismo-daily.yml` (cron diario 11:00 UTC) mantiene al día las cifras de muertos/heridos del sismo sin edición manual:
+
+- `scripts/update-sismo.py` parsea el infobox de Wikipedia (wikitext; lee el valor crudo dentro de `{{rounddown|N}}`).
+- **Guardas de seguridad**: las cifras solo suben, el salto diario no puede superar ~2× y hay topes duros → bloquea vandalismo o errores de parseo.
+- Cambio válido → commit a `main` + dispara `deploy-web`. Guarda saltada → abre un issue de revisión en vez de publicar.
+- La FAQ y la card del landing derivan de `DAMAGE`, así que el bot solo edita una fuente de verdad (`data.ts`).
+
+> Las páginas manuales (`coyuntura`, `puerta-giratoria`, `esequibo`, y los campos del sismo que no toca el bot: desaparecidos, desplazados, económico) se refrescan a mano y cada cifra cita su fuente.
+
 ---
 
 ## 🚢 Despliegue
 
-Cada `push` a `main` dispara, según paths cambiados:
+Los deploys de prod son **por release** (`release-please`). Al hacer merge a `main`, `release-please.yml` mantiene un **release PR** que acumula los conventional commits y sube la versión + `CHANGELOG.md`. Al mergear ese PR se crea el Release/tag y **eso** dispara los deploys.
 
-| Cambio | Workflow | Resultado |
+| Workflow | Se dispara | Resultado |
 |---|---|---|
-| 🎨 `web/**` | `deploy-web.yml` | `npx opennextjs-cloudflare build` + `wrangler deploy` |
-| ⚙️ `api/**` | `deploy-api.yml` | `wrangler deploy` (worker `cuentas-venezuela-api`) |
-| 🗄️ `db/schema.sql` o `db/seeds.sql` | `db-migrate.yml` | `psql -f` contra Neon prod (idempotente) |
-| 🐍 `etl/**` | (manual / cron) | Sin auto-deploy; ETL corre desde GH Actions runner |
+| 🏷️ `release-please.yml` | push a `main` | Abre/actualiza el release PR; al mergearlo, crea el Release y despacha los deploys |
+| 🎨 `deploy-web.yml` | Release (o `workflow_dispatch`) | `npx opennextjs-cloudflare build` + `wrangler deploy` |
+| ⚙️ `deploy-api.yml` | Release (o `workflow_dispatch`) | `wrangler deploy` (worker `cuentas-venezuela-api`) |
+| 🗄️ `db-migrate.yml` | push a `main` con `db/*.sql` | `psql -f` contra Neon prod (idempotente) |
+| 🌊 `sismo-daily.yml` | cron diario | Actualiza cifras del sismo y despacha `deploy-web` directamente (los datos no esperan un release) |
+| 🐍 `etl/**` | manual / cron semanal | Sin auto-deploy; ETL corre desde el runner |
+
+> Versionado semver + changelog automáticos desde conventional commits. Para forzar un deploy sin release: Actions → `deploy-web` / `deploy-api` → Run workflow.
 
 > ⚠️ **Nunca hacer `psql -c "INSERT..."` ad-hoc en prod.** Toda metadata permanente (sources, datasets, indicators) se declara en `db/seeds.sql`.
 

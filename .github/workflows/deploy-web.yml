@@ -3,15 +3,10 @@ name: deploy-web
 # Build Next.js with @opennextjs/cloudflare, then deploy the resulting
 # Worker bundle via `wrangler deploy`. Same pattern as deploy-api.
 
+# Prod deploys are release-gated: this runs on demand only — dispatched by
+# release-please when a release is cut, by the sismo-daily data bot, or
+# manually. No longer triggered by every push to main.
 on:
-  push:
-    branches: [main]
-    paths:
-      - "web/**"
-      - ".github/workflows/deploy-web.yml"
-  pull_request:
-    paths:
-      - "web/**"
   workflow_dispatch:
 
 concurrency:
