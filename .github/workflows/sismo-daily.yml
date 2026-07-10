@@ -1,0 +1,72 @@
+name: sismo-daily
+
+# Daily auto-refresh of the 2026 Venezuela earthquake casualty figures.
+# Parses the English Wikipedia infobox, applies sanity guardrails, and — if
+# the counts changed and passed the guards — commits the new figures to main
+# and triggers the web deploy. If a value trips a guardrail (possible
+# vandalism or parse error) nothing is published and an issue is opened for
+# human review.
+
+on:
+  schedule:
+    # 11:00 UTC = 07:00 VET, daily
+    - cron: "0 11 * * *"
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "Parse and report without writing/committing"
+        type: boolean
+        default: false
+
+concurrency:
+  group: sismo-daily
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+  actions: write
+  issues: write
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Update figures from Wikipedia
+        id: update
+        run: |
+          python3 scripts/update-sismo.py ${{ inputs.dry_run && '--dry-run' || '' }}
+
+      - name: Open review issue (guardrail tripped)
+        if: steps.update.outputs.guard_tripped == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh issue create \
+            --title "sismo-daily: cifra rechazada por guardas ($(date -u +%F))" \
+            --body "El actualizador diario rechazó la cifra parseada de Wikipedia por una guarda de seguridad y **no** publicó nada. Revisar a mano.\n\nRazón: ${{ steps.update.outputs.reason }}" \
+            --label "sismo" || true
+
+      - name: Commit and deploy
+        if: steps.update.outputs.changed == 'true' && inputs.dry_run != true
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          git config user.name "sismo-bot"
+          git config user.email "actions@github.com"
+          git add web/src/app/venezuela/sismo-2026/data.ts \
+                  web/src/app/sitemap.ts \
+                  web/public/llms.txt web/public/llms-full.txt
+          git commit -m "data(sismo-2026): daily auto-refresh — ${{ steps.update.outputs.summary }}
+
+          Automated update from the Wikipedia infobox (passed sanity guardrails).
+
+          Co-Authored-By: Claude Opus 4.8 <noreply@anthropic.com>"
+          git push origin HEAD:main
+          # GITHUB_TOKEN pushes don't trigger the push-based deploy, so fire it.
+          gh workflow run deploy-web.yml --ref main
