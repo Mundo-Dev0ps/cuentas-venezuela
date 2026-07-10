@@ -1,0 +1,39 @@
+name: release-please
+
+# On every push to main, release-please maintains a "release PR" that
+# accumulates the pending conventional commits and bumps the version +
+# CHANGELOG. Merging that PR creates a GitHub Release and tag — which is
+# what gates prod deploys. Because releases created with GITHUB_TOKEN don't
+# trigger other workflows, this job dispatches the deploys itself.
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+  pull-requests: write
+  actions: write
+
+concurrency:
+  group: release-please
+  cancel-in-progress: false
+
+jobs:
+  release-please:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: googleapis/release-please-action@v4
+        id: rp
+        with:
+          config-file: release-please-config.json
+          manifest-file: .release-please-manifest.json
+
+      - name: Deploy on new release
+        if: ${{ steps.rp.outputs.release_created == 'true' }}
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          echo "Release ${{ steps.rp.outputs.tag_name }} created — deploying."
+          gh workflow run deploy-web.yml --ref main
+          gh workflow run deploy-api.yml --ref main
