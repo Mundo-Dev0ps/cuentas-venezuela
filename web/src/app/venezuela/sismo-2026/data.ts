@@ -16,6 +16,16 @@ export function fmtNum(n: number): string {
   return NUM_FMT.format(n);
 }
 
+const MESES_LARGO = [
+  "enero", "febrero", "marzo", "abril", "mayo", "junio",
+  "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre",
+];
+/** "2026-07-08" -> "8 de julio de 2026". */
+export function fmtFechaLarga(iso: string): string {
+  const [y, m, d] = iso.split("-").map(Number);
+  return `${d} de ${MESES_LARGO[m - 1]} de ${y}`;
+}
+
 export interface Source {
   label: string;
   url: string;
@@ -151,8 +161,8 @@ export const SEISMIC_EVENTS: SeismicEvent[] = [
 ];
 
 export const DAMAGE: DamageStats = {
-  asOf: "2026-07-08",
-  dead: 3811,
+  asOf: "2026-07-10",
+  dead: 3889,
   injured: 16740,
   missingGov: "miles (sin cifra oficial)",
   missingTracker: 18100,
@@ -243,8 +253,7 @@ export const ECONOMIC_DAMAGE: EconomicDamage = {
 export const SISMO_FAQS: SismoFaq[] = [
   {
     question: "¿Cuántas personas murieron en el terremoto de Venezuela de 2026?",
-    answer:
-      "Al 8 de julio de 2026, las autoridades reportaban al menos 3.811 muertos y más de 16.740 heridos por el doble terremoto del 24 de junio, con más de 6.400 personas rescatadas. La cifra siguió subiendo conforme avanzaban las labores de rescate. Más de 16.300 personas perdieron su vivienda y las estimaciones de desaparecidos oscilaban entre ~18.000 y 50.000.",
+    answer: `Al ${fmtFechaLarga(DAMAGE.asOf)}, las autoridades reportaban al menos ${fmtNum(DAMAGE.dead)} muertos y más de ${fmtNum(DAMAGE.injured)} heridos por el doble terremoto del 24 de junio, con más de 6.400 personas rescatadas. La cifra siguió subiendo conforme avanzaban las labores de rescate. Más de 16.300 personas perdieron su vivienda y las estimaciones de desaparecidos oscilaban entre ~18.000 y 50.000.`,
   },
   {
     question: "¿Cuál fue la magnitud del terremoto y dónde estuvo el epicentro?",
