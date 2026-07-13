@@ -14,11 +14,11 @@ Esta es la versión de texto completo (`llms-full.txt`). El índice resumido est
 ## Terremotos de Venezuela de 2026 — texto completo
 
 URL: https://cuentasvenezuela.org/venezuela/sismo-2026
-Publicado: 24 de junio de 2026. Última actualización de cifras: 11 de julio de 2026.
+Publicado: 24 de junio de 2026. Última actualización de cifras: 12 de julio de 2026.
 
 El 24 de junio de 2026, a las 18:04:33 hora local (VET), un sismo de magnitud Mw 7,2 con epicentro a 23 km al noroeste de San Felipe (Yaracuy), profundidad 20,3 km, actuó como precursor. 39 segundos después, un sismo principal de magnitud Mw 7,5, más superficial (profundidad 10 km), con epicentro a 28 km al sureste de Yumare (Yaracuy), sacudió el norte y centro de Venezuela. Ambos de tipo desgarre (strike-slip). Fue el terremoto más fuerte en Venezuela desde el sismo de San Narciso de 1900 (~Mw 7,6). Ocurrió durante la conmemoración de la Batalla de Carabobo, con muchos comercios cerrados. En septiembre de 2025 ya se había registrado un doblete previo (Mw 6,2 y 6,3) con daños en Zulia y Lara.
 
-Víctimas (al 11 de julio de 2026): al menos 4.118 muertos, más de 16.740 heridos, más de 16.300 personas sin vivienda y más de 6.400 personas rescatadas. La cifra de desaparecidos está disputada: el gobierno la reporta como "miles" y las estimaciones de sitios independientes de seguimiento oscilan entre unas 18.000 personas y las cerca de 50.000 que estima la ONU. El colapso de telecomunicaciones y el acceso difícil a zonas con derrumbes complican el conteo.
+Víctimas (al 12 de julio de 2026): al menos 4.490 muertos, más de 16.740 heridos, más de 16.300 personas sin vivienda y más de 6.400 personas rescatadas. La cifra de desaparecidos está disputada: el gobierno la reporta como "miles" y las estimaciones de sitios independientes de seguimiento oscilan entre unas 18.000 personas y las cerca de 50.000 que estima la ONU. El colapso de telecomunicaciones y el acceso difícil a zonas con derrumbes complican el conteo.
 
 Estados afectados: La Guaira (crítico: más de 1.400 edificios destruidos, aeropuerto internacional Simón Bolívar dañado y cerrado temporalmente) y Yaracuy (crítico: epicentro, San Felipe y Yumare). También Carabobo (alto, Valencia), Aragua (alto), Miranda (alto), Distrito Capital/Caracas (alto), Trujillo (moderado), Lara (moderado), Falcón (moderado) y Mérida (moderado).
 
@@ -30,7 +30,7 @@ Fuentes: USGS, OCHA/ReliefWeb, PNUD, PAHO/OPS, UN News, NASA.
 
 Preguntas frecuentes:
 P: ¿Cuántas personas murieron en el terremoto de Venezuela de 2026?
-R: Al 11 de julio de 2026, las autoridades reportaban al menos 4.118 muertos y más de 16.740 heridos por el doble terremoto del 24 de junio, con más de 6.400 rescatados. La cifra siguió subiendo durante los días posteriores. Más de 16.300 personas perdieron su vivienda y las estimaciones de desaparecidos oscilaban entre unas 18.000 y 50.000.
+R: Al 12 de julio de 2026, las autoridades reportaban al menos 4.490 muertos y más de 16.740 heridos por el doble terremoto del 24 de junio, con más de 6.400 rescatados. La cifra siguió subiendo durante los días posteriores. Más de 16.300 personas perdieron su vivienda y las estimaciones de desaparecidos oscilaban entre unas 18.000 y 50.000.
 
 P: ¿Cuál fue la magnitud del terremoto y dónde estuvo el epicentro?
 R: Dos sismos con 39 segundos de diferencia: primero Mw 7,2 a 23 km de San Felipe (Yaracuy, profundidad 20,3 km), luego el principal de Mw 7,5 a 28 km al sureste de Yumare (profundidad 10 km). El más fuerte en Venezuela desde el sismo de San Narciso de 1900.
