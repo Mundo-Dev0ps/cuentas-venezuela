@@ -10,13 +10,15 @@ Guardrails (a factual site must not publish vandalism or parse errors):
   - counts only ever RISE (death tolls are monotonic during recovery);
   - a single-day jump may not exceed ~2x the current value (+ a floor);
   - hard upper bounds reject absurd values.
-If a parsed value trips a guardrail, nothing is written and the script
-exits 2 so the workflow can open an issue for human review instead.
+If a parsed value trips a guardrail, nothing is written; the script still
+exits 0 (a tripped guard is an expected outcome, usually a transient bad
+Wikipedia edit) but sets guard_tripped=true so the workflow opens an issue
+for human review.
 
 Usage:
   python3 scripts/update-sismo.py [--dry-run]
 
-Exit codes: 0 = no change or applied; 2 = guardrail tripped (needs review).
+Exit code is always 0 unless the script itself errors (network/parse crash).
 """
 
 from __future__ import annotations
@@ -139,7 +141,10 @@ def main() -> int:
         print(f"GUARDRAIL: {reason}")
         _set_output("guard_tripped", "true")
         _set_output("reason", reason)
-        return 2
+        # Exit 0 on a tripped guardrail: this is an expected outcome (likely a
+        # transient bad Wikipedia edit), not a script error. Keeping the run
+        # green lets the workflow's issue step fire so a human can review.
+        return 0
 
     if dead == cur_dead and injured == cur_injured:
         print("no change")
