@@ -18,7 +18,7 @@ const DDHH_FAQS = [
   {
     question: "¿Cuál es la clasificación de Venezuela en Freedom House?",
     answer:
-      "Venezuela está clasificada como 'No Libre' (Not Free) por Freedom House desde 2017. En 2024 obtuvo un puntaje total de 15/100 (1/40 en derechos políticos, 14/60 en libertades civiles), una de las clasificaciones más bajas de América Latina, comparable con Cuba y Nicaragua.",
+      "Venezuela está clasificada como 'No Libre' (Not Free) por Freedom House desde 2017. En 2024 obtuvo un puntaje total de 15 sobre 100 (1 de 40 en derechos políticos, 14 de 60 en libertades civiles), una de las clasificaciones más bajas de América Latina, comparable con Cuba y Nicaragua.",
   },
   {
     question: "¿Desde cuándo Venezuela perdió la clasificación de país libre?",
@@ -28,7 +28,7 @@ const DDHH_FAQS = [
   {
     question: "¿Cómo se compara Venezuela con Chile y Uruguay en derechos humanos?",
     answer:
-      "Chile y Uruguay han sostenido clasificación 'Libre' (Free) durante todo el período medido, con puntajes consistentemente sobre 90/100. Venezuela arranca el período en 'Parcialmente Libre' y termina en 'No Libre' con menos de 20 puntos — una brecha de más de 75 puntos respecto a sus pares regionales democráticos.",
+      "Chile y Uruguay han sostenido clasificación 'Libre' (Free) durante todo el período medido, con puntajes consistentemente sobre 90 de 100. Venezuela arranca el período en 'Parcialmente Libre' y termina en 'No Libre' con menos de 20 puntos — una brecha de más de 75 puntos respecto a sus pares regionales democráticos.",
   },
   {
     question: "¿Qué mide exactamente el índice de Freedom House?",
@@ -173,7 +173,7 @@ export default async function DDHHPage() {
               {venLatest.total ?? "—"}<span className="text-sm text-slate-500"> de 100</span>
             </p>
             <p className="text-xs text-slate-500 mt-1">
-              PR {venLatest.prScore ?? "—"}/40 · CL {venLatest.clScore ?? "—"}/60
+              PR {venLatest.prScore ?? "—"} de 40 · CL {venLatest.clScore ?? "—"} de 60
             </p>
           </div>
           <div className="rounded-xl border border-slate-700/40 bg-slate-900/60 p-4">
@@ -222,9 +222,9 @@ export default async function DDHHPage() {
                 <tr>
                   <th className="text-left px-4 py-2">Año</th>
                   <th className="text-left px-4 py-2">Estatus</th>
-                  <th className="text-right px-4 py-2">PR</th>
-                  <th className="text-right px-4 py-2">CL</th>
-                  <th className="text-right px-4 py-2">Total</th>
+                  <th className="text-right px-4 py-2">PR (de 40)</th>
+                  <th className="text-right px-4 py-2">CL (de 60)</th>
+                  <th className="text-right px-4 py-2">Total (de 100)</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-700/30">
@@ -239,13 +239,13 @@ export default async function DDHHPage() {
                       </span>
                     </td>
                     <td className="px-4 py-2 text-right font-mono">
-                      {r.prScore ?? "—"}<span className="text-slate-500">/40</span>
+                      {r.prScore ?? "—"}
                     </td>
                     <td className="px-4 py-2 text-right font-mono">
-                      {r.clScore ?? "—"}<span className="text-slate-500">/60</span>
+                      {r.clScore ?? "—"}
                     </td>
                     <td className="px-4 py-2 text-right font-mono font-bold">
-                      {r.total ?? "—"}<span className="text-slate-500">/100</span>
+                      {r.total ?? "—"}
                     </td>
                   </tr>
                 ))}
