@@ -1,16 +1,20 @@
 name: sismo-daily
 
-# Daily auto-refresh of the 2026 Venezuela earthquake casualty figures.
+# Auto-refresh of the 2026 Venezuela earthquake casualty figures.
 # Parses the English Wikipedia infobox, applies sanity guardrails, and — if
 # the counts changed and passed the guards — commits the new figures to main
 # and triggers the web deploy. If a value trips a guardrail (possible
 # vandalism or parse error) nothing is published and an issue is opened for
 # human review.
+#
+# Runs every 8h: the toll rises through the day and a once-daily run left the
+# site up to ~24h behind. A no-op run costs nothing (it exits without
+# committing when the figure is unchanged).
 
 on:
   schedule:
-    # 11:00 UTC = 07:00 VET, daily
-    - cron: "0 11 * * *"
+    # 00:00, 08:00 and 16:00 UTC
+    - cron: "0 */8 * * *"
   workflow_dispatch:
     inputs:
       dry_run:
