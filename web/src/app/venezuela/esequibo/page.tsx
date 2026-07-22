@@ -18,9 +18,6 @@ export const metadata = pageMetadata({
 
 export const revalidate = 3600;
 
-const SITE_URL =
-  process.env.NEXT_PUBLIC_SITE_URL ?? "https://cuentasvenezuela.org";
-
 const DELAYS: Array<0 | 100 | 200 | 300 | 400> = [0, 100, 200, 300, 400];
 
 const MONTHS = [
@@ -35,26 +32,6 @@ function formatDate(iso: string, precision: "day" | "month" | "year"): string {
     return `${MONTHS[d.getUTCMonth()]} ${d.getUTCFullYear()}`;
   }
   return `${d.getUTCDate()} ${MONTHS[d.getUTCMonth()]} ${d.getUTCFullYear()}`;
-}
-
-function eventJsonLd(ev: (typeof EVENTS)[number]) {
-  return {
-    "@context": "https://schema.org",
-    "@type": "Event",
-    name: ev.title,
-    startDate: ev.date,
-    eventStatus: "https://schema.org/EventScheduled",
-    eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
-    description: ev.description,
-    location: { "@type": "Place", name: "Esequibo / Guayana Esequiba" },
-    url: `${SITE_URL}/venezuela/esequibo#${ev.id}`,
-    ...(ev.sources[0]?.url ? { sameAs: ev.sources.map((s) => s.url) } : {}),
-    isPartOf: {
-      "@type": "WebSite",
-      name: "Cuentas Venezuela",
-      url: SITE_URL,
-    },
-  };
 }
 
 const FAQS = [
@@ -93,9 +70,6 @@ export default function EsequiboPage() {
         ])}
       />
       <JsonLd data={faqPageJsonLd(FAQS)} />
-      {sorted.map((ev) => (
-        <JsonLd key={`jsonld-${ev.id}`} data={eventJsonLd(ev)} />
-      ))}
 
       <Link
         href="/venezuela"
