@@ -27,7 +27,6 @@ import {
   SISMO_FAQS,
   fmtNum,
   type Source,
-  type SeismicEvent,
 } from "./data";
 
 export const metadata = pageMetadata({
@@ -39,9 +38,6 @@ export const metadata = pageMetadata({
 });
 
 export const revalidate = 3600;
-
-const SITE_URL =
-  process.env.NEXT_PUBLIC_SITE_URL ?? "https://cuentasvenezuela.org";
 
 const DELAYS: Array<0 | 100 | 200 | 300 | 400> = [0, 100, 200, 300, 400];
 
@@ -74,33 +70,6 @@ function SourceLinks({ sources }: { sources: Source[] }) {
   );
 }
 
-function eventJsonLd(ev: SeismicEvent) {
-  return {
-    "@context": "https://schema.org",
-    "@type": "Event",
-    name: `Terremoto Mw ${ev.magnitude} — ${ev.epicenter}`,
-    startDate: ev.datetimeUtc,
-    eventStatus: "https://schema.org/EventScheduled",
-    eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
-    description: `Sismo de magnitud ${ev.magnitude} ${ev.scale} a ${ev.depthKm} km de profundidad, con epicentro en ${ev.epicenter}, el 24 de junio de 2026 en Venezuela.`,
-    location: {
-      "@type": "Place",
-      name: ev.epicenter,
-      geo: {
-        "@type": "GeoCoordinates",
-        latitude: ev.lat,
-        longitude: ev.lon,
-      },
-    },
-    url: `${SITE_URL}/venezuela/sismo-2026#${ev.id}`,
-    sameAs: ev.sources.map((s) => s.url),
-    isPartOf: {
-      "@type": "WebSite",
-      name: "Cuentas Venezuela",
-      url: SITE_URL,
-    },
-  };
-}
 
 const KPIS = [
   {
@@ -144,9 +113,6 @@ export default function SismoPage() {
         ])}
       />
       <JsonLd data={faqPageJsonLd(SISMO_FAQS)} />
-      {SEISMIC_EVENTS.map((ev) => (
-        <JsonLd key={`jsonld-${ev.id}`} data={eventJsonLd(ev)} />
-      ))}
       <JsonLd
         data={datasetJsonLd({
           name: "Terremotos de Venezuela del 24 de junio de 2026",
