@@ -41,6 +41,14 @@ const SECTIONS = [
     badge: "Disponible",
   },
   {
+    href: "/venezuela/recibido-vs-hoy",
+    icon: TrendingDown,
+    color: "text-rose-400",
+    title: "Cómo lo recibió el chavismo",
+    desc: "1998 vs hoy: pobreza (ENCOVI), producción petrolera, inflación, PIB per cápita, desempleo y deuda. Cifra de entonces, cifra de hoy y tendencia. Cada dato citado.",
+    badge: "Disponible",
+  },
+  {
     href: "/venezuela/economia",
     icon: Activity,
     color: "text-amber-400",
@@ -86,6 +94,14 @@ const SECTIONS = [
     color: "text-rose-400",
     title: "Corrupción y sanciones",
     desc: "Casos documentados, individuos sancionados (OFAC/UE/UK) y direcciones cripto SDN. Cada entrada con fuente oficial.",
+    badge: "Disponible",
+  },
+  {
+    href: "/venezuela/sanciones",
+    icon: Scale,
+    color: "text-cyan-400",
+    title: "Sanciones, no bloqueo",
+    desc: "Qué son y qué no son las sanciones a Venezuela: a personas (OFAC), sectoriales (PDVSA), exenciones humanitarias y la cronología del colapso previo. Cada afirmación citada.",
     badge: "Disponible",
   },
   {
