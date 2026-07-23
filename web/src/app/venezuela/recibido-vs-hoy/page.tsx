@@ -9,20 +9,22 @@ import {
   faqPageJsonLd,
 } from "@/components/json-ld";
 import { Reveal } from "@/components/reveal";
-import { BeforeAfter } from "./before-after";
+import { BeforeAfter, MegaStatCard } from "./before-after";
 import {
   WB_INDICATORS,
   WB_SOURCE,
   POVERTY,
+  EXTREME_POVERTY,
   OIL,
   INFLATION,
+  MONETARY_STATS,
   type Point,
 } from "./data";
 
 export const metadata = pageMetadata({
   title: "Cómo recibió el chavismo a Venezuela y cómo está hoy",
   description:
-    "Comparativa de rendición de cuentas: Venezuela en 1998 (antes del chavismo) frente al último dato en pobreza, producción petrolera, inflación, PIB per cápita, desempleo y deuda. Cada cifra fechada y citada.",
+    "Comparativa de rendición de cuentas: Venezuela en 1998 (antes del chavismo) frente al último dato en pobreza, pobreza extrema, producción petrolera, inflación acumulada, devaluación del bolívar, PIB per cápita y desempleo. Cada cifra fechada y citada.",
   path: "/venezuela/recibido-vs-hoy",
 });
 
@@ -45,6 +47,16 @@ const FAQS = [
     question: "¿La pobreza en Venezuela subió o bajó bajo el chavismo?",
     answer:
       "La pobreza de ingresos pasó de cerca del 44% de los hogares en 1998 a un pico superior al 90% en 2020, según la ENCOVI de la UCAB. En 2023-2024 bajó (73,2% en 2024) por la estabilización cambiaria, pero sigue muy por encima del nivel de 1998. La medición independiente es la ENCOVI porque el gobierno dejó de publicar cifras oficiales de pobreza.",
+  },
+  {
+    question: "¿Cuánto se devaluó el bolívar y cuánta inflación acumuló Venezuela?",
+    answer:
+      "Al bolívar se le quitaron 14 ceros en tres reconversiones (bolívar fuerte en 2008, soberano en 2018 y digital en 2021) para que las cifras siguieran cabiendo en billetes y calculadoras. Solo en el primer gobierno de Nicolás Maduro, la inflación acumulada entre 2013 y 2019 fue de 5.395.536.286%, es decir, los precios se multiplicaron por más de 53 millones. Es una de las hiperinflaciones más graves de la historia moderna.",
+  },
+  {
+    question: "¿Cuánta pobreza extrema hay en Venezuela?",
+    answer:
+      "La pobreza extrema de ingresos —hogares sin dinero para cubrir siquiera la canasta alimentaria— pasó de cerca del 20% en 1998 (INE) a un pico de aproximadamente 79% en 2019-2020, según la ENCOVI de la UCAB. Bajó a 36,5% en 2024 y 31,7% en 2025 gracias a la estabilización del tipo de cambio, pero sigue por encima del nivel previo al chavismo.",
   },
   {
     question: "¿Por qué se comparan 1998 y hoy?",
@@ -81,7 +93,7 @@ export default async function RecibidoVsHoyPage() {
     points: b.points,
     sources: [WB_SOURCE],
   }));
-  const manualBlocks: BAProps[] = [POVERTY, OIL, INFLATION].map((m) => ({
+  const manualBlocks: BAProps[] = [POVERTY, EXTREME_POVERTY, OIL, INFLATION].map((m) => ({
     title: m.title,
     unitLabel: m.unitLabel,
     format: m.format,
@@ -119,8 +131,11 @@ export default async function RecibidoVsHoyPage() {
             "Venezuela 1998",
             "chavismo antes y después",
             "pobreza Venezuela ENCOVI",
+            "pobreza extrema Venezuela",
             "producción petrolera Venezuela",
-            "inflación Venezuela",
+            "inflación acumulada Venezuela",
+            "devaluación bolívar",
+            "reconversión monetaria Venezuela",
           ],
           temporalCoverage: "1998/2025",
           spatialCoverage: "Venezuela",
@@ -169,6 +184,22 @@ export default async function RecibidoVsHoyPage() {
             <BeforeAfter {...b} />
           </Reveal>
         ))}
+      </section>
+
+      <section className="mt-12">
+        <h2 className="mb-1 text-2xl font-bold tracking-tight">El colapso del bolívar</h2>
+        <p className="mb-5 max-w-2xl text-sm text-slate-400">
+          Dos cifras que ninguna comparación de dos columnas puede contener: la
+          devaluación y la inflación acumulada abarcan tantos órdenes de
+          magnitud que al bolívar hubo que quitarle 14 ceros.
+        </p>
+        <div className="grid gap-4 sm:grid-cols-2">
+          {MONETARY_STATS.map((s, i) => (
+            <Reveal key={s.id} delay={DELAYS[i % DELAYS.length]}>
+              <MegaStatCard stat={s} />
+            </Reveal>
+          ))}
+        </div>
       </section>
 
       <section className="mt-16 space-y-5">
