@@ -65,7 +65,7 @@ export const WB_INDICATORS: WbIndicator[] = [
     format: "pct",
     direction: "lowerBetter",
     deltaKind: "pp",
-    note: "Estimación modelada de la OIT vía Banco Mundial.",
+    note: "Estimación modelada de la OIT vía Banco Mundial. OJO: la baja tasa de desempleo engaña — no significa más empleo formal, sino que el desempleo se traslada a la economía informal y a la emigración de millones de trabajadores. Ver el bloque de empleo informal.",
   },
   {
     code: "GC.DOD.TOTL.GD.ZS",
@@ -195,7 +195,57 @@ export const EXTREME_POVERTY: ManualSeries = {
   ],
 };
 
-export const MANUAL_SERIES: ManualSeries[] = [POVERTY, EXTREME_POVERTY, OIL, INFLATION];
+/**
+ * Empleo informal (% del empleo total). El contrapunto al desempleo: la tasa
+ * de desempleo baja NO refleja más empleo formal, sino trabajo informal
+ * (buhonería, changas, cuentapropismo de subsistencia) que absorbe la fuerza
+ * laboral y no aparece como "desempleo". De ~50% en 1998 a ~70% en 2025 según
+ * Ecoanalítica (4º más alto de América Latina). Metodologías dispares: la
+ * ENCOVI, con una definición más estricta, da cifras más bajas (~50%).
+ */
+export const INFORMAL_EMPLOYMENT: ManualSeries = {
+  id: "empleo-informal",
+  title: "Empleo informal",
+  unitLabel: "% del empleo total",
+  format: "pct",
+  direction: "lowerBetter",
+  deltaKind: "pp",
+  highlight: "El desempleo bajo engaña: la fuerza laboral se refugia en la informalidad",
+  points: [
+    { year: 1998, value: 50 },
+    { year: 2025, value: 70 },
+  ],
+  note: "1998: el sector informal absorbía ~49,5% del empleo. 2025: ~70% según Ecoanalítica (4º más alto de América Latina, promedio regional ~50%). La ENCOVI, con una definición más estricta, reporta cifras más conservadoras (~50%). El punto: la baja tasa de desempleo oficial oculta el desplazamiento hacia el empleo informal y la emigración.",
+  sources: [
+    { label: "AméricaEconomía — informalidad laboral en Venezuela (Ecoanalítica ~70%)", url: "https://www.americaeconomia.com/economia-mercados/finanzas/venezuela-registra-la-tasa-mas-baja-de-empleo-informal-de-america-latina" },
+    { label: "UCAB — La informalidad laboral en Venezuela (definiciones)", url: "https://www.ucab.edu.ve/wp-content/uploads/2021/11/11Notas-sobre-la-Economia-Venezolana-DML.pdf" },
+  ],
+};
+
+export const MANUAL_SERIES: ManualSeries[] = [
+  POVERTY,
+  EXTREME_POVERTY,
+  OIL,
+  INFLATION,
+  INFORMAL_EMPLOYMENT,
+];
+
+/* ── Marcadores de era en las mini-tendencias ──────────────────────────
+ * Líneas verticales que ubican los hitos políticos en cada gráfica. El fin de
+ * Chávez (muerte, marzo 2013) y el inicio de Maduro (abril 2013) coinciden en
+ * el mismo año, así que se muestran como un solo marcador. */
+
+export interface EraMarker {
+  year: number;
+  label: string;
+  /** Color de la línea/leyenda. */
+  color: string;
+}
+
+export const ERA_MARKERS: EraMarker[] = [
+  { year: 1999, label: "Chávez asume la presidencia", color: "#38bdf8" },
+  { year: 2013, label: "Muere Chávez y Maduro asume", color: "#fbbf24" },
+];
 
 /* ── Colapso monetario: cifras que no caben en un antes/después ────────
  * La devaluación y la inflación acumulada abarcan tantos órdenes de magnitud

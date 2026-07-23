@@ -1,5 +1,12 @@
 import { ExternalLink, ArrowRight } from "lucide-react";
-import { fmtValue, type Direction, type Point, type Source, type MegaStat } from "./data";
+import {
+  fmtValue,
+  type Direction,
+  type Point,
+  type Source,
+  type MegaStat,
+  type EraMarker,
+} from "./data";
 
 function SourceLinks({ sources }: { sources: Source[] }) {
   return (
@@ -15,6 +22,33 @@ function SourceLinks({ sources }: { sources: Source[] }) {
           {s.label}
           <ExternalLink className="h-3 w-3" />
         </a>
+      ))}
+    </div>
+  );
+}
+
+/** Leyenda de los marcadores de era que aparecen en cada mini-tendencia. */
+export function EraLegend({ markers }: { markers: EraMarker[] }) {
+  return (
+    <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-slate-400">
+      <span className="text-slate-500">En las tendencias:</span>
+      {markers.map((m) => (
+        <span key={m.year} className="inline-flex items-center gap-1.5">
+          <svg width="14" height="10" aria-hidden>
+            <line
+              x1="7"
+              y1="0"
+              x2="7"
+              y2="10"
+              stroke={m.color}
+              strokeWidth="1.5"
+              strokeDasharray="2 2"
+            />
+          </svg>
+          <span>
+            <span className="font-mono text-slate-300">{m.year}</span> {m.label}
+          </span>
+        </span>
       ))}
     </div>
   );
@@ -48,6 +82,13 @@ interface Props {
   highlight?: string;
   note?: string;
   sources: Source[];
+  markers?: EraMarker[];
+}
+
+/** Posición X de un año dentro del rango temporal de la serie. */
+function xForYear(year: number, minYear: number, maxYear: number, w: number): number {
+  if (maxYear === minYear) return w / 2;
+  return ((year - minYear) / (maxYear - minYear)) * w;
 }
 
 function sparkPath(points: Point[], logScale: boolean, w: number, h: number): string {
@@ -55,10 +96,12 @@ function sparkPath(points: Point[], logScale: boolean, w: number, h: number): st
   const min = Math.min(...ys);
   const max = Math.max(...ys);
   const span = max - min || 1;
-  const n = points.length;
+  const years = points.map((p) => p.year);
+  const minYear = Math.min(...years);
+  const maxYear = Math.max(...years);
   return points
-    .map((_, i) => {
-      const x = n === 1 ? w / 2 : (i / (n - 1)) * w;
+    .map((p, i) => {
+      const x = xForYear(p.year, minYear, maxYear, w);
       const y = h - ((ys[i] - min) / span) * h;
       return `${i === 0 ? "M" : "L"}${x.toFixed(1)} ${y.toFixed(1)}`;
     })
@@ -90,9 +133,13 @@ export function BeforeAfter({
   highlight,
   note,
   sources,
+  markers = [],
 }: Props) {
   const first = points[0];
   const last = points[points.length - 1];
+  const minYear = first.year;
+  const maxYear = last.year;
+  const visibleMarkers = markers.filter((m) => m.year > minYear && m.year < maxYear);
   const rose = direction === "higherBetter" ? last.value < first.value : last.value > first.value;
   const deltaColor = rose
     ? "border-rose-500/50 bg-rose-500/10 text-rose-200"
@@ -140,6 +187,22 @@ export function BeforeAfter({
         className="mt-3 h-10 w-full"
         aria-hidden
       >
+        {visibleMarkers.map((m) => {
+          const x = xForYear(m.year, minYear, maxYear, 240);
+          return (
+            <line
+              key={m.year}
+              x1={x}
+              y1={0}
+              x2={x}
+              y2={40}
+              stroke={m.color}
+              strokeWidth={1}
+              strokeDasharray="2 2"
+              opacity={0.55}
+            />
+          );
+        })}
         <path
           d={sparkPath(points, logScale, 240, 40)}
           fill="none"

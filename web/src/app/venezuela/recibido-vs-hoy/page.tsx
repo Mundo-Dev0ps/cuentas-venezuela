@@ -9,7 +9,7 @@ import {
   faqPageJsonLd,
 } from "@/components/json-ld";
 import { Reveal } from "@/components/reveal";
-import { BeforeAfter, MegaStatCard } from "./before-after";
+import { BeforeAfter, MegaStatCard, EraLegend } from "./before-after";
 import {
   WB_INDICATORS,
   WB_SOURCE,
@@ -17,14 +17,16 @@ import {
   EXTREME_POVERTY,
   OIL,
   INFLATION,
+  INFORMAL_EMPLOYMENT,
   MONETARY_STATS,
+  ERA_MARKERS,
   type Point,
 } from "./data";
 
 export const metadata = pageMetadata({
   title: "Cómo recibió el chavismo a Venezuela y cómo está hoy",
   description:
-    "Comparativa de rendición de cuentas: Venezuela en 1998 (antes del chavismo) frente al último dato en pobreza, pobreza extrema, producción petrolera, inflación acumulada, devaluación del bolívar, PIB per cápita y desempleo. Cada cifra fechada y citada.",
+    "Comparativa de rendición de cuentas: Venezuela en 1998 (antes del chavismo) frente al último dato en pobreza, pobreza extrema, empleo informal, producción petrolera, inflación acumulada, devaluación del bolívar, PIB per cápita y desempleo. Cada cifra fechada y citada, con los hitos de las eras de Chávez y Maduro marcados en las tendencias.",
   path: "/venezuela/recibido-vs-hoy",
 });
 
@@ -52,6 +54,11 @@ const FAQS = [
     question: "¿Cuánto se devaluó el bolívar y cuánta inflación acumuló Venezuela?",
     answer:
       "Al bolívar se le quitaron 14 ceros en tres reconversiones (bolívar fuerte en 2008, soberano en 2018 y digital en 2021) para que las cifras siguieran cabiendo en billetes y calculadoras. Solo en el primer gobierno de Nicolás Maduro, la inflación acumulada entre 2013 y 2019 fue de 5.395.536.286%, es decir, los precios se multiplicaron por más de 53 millones. Es una de las hiperinflaciones más graves de la historia moderna.",
+  },
+  {
+    question: "¿Por qué el desempleo en Venezuela parece bajo si la economía colapsó?",
+    answer:
+      "Porque una tasa de desempleo baja no significa más empleo formal. El desempleo se traslada a la economía informal —buhonería, cuentapropismo de subsistencia— y a la emigración de millones de trabajadores, que salen de la fuerza laboral y dejan de contar como desempleados. El empleo informal pasó de cerca del 50% en 1998 a alrededor del 70% en 2025 según Ecoanalítica, uno de los más altos de América Latina. Por eso el desempleo oficial engaña.",
   },
   {
     question: "¿Cuánta pobreza extrema hay en Venezuela?",
@@ -92,8 +99,9 @@ export default async function RecibidoVsHoyPage() {
     note: b.cfg.note,
     points: b.points,
     sources: [WB_SOURCE],
+    markers: ERA_MARKERS,
   }));
-  const manualBlocks: BAProps[] = [POVERTY, EXTREME_POVERTY, OIL, INFLATION].map((m) => ({
+  const toBlock = (m: typeof POVERTY): BAProps => ({
     title: m.title,
     unitLabel: m.unitLabel,
     format: m.format,
@@ -104,12 +112,19 @@ export default async function RecibidoVsHoyPage() {
     highlight: m.highlight,
     note: m.note,
     sources: m.sources,
-  }));
-  // PIB per cápita primero (si hay serie), luego pobreza/petróleo/inflación,
-  // luego el resto del Banco Mundial (desempleo, deuda).
-  const blocks: BAProps[] = [wbBlocks[0], ...manualBlocks, ...wbBlocks.slice(1)].filter(
-    Boolean,
-  ) as BAProps[];
+    markers: ERA_MARKERS,
+  });
+  const manualBlocks = [POVERTY, EXTREME_POVERTY, OIL, INFLATION].map(toBlock);
+  const informalBlock = toBlock(INFORMAL_EMPLOYMENT);
+  // Orden: PIB per cápita, luego pobreza/extrema/petróleo/inflación, después
+  // desempleo y JUSTO detrás el empleo informal (que desmonta la "mejora" del
+  // desempleo), y el resto del Banco Mundial (deuda) al final.
+  const blocks: BAProps[] = [
+    wbBlocks[0],
+    ...manualBlocks,
+    ...wbBlocks.slice(1),
+    informalBlock,
+  ].filter(Boolean) as BAProps[];
 
   return (
     <main className="mx-auto max-w-5xl px-4 py-10 sm:px-6">
@@ -132,6 +147,8 @@ export default async function RecibidoVsHoyPage() {
             "chavismo antes y después",
             "pobreza Venezuela ENCOVI",
             "pobreza extrema Venezuela",
+            "empleo informal Venezuela",
+            "desempleo Venezuela",
             "producción petrolera Venezuela",
             "inflación acumulada Venezuela",
             "devaluación bolívar",
@@ -177,6 +194,10 @@ export default async function RecibidoVsHoyPage() {
           </span>
         </p>
       </aside>
+
+      <div className="mb-4">
+        <EraLegend markers={ERA_MARKERS} />
+      </div>
 
       <section className="grid gap-4 sm:grid-cols-2">
         {blocks.map((b, i) => (
