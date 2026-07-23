@@ -1,5 +1,41 @@
 import { ExternalLink, ArrowRight } from "lucide-react";
-import { fmtValue, type Direction, type Point, type Source } from "./data";
+import { fmtValue, type Direction, type Point, type Source, type MegaStat } from "./data";
+
+function SourceLinks({ sources }: { sources: Source[] }) {
+  return (
+    <div className="mt-3 flex flex-wrap gap-1.5">
+      {sources.map((s) => (
+        <a
+          key={s.url}
+          href={s.url}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-1 rounded-md border border-cyan-500/40 bg-cyan-500/5 px-2 py-0.5 text-[11px] text-cyan-200 hover:bg-cyan-500/10"
+        >
+          {s.label}
+          <ExternalLink className="h-3 w-3" />
+        </a>
+      ))}
+    </div>
+  );
+}
+
+/** Cifra destacada para magnitudes que no caben en un antes/después. */
+export function MegaStatCard({ stat }: { stat: MegaStat }) {
+  return (
+    <div className="rounded-xl border border-rose-500/30 bg-rose-500/5 p-5">
+      <h3 className="text-lg font-semibold text-slate-100">{stat.title}</h3>
+      <p className="mt-3 font-mono text-3xl font-bold leading-tight text-rose-200 sm:text-4xl">
+        {stat.value}
+      </p>
+      <p className="mt-1 text-[11px] uppercase tracking-wider text-slate-500">
+        {stat.caption}
+      </p>
+      <p className="mt-3 text-sm leading-relaxed text-slate-400">{stat.note}</p>
+      <SourceLinks sources={stat.sources} />
+    </div>
+  );
+}
 
 interface Props {
   title: string;
@@ -127,20 +163,7 @@ export function BeforeAfter({
 
       {note && <p className="mt-3 text-sm leading-relaxed text-slate-400">{note}</p>}
 
-      <div className="mt-3 flex flex-wrap gap-1.5">
-        {sources.map((s) => (
-          <a
-            key={s.url}
-            href={s.url}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-1 rounded-md border border-cyan-500/40 bg-cyan-500/5 px-2 py-0.5 text-[11px] text-cyan-200 hover:bg-cyan-500/10"
-          >
-            {s.label}
-            <ExternalLink className="h-3 w-3" />
-          </a>
-        ))}
-      </div>
+      <SourceLinks sources={sources} />
     </div>
   );
 }

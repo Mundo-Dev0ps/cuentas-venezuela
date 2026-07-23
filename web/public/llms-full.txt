@@ -99,10 +99,12 @@ Comparativa 1998 (último año antes del chavismo; Chávez asume el 2 de febrero
 
 - Producción petrolera: ~3.300.000 bpd (1998) → mínimo histórico de 557.000 bpd (2020) → ~1.120.000 bpd (2025). Fuentes: OPEP, EIA.
 - Pobreza de ingresos de hogares: ~44% (1998, INE) → ~73% (2015, ENCOVI) → pico ~94% (2020) → 73,2% (2024). La medición independiente es la ENCOVI/UCAB porque el gobierno dejó de publicar cifras oficiales. Fuentes: ENCOVI/UCAB, INE.
+- Pobreza extrema de hogares (sin ingreso para la canasta alimentaria): ~20% (1998, INE, pobreza crítica) → pico ~79% (2019-2020, ENCOVI) → 36,5% (2024) → 31,7% (2025). Bajó por la estabilización cambiaria pero sigue por encima de 1998. Fuentes: ENCOVI/UCAB, INE.
 - Inflación anual (IPC): ~36% (1998) → hiperinflación 2017-2021 con pico anual cercano a 130.000% en 2018 (FMI) → en descenso, todavía de las más altas del mundo (FMI proyecta ~270% para 2025). Fuentes: FMI, OVF, BCV.
+- Colapso monetario: al bolívar se le quitaron 14 ceros en tres reconversiones (bolívar fuerte 2008 ÷1.000, soberano 2018 ÷100.000, digital 2021 ÷1.000.000). Inflación acumulada 2013-2019 (primer gobierno de Maduro): 5.395.536.286% — los precios se multiplicaron por más de 53 millones. Fuentes: VenAmCham, La Nación, Wikipedia (Hiperinflación en Venezuela).
 - PIB per cápita, desempleo y deuda del gobierno central: series del Banco Mundial 1998→último dato.
 
-Registro factual; pobreza, petróleo e inflación curados a mano y citados. Fuentes: Banco Mundial, ENCOVI/UCAB, OPEP/EIA, FMI.
+Registro factual; pobreza, pobreza extrema, petróleo, inflación y colapso monetario curados a mano y citados. Fuentes: Banco Mundial, ENCOVI/UCAB, OPEP/EIA, FMI, VenAmCham.
 
 ## Sanciones, no bloqueo: los hechos — texto completo
 
