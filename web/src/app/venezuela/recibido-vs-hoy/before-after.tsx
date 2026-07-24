@@ -1,4 +1,7 @@
+"use client";
+
 import { ExternalLink, ArrowRight } from "lucide-react";
+import { useInView } from "@/lib/use-in-view";
 import {
   fmtValue,
   type Direction,
@@ -135,6 +138,8 @@ export function BeforeAfter({
   sources,
   markers = [],
 }: Props) {
+  const { ref, inView } = useInView<HTMLDivElement>({ threshold: 0.25 });
+  const drawn = inView ? "is-drawn" : "";
   const first = points[0];
   const last = points[points.length - 1];
   const minYear = first.year;
@@ -147,7 +152,7 @@ export function BeforeAfter({
   const line = rose ? "#f43f5e" : "#34d399";
 
   return (
-    <div className="rounded-xl border border-slate-700/40 bg-slate-900/50 p-5">
+    <div ref={ref} className="rounded-xl border border-slate-700/40 bg-slate-900/50 p-5">
       <div className="mb-1 flex items-baseline justify-between gap-2">
         <h3 className="text-lg font-semibold text-slate-100">{title}</h3>
         <span className="text-[11px] uppercase tracking-wider text-slate-500">
@@ -187,11 +192,13 @@ export function BeforeAfter({
         className="mt-3 h-10 w-full"
         aria-hidden
       >
-        {visibleMarkers.map((m) => {
+        {visibleMarkers.map((m, i) => {
           const x = xForYear(m.year, minYear, maxYear, 240);
           return (
             <line
               key={m.year}
+              className={`spark-marker ${drawn}`}
+              style={{ animationDelay: `${700 + i * 150}ms` }}
               x1={x}
               y1={0}
               x2={x}
@@ -204,6 +211,8 @@ export function BeforeAfter({
           );
         })}
         <path
+          className={`spark-path ${drawn}`}
+          pathLength={1}
           d={sparkPath(points, logScale, 240, 40)}
           fill="none"
           stroke={line}

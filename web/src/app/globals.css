@@ -81,6 +81,41 @@ body {
   animation: yearPop 380ms cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
+/* Sparkline: dibuja el trazo cuando la tarjeta entra en viewport.
+ * El path usa pathLength="1", así que dasharray/offset 1 = longitud completa. */
+@keyframes sparkDraw {
+  from { stroke-dashoffset: 1; }
+  to   { stroke-dashoffset: 0; }
+}
+.spark-path {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+}
+.spark-path.is-drawn {
+  animation: sparkDraw 1000ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* Marcadores de era: crecen desde la base al revelarse. */
+@keyframes barRise {
+  from { transform: scaleY(0); opacity: 0; }
+  to   { transform: scaleY(1); opacity: 0.55; }
+}
+.spark-marker {
+  transform-box: fill-box;
+  transform-origin: bottom;
+  opacity: 0;
+}
+.spark-marker.is-drawn {
+  animation: barRise 600ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .spark-path,
+  .spark-path.is-drawn { stroke-dashoffset: 0; animation: none; }
+  .spark-marker,
+  .spark-marker.is-drawn { transform: none; opacity: 0.55; animation: none; }
+}
+
 /* Mobile-only: hide marked overlays when user toggles map-only view */
 @media (max-width: 767px) {
   [data-mdo-mobile-view="map"] .mdo-overlay {
