@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { ExternalLink, ArrowRight } from "lucide-react";
 import { useInView } from "@/lib/use-in-view";
 import {
@@ -60,16 +61,18 @@ export function EraLegend({ markers }: { markers: EraMarker[] }) {
 /** Cifra destacada para magnitudes que no caben en un antes/después. */
 export function MegaStatCard({ stat }: { stat: MegaStat }) {
   return (
-    <div className="rounded-xl border border-rose-500/30 bg-rose-500/5 p-5">
+    <div className="flex h-full flex-col rounded-xl border border-rose-500/30 bg-rose-500/5 p-5">
       <h3 className="text-lg font-semibold text-slate-100">{stat.title}</h3>
-      <p className="mt-3 font-mono text-3xl font-bold leading-tight text-rose-200 sm:text-4xl">
+      <p className="mt-3 break-words font-mono text-2xl font-bold leading-tight text-rose-200 sm:text-3xl md:text-4xl">
         {stat.value}
       </p>
       <p className="mt-1 text-[11px] uppercase tracking-wider text-slate-500">
         {stat.caption}
       </p>
       <p className="mt-3 text-sm leading-relaxed text-slate-400">{stat.note}</p>
-      <SourceLinks sources={stat.sources} />
+      <div className="mt-auto">
+        <SourceLinks sources={stat.sources} />
+      </div>
     </div>
   );
 }
@@ -111,6 +114,26 @@ function sparkPath(points: Point[], logScale: boolean, w: number, h: number): st
     .join("");
 }
 
+/** Índice del punto cuyo x% está más cerca del cursor. */
+function nearestDot(
+  el: HTMLElement,
+  clientX: number,
+  dots: { i: number; left: number }[],
+): number {
+  const rect = el.getBoundingClientRect();
+  const relX = ((clientX - rect.left) / rect.width) * 100;
+  let best = 0;
+  let bestDist = Infinity;
+  for (const d of dots) {
+    const dist = Math.abs(d.left - relX);
+    if (dist < bestDist) {
+      bestDist = dist;
+      best = d.i;
+    }
+  }
+  return best;
+}
+
 function delta(points: Point[], kind: Props["deltaKind"]): string {
   const a = points[0].value;
   const b = points[points.length - 1].value;
@@ -140,6 +163,7 @@ export function BeforeAfter({
 }: Props) {
   const { ref, inView } = useInView<HTMLDivElement>({ threshold: 0.25 });
   const drawn = inView ? "is-drawn" : "";
+  const [active, setActive] = useState<number | null>(null);
   const first = points[0];
   const last = points[points.length - 1];
   const minYear = first.year;
@@ -151,8 +175,34 @@ export function BeforeAfter({
     : "border-emerald-500/50 bg-emerald-500/10 text-emerald-200";
   const line = rose ? "#f43f5e" : "#34d399";
 
+  // Geometría de los puntos para la capa interactiva (posiciones en %).
+  const ys = points.map((p) => (logScale ? Math.log10(Math.max(p.value, 1)) : p.value));
+  const minV = Math.min(...ys);
+  const maxV = Math.max(...ys);
+  const spanV = maxV - minV || 1;
+  const peakIdx = ys.indexOf(maxV);
+  const dots = points.map((p, i) => ({
+    p,
+    i,
+    left: xForYear(p.year, minYear, maxYear, 100),
+    top: (1 - (ys[i] - minV) / spanV) * 100,
+    isPeak: i === peakIdx,
+  }));
+  const tip = active != null ? dots[active] : null;
+  const tipAlign =
+    tip == null
+      ? ""
+      : tip.left < 15
+        ? "translate-x-0"
+        : tip.left > 85
+          ? "-translate-x-full"
+          : "-translate-x-1/2";
+
   return (
-    <div ref={ref} className="rounded-xl border border-slate-700/40 bg-slate-900/50 p-5">
+    <div
+      ref={ref}
+      className="flex h-full flex-col rounded-xl border border-slate-700/40 bg-slate-900/50 p-5"
+    >
       <div className="mb-1 flex items-baseline justify-between gap-2">
         <h3 className="text-lg font-semibold text-slate-100">{title}</h3>
         <span className="text-[11px] uppercase tracking-wider text-slate-500">
@@ -185,42 +235,97 @@ export function BeforeAfter({
         </span>
       </div>
 
-      {/* mini-tendencia */}
-      <svg
-        viewBox="0 0 240 40"
-        preserveAspectRatio="none"
-        className="mt-3 h-10 w-full"
-        aria-hidden
-      >
-        {visibleMarkers.map((m, i) => {
-          const x = xForYear(m.year, minYear, maxYear, 240);
-          return (
-            <line
-              key={m.year}
-              className={`spark-marker ${drawn}`}
-              style={{ animationDelay: `${700 + i * 150}ms` }}
-              x1={x}
-              y1={0}
-              x2={x}
-              y2={40}
-              stroke={m.color}
-              strokeWidth={1}
-              strokeDasharray="2 2"
-              opacity={0.55}
+      {/* mini-tendencia interactiva */}
+      <div className="relative mt-3 h-12">
+        <svg
+          viewBox="0 0 240 40"
+          preserveAspectRatio="none"
+          className="h-full w-full"
+          aria-hidden
+        >
+          {visibleMarkers.map((m, i) => {
+            const x = xForYear(m.year, minYear, maxYear, 240);
+            return (
+              <line
+                key={m.year}
+                className={`spark-marker ${drawn}`}
+                style={{ animationDelay: `${700 + i * 150}ms` }}
+                x1={x}
+                y1={0}
+                x2={x}
+                y2={40}
+                stroke={m.color}
+                strokeWidth={1}
+                strokeDasharray="2 2"
+                opacity={0.55}
+              />
+            );
+          })}
+          <path
+            className={`spark-path ${drawn}`}
+            pathLength={1}
+            d={sparkPath(points, logScale, 240, 40)}
+            fill="none"
+            stroke={line}
+            strokeWidth={2}
+            strokeLinejoin="round"
+            strokeLinecap="round"
+          />
+        </svg>
+
+        {/* capa interactiva: sigue el mouse y marca el punto más cercano */}
+        <div
+          className="absolute inset-0 cursor-crosshair"
+          onMouseMove={(e) => setActive(nearestDot(e.currentTarget, e.clientX, dots))}
+          onMouseLeave={() => setActive(null)}
+          onTouchStart={(e) =>
+            setActive(nearestDot(e.currentTarget, e.touches[0].clientX, dots))
+          }
+          onTouchMove={(e) =>
+            setActive(nearestDot(e.currentTarget, e.touches[0].clientX, dots))
+          }
+          onTouchEnd={() => setActive(null)}
+        >
+          {/* siempre visible: el pico. En hover: el punto activo. */}
+          {dots.map(
+            (d) =>
+              (d.isPeak || d.i === active) && (
+                <span
+                  key={d.p.year}
+                  className="pointer-events-none absolute -translate-x-1/2 -translate-y-1/2"
+                  style={{ left: `${d.left}%`, top: `${d.top}%` }}
+                >
+                  <span
+                    className={`block rounded-full border border-slate-900 ${
+                      d.i === active ? "h-3 w-3" : "h-2.5 w-2.5"
+                    } ${d.isPeak ? "ring-2 ring-amber-400/80" : ""}`}
+                    style={{ backgroundColor: d.isPeak ? "#fbbf24" : line }}
+                  />
+                </span>
+              ),
+          )}
+
+          {/* línea guía vertical en el punto activo */}
+          {tip && (
+            <span
+              className="pointer-events-none absolute top-0 bottom-0 w-px bg-slate-500/40"
+              style={{ left: `${tip.left}%` }}
             />
-          );
-        })}
-        <path
-          className={`spark-path ${drawn}`}
-          pathLength={1}
-          d={sparkPath(points, logScale, 240, 40)}
-          fill="none"
-          stroke={line}
-          strokeWidth={2}
-          strokeLinejoin="round"
-          strokeLinecap="round"
-        />
-      </svg>
+          )}
+
+          {tip && (
+            <div
+              className={`pointer-events-none absolute z-10 -translate-y-full ${tipAlign} whitespace-nowrap rounded-md border border-slate-600 bg-slate-800 px-2 py-1 text-[11px] font-medium text-slate-100 shadow-lg`}
+              style={{ left: `${tip.left}%`, top: `${tip.top}%`, marginTop: "-8px" }}
+            >
+              <span className="font-mono text-slate-300">{tip.p.year}</span>
+              {" · "}
+              <span className="font-semibold">{fmtValue(tip.p.value, format)}</span>
+              {tip.isPeak && <span className="ml-1 text-amber-300">pico</span>}
+            </div>
+          )}
+        </div>
+      </div>
       <p className="mt-1 flex justify-between text-[10px] text-slate-600">
         <span>{first.year}</span>
         {logScale && <span className="text-slate-500">escala log</span>}
@@ -235,7 +340,9 @@ export function BeforeAfter({
 
       {note && <p className="mt-3 text-sm leading-relaxed text-slate-400">{note}</p>}
 
-      <SourceLinks sources={sources} />
+      <div className="mt-auto">
+        <SourceLinks sources={sources} />
+      </div>
     </div>
   );
 }

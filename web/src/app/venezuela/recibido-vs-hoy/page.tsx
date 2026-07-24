@@ -199,9 +199,9 @@ export default async function RecibidoVsHoyPage() {
         <EraLegend markers={ERA_MARKERS} />
       </div>
 
-      <section className="grid gap-4 sm:grid-cols-2">
+      <section className="grid items-stretch gap-4 sm:grid-cols-2">
         {blocks.map((b, i) => (
-          <Reveal key={b.title} delay={DELAYS[i % DELAYS.length]}>
+          <Reveal key={b.title} delay={DELAYS[i % DELAYS.length]} className="h-full">
             <BeforeAfter {...b} />
           </Reveal>
         ))}
@@ -214,9 +214,9 @@ export default async function RecibidoVsHoyPage() {
           devaluación y la inflación acumulada abarcan tantos órdenes de
           magnitud que al bolívar hubo que quitarle 14 ceros.
         </p>
-        <div className="grid gap-4 sm:grid-cols-2">
+        <div className="grid items-stretch gap-4 sm:grid-cols-2">
           {MONETARY_STATS.map((s, i) => (
-            <Reveal key={s.id} delay={DELAYS[i % DELAYS.length]}>
+            <Reveal key={s.id} delay={DELAYS[i % DELAYS.length]} className="h-full">
               <MegaStatCard stat={s} />
             </Reveal>
           ))}
