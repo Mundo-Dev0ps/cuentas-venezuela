@@ -125,6 +125,16 @@ const nextConfig = {
         destination: "/mapa-del-olvido/obras/:id",
         permanent: true,
       },
+      {
+        source: "/mapa-del-olvido/obra/:id",
+        destination: "/mapa-del-olvido/obras/:id",
+        permanent: true,
+      },
+      {
+        source: "/obra/:id",
+        destination: "/mapa-del-olvido/obras/:id",
+        permanent: true,
+      },
     ];
   },
   async headers() {
