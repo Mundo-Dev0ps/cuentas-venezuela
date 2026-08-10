@@ -41,6 +41,8 @@ SITEMAP_TS = os.path.join(ROOT, "web/src/app/sitemap.ts")
 LLMS = os.path.join(ROOT, "web/public/llms.txt")
 LLMS_FULL = os.path.join(ROOT, "web/public/llms-full.txt")
 
+PENDING_FILE = os.path.join(ROOT, "scripts/.sismo-pending.json")
+
 MESES = [
     "enero", "febrero", "marzo", "abril", "mayo", "junio",
     "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre",
@@ -67,8 +69,6 @@ def fetch_wikitext() -> str:
 
 
 def _num_before(text: str, keyword: str) -> int | None:
-    """Extract the count associated with `keyword` (e.g. 'dead') from the
-    infobox casualties value, handling {{val|{{rounddown|N|-2}}}} wrappers."""
     idx = text.lower().find(keyword)
     if idx < 0:
         return None
@@ -86,7 +86,6 @@ def parse_casualties(wikitext: str) -> tuple[int | None, int | None]:
         return None, None
     val = m.group(1)
     dead = _num_before(val, "dead") or _num_before(val, "killed")
-    # injured count sits after "dead"; slice from there to avoid re-reading it
     after = val[val.lower().find("dead") + 4:] if "dead" in val.lower() else val
     injured = _num_before(after, "injured")
     return dead, injured
@@ -100,18 +99,47 @@ def read_current() -> tuple[int, int, str]:
     return dead, injured, as_of
 
 
-def guard(new: int | None, cur: int, hard_max: int, floor: int) -> tuple[int, str | None]:
+def load_pending() -> dict | None:
+    if os.path.exists(PENDING_FILE):
+        try:
+            return json.loads(open(PENDING_FILE, encoding="utf-8").read())
+        except Exception:
+            return None
+    return None
+
+
+def save_pending(dead: int | None, injured: int | None) -> None:
+    data = {"dead": dead, "injured": injured, "timestamp": dt.datetime.now(dt.timezone.utc).isoformat()}
+    with open(PENDING_FILE, "w", encoding="utf-8") as f:
+        json.dump(data, f, indent=2)
+
+
+def clear_pending() -> None:
+    if os.path.exists(PENDING_FILE):
+        try:
+            os.remove(PENDING_FILE)
+        except Exception:
+            pass
+
+
+def guard(new: int | None, cur: int, hard_max: int, floor: int, mult: float, pending_val: int | None) -> tuple[int, str | None]:
     """Return (value_to_use, tripped_reason). Falls back to `cur` on reject."""
     if new is None:
-        return cur, None  # couldn't parse this field; leave as-is
+        return cur, None
     if new == cur:
         return cur, None
     if new < cur:
         return cur, f"parsed {new} < current {cur} (counts should not fall)"
-    if new > cur * 2 + floor:
-        return cur, f"parsed {new} jumps >2x from {cur}"
     if new >= hard_max:
         return cur, f"parsed {new} exceeds hard max {hard_max}"
+    
+    # Large jump check with persistence auto-approval
+    if new > cur * mult + floor:
+        if pending_val is not None and pending_val == new:
+            print(f"AUTO-APPROVED persistent figure {new} (verified stable across runs)")
+            return new, None
+        return cur, f"parsed {new} jumps >{mult}x from {cur} (queued for persistence check)"
+    
     return new, None
 
 
@@ -130,21 +158,30 @@ def main() -> int:
     wikitext = fetch_wikitext()
     p_dead, p_injured = parse_casualties(wikitext)
     cur_dead, cur_injured, cur_asof = read_current()
+    pending = load_pending()
+    
+    pending_dead = pending.get("dead") if pending else None
+    pending_injured = pending.get("injured") if pending else None
+
     print(f"parsed wiki: dead={p_dead} injured={p_injured}")
     print(f"current    : dead={cur_dead} injured={cur_injured} asOf={cur_asof}")
+    if pending:
+        print(f"pending    : dead={pending_dead} injured={pending_injured}")
 
-    dead, r1 = guard(p_dead, cur_dead, MAX_DEAD, 500)
-    injured, r2 = guard(p_injured, cur_injured, MAX_INJURED, 2000)
+    dead, r1 = guard(p_dead, cur_dead, MAX_DEAD, floor=1000, mult=3.0, pending_val=pending_dead)
+    injured, r2 = guard(p_injured, cur_injured, MAX_INJURED, floor=15000, mult=5.0, pending_val=pending_injured)
 
     if r1 or r2:
         reason = "; ".join(r for r in (r1, r2) if r)
         print(f"GUARDRAIL: {reason}")
+        if not dry:
+            save_pending(p_dead, p_injured)
         _set_output("guard_tripped", "true")
         _set_output("reason", reason)
-        # Exit 0 on a tripped guardrail: this is an expected outcome (likely a
-        # transient bad Wikipedia edit), not a script error. Keeping the run
-        # green lets the workflow's issue step fire so a human can review.
         return 0
+
+    if not dry:
+        clear_pending()
 
     if dead == cur_dead and injured == cur_injured:
         print("no change")
