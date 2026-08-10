@@ -7,14 +7,14 @@ name: sismo-daily
 # vandalism or parse error) nothing is published and an issue is opened for
 # human review.
 #
-# Runs every 8h: the toll rises through the day and a once-daily run left the
+# Runs every 12h: the toll rises through the day and a once-daily run left the
 # site up to ~24h behind. A no-op run costs nothing (it exits without
 # committing when the figure is unchanged).
 
 on:
   schedule:
-    # 00:00, 08:00 and 16:00 UTC
-    - cron: "0 */8 * * *"
+    # 00:00 and 12:00 UTC (every 12h)
+    - cron: "0 */12 * * *"
   workflow_dispatch:
     inputs:
       dry_run:
