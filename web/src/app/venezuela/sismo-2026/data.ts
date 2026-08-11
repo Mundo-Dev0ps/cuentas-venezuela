@@ -161,8 +161,8 @@ export const SEISMIC_EVENTS: SeismicEvent[] = [
 ];
 
 export const DAMAGE: DamageStats = {
-  asOf: "2026-08-10",
-  dead: 6125,
+  asOf: "2026-08-11",
+  dead: 6301,
   injured: 61000,
   missingGov: "miles (sin cifra oficial)",
   missingTracker: 18100,
