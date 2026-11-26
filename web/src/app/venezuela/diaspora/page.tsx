@@ -81,7 +81,7 @@ export default async function DiasporaPage() {
   }));
 
   return (
-    <div className="mx-auto max-w-6xl px-4 py-10 sm:px-6">
+    <main className="mx-auto max-w-6xl px-4 py-10 sm:px-6">
       <JsonLd
         data={breadcrumbsJsonLd([
           { name: "Inicio", path: "/" },
@@ -290,6 +290,6 @@ export default async function DiasporaPage() {
           cubren a millones más. Para totales completos ver R4V de ONU.
         </p>
       </footer>
-    </div>
+    </main>
   );
 }

@@ -248,14 +248,14 @@ export default function CoyunturaPage() {
                 </span>
                 <div className="h-6 flex-1 overflow-hidden rounded bg-slate-800/60">
                   <div
-                    className="flex h-full items-center justify-end rounded bg-gradient-to-r from-amber-500/60 to-rose-500/70 px-2 text-[11px] font-semibold text-slate-950"
+                    className="flex h-full items-center justify-end rounded bg-amber-400 px-2 font-mono tabular-nums text-xs font-semibold text-slate-950"
                     style={{ width: `${(p.monthlyPct / maxInflation) * 100}%` }}
                   >
                     {p.monthlyPct}%
                   </div>
                 </div>
                 {p.interannualPct != null && (
-                  <span className="w-28 shrink-0 text-right text-xs text-slate-500">
+                  <span className="w-28 shrink-0 text-right font-mono tabular-nums text-xs text-slate-400">
                     interanual {p.interannualPct}%
                   </span>
                 )}
@@ -318,29 +318,29 @@ export default function CoyunturaPage() {
             cambiario. Valor de referencia puntual: cambia a diario.
           </p>
           <div className="grid gap-4 sm:grid-cols-3">
-            <div className="rounded-xl border border-slate-700/40 bg-slate-900/50 p-5">
-              <p className="text-xs uppercase tracking-wider text-slate-500">
+            <div className="rounded-xl border border-white/[0.08] bg-slate-900/50 p-5">
+              <p className="text-xs font-medium text-slate-400">
                 Oficial BCV
               </p>
-              <p className="mt-1 text-2xl font-bold text-slate-100">
+              <p className="mt-1 font-mono tabular-nums text-2xl font-semibold text-slate-100">
                 Bs {EXCHANGE_RATE.bcv.toLocaleString("es")}
               </p>
             </div>
-            <div className="rounded-xl border border-slate-700/40 bg-slate-900/50 p-5">
-              <p className="text-xs uppercase tracking-wider text-slate-500">
+            <div className="rounded-xl border border-white/[0.08] bg-slate-900/50 p-5">
+              <p className="text-xs font-medium text-slate-400">
                 Paralelo (Binance)
               </p>
-              <p className="mt-1 text-2xl font-bold text-slate-100">
+              <p className="mt-1 font-mono tabular-nums text-2xl font-semibold text-slate-100">
                 {EXCHANGE_RATE.parallel
                   ? `Bs ${EXCHANGE_RATE.parallel.toLocaleString("es")}`
                   : "—"}
               </p>
             </div>
-            <div className="rounded-xl border border-slate-700/40 bg-slate-900/50 p-5">
-              <p className="text-xs uppercase tracking-wider text-slate-500">
+            <div className="rounded-xl border border-white/[0.08] bg-slate-900/50 p-5">
+              <p className="text-xs font-medium text-slate-400">
                 Brecha
               </p>
-              <p className="mt-1 text-2xl font-bold text-rose-300">
+              <p className="mt-1 font-mono tabular-nums text-2xl font-semibold text-rose-300">
                 {EXCHANGE_RATE.parallel
                   ? `${Math.round(((EXCHANGE_RATE.parallel - EXCHANGE_RATE.bcv) / EXCHANGE_RATE.bcv) * 100)}%`
                   : "—"}
@@ -367,7 +367,7 @@ export default function CoyunturaPage() {
           </p>
           <div className="overflow-x-auto rounded-xl border border-slate-700/40">
             <table className="w-full text-sm">
-              <thead className="bg-slate-900/80 text-left text-xs uppercase tracking-wider text-slate-400">
+              <thead className="bg-slate-900/80 text-left text-xs font-medium text-slate-400">
                 <tr>
                   <th className="px-4 py-3 font-medium">Período</th>
                   <th className="px-4 py-3 font-medium text-right">kbpd</th>
@@ -378,7 +378,7 @@ export default function CoyunturaPage() {
                 {OIL_PRODUCTION.map((o) => (
                   <tr key={o.period} className="align-top">
                     <td className="px-4 py-3 text-slate-300">{o.period}</td>
-                    <td className="whitespace-nowrap px-4 py-3 text-right text-lg font-bold text-slate-100">
+                    <td className="whitespace-nowrap px-4 py-3 text-right font-mono tabular-nums text-base font-semibold text-slate-100">
                       {o.kbpd.toLocaleString("es")}
                     </td>
                     <td className="px-4 py-3 text-slate-400">

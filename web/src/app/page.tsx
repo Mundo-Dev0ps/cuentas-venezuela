@@ -47,13 +47,13 @@ const HOME_FAQS = [
 
 export default function HomePage() {
   return (
-    <div className="mx-auto max-w-6xl px-6 py-12 space-y-16">
+    <main className="mx-auto max-w-6xl px-6 py-12 space-y-16">
       <JsonLd data={faqPageJsonLd(HOME_FAQS)} />
       <section className="space-y-6">
-        <h1 className="text-3xl sm:text-4xl font-bold tracking-tight">
+        <h1 className="text-3xl sm:text-4xl font-semibold tracking-tight text-slate-100">
           Cuentas Venezuela
         </h1>
-        <p className="max-w-2xl text-lg text-slate-300">
+        <p className="max-w-2xl text-lg text-slate-300 leading-relaxed">
           Datos abiertos sobre obras públicas en Venezuela y la migración
           venezolana en Chile. Auditables, comparables y citados desde fuentes
           oficiales.
@@ -61,15 +61,17 @@ export default function HomePage() {
         <div className="flex flex-wrap gap-3">
           <Link
             href="/mapa-del-olvido"
-            className="inline-flex min-h-11 items-center gap-1 rounded-md bg-cyan-500 px-4 py-2 text-sm font-semibold text-slate-950 transition hover:bg-cyan-400"
+            className="inline-flex min-h-11 items-center gap-1.5 rounded-lg bg-cyan-500 ps-4 pe-3.5 py-2 text-sm font-semibold text-slate-950 transition-[background-color,transform] duration-150 ease-out hover:bg-cyan-400 active:scale-[0.96]"
           >
-            Explorar el Mapa →
+            <span>Explorar el Mapa</span>
+            <ArrowRight className="h-4 w-4" strokeWidth={1.5} aria-hidden />
           </Link>
           <Link
             href="/datos-chile/dashboards"
-            className="inline-flex min-h-11 items-center gap-1 rounded-md border border-cyan-400 px-4 py-2 text-sm font-semibold text-cyan-300 transition hover:bg-cyan-400/10"
+            className="inline-flex min-h-11 items-center gap-1.5 rounded-lg border border-cyan-400/50 bg-slate-900/60 ps-4 pe-3.5 py-2 text-sm font-medium text-cyan-300 transition-[background-color,border-color,transform] duration-150 ease-out hover:bg-cyan-400/10 hover:border-cyan-400 active:scale-[0.96]"
           >
-            Ver dashboards →
+            <span>Ver dashboards</span>
+            <ArrowRight className="h-4 w-4" strokeWidth={1.5} aria-hidden />
           </Link>
         </div>
       </section>
@@ -78,111 +80,115 @@ export default function HomePage() {
           emergencia; retirar o degradar cuando pase la fase aguda. */}
       <Link
         href="/venezuela/sismo-2026"
-        className="group block rounded-2xl border border-red-500/40 bg-gradient-to-br from-red-500/10 via-rose-500/5 to-slate-900/40 p-5 sm:p-6 transition hover:border-red-400/70"
+        className="group block rounded-2xl border border-red-500/35 border-l-4 border-l-red-400 bg-slate-900/80 p-5 sm:p-6 transition-colors duration-150 ease-out hover:border-red-400/60 hover:bg-slate-900"
       >
         <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <div className="flex items-start gap-3">
-            <AlertTriangle className="mt-0.5 h-6 w-6 shrink-0 text-red-400" />
+            <AlertTriangle className="mt-0.5 h-5 w-5 shrink-0 text-red-400" strokeWidth={1.5} aria-hidden />
             <div>
-              <p className="text-[0.7rem] font-semibold uppercase tracking-widest text-red-400">
-                Emergencia · cobertura en vivo
+              <p className="inline-flex items-center gap-1.5 text-xs font-medium text-red-400">
+                <span className="h-1.5 w-1.5 rounded-full bg-red-400" aria-hidden />
+                Emergencia · actualización cada 12h
               </p>
-              <h2 className="mt-1 text-xl font-bold text-slate-100 sm:text-2xl">
+              <h2 className="mt-1 text-xl font-semibold text-slate-100 sm:text-2xl">
                 Terremotos de Venezuela de 2026
               </h2>
               <p className="mt-1 text-sm text-slate-300">
                 Doble sismo Mw 7,5 y 7,2 del 24 de junio.{" "}
-                <span className="font-semibold text-slate-100">
+                <span className="font-mono tabular-nums font-semibold text-slate-100">
                   {fmtNum(DAMAGE.dead)}+ muertos
                 </span>
                 ,{" "}
-                <span className="font-semibold text-slate-100">
+                <span className="font-mono tabular-nums font-semibold text-slate-100">
                   {fmtNum(DAMAGE.injured)}+ heridos
                 </span>
                 . Víctimas, estados afectados, mapa de daños y costo económico.
               </p>
             </div>
           </div>
-          <span className="inline-flex shrink-0 items-center gap-1 self-start rounded-md bg-red-500 px-4 py-2 text-sm font-semibold text-slate-950 transition group-hover:bg-red-400 sm:self-center">
-            Ver cobertura
-            <ArrowRight className="h-4 w-4" />
+          <span className="inline-flex shrink-0 items-center gap-1.5 self-start rounded-lg bg-red-500 ps-4 pe-3.5 py-2 text-sm font-semibold text-slate-950 transition-colors duration-150 group-hover:bg-red-400 sm:self-center">
+            <span>Ver cobertura</span>
+            <ArrowRight className="h-4 w-4" strokeWidth={1.5} aria-hidden />
           </span>
         </div>
       </Link>
 
       <section className="grid gap-6 md:grid-cols-3">
-        <div className="group relative flex flex-col rounded-xl border border-slate-700/40 border-l-[3px] border-l-cyan-400 bg-slate-900/80 p-8 transition hover:border-cyan-400/60 hover:shadow-lg">
-          <span className="absolute right-4 top-4 rounded-full border border-cyan-400/40 bg-cyan-400/10 px-2 py-0.5 text-[0.65rem] font-semibold uppercase tracking-wider text-cyan-300">
-            Destacado
-          </span>
-          <div className="mb-3 flex items-center gap-2">
-            <Map className="h-5 w-5 text-orange-400" />
-            <h2 className="text-2xl font-semibold">Mapa del Olvido</h2>
+        <div className="group relative flex flex-col rounded-xl border border-white/[0.08] border-l-[3px] border-l-cyan-400 bg-slate-900/80 p-6 transition-colors duration-150 hover:border-cyan-400/50">
+          <div className="mb-3 flex items-center justify-between gap-2">
+            <div className="flex items-center gap-2">
+              <Map className="h-[18px] w-[18px] text-orange-400" strokeWidth={1.5} aria-hidden />
+              <h2 className="text-xl font-semibold text-slate-100">Mapa del Olvido</h2>
+            </div>
+            <span className="text-xs font-mono text-cyan-300">Principal</span>
           </div>
-          <p className="mb-4 text-slate-300">
+          <p className="mb-4 text-sm leading-relaxed text-slate-300">
             Mapa interactivo de obras públicas inauguradas, abandonadas o
             paralizadas en Venezuela.
           </p>
-          <div className="flex flex-col gap-1 text-sm">
+          <div className="mt-auto flex flex-col gap-1.5 text-sm">
             <Link
               href="/mapa-del-olvido"
-              className="font-medium text-cyan-300 hover:underline"
+              className="inline-flex items-center gap-1 font-medium text-cyan-300 hover:underline"
             >
-              Explorar el mapa interactivo →
+              <span>Explorar el mapa interactivo</span>
+              <ArrowRight className="h-3.5 w-3.5" strokeWidth={1.5} aria-hidden />
             </Link>
             <Link
               href="/mapa-del-olvido/obras"
-              className="text-slate-400 hover:text-slate-200"
+              className="text-slate-400 transition-colors duration-150 hover:text-slate-200"
             >
-              · Ver catálogo completo de obras
+              Ver catálogo completo de obras
             </Link>
           </div>
         </div>
 
         <Link
           href="/venezuela"
-          className="group rounded-xl border border-slate-700/40 bg-slate-900/80 p-8 transition hover:border-rose-400/60 hover:shadow-lg"
+          className="group flex flex-col rounded-xl border border-white/[0.08] bg-slate-900/80 p-6 transition-colors duration-150 hover:border-rose-400/50"
         >
           <div className="mb-3 flex items-center gap-2">
-            <Globe2 className="h-5 w-5 text-rose-400" />
-            <h2 className="text-2xl font-semibold">Venezuela</h2>
+            <Globe2 className="h-[18px] w-[18px] text-rose-400" strokeWidth={1.5} aria-hidden />
+            <h2 className="text-xl font-semibold text-slate-100">Venezuela</h2>
           </div>
-          <p className="mb-4 text-slate-300">
+          <p className="mb-4 text-sm leading-relaxed text-slate-300">
             Crisis económica, salud, inseguridad, derechos humanos y
             comparativas antes/después con datos del Banco Mundial.
           </p>
-          <span className="text-sm font-medium text-rose-300 group-hover:underline">
-            Ver dashboards →
+          <span className="mt-auto inline-flex items-center gap-1 text-sm font-medium text-rose-300 group-hover:underline">
+            <span>Ver dashboards</span>
+            <ArrowRight className="h-3.5 w-3.5" strokeWidth={1.5} aria-hidden />
           </span>
         </Link>
 
         <Link
           href="/datos-chile"
-          className="group rounded-xl border border-slate-700/40 bg-slate-900/80 p-8 transition hover:border-cyan-400/60 hover:shadow-lg"
+          className="group flex flex-col rounded-xl border border-white/[0.08] bg-slate-900/80 p-6 transition-colors duration-150 hover:border-cyan-400/50"
         >
           <div className="mb-3 flex items-center gap-2">
-            <BarChart3 className="h-5 w-5 text-orange-400" />
-            <h2 className="text-2xl font-semibold">Datos Chile</h2>
+            <BarChart3 className="h-[18px] w-[18px] text-orange-400" strokeWidth={1.5} aria-hidden />
+            <h2 className="text-xl font-semibold text-slate-100">Datos Chile</h2>
           </div>
-          <p className="mb-4 text-slate-300">
+          <p className="mb-4 text-sm leading-relaxed text-slate-300">
             Dashboards sobre venezolanos en Chile: demografía, pensiones,
             tributario, regional.
           </p>
-          <span className="text-sm font-medium text-cyan-300 group-hover:underline">
-            Ver dashboards →
+          <span className="mt-auto inline-flex items-center gap-1 text-sm font-medium text-cyan-300 group-hover:underline">
+            <span>Ver dashboards</span>
+            <ArrowRight className="h-3.5 w-3.5" strokeWidth={1.5} aria-hidden />
           </span>
         </Link>
       </section>
 
       <section className="space-y-6">
-        <h2 className="text-2xl font-bold tracking-tight">
+        <h2 className="text-2xl font-semibold tracking-tight text-slate-100">
           Preguntas frecuentes
         </h2>
-        <dl className="space-y-5">
+        <dl className="space-y-4">
           {HOME_FAQS.map((faq, idx) => (
             <Reveal key={faq.question} delay={DELAYS[idx % DELAYS.length]}>
             <div
-              className="rounded-xl border border-slate-700/40 bg-slate-900/50 p-5"
+              className="rounded-xl border border-white/[0.08] bg-slate-900/60 p-5"
             >
               <dt className="text-base font-semibold text-slate-100">
                 {faq.question}
@@ -195,6 +201,6 @@ export default function HomePage() {
           ))}
         </dl>
       </section>
-    </div>
+    </main>
   );
 }

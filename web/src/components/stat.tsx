@@ -78,16 +78,16 @@ export function Stat({
     <div
       ref={ref}
       className={cn(
-        "rounded-xl border border-slate-700/40 bg-slate-900/80 backdrop-blur-md p-5",
+        "rounded-xl border border-white/[0.08] bg-slate-900/80 backdrop-blur-md p-5",
         className,
       )}
     >
-      <div className="text-xs uppercase tracking-widest text-slate-400 font-semibold">
+      <div className="text-xs font-medium text-slate-400">
         {label}
       </div>
       <div
         className={cn(
-          "mt-2 font-bold tracking-tight leading-tight overflow-hidden",
+          "mt-2 font-semibold tracking-tight leading-tight overflow-hidden",
           valueColor,
           numericValue !== undefined
             ? "text-2xl sm:text-3xl font-mono tabular-nums"

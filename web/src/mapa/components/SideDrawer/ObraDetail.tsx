@@ -1,3 +1,4 @@
+import { Building2, Droplets, GraduationCap, HeartPulse, Share2, Zap } from 'lucide-react';
 import type { ObraPublica } from '../../types/obra';
 import { STATUS_HEX } from '../../constants/colors';
 import { calculateImpact } from './ImpactCalculator';
@@ -53,46 +54,46 @@ export function ObraDetail({ obra }: ObraDetailProps) {
       )}
 
       <div>
-        <p className="text-slate-500 text-xs uppercase tracking-wider mb-2">Fotografías</p>
+        <p className="text-slate-400 text-xs font-medium mb-2">Fotografías</p>
         <PhotoGallery fotos={obra.fotos_url} alt={obra.nombre} />
       </div>
 
       <div className="grid grid-cols-2 gap-3">
         <div className="bg-slate-800/60 rounded-lg p-3 min-w-0">
-          <p className="text-slate-500 text-xs uppercase tracking-wider mb-1">Presupuesto (USD)</p>
+          <p className="text-slate-400 text-xs mb-1">Presupuesto (USD)</p>
           <p
-            className="text-rose-400 font-mono text-base font-bold truncate"
+            className="text-rose-400 font-mono tabular-nums text-base font-semibold truncate"
             title={fullAmount}
           >
             {compact} <span className="text-rose-300/80 text-xs">USD</span>
           </p>
-          <p className="text-slate-500 text-[10px] truncate" title={fullAmount}>
+          <p className="text-slate-400 text-[11px] font-mono tabular-nums truncate" title={fullAmount}>
             {fullAmount}
           </p>
         </div>
         <div className="bg-slate-800/60 rounded-lg p-3 min-w-0">
-          <p className="text-slate-500 text-xs uppercase tracking-wider mb-1">Inicio</p>
-          <p className="text-slate-100 font-mono text-base font-bold">{obra.anio_inicio}</p>
+          <p className="text-slate-400 text-xs mb-1">Inicio</p>
+          <p className="text-slate-100 font-mono tabular-nums text-base font-semibold">{obra.anio_inicio}</p>
           {yearsAbandoned > 0 && (
-            <p className="text-amber-400 text-[10px]">
+            <p className="text-amber-400 text-[11px] font-mono tabular-nums">
               {yearsAbandoned} {yearsAbandoned === 1 ? 'año' : 'años'} abandonada
             </p>
           )}
         </div>
         <div className="bg-slate-800/60 rounded-lg p-3 col-span-2 min-w-0">
-          <p className="text-slate-500 text-xs uppercase tracking-wider mb-1">Ente Responsable</p>
+          <p className="text-slate-400 text-xs mb-1">Ente responsable</p>
           <p className="text-slate-200 text-sm break-words">{obra.ente_responsable}</p>
         </div>
 
         {typeof obra.progreso_pct === 'number' && (
           <div className="bg-slate-800/60 rounded-lg p-3 col-span-2 min-w-0">
             <div className="flex items-center justify-between mb-2">
-              <p className="text-slate-500 text-xs uppercase tracking-wider">Progreso al paralizarse</p>
-              <p className="text-slate-100 font-mono text-sm font-bold">{obra.progreso_pct}%</p>
+              <p className="text-slate-400 text-xs">Progreso al paralizarse</p>
+              <p className="text-slate-100 font-mono tabular-nums text-sm font-semibold">{obra.progreso_pct}%</p>
             </div>
             <div className="h-2 bg-slate-900/60 rounded-full overflow-hidden">
               <div
-                className="h-full bg-gradient-to-r from-orange-500 to-rose-400 rounded-full"
+                className="h-full bg-orange-400 rounded-full"
                 style={{ width: `${Math.max(0, Math.min(100, obra.progreso_pct))}%` }}
               />
             </div>
@@ -101,12 +102,12 @@ export function ObraDetail({ obra }: ObraDetailProps) {
 
         {typeof obra.sobrecosto_pct === 'number' && (
           <div className="bg-slate-800/60 rounded-lg p-3 col-span-2 min-w-0">
-            <p className="text-slate-500 text-xs uppercase tracking-wider mb-1">Sobrecosto</p>
-            <p className="text-rose-400 font-mono text-base font-bold">
+            <p className="text-slate-400 text-xs mb-1">Sobrecosto</p>
+            <p className="text-rose-400 font-mono tabular-nums text-base font-semibold">
               +{obra.sobrecosto_pct}%
             </p>
             {typeof obra.presupuesto_original_usd === 'number' && (
-              <p className="text-slate-500 text-[10px] mt-0.5">
+              <p className="text-slate-400 text-[11px] font-mono tabular-nums mt-0.5">
                 Anunciado: {formatUSDCompact(obra.presupuesto_original_usd)} USD → Real: {compact} USD
               </p>
             )}
@@ -116,20 +117,20 @@ export function ObraDetail({ obra }: ObraDetailProps) {
 
       {(obra.responsable_politico || obra.partido_politico || obra.contratista) && (
         <div>
-          <p className="text-slate-500 text-xs uppercase tracking-wider mb-2">Responsabilidad</p>
+          <p className="text-slate-400 text-xs font-medium mb-2">Responsabilidad</p>
           <div className="flex flex-col gap-2">
             {obra.responsable_politico && (
               <div className="bg-slate-800/40 rounded-lg p-2.5">
-                <p className="text-slate-500 text-[10px] uppercase tracking-wider">A cargo al iniciar</p>
+                <p className="text-slate-400 text-[11px]">A cargo al iniciar</p>
                 <p className="text-slate-100 text-sm font-semibold">{obra.responsable_politico}</p>
                 {obra.partido_politico && (
-                  <p className="text-amber-400 text-[11px] mt-0.5">{obra.partido_politico}</p>
+                  <p className="text-amber-400 text-xs mt-0.5">{obra.partido_politico}</p>
                 )}
               </div>
             )}
             {obra.contratista && (
               <div className="bg-slate-800/40 rounded-lg p-2.5">
-                <p className="text-slate-500 text-[10px] uppercase tracking-wider">Contratista</p>
+                <p className="text-slate-400 text-[11px]">Contratista</p>
                 <p className="text-slate-100 text-sm">{obra.contratista}</p>
               </div>
             )}
@@ -138,49 +139,49 @@ export function ObraDetail({ obra }: ObraDetailProps) {
       )}
 
       <div>
-        <p className="text-slate-500 text-xs uppercase tracking-wider mb-3">Impacto Social Equivalente</p>
+        <p className="text-slate-400 text-xs font-medium mb-3">Impacto social equivalente</p>
         <div className="flex flex-col gap-2">
           {impact.schools > 0 && (
             <div className="flex items-center gap-3 bg-slate-800/40 rounded-lg px-3 py-2">
-              <span className="text-2xl" role="img" aria-label="escuela">🏫</span>
+              <Building2 className="h-[18px] w-[18px] text-slate-400 shrink-0" strokeWidth={1.5} aria-hidden />
               <div>
-                <p className="text-slate-100 font-bold">{impact.schools.toLocaleString('es-VE')}</p>
+                <p className="text-slate-100 font-mono tabular-nums font-semibold">{impact.schools.toLocaleString('es-VE')}</p>
                 <p className="text-slate-400 text-xs">escuelas primarias</p>
               </div>
             </div>
           )}
           {impact.hospitals > 0 && (
             <div className="flex items-center gap-3 bg-slate-800/40 rounded-lg px-3 py-2">
-              <span className="text-2xl" role="img" aria-label="hospital">🏥</span>
+              <HeartPulse className="h-[18px] w-[18px] text-slate-400 shrink-0" strokeWidth={1.5} aria-hidden />
               <div>
-                <p className="text-slate-100 font-bold">{impact.hospitals.toLocaleString('es-VE')}</p>
+                <p className="text-slate-100 font-mono tabular-nums font-semibold">{impact.hospitals.toLocaleString('es-VE')}</p>
                 <p className="text-slate-400 text-xs">hospitales comunitarios</p>
               </div>
             </div>
           )}
           {impact.universities > 0 && (
             <div className="flex items-center gap-3 bg-slate-800/40 rounded-lg px-3 py-2">
-              <span className="text-2xl" role="img" aria-label="universidad">🎓</span>
+              <GraduationCap className="h-[18px] w-[18px] text-slate-400 shrink-0" strokeWidth={1.5} aria-hidden />
               <div>
-                <p className="text-slate-100 font-bold">{impact.universities.toLocaleString('es-VE')}</p>
+                <p className="text-slate-100 font-mono tabular-nums font-semibold">{impact.universities.toLocaleString('es-VE')}</p>
                 <p className="text-slate-400 text-xs">universidades públicas</p>
               </div>
             </div>
           )}
           {impact.waterPlants > 0 && (
             <div className="flex items-center gap-3 bg-slate-800/40 rounded-lg px-3 py-2">
-              <span className="text-2xl" role="img" aria-label="agua">💧</span>
+              <Droplets className="h-[18px] w-[18px] text-slate-400 shrink-0" strokeWidth={1.5} aria-hidden />
               <div>
-                <p className="text-slate-100 font-bold">{impact.waterPlants.toLocaleString('es-VE')}</p>
+                <p className="text-slate-100 font-mono tabular-nums font-semibold">{impact.waterPlants.toLocaleString('es-VE')}</p>
                 <p className="text-slate-400 text-xs">plantas de agua potable</p>
               </div>
             </div>
           )}
           {impact.electricPlants > 0 && (
             <div className="flex items-center gap-3 bg-slate-800/40 rounded-lg px-3 py-2">
-              <span className="text-2xl" role="img" aria-label="electricidad">⚡</span>
+              <Zap className="h-[18px] w-[18px] text-slate-400 shrink-0" strokeWidth={1.5} aria-hidden />
               <div>
-                <p className="text-slate-100 font-bold">{impact.electricPlants.toLocaleString('es-VE')}</p>
+                <p className="text-slate-100 font-mono tabular-nums font-semibold">{impact.electricPlants.toLocaleString('es-VE')}</p>
                 <p className="text-slate-400 text-xs">plantas eléctricas comunitarias</p>
               </div>
             </div>
@@ -188,16 +189,16 @@ export function ObraDetail({ obra }: ObraDetailProps) {
         </div>
       </div>
 
-      <div className="flex flex-col gap-2 pt-2 border-t border-slate-700/40">
+      <div className="flex flex-col gap-2 pt-2 border-t border-white/[0.08]">
         <a
           href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(
             `${obra.nombre} — ${compact} de presupuesto, ${yearsAbandoned > 0 ? `${yearsAbandoned} años abandonada` : 'sin terminar'} en ${obra.estado_venezuela}. #MapaDelOlvido`,
           )}&url=${encodeURIComponent(typeof window !== 'undefined' ? window.location.href : '')}`}
           target="_blank"
           rel="noopener noreferrer"
-          className="flex items-center justify-center gap-2 bg-slate-100 hover:bg-white text-slate-900 font-semibold text-sm rounded-lg py-2 transition-colors"
+          className="flex items-center justify-center gap-2 bg-slate-100 hover:bg-white text-slate-900 font-semibold text-sm rounded-lg py-2 transition-[background-color,transform] duration-150 active:scale-[0.96]"
         >
-          <span>𝕏</span>
+          <Share2 className="h-4 w-4" strokeWidth={1.5} aria-hidden />
           <span>Denunciar en X</span>
         </a>
         <a

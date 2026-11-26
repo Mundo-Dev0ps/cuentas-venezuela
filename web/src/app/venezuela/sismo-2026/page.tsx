@@ -169,22 +169,23 @@ export default function SismoPage() {
       </Link>
 
       <header className="mb-8">
-        <p className="text-red-400 text-xs font-semibold uppercase tracking-widest mb-2">
+        <p className="inline-flex items-center gap-1.5 text-red-400 text-xs font-medium mb-2">
+          <span className="h-1.5 w-1.5 rounded-full bg-red-400" aria-hidden />
           Emergencia · 24 de junio de 2026
         </p>
-        <h1 className="text-3xl sm:text-4xl font-bold tracking-tight">
+        <h1 className="text-3xl sm:text-4xl font-semibold tracking-tight text-slate-100">
           Terremotos de Venezuela de 2026
         </h1>
-        <p className="mt-4 max-w-3xl text-slate-300">
+        <p className="mt-4 max-w-3xl text-slate-300 leading-relaxed">
           El 24 de junio de 2026 un doblete sísmico de magnitudes Mw 7,2 y 7,5
           golpeó el norte y centro de Venezuela, con epicentros en Yaracuy. Es
           el terremoto más grave del país desde 1900. Resumen de víctimas,
           estados afectados, daño estructural y costo económico, con cada cifra
           citada a su fuente.
         </p>
-        <div className="mt-4 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-slate-500">
+        <div className="mt-4 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-slate-400">
           <span>
-            Por <span className="text-slate-300">Cuentas Venezuela</span>
+            Por <span className="text-slate-200">Cuentas Venezuela</span>
           </span>
           <span aria-hidden>·</span>
           <span>
@@ -197,7 +198,7 @@ export default function SismoPage() {
             <time dateTime={DAMAGE.asOf}>{fmtDate(DAMAGE.asOf)}</time>
           </span>
           <span aria-hidden>·</span>
-          <Link href="/fuentes" className="text-cyan-400 hover:text-cyan-300">
+          <Link href="/fuentes" className="text-cyan-300 hover:text-cyan-200">
             Fuentes y metodología
           </Link>
         </div>
@@ -205,10 +206,10 @@ export default function SismoPage() {
 
       <aside className="mb-10 rounded-xl border border-red-500/30 bg-red-500/5 p-5 text-sm text-red-200">
         <p className="flex gap-2">
-          <AlertTriangle className="h-5 w-5 shrink-0" />
+          <AlertTriangle className="h-5 w-5 shrink-0" strokeWidth={1.5} aria-hidden />
           <span>
             <strong>Cifras en evolución.</strong> Las víctimas y los daños se
-            actualizan a diario conforme avanzan los rescates. Última revisión
+            actualizan cada 12h conforme las fuentes consolidan reportes. Última revisión
             de cifras: {fmtDate(DAMAGE.asOf)}. Cada bloque indica su fuente.
           </span>
         </p>
@@ -221,10 +222,10 @@ export default function SismoPage() {
             key={k.label}
             className={`rounded-xl border p-4 ${k.color}`}
           >
-            <p className="text-xs uppercase tracking-wider opacity-70">
+            <p className="text-xs font-medium opacity-85">
               {k.label}
             </p>
-            <p className="mt-1 text-2xl font-bold sm:text-3xl">{k.value}</p>
+            <p className="mt-1 font-mono tabular-nums text-2xl font-semibold sm:text-3xl">{k.value}</p>
           </div>
         ))}
       </section>
@@ -233,8 +234,8 @@ export default function SismoPage() {
       <Reveal delay={0}>
         <section id="evento" className="mb-14 scroll-mt-24">
           <div className="mb-3 flex items-center gap-2">
-            <Activity className="h-5 w-5 text-red-400" />
-            <h2 className="text-2xl font-bold tracking-tight">
+            <Activity className="h-[18px] w-[18px] text-red-400" strokeWidth={1.5} aria-hidden />
+            <h2 className="text-2xl font-semibold tracking-tight">
               El evento sísmico
             </h2>
           </div>
@@ -251,28 +252,28 @@ export default function SismoPage() {
                 className="scroll-mt-24 rounded-xl border border-slate-700/40 bg-slate-900/50 p-5"
               >
                 <div className="mb-3 flex items-baseline justify-between">
-                  <span className="text-3xl font-bold text-slate-100">
+                  <span className="font-mono tabular-nums text-3xl font-semibold text-slate-100">
                     {ev.magnitude}{" "}
                     <span className="text-base font-medium text-slate-400">
                       {ev.scale}
                     </span>
                   </span>
-                  <span className="rounded-md border border-slate-600/50 bg-slate-800/40 px-2 py-0.5 text-[10px] font-medium uppercase tracking-wider text-slate-300">
+                  <span className="rounded-md border border-white/[0.1] bg-slate-800/40 px-2 py-0.5 text-xs font-medium text-slate-300">
                     {ev.type === "mainshock" ? "Principal" : "Precursor"}
                   </span>
                 </div>
                 <dl className="space-y-1.5 text-sm">
                   <div className="flex justify-between gap-2">
-                    <dt className="text-slate-500">Hora local</dt>
-                    <dd className="font-mono text-slate-300">{ev.localTime}</dd>
+                    <dt className="text-slate-400">Hora local</dt>
+                    <dd className="font-mono tabular-nums text-slate-200">{ev.localTime}</dd>
                   </div>
                   <div className="flex justify-between gap-2">
-                    <dt className="text-slate-500">Profundidad</dt>
-                    <dd className="font-mono text-slate-300">{ev.depthKm} km</dd>
+                    <dt className="text-slate-400">Profundidad</dt>
+                    <dd className="font-mono tabular-nums text-slate-200">{ev.depthKm} km</dd>
                   </div>
                   <div className="flex justify-between gap-2">
-                    <dt className="shrink-0 text-slate-500">Epicentro</dt>
-                    <dd className="text-right text-slate-300">{ev.epicenter}</dd>
+                    <dt className="shrink-0 text-slate-400">Epicentro</dt>
+                    <dd className="text-right text-slate-200">{ev.epicenter}</dd>
                   </div>
                 </dl>
                 <SourceLinks sources={ev.sources} />
@@ -341,10 +342,10 @@ export default function SismoPage() {
             </h2>
           </div>
           <div className="rounded-xl border border-emerald-500/30 bg-emerald-500/5 p-6">
-            <p className="text-xs uppercase tracking-wider text-emerald-300/70">
+            <p className="text-xs font-medium text-emerald-300/85">
               Daño estimado (PNUD)
             </p>
-            <p className="mt-1 text-3xl font-bold text-slate-100 sm:text-4xl">
+            <p className="mt-1 font-mono tabular-nums text-3xl font-semibold text-slate-100 sm:text-4xl">
               USD {ECONOMIC_DAMAGE.pnudLowUsdBn}–{ECONOMIC_DAMAGE.pnudHighUsdBn}{" "}
               mil millones
             </p>

@@ -4,17 +4,47 @@
 
 :root {
   color-scheme: dark;
-  /* Mirror the mapa-del-olvido base palette */
+  /* Ink ramp anchored to the mapa-del-olvido base palette */
   --bg-page: #06102a;
-  --bg-panel: rgba(15, 23, 42, 0.8); /* slate-900/80 */
-  --border-soft: rgba(51, 65, 85, 0.4); /* slate-700/40 */
-  --accent: #fb923c; /* orange-400 */
-  --accent-hover: #fdba74; /* orange-300 */
+  --bg-panel: rgba(15, 23, 42, 0.8);
+  --border-soft: rgba(238, 240, 245, 0.08);
+  --focus-ring: #7dd3fc;
+  --accent: #fb923c;
+  --accent-hover: #fdba74;
 }
 
 html,
 body {
   height: 100%;
+}
+
+/* Offset anchor targets beneath sticky SiteHeader (48px) */
+[id] {
+  scroll-margin-top: 5rem;
+}
+
+:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+.skip-link {
+  position: absolute;
+  inset-inline-start: -9999px;
+  top: 0;
+  z-index: 60;
+  border-radius: 0.5rem;
+  background: #0f172a;
+  color: #f1f5f9;
+  border: 1px solid var(--focus-ring);
+  padding: 0.5rem 0.875rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.skip-link:focus-visible {
+  inset-inline-start: 1rem;
+  top: 0.75rem;
 }
 
 body {
@@ -110,6 +140,18 @@ body {
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .animate-page-fade,
+  .animate-page-rise,
+  .animate-ui-slide-down,
+  .animate-ui-slide-up,
+  .animate-ui-slide-left,
+  .animate-ui-slide-right,
+  .animate-ui-fade,
+  .animate-year-pop {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
   .spark-path,
   .spark-path.is-drawn { stroke-dashoffset: 0; animation: none; }
   .spark-marker,

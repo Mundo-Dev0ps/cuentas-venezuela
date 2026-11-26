@@ -1,4 +1,5 @@
 import { useEffect, useState, useCallback } from 'react';
+import { List, Map, RotateCw, Smartphone, X } from 'lucide-react';
 
 interface RotateHintProps {
   view: 'data' | 'map';
@@ -125,7 +126,7 @@ export function RotateHint({ view, onToggle }: RotateHintProps) {
           className="fixed inset-x-3 top-16 z-50 sm:hidden rounded-xl border border-cyan-400/40 bg-slate-900/95 backdrop-blur-md px-4 py-3 shadow-xl animate-ui-slide-down"
         >
           <div className="flex items-start gap-3">
-            <span aria-hidden className="text-2xl leading-none mt-0.5">📱↻</span>
+            <Smartphone className="h-5 w-5 text-cyan-300 shrink-0 mt-0.5" strokeWidth={1.5} aria-hidden />
             <div className="flex-1 min-w-0">
               <p className="text-slate-100 text-sm font-semibold">
                 Mapa más cómodo en horizontal
@@ -137,9 +138,10 @@ export function RotateHint({ view, onToggle }: RotateHintProps) {
               <div className="mt-2 flex flex-wrap gap-2">
                 <button
                   onClick={handleRotate}
-                  className="rounded-md bg-cyan-500 hover:bg-cyan-400 text-slate-950 text-xs font-semibold px-3 py-1.5"
+                  className="inline-flex items-center gap-1 rounded-md bg-cyan-500 hover:bg-cyan-400 text-slate-950 text-xs font-semibold px-3 py-1.5"
                 >
-                  ↺ Rotar mapa
+                  <RotateCw className="h-3.5 w-3.5" strokeWidth={1.5} aria-hidden />
+                  <span>Rotar mapa</span>
                 </button>
                 <button
                   onClick={() => {
@@ -161,9 +163,9 @@ export function RotateHint({ view, onToggle }: RotateHintProps) {
             <button
               onClick={closeBanner}
               aria-label="Cerrar sugerencia"
-              className="text-slate-500 hover:text-slate-200 text-lg leading-none w-6 h-6 flex items-center justify-center -mt-0.5"
+              className="text-slate-400 hover:text-slate-200 w-7 h-7 flex items-center justify-center rounded -mt-0.5"
             >
-              ×
+              <X className="h-4 w-4" strokeWidth={1.5} aria-hidden />
             </button>
           </div>
         </div>
@@ -175,9 +177,9 @@ export function RotateHint({ view, onToggle }: RotateHintProps) {
         onClick={handleRotate}
         aria-pressed={landscapeMode !== null}
         aria-label={landscapeMode ? 'Volver a vertical' : 'Rotar mapa a horizontal'}
-        className="sm:hidden fixed bottom-40 right-3 z-40 inline-flex items-center gap-1.5 rounded-full border border-orange-400/60 bg-slate-900/95 backdrop-blur-md px-4 py-2.5 text-sm font-semibold text-orange-200 shadow-xl ring-1 ring-orange-400/30"
+        className="sm:hidden fixed bottom-40 right-3 z-40 inline-flex items-center gap-1.5 rounded-full border border-orange-400/60 bg-slate-900/95 backdrop-blur-md px-4 py-2.5 text-sm font-semibold text-orange-200 shadow-xl ring-1 ring-orange-400/30 active:scale-[0.96] transition-transform duration-150"
       >
-        <span aria-hidden className="text-base leading-none">↺</span>
+        <RotateCw className="h-4 w-4" strokeWidth={1.5} aria-hidden />
         {landscapeMode ? 'Volver vertical' : 'Rotar mapa'}
       </button>
 
@@ -187,9 +189,13 @@ export function RotateHint({ view, onToggle }: RotateHintProps) {
         onClick={onToggle}
         aria-pressed={view === 'map'}
         aria-label={view === 'map' ? 'Mostrar paneles de datos' : 'Ocultar paneles para ver el mapa'}
-        className="sm:hidden fixed bottom-24 right-3 z-40 inline-flex items-center gap-1.5 rounded-full border border-cyan-400/60 bg-slate-900/95 backdrop-blur-md px-4 py-2.5 text-sm font-semibold text-cyan-200 shadow-xl ring-1 ring-cyan-400/30"
+        className="sm:hidden fixed bottom-24 right-3 z-40 inline-flex items-center gap-1.5 rounded-full border border-cyan-400/60 bg-slate-900/95 backdrop-blur-md px-4 py-2.5 text-sm font-semibold text-cyan-200 shadow-xl ring-1 ring-cyan-400/30 active:scale-[0.96] transition-transform duration-150"
       >
-        <span aria-hidden className="text-base leading-none">{view === 'map' ? '☰' : '🗺'}</span>
+        {view === 'map' ? (
+          <List className="h-4 w-4" strokeWidth={1.5} aria-hidden />
+        ) : (
+          <Map className="h-4 w-4" strokeWidth={1.5} aria-hidden />
+        )}
         {view === 'map' ? 'Ver datos' : 'Ver mapa'}
       </button>
     </>

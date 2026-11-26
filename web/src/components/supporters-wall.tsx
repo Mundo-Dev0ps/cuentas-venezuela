@@ -29,8 +29,8 @@ export function SupportersWall({ supporters, showEmpty = true }: SupportersWallP
   if (supporters.length === 0) {
     if (!showEmpty) return null;
     return (
-      <p className="text-sm text-slate-400 italic">
-        Sé el primero en apoyar este proyecto. Tu nombre aparecerá aquí 🙌
+      <p className="text-sm text-slate-400">
+        Sé el primero en apoyar este proyecto. Tu nombre aparecerá aquí.
       </p>
     );
   }
@@ -39,20 +39,20 @@ export function SupportersWall({ supporters, showEmpty = true }: SupportersWallP
       {supporters.map((s, i) => (
         <li
           key={i}
-          className="rounded-lg border border-slate-700/40 bg-slate-900/60 px-4 py-3"
+          className="rounded-lg border border-white/[0.08] bg-slate-900/60 px-4 py-3"
         >
           <div className="flex items-baseline justify-between gap-2 mb-1">
             <p className="font-semibold text-slate-100 truncate">{s.name}</p>
-            <span className="text-xs text-pink-300 whitespace-nowrap">
+            <span className="font-mono tabular-nums text-xs text-pink-300 whitespace-nowrap">
               {fmtAmount(s)}
             </span>
           </div>
           {s.message && (
-            <p className="text-sm text-slate-300 italic mb-1">
+            <p className="text-sm text-slate-300 mb-1">
               «{s.message}»
             </p>
           )}
-          <p className="text-[0.65rem] text-slate-500 uppercase tracking-wider">
+          <p className="text-xs text-slate-400">
             {fmtDate(s.at)} · {s.type}
           </p>
         </li>

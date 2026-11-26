@@ -1,0 +1,1418 @@
+{
+  ".claude/settings.local.json": {
+    "mtime": 1785341874.372078,
+    "seen": 1795704550.2663715,
+    "ast_hash": "a89ad7d164b2986ccf90211392382749",
+    "semantic_hash": ""
+  },
+  ".release-please-manifest.json": {
+    "mtime": 1784907430.983387,
+    "seen": 1795704550.2663815,
+    "ast_hash": "4e1cc2054ca499a72b34bc96745f45ac",
+    "semantic_hash": ""
+  },
+  "api/package.json": {
+    "mtime": 1778600876.5824423,
+    "seen": 1795704550.266384,
+    "ast_hash": "450e80e2f328a77d0941a0ba51c335dd",
+    "semantic_hash": ""
+  },
+  "api/src/app.ts": {
+    "mtime": 1784907430.984507,
+    "seen": 1795704550.2663867,
+    "ast_hash": "b3c4cd7cd67b58d1413b16f79072ce53",
+    "semantic_hash": ""
+  },
+  "api/src/db/client.ts": {
+    "mtime": 1778536584.235297,
+    "seen": 1795704550.2663884,
+    "ast_hash": "a9deb88798d8a74c9b4285926c50d8eb",
+    "semantic_hash": ""
+  },
+  "api/src/db/schema.ts": {
+    "mtime": 1778536584.235297,
+    "seen": 1795704550.266391,
+    "ast_hash": "6c25ac1f9a6cb72ee1d51c889184d300",
+    "semantic_hash": ""
+  },
+  "api/src/dev-server.ts": {
+    "mtime": 1784907430.9849987,
+    "seen": 1795704550.266394,
+    "ast_hash": "efb2c7c69cf80ed193dfed40bbc57ea6",
+    "semantic_hash": ""
+  },
+  "api/src/index.test.ts": {
+    "mtime": 1778536584.235297,
+    "seen": 1795704550.2663953,
+    "ast_hash": "bd6d9e23816c8a17506e043e50880d10",
+    "semantic_hash": ""
+  },
+  "api/src/index.ts": {
+    "mtime": 1778536584.235297,
+    "seen": 1795704550.2663982,
+    "ast_hash": "f12f14463271f200c98346943f88b014",
+    "semantic_hash": ""
+  },
+  "api/src/lib/mailer.ts": {
+    "mtime": 1778600876.5826998,
+    "seen": 1795704550.2663999,
+    "ast_hash": "469c46bc0b35a1e6d33f112b0ac10a55",
+    "semantic_hash": ""
+  },
+  "api/src/lib/rate-limit.ts": {
+    "mtime": 1778536584.235297,
+    "seen": 1795704550.266402,
+    "ast_hash": "4e6dc9f06bd1975055881aba0889ce59",
+    "semantic_hash": ""
+  },
+  "api/src/routes/__tests__/reportes.test.ts": {
+    "mtime": 1778536584.2370842,
+    "seen": 1795704550.2664049,
+    "ast_hash": "4cb743edf783d0b2136580c0de1cd175",
+    "semantic_hash": ""
+  },
+  "api/tsconfig.json": {
+    "mtime": 1777926233.6310363,
+    "seen": 1795704550.2664063,
+    "ast_hash": "67c233335b7142152d85fecd041e608e",
+    "semantic_hash": ""
+  },
+  "api/vitest.config.ts": {
+    "mtime": 1777940677.361111,
+    "seen": 1795704550.2664077,
+    "ast_hash": "4e36d1c3e5f5785b451682dccb1732b4",
+    "semantic_hash": ""
+  },
+  "etl/pipelines/__init__.py": {
+    "mtime": 1777926314.8857934,
+    "seen": 1795704550.2664099,
+    "ast_hash": "354f6357ae42686fa864f136841f0f3b",
+    "semantic_hash": ""
+  },
+  "etl/pipelines/__main__.py": {
+    "mtime": 1784907430.9865758,
+    "seen": 1795704550.2664125,
+    "ast_hash": "b975557c2d3f63ca3b3ff4ce3fc8d8b8",
+    "semantic_hash": ""
+  },
+  "etl/pipelines/_http.py": {
+    "mtime": 1777940635.7199051,
+    "seen": 1795704550.2664149,
+    "ast_hash": "f9e6113ef2f6fba419d9df1f4d50292b",
+    "semantic_hash": ""
+  },
+  "etl/pipelines/_obras_geocoder.py": {
+    "mtime": 1778536584.2370842,
+    "seen": 1795704550.2664165,
+    "ast_hash": "8d4299c95ff57649146820acb65fc711",
+    "semantic_hash": ""
+  },
+  "etl/pipelines/_obras_parser.py": {
+    "mtime": 1778536584.2370842,
+    "seen": 1795704550.2664192,
+    "ast_hash": "f434e23d0794aed72cbfa4fb519f5e4b",
+    "semantic_hash": ""
+  },
+  "etl/pipelines/_pg.py": {
+    "mtime": 1778536584.2370842,
+    "seen": 1795704550.266422,
+    "ast_hash": "1fe8ce512a8685e373309fd6c48ecb04",
+    "semantic_hash": ""
+  },
+  "etl/pipelines/_regions.py": {
+    "mtime": 1777929494.1053185,
+    "seen": 1795704550.266423,
+    "ast_hash": "32fc2c5a95230b143975c549f2d8bb9f",
+    "semantic_hash": ""
+  },
+  "etl/pipelines/_storage.py": {
+    "mtime": 1778538826.9141774,
+    "seen": 1795704550.2664254,
+    "ast_hash": "87d341254788e272bc2a29761f1d9726",
+    "semantic_hash": ""
+  },
+  "etl/pipelines/acnur.py": {
+    "mtime": 1778536584.2370842,
+    "seen": 1795704550.266428,
+    "ast_hash": "1a3c1bed863b07271dfa6cf93b42d76e",
+    "semantic_hash": ""
+  },
+  "etl/pipelines/comparativa.py": {
+    "mtime": 1778536584.2370842,
+    "seen": 1795704550.2664306,
+    "ast_hash": "d36ecbe804dcc8a242b58d668c312b5b",
+    "semantic_hash": ""
+  },
+  "etl/pipelines/embi.py": {
+    "mtime": 1784907430.9865758,
+    "seen": 1795704550.2664318,
+    "ast_hash": "84d65050197ce3027fd0374cacffe8ef",
+    "semantic_hash": ""
+  },
+  "etl/pipelines/extranjeria.py": {
+    "mtime": 1778536584.237297,
+    "seen": 1795704550.2664335,
+    "ast_hash": "85acfb0a56bbbc09903f01cd85d93d77",
+    "semantic_hash": ""
+  },
+  "etl/pipelines/freedom_house.py": {
+    "mtime": 1778536584.237297,
+    "seen": 1795704550.2664363,
+    "ast_hash": "30fd8781ff6b11224adcc86d9fae8ccb",
+    "semantic_hash": ""
+  },
+  "etl/pipelines/ine.py": {
+    "mtime": 1777926337.9994323,
+    "seen": 1795704550.2664373,
+    "ast_hash": "2156fc0b9e494194059f4c03b2d80dea",
+    "semantic_hash": ""
+  },
+  "etl/pipelines/obras.py": {
+    "mtime": 1778536584.237297,
+    "seen": 1795704550.2664392,
+    "ast_hash": "d477d7d4323c27337faf19663feca626",
+    "semantic_hash": ""
+  },
+  "etl/pipelines/sanciones.py": {
+    "mtime": 1784907430.9870532,
+    "seen": 1795704550.2664402,
+    "ast_hash": "4b165ca823a7196e38b89f1f2bf93ee9",
+    "semantic_hash": ""
+  },
+  "etl/pipelines/sii.py": {
+    "mtime": 1778536584.237297,
+    "seen": 1795704550.2664425,
+    "ast_hash": "bc6dc3712e3adeb5ef1a20397f6b3279",
+    "semantic_hash": ""
+  },
+  "etl/pipelines/sp.py": {
+    "mtime": 1778536584.237297,
+    "seen": 1795704550.266444,
+    "ast_hash": "5c30ad28eed05aaab036a3db587ce61c",
+    "semantic_hash": ""
+  },
+  "etl/pipelines/vdem.py": {
+    "mtime": 1784907430.9871333,
+    "seen": 1795704550.2664454,
+    "ast_hash": "0b159d003157e83937dbda6160f5b952",
+    "semantic_hash": ""
+  },
+  "etl/pipelines/ve_macro.py": {
+    "mtime": 1778536584.237297,
+    "seen": 1795704550.2664475,
+    "ast_hash": "a1037bfffe827ef6d2fb8bd03239f0ae",
+    "semantic_hash": ""
+  },
+  "etl/pyproject.toml": {
+    "mtime": 1778536584.237297,
+    "seen": 1795704550.2664502,
+    "ast_hash": "3d0eece4cb23f554548b4f2b68253a01",
+    "semantic_hash": ""
+  },
+  "etl/scripts/verify_sources.sh": {
+    "mtime": 1778536584.237297,
+    "seen": 1795704550.266452,
+    "ast_hash": "852d435de7dd1579d9ec0333972a4eea",
+    "semantic_hash": ""
+  },
+  "etl/tests/__init__.py": {
+    "mtime": 1777940692.1848273,
+    "seen": 1795704550.2664545,
+    "ast_hash": "d41d8cd98f00b204e9800998ecf8427e",
+    "semantic_hash": ""
+  },
+  "etl/tests/test_comparativa.py": {
+    "mtime": 1777940708.0315242,
+    "seen": 1795704550.2664564,
+    "ast_hash": "026cf594d5b5f8bc0cfbde45c116438d",
+    "semantic_hash": ""
+  },
+  "etl/tests/test_extranjeria.py": {
+    "mtime": 1777940702.9366217,
+    "seen": 1795704550.266459,
+    "ast_hash": "0f1246f13c6bc2650257efd1a51d6dc8",
+    "semantic_hash": ""
+  },
+  "etl/tests/test_obras.py": {
+    "mtime": 1778536584.237297,
+    "seen": 1795704550.2664597,
+    "ast_hash": "3cc91aa380429fdaf449ce36c5c52bb2",
+    "semantic_hash": ""
+  },
+  "release-please-config.json": {
+    "mtime": 1784907430.987234,
+    "seen": 1795704550.2664611,
+    "ast_hash": "64ba8fdc9816b8332dbaed0e88ffe9a7",
+    "semantic_hash": ""
+  },
+  "scripts/cf-custom-domains.sh": {
+    "mtime": 1778537971.034429,
+    "seen": 1795704550.2664628,
+    "ast_hash": "83801ada34fca8703cd879e2206ba173",
+    "semantic_hash": ""
+  },
+  "scripts/cf-security-bootstrap.sh": {
+    "mtime": 1778536614.041824,
+    "seen": 1795704550.2664645,
+    "ast_hash": "779a63a86f15db28dd67f526f39d2a23",
+    "semantic_hash": ""
+  },
+  "scripts/cf-worker-secrets.sh": {
+    "mtime": 1778537971.0346859,
+    "seen": 1795704550.266467,
+    "ast_hash": "6c97fc86a523edac004805850e51f2a3",
+    "semantic_hash": ""
+  },
+  "scripts/set-gh-secrets.sh": {
+    "mtime": 1784907430.987234,
+    "seen": 1795704550.2664683,
+    "ast_hash": "39f7f06a643c07f14d5daac28b887d97",
+    "semantic_hash": ""
+  },
+  "scripts/update-sismo.py": {
+    "mtime": 1795703438.1585717,
+    "seen": 1795704550.2664707,
+    "ast_hash": "585dd61528175dc7c97c03794ef633d1",
+    "semantic_hash": ""
+  },
+  "scripts/with-personal-gh.sh": {
+    "mtime": 1778536614.0431674,
+    "seen": 1795704550.266472,
+    "ast_hash": "685e4262a2748be3ded222b5fc956053",
+    "semantic_hash": ""
+  },
+  "start.sh": {
+    "mtime": 1778536584.2390785,
+    "seen": 1795704550.2664745,
+    "ast_hash": "e8f11e75706e1105b8295a665145759c",
+    "semantic_hash": ""
+  },
+  "web/e2e/datos-chile-routes.spec.ts": {
+    "mtime": 1778536584.2390785,
+    "seen": 1795704550.2664764,
+    "ast_hash": "1c9b4be2b5ae1871222e7baf9f14cfe3",
+    "semantic_hash": ""
+  },
+  "web/e2e/landing.spec.ts": {
+    "mtime": 1778536584.2390785,
+    "seen": 1795704550.2664783,
+    "ast_hash": "f120deb82376fafbddaf39777eab767f",
+    "semantic_hash": ""
+  },
+  "web/e2e/mapa-del-olvido.spec.ts": {
+    "mtime": 1778536584.2390785,
+    "seen": 1795704550.2664807,
+    "ast_hash": "42d16f63830908e1dff42dcb79ec3e6f",
+    "semantic_hash": ""
+  },
+  "web/e2e/mapa-internal-routes.spec.ts": {
+    "mtime": 1778536584.2390785,
+    "seen": 1795704550.2664828,
+    "ast_hash": "c586ccfb3b1ea4779acf508310af48d0",
+    "semantic_hash": ""
+  },
+  "web/e2e/mobile.spec.ts": {
+    "mtime": 1778536584.2390785,
+    "seen": 1795704550.2664847,
+    "ast_hash": "c37c3d765f95442c844b31a70addb3a8",
+    "semantic_hash": ""
+  },
+  "web/e2e/site-shell.spec.ts": {
+    "mtime": 1778536584.2390785,
+    "seen": 1795704550.2664857,
+    "ast_hash": "ff2e83ac212d30a50f1bb9211da8c03c",
+    "semantic_hash": ""
+  },
+  "web/e2e/smoke.spec.ts": {
+    "mtime": 1778536584.2390785,
+    "seen": 1795704550.266488,
+    "ast_hash": "1ddde19a70fd11aa5f0bc49a69218429",
+    "semantic_hash": ""
+  },
+  "web/next-env.d.ts": {
+    "mtime": 1778529966.7103977,
+    "seen": 1795704550.2664907,
+    "ast_hash": "ba64ff7d54714a8f64db89b1003207d8",
+    "semantic_hash": ""
+  },
+  "web/next.config.mjs": {
+    "mtime": 1785342274.44371,
+    "seen": 1795704550.266492,
+    "ast_hash": "6afec632dbe2363168c9d2db75f9d615",
+    "semantic_hash": ""
+  },
+  "web/open-next.config.ts": {
+    "mtime": 1778536584.2390785,
+    "seen": 1795704550.2664936,
+    "ast_hash": "038b82247cd33ddb886b0e8e9d8a5f8b",
+    "semantic_hash": ""
+  },
+  "web/package.json": {
+    "mtime": 1778536584.2402968,
+    "seen": 1795704550.266495,
+    "ast_hash": "0ea56a3a0b3493da29b4d644ced099bb",
+    "semantic_hash": ""
+  },
+  "web/playwright.config.ts": {
+    "mtime": 1777940722.1352043,
+    "seen": 1795704550.2664974,
+    "ast_hash": "c49a2810a57dfa9529869f088960b55f",
+    "semantic_hash": ""
+  },
+  "web/postcss.config.mjs": {
+    "mtime": 1777926274.445416,
+    "seen": 1795704550.2664986,
+    "ast_hash": "c735540bb63936a123bc867d950c9f69",
+    "semantic_hash": ""
+  },
+  "web/scripts/gen-map.js": {
+    "mtime": 1784907430.9888792,
+    "seen": 1795704550.2665,
+    "ast_hash": "f2540504caa2045f778d7ae69186e0ef",
+    "semantic_hash": ""
+  },
+  "web/src/app/apoyar/page.tsx": {
+    "mtime": 1795703734.4339936,
+    "seen": 1795704550.2665024,
+    "ast_hash": "acfed67e60a93a3d122ad720526e4daa",
+    "semantic_hash": ""
+  },
+  "web/src/app/apple-icon.tsx": {
+    "mtime": 1784907430.9893909,
+    "seen": 1795704550.266504,
+    "ast_hash": "fdaaa399d8d44d1892a96f16b1f50734",
+    "semantic_hash": ""
+  },
+  "web/src/app/datos-chile/dashboards/comparativa/page.tsx": {
+    "mtime": 1784907430.9893909,
+    "seen": 1795704550.2665062,
+    "ast_hash": "73421e333ca5da052e63fe00164161c6",
+    "semantic_hash": ""
+  },
+  "web/src/app/datos-chile/dashboards/demografia/page.tsx": {
+    "mtime": 1784907430.9893909,
+    "seen": 1795704550.266508,
+    "ast_hash": "1b907a1813687689a676dac8295bee1e",
+    "semantic_hash": ""
+  },
+  "web/src/app/datos-chile/dashboards/page.tsx": {
+    "mtime": 1784907430.9893909,
+    "seen": 1795704550.266509,
+    "ast_hash": "4141a7977c45b7ae3a90c1c5c1a3da26",
+    "semantic_hash": ""
+  },
+  "web/src/app/datos-chile/dashboards/pensiones/page.tsx": {
+    "mtime": 1784907430.9893909,
+    "seen": 1795704550.2665102,
+    "ast_hash": "f881e2d37616381913909a7a343f67a4",
+    "semantic_hash": ""
+  },
+  "web/src/app/datos-chile/dashboards/tributario/page.tsx": {
+    "mtime": 1784907430.9893909,
+    "seen": 1795704550.266512,
+    "ast_hash": "9f6fa631523c66969156a89450c17281",
+    "semantic_hash": ""
+  },
+  "web/src/app/datos-chile/fuentes/[slug]/page.tsx": {
+    "mtime": 1784907430.9893909,
+    "seen": 1795704550.266514,
+    "ast_hash": "79f01699e2d2bf83048fd446a56a3f3a",
+    "semantic_hash": ""
+  },
+  "web/src/app/datos-chile/fuentes/page.tsx": {
+    "mtime": 1784907430.989453,
+    "seen": 1795704550.2665155,
+    "ast_hash": "efe1e417c0dc6741679e63fed8f0b550",
+    "semantic_hash": ""
+  },
+  "web/src/app/datos-chile/indicadores/[slug]/page.tsx": {
+    "mtime": 1784907430.989453,
+    "seen": 1795704550.266518,
+    "ast_hash": "705585037d1960fadba10f857509201c",
+    "semantic_hash": ""
+  },
+  "web/src/app/datos-chile/indicadores/page.tsx": {
+    "mtime": 1784907430.989453,
+    "seen": 1795704550.2665193,
+    "ast_hash": "d3bc6817b61068f2584eebebb77d9b87",
+    "semantic_hash": ""
+  },
+  "web/src/app/datos-chile/metodologia/page.tsx": {
+    "mtime": 1784907430.989453,
+    "seen": 1795704550.2665207,
+    "ast_hash": "0e12c4b32ded4b530115167a002a14f9",
+    "semantic_hash": ""
+  },
+  "web/src/app/datos-chile/page.tsx": {
+    "mtime": 1784907430.989453,
+    "seen": 1795704550.2665224,
+    "ast_hash": "db0906714444b5916ea272342104e9f2",
+    "semantic_hash": ""
+  },
+  "web/src/app/fuentes/page.tsx": {
+    "mtime": 1795703738.3169336,
+    "seen": 1795704550.2665231,
+    "ast_hash": "569cadc7e78e7bdd87443dd1af763c89",
+    "semantic_hash": ""
+  },
+  "web/src/app/icon.tsx": {
+    "mtime": 1784907430.9916816,
+    "seen": 1795704550.2665246,
+    "ast_hash": "ad5acc79feb677c030702d7eaf111ecc",
+    "semantic_hash": ""
+  },
+  "web/src/app/layout.tsx": {
+    "mtime": 1795703658.5801656,
+    "seen": 1795704550.266527,
+    "ast_hash": "72bae4923dbdfabe5bf19a1592b79310",
+    "semantic_hash": ""
+  },
+  "web/src/app/manifest.ts": {
+    "mtime": 1784907430.9916816,
+    "seen": 1795704550.2665296,
+    "ast_hash": "dc0c18bf0604182604ce10fd561fcb91",
+    "semantic_hash": ""
+  },
+  "web/src/app/mapa-del-olvido/[[...slug]]/page.tsx": {
+    "mtime": 1784907430.9916816,
+    "seen": 1795704550.2665308,
+    "ast_hash": "35122bdcdfe70d7977d9bc8b490f5964",
+    "semantic_hash": ""
+  },
+  "web/src/app/mapa-del-olvido/obras/[id]/page.tsx": {
+    "mtime": 1784907430.9922023,
+    "seen": 1795704550.2665334,
+    "ast_hash": "a0fcb637154e0729c17615b29ddf4a59",
+    "semantic_hash": ""
+  },
+  "web/src/app/mapa-del-olvido/obras/page.tsx": {
+    "mtime": 1784907430.9923193,
+    "seen": 1795704550.2665358,
+    "ast_hash": "8140e1b27e20f15ba370949737be74bd",
+    "semantic_hash": ""
+  },
+  "web/src/app/not-found.tsx": {
+    "mtime": 1778536584.257583,
+    "seen": 1795704550.2665372,
+    "ast_hash": "5b77a815d309ee5e94782decf054d8d1",
+    "semantic_hash": ""
+  },
+  "web/src/app/opengraph-image.tsx": {
+    "mtime": 1784907430.9923193,
+    "seen": 1795704550.2665396,
+    "ast_hash": "90643b8e6be2efb1db48aa5b361012c8",
+    "semantic_hash": ""
+  },
+  "web/src/app/page.tsx": {
+    "mtime": 1795703731.9930313,
+    "seen": 1795704550.2665424,
+    "ast_hash": "ece76203d95af562bd1534ed03b65827",
+    "semantic_hash": ""
+  },
+  "web/src/app/robots.ts": {
+    "mtime": 1778536584.257583,
+    "seen": 1795704550.266544,
+    "ast_hash": "ee6b521d874831388382d615805e95b8",
+    "semantic_hash": ""
+  },
+  "web/src/app/sitemap.ts": {
+    "mtime": 1791230525.8357089,
+    "seen": 1795704550.2665467,
+    "ast_hash": "92d4a26e85a149b2fefee5808102b1e0",
+    "semantic_hash": ""
+  },
+  "web/src/app/twitter-image.tsx": {
+    "mtime": 1784907430.9928627,
+    "seen": 1795704550.266548,
+    "ast_hash": "f14a02ea4ca908e66bec9b19c9211650",
+    "semantic_hash": ""
+  },
+  "web/src/app/venezuela/antes-despues/page.tsx": {
+    "mtime": 1795703809.4248643,
+    "seen": 1795704550.2665496,
+    "ast_hash": "7f9592941b428c93aeab85bc622ff2c8",
+    "semantic_hash": ""
+  },
+  "web/src/app/venezuela/corrupcion/data.ts": {
+    "mtime": 1784907430.9928627,
+    "seen": 1795704550.2665517,
+    "ast_hash": "f9aa421b36b728073fac880ab0fedb8d",
+    "semantic_hash": ""
+  },
+  "web/src/app/venezuela/corrupcion/page.tsx": {
+    "mtime": 1784907430.9934425,
+    "seen": 1795704550.266554,
+    "ast_hash": "262354cbcb63874ef4f8e63b045120a8",
+    "semantic_hash": ""
+  },
+  "web/src/app/venezuela/coyuntura/data.ts": {
+    "mtime": 1784907430.993862,
+    "seen": 1795704550.2665555,
+    "ast_hash": "72f5286db66beab42ac67e28e98615fb",
+    "semantic_hash": ""
+  },
+  "web/src/app/venezuela/coyuntura/page.tsx": {
+    "mtime": 1795703784.809215,
+    "seen": 1795704550.2665572,
+    "ast_hash": "204eb3267576815a729e09a876f2c6c9",
+    "semantic_hash": ""
+  },
+  "web/src/app/venezuela/cronologia/data.ts": {
+    "mtime": 1784907430.9941955,
+    "seen": 1795704550.2665586,
+    "ast_hash": "2e2286d024e12187d43c318268ab314d",
+    "semantic_hash": ""
+  },
+  "web/src/app/venezuela/cronologia/page.tsx": {
+    "mtime": 1784907430.994681,
+    "seen": 1795704550.266561,
+    "ast_hash": "39991dff2494523e90228b7c78618ad4",
+    "semantic_hash": ""
+  },
+  "web/src/app/venezuela/ddhh/page.tsx": {
+    "mtime": 1795703811.4628034,
+    "seen": 1795704550.2665625,
+    "ast_hash": "1b188e546b39f3b50913f62418efbb36",
+    "semantic_hash": ""
+  },
+  "web/src/app/venezuela/diaspora/page.tsx": {
+    "mtime": 1795703814.2077608,
+    "seen": 1795704550.2665634,
+    "ast_hash": "a0f0b862334f275ae3dcb50b390775c1",
+    "semantic_hash": ""
+  },
+  "web/src/app/venezuela/economia/page.tsx": {
+    "mtime": 1795703816.3957272,
+    "seen": 1795704550.266566,
+    "ast_hash": "eb32bdbd725a90d35dccb9b83a9ffbf8",
+    "semantic_hash": ""
+  },
+  "web/src/app/venezuela/esequibo/data.ts": {
+    "mtime": 1784907430.9953887,
+    "seen": 1795704550.2665687,
+    "ast_hash": "34e6b095428abc7c26c02a1f9c671694",
+    "semantic_hash": ""
+  },
+  "web/src/app/venezuela/esequibo/page.tsx": {
+    "mtime": 1784907430.9963279,
+    "seen": 1795704550.266571,
+    "ast_hash": "d028236e163aa32df4e07368df91d37e",
+    "semantic_hash": ""
+  },
+  "web/src/app/venezuela/inseguridad/page.tsx": {
+    "mtime": 1795703818.9596875,
+    "seen": 1795704550.266574,
+    "ast_hash": "c63ec6603e0974a7e74e2df9d96956c1",
+    "semantic_hash": ""
+  },
+  "web/src/app/venezuela/page.tsx": {
+    "mtime": 1795703741.1038904,
+    "seen": 1795704550.266575,
+    "ast_hash": "52393893d4507ddb837c93f5f4b106a8",
+    "semantic_hash": ""
+  },
+  "web/src/app/venezuela/puerta-giratoria/data.ts": {
+    "mtime": 1784907431.000348,
+    "seen": 1795704550.2665777,
+    "ast_hash": "5407cee240fca63047e660003a644bcf",
+    "semantic_hash": ""
+  },
+  "web/src/app/venezuela/puerta-giratoria/page.tsx": {
+    "mtime": 1784907431.0007224,
+    "seen": 1795704550.2665799,
+    "ast_hash": "19259f32a15710120ef97a4e3b2196ee",
+    "semantic_hash": ""
+  },
+  "web/src/app/venezuela/puerta-giratoria/ranking-list.tsx": {
+    "mtime": 1795703787.4241748,
+    "seen": 1795704550.2665813,
+    "ast_hash": "11b95e25e90d9bd370eed343752effba",
+    "semantic_hash": ""
+  },
+  "web/src/app/venezuela/recibido-vs-hoy/before-after.tsx": {
+    "mtime": 1784907431.0012014,
+    "seen": 1795704550.2665844,
+    "ast_hash": "8dac894862009a6b3e9a49a2513c5c8f",
+    "semantic_hash": ""
+  },
+  "web/src/app/venezuela/recibido-vs-hoy/data.ts": {
+    "mtime": 1784907431.001333,
+    "seen": 1795704550.2665856,
+    "ast_hash": "2b4ba9951cab01faf6e22acad0c287b5",
+    "semantic_hash": ""
+  },
+  "web/src/app/venezuela/recibido-vs-hoy/page.tsx": {
+    "mtime": 1784907431.0015397,
+    "seen": 1795704550.2665865,
+    "ast_hash": "10c03cd545d8ff0e6f85904ad32c012d",
+    "semantic_hash": ""
+  },
+  "web/src/app/venezuela/salud/page.tsx": {
+    "mtime": 1795703821.5566473,
+    "seen": 1795704550.2665892,
+    "ast_hash": "38369c0bed29647699e14008e831ba8d",
+    "semantic_hash": ""
+  },
+  "web/src/app/venezuela/sanciones/data.ts": {
+    "mtime": 1784907431.0018547,
+    "seen": 1795704550.2665904,
+    "ast_hash": "d746f4b0a0488e7d5ea5f1c08916c5fb",
+    "semantic_hash": ""
+  },
+  "web/src/app/venezuela/sanciones/page.tsx": {
+    "mtime": 1784907431.0019562,
+    "seen": 1795704550.266592,
+    "ast_hash": "9d575c68934f87de71c067f63b361947",
+    "semantic_hash": ""
+  },
+  "web/src/app/venezuela/sismo-2026/affected-states.tsx": {
+    "mtime": 1784907431.0021,
+    "seen": 1795704550.266593,
+    "ast_hash": "0853404dfea5a9e64a474f0bbf4004d4",
+    "semantic_hash": ""
+  },
+  "web/src/app/venezuela/sismo-2026/damage-map.tsx": {
+    "mtime": 1784907431.0022044,
+    "seen": 1795704550.2665954,
+    "ast_hash": "2997bd8797dcfb493b615f262dfc625a",
+    "semantic_hash": ""
+  },
+  "web/src/app/venezuela/sismo-2026/data.ts": {
+    "mtime": 1791230525.8357089,
+    "seen": 1795704550.2665966,
+    "ast_hash": "30cef6d2173b9010c83031ec635dd869",
+    "semantic_hash": ""
+  },
+  "web/src/app/venezuela/sismo-2026/map-paths.ts": {
+    "mtime": 1784907431.0027719,
+    "seen": 1795704550.2665982,
+    "ast_hash": "4a71b2508cf81dfb0884cb8da5aa081e",
+    "semantic_hash": ""
+  },
+  "web/src/app/venezuela/sismo-2026/opengraph-image.tsx": {
+    "mtime": 1784907431.0028834,
+    "seen": 1795704550.2665997,
+    "ast_hash": "c932285c11f5afcacab26f402c072447",
+    "semantic_hash": ""
+  },
+  "web/src/app/venezuela/sismo-2026/page.tsx": {
+    "mtime": 1795703780.6652792,
+    "seen": 1795704550.2666025,
+    "ast_hash": "83aa9f54ba57ff4b89c1d194a09ebc01",
+    "semantic_hash": ""
+  },
+  "web/src/app/venezuela/sismo-2026/states-explorer.tsx": {
+    "mtime": 1784907431.00327,
+    "seen": 1795704550.266605,
+    "ast_hash": "5019ccfaa38893c5b58ee40e8a96a041",
+    "semantic_hash": ""
+  },
+  "web/src/components/aporte-bar-chart.tsx": {
+    "mtime": 1778536584.2578979,
+    "seen": 1795704550.2666066,
+    "ast_hash": "89908b6df2a60c398d98d5571b829349",
+    "semantic_hash": ""
+  },
+  "web/src/components/card.tsx": {
+    "mtime": 1795703664.703071,
+    "seen": 1795704550.2666082,
+    "ast_hash": "3c40283c48950de3437063fcd4540240",
+    "semantic_hash": ""
+  },
+  "web/src/components/chile-map-loader.tsx": {
+    "mtime": 1778536584.2578979,
+    "seen": 1795704550.2666094,
+    "ast_hash": "577a3fa5e91baf32d77251a876cfc44f",
+    "semantic_hash": ""
+  },
+  "web/src/components/chile-map.tsx": {
+    "mtime": 1778536584.2578979,
+    "seen": 1795704550.2666109,
+    "ast_hash": "5e2128d1ef9c932c71f159c6958d3c47",
+    "semantic_hash": ""
+  },
+  "web/src/components/comparativa-chart.tsx": {
+    "mtime": 1778536584.2578979,
+    "seen": 1795704550.2666125,
+    "ast_hash": "9a11c607ed39fdb1433c648b9362753b",
+    "semantic_hash": ""
+  },
+  "web/src/components/demografia-view.tsx": {
+    "mtime": 1778536584.2578979,
+    "seen": 1795704550.2666147,
+    "ast_hash": "c304478f60a0e16aac1c72be9a0aaf16",
+    "semantic_hash": ""
+  },
+  "web/src/components/diaspora-bar-chart.tsx": {
+    "mtime": 1778536584.2578979,
+    "seen": 1795704550.266617,
+    "ast_hash": "8991ea364813f41bdc77952b1b7f6301",
+    "semantic_hash": ""
+  },
+  "web/src/components/embi-bar-chart.tsx": {
+    "mtime": 1778550576.4233396,
+    "seen": 1795704550.2666187,
+    "ast_hash": "26176861c5107a0d457edf139ce54867",
+    "semantic_hash": ""
+  },
+  "web/src/components/freedom-trend-chart.tsx": {
+    "mtime": 1778536584.2578979,
+    "seen": 1795704550.2666206,
+    "ast_hash": "a956fea757138446047198e16365ef83",
+    "semantic_hash": ""
+  },
+  "web/src/components/help-ways.tsx": {
+    "mtime": 1784907431.003495,
+    "seen": 1795704550.266623,
+    "ast_hash": "1bc018083c37c02edbf300a9d04023de",
+    "semantic_hash": ""
+  },
+  "web/src/components/indicator-block.tsx": {
+    "mtime": 1778536584.2582967,
+    "seen": 1795704550.2666252,
+    "ast_hash": "13164877f031194cb4fc0db09a5c1300",
+    "semantic_hash": ""
+  },
+  "web/src/components/json-ld.tsx": {
+    "mtime": 1784907431.0041277,
+    "seen": 1795704550.2666273,
+    "ast_hash": "2feb6f18a389475831cfb3f3ca6243df",
+    "semantic_hash": ""
+  },
+  "web/src/components/kofi-button.tsx": {
+    "mtime": 1778536584.2582967,
+    "seen": 1795704550.2666297,
+    "ast_hash": "f08a9c310dd2ec8253fad349cba446c7",
+    "semantic_hash": ""
+  },
+  "web/src/components/kofi-feed.tsx": {
+    "mtime": 1778536584.2582967,
+    "seen": 1795704550.2666318,
+    "ast_hash": "253862e726095810ea0cd56a87100eef",
+    "semantic_hash": ""
+  },
+  "web/src/components/mapa-loader.tsx": {
+    "mtime": 1778536584.2582967,
+    "seen": 1795704550.2666345,
+    "ast_hash": "04d8991212d9ef74c92e16a6e5ad9171",
+    "semantic_hash": ""
+  },
+  "web/src/components/newsletter-signup.tsx": {
+    "mtime": 1778536584.2582967,
+    "seen": 1795704550.266636,
+    "ast_hash": "b7613885b15f64cd1f01bc1594cad88c",
+    "semantic_hash": ""
+  },
+  "web/src/components/preview-table.tsx": {
+    "mtime": 1778536584.2582967,
+    "seen": 1795704550.2666373,
+    "ast_hash": "980265c662c6ab113ad477906c261847",
+    "semantic_hash": ""
+  },
+  "web/src/components/region-bar-chart.tsx": {
+    "mtime": 1778536584.2582967,
+    "seen": 1795704550.2666385,
+    "ast_hash": "426715a2a03c37e669523934bb31e94a",
+    "semantic_hash": ""
+  },
+  "web/src/components/reveal.tsx": {
+    "mtime": 1778536584.2582967,
+    "seen": 1795704550.266641,
+    "ast_hash": "da5b0bf0ffdce43f116a96d3757ff7a9",
+    "semantic_hash": ""
+  },
+  "web/src/components/sector-pie-chart.tsx": {
+    "mtime": 1778536584.2582967,
+    "seen": 1795704550.266644,
+    "ast_hash": "c833d8759fadb6d00105a01fe2743c37",
+    "semantic_hash": ""
+  },
+  "web/src/components/share-button.tsx": {
+    "mtime": 1778536584.2582967,
+    "seen": 1795704550.2666464,
+    "ast_hash": "76ad89a3060a7568c7061156f8cde50b",
+    "semantic_hash": ""
+  },
+  "web/src/components/share-buttons.tsx": {
+    "mtime": 1795703667.3820298,
+    "seen": 1795704550.2666476,
+    "ast_hash": "02fc2d416b99bea621fadc3b7845bc11",
+    "semantic_hash": ""
+  },
+  "web/src/components/site-footer.tsx": {
+    "mtime": 1795703662.115111,
+    "seen": 1795704550.266649,
+    "ast_hash": "a728de1e605ac9a07e0e2e9955f927ae",
+    "semantic_hash": ""
+  },
+  "web/src/components/site-header.tsx": {
+    "mtime": 1795703660.7761316,
+    "seen": 1795704550.2666507,
+    "ast_hash": "883b8ac6a6a4aa18f75ddd6756ef75b5",
+    "semantic_hash": ""
+  },
+  "web/src/components/source-badge.tsx": {
+    "mtime": 1778536584.2592967,
+    "seen": 1795704550.2666516,
+    "ast_hash": "53bee74238535f3a2b3ee94a4991d10e",
+    "semantic_hash": ""
+  },
+  "web/src/components/source-pill.tsx": {
+    "mtime": 1778536584.2592967,
+    "seen": 1795704550.2666528,
+    "ast_hash": "bbe35804ffb439b8a500f6cf972322a0",
+    "semantic_hash": ""
+  },
+  "web/src/components/stat.tsx": {
+    "mtime": 1795703663.343092,
+    "seen": 1795704550.2666545,
+    "ast_hash": "6269870388d8a6f1701865e4fb79f0c0",
+    "semantic_hash": ""
+  },
+  "web/src/components/stock-chart.tsx": {
+    "mtime": 1778536584.2592967,
+    "seen": 1795704550.266656,
+    "ast_hash": "8965cb337ced092fc4fa45d6a93a8af7",
+    "semantic_hash": ""
+  },
+  "web/src/components/supporters-wall.tsx": {
+    "mtime": 1795703668.6740098,
+    "seen": 1795704550.2666574,
+    "ast_hash": "e51f92f5d69103541178f5a2aa3c405d",
+    "semantic_hash": ""
+  },
+  "web/src/components/turnstile.tsx": {
+    "mtime": 1784907431.0045793,
+    "seen": 1795704550.2666588,
+    "ast_hash": "db0dbe2ca6bbda878a73632686529cbd",
+    "semantic_hash": ""
+  },
+  "web/src/components/vdem-trend-chart.tsx": {
+    "mtime": 1784907431.0046487,
+    "seen": 1795704550.2666602,
+    "ast_hash": "43d1d4af25f64c20e4e69b7528362a19",
+    "semantic_hash": ""
+  },
+  "web/src/components/ve-trend-chart.tsx": {
+    "mtime": 1778536584.2592967,
+    "seen": 1795704550.2666616,
+    "ast_hash": "34ad7424abd8aee4ff4a6dc78ac26fbd",
+    "semantic_hash": ""
+  },
+  "web/src/lib/__tests__/csv-export.test.ts": {
+    "mtime": 1778536584.2592967,
+    "seen": 1795704550.2666628,
+    "ast_hash": "418cf68961c84a22fc4c287d9953cb60",
+    "semantic_hash": ""
+  },
+  "web/src/lib/__tests__/obras-mock.test.ts": {
+    "mtime": 1778536584.2608645,
+    "seen": 1795704550.2666652,
+    "ast_hash": "519cd202818cde60bda462a7b3c64dcd",
+    "semantic_hash": ""
+  },
+  "web/src/lib/__tests__/slug.test.ts": {
+    "mtime": 1778536584.2608645,
+    "seen": 1795704550.2666667,
+    "ast_hash": "822eadf02ebf302296d1994623e9fa6b",
+    "semantic_hash": ""
+  },
+  "web/src/lib/api.ts": {
+    "mtime": 1784907431.0048165,
+    "seen": 1795704550.2666686,
+    "ast_hash": "b9efd982b6df0a423fab3aa73d53d9e4",
+    "semantic_hash": ""
+  },
+  "web/src/lib/cn.ts": {
+    "mtime": 1777927753.6357503,
+    "seen": 1795704550.2666712,
+    "ast_hash": "d9837f38cc05303254571985e3164050",
+    "semantic_hash": ""
+  },
+  "web/src/lib/csv-export.ts": {
+    "mtime": 1778536584.2608645,
+    "seen": 1795704550.2666721,
+    "ast_hash": "4ee8fac712be0d1d6dbb0d10d7984ee0",
+    "semantic_hash": ""
+  },
+  "web/src/lib/obras-mock.ts": {
+    "mtime": 1778536584.2608645,
+    "seen": 1795704550.2666738,
+    "ast_hash": "e2ae4c08d2e8a6d1c51fc67aeae471b1",
+    "semantic_hash": ""
+  },
+  "web/src/lib/obras-types.ts": {
+    "mtime": 1778536584.2608645,
+    "seen": 1795704550.2666755,
+    "ast_hash": "bd9dbd0bc8f7ca164b5232d1f9a81529",
+    "semantic_hash": ""
+  },
+  "web/src/lib/regions.ts": {
+    "mtime": 1777929580.9629767,
+    "seen": 1795704550.2666767,
+    "ast_hash": "33db499acd80f52f201081908304d183",
+    "semantic_hash": ""
+  },
+  "web/src/lib/seo.ts": {
+    "mtime": 1784907431.0048964,
+    "seen": 1795704550.266679,
+    "ast_hash": "44d08268c54f8fdfe4c9623b7bf3b5c8",
+    "semantic_hash": ""
+  },
+  "web/src/lib/slug.ts": {
+    "mtime": 1778536584.2608645,
+    "seen": 1795704550.2666805,
+    "ast_hash": "4ea3cec29f089ac699e43ad606edc2be",
+    "semantic_hash": ""
+  },
+  "web/src/lib/use-count-up.ts": {
+    "mtime": 1778536584.2608645,
+    "seen": 1795704550.2666821,
+    "ast_hash": "f0fe6989b3eae0f4d3df6563f1f32967",
+    "semantic_hash": ""
+  },
+  "web/src/lib/use-in-view.ts": {
+    "mtime": 1778536584.2608645,
+    "seen": 1795704550.2666836,
+    "ast_hash": "dd92a27bacd65cc65ffdb746bb71d6bf",
+    "semantic_hash": ""
+  },
+  "web/src/mapa/App.tsx": {
+    "mtime": 1778536584.2608645,
+    "seen": 1795704550.266685,
+    "ast_hash": "67e4c63b7a2d63c655c5df750e8546fb",
+    "semantic_hash": ""
+  },
+  "web/src/mapa/MapaRoot.tsx": {
+    "mtime": 1778536584.2608645,
+    "seen": 1795704550.266686,
+    "ast_hash": "9d43cf1976e5fb14e54563322b959c9f",
+    "semantic_hash": ""
+  },
+  "web/src/mapa/components/FiltersBar/FiltersBar.tsx": {
+    "mtime": 1795703989.6110506,
+    "seen": 1795704550.266688,
+    "ast_hash": "f3c3764cfddb7652dd7fc2783cea8524",
+    "semantic_hash": ""
+  },
+  "web/src/mapa/components/HeroStats/HeroStats.tsx": {
+    "mtime": 1778597772.6740696,
+    "seen": 1795704550.2666893,
+    "ast_hash": "acbe6b5299a145244595e5885926b908",
+    "semantic_hash": ""
+  },
+  "web/src/mapa/components/Legend/Legend.tsx": {
+    "mtime": 1778597772.674286,
+    "seen": 1795704550.2666903,
+    "ast_hash": "5dec196466d301bb0aedfdcd5fb5e813",
+    "semantic_hash": ""
+  },
+  "web/src/mapa/components/Map/CapitalLayer.ts": {
+    "mtime": 1778536584.2616298,
+    "seen": 1795704550.2666917,
+    "ast_hash": "c46abc281117e4ec1729243c1e3edea7",
+    "semantic_hash": ""
+  },
+  "web/src/mapa/components/Map/ChoroplethLayer.ts": {
+    "mtime": 1778536584.2619848,
+    "seen": 1795704550.266693,
+    "ast_hash": "6364943096bf7755428b6ce157d37660",
+    "semantic_hash": ""
+  },
+  "web/src/mapa/components/Map/ClusterLayer.ts": {
+    "mtime": 1778536584.2619848,
+    "seen": 1795704550.2666943,
+    "ast_hash": "25e15c86ad49eb99b8119e9936a35fb1",
+    "semantic_hash": ""
+  },
+  "web/src/mapa/components/Map/HighlightLayer.ts": {
+    "mtime": 1778536584.2619848,
+    "seen": 1795704550.2666981,
+    "ast_hash": "6bc92ba547ad0e87519411299ff4d923",
+    "semantic_hash": ""
+  },
+  "web/src/mapa/components/Map/MapContainer.tsx": {
+    "mtime": 1778595253.1755447,
+    "seen": 1795704550.2666996,
+    "ast_hash": "df39d5a81722e531703a5def3323a8ff",
+    "semantic_hash": ""
+  },
+  "web/src/mapa/components/Map/MapModeToggle.tsx": {
+    "mtime": 1778536584.2619848,
+    "seen": 1795704550.266701,
+    "ast_hash": "5c5f43cff8b0e49495ca01e306c71c9e",
+    "semantic_hash": ""
+  },
+  "web/src/mapa/components/Map/ScatterLayer.ts": {
+    "mtime": 1778536584.2619848,
+    "seen": 1795704550.2667022,
+    "ast_hash": "3465422f121755acb2f0c49b2b425750",
+    "semantic_hash": ""
+  },
+  "web/src/mapa/components/Onboarding/Onboarding.tsx": {
+    "mtime": 1795703871.537875,
+    "seen": 1795704550.2667043,
+    "ast_hash": "384b1efebe110ba82cb971c239ad4d77",
+    "semantic_hash": ""
+  },
+  "web/src/mapa/components/Pages/LandingPage.tsx": {
+    "mtime": 1795703947.4977014,
+    "seen": 1795704550.266706,
+    "ast_hash": "f149a0dc2f5fc0b0c41f9b696f659ada",
+    "semantic_hash": ""
+  },
+  "web/src/mapa/components/Pages/MetodologiaPage.tsx": {
+    "mtime": 1778536584.2625446,
+    "seen": 1795704550.2667089,
+    "ast_hash": "3e60e93a335284ea95872409e5fc2e94",
+    "semantic_hash": ""
+  },
+  "web/src/mapa/components/Pages/PageLayout.tsx": {
+    "mtime": 1795703950.432656,
+    "seen": 1795704550.2667098,
+    "ast_hash": "4b49c2d8acf8e04122112834919a6864",
+    "semantic_hash": ""
+  },
+  "web/src/mapa/components/Pages/ReportarPage.tsx": {
+    "mtime": 1784907431.005071,
+    "seen": 1795704550.266712,
+    "ast_hash": "b9bd3884e413603f604ec97d8840ec74",
+    "semantic_hash": ""
+  },
+  "web/src/mapa/components/Pages/SobrePage.tsx": {
+    "mtime": 1795703953.0046163,
+    "seen": 1795704550.2667136,
+    "ast_hash": "4db71495046fb4fc626d390e06fa4e31",
+    "semantic_hash": ""
+  },
+  "web/src/mapa/components/SideDrawer/AggregateImpact.tsx": {
+    "mtime": 1795703942.2927818,
+    "seen": 1795704550.266716,
+    "ast_hash": "4f918869d9b74961393f02dbf8d06dde",
+    "semantic_hash": ""
+  },
+  "web/src/mapa/components/SideDrawer/ImpactCalculator.ts": {
+    "mtime": 1778536584.2629035,
+    "seen": 1795704550.2667174,
+    "ast_hash": "9a9a17ec6f9c6f8a81c2d15714692b18",
+    "semantic_hash": ""
+  },
+  "web/src/mapa/components/SideDrawer/ObraDetail.tsx": {
+    "mtime": 1795703944.7127442,
+    "seen": 1795704550.2667198,
+    "ast_hash": "3d13499d99019a3eb2adda4e751eb338",
+    "semantic_hash": ""
+  },
+  "web/src/mapa/components/SideDrawer/ObraListItem.tsx": {
+    "mtime": 1778536584.2629035,
+    "seen": 1795704550.266723,
+    "ast_hash": "74afd56db49ac3362afc556b98fb0871",
+    "semantic_hash": ""
+  },
+  "web/src/mapa/components/SideDrawer/PhotoGallery.tsx": {
+    "mtime": 1795703870.2268953,
+    "seen": 1795704550.2667236,
+    "ast_hash": "244b77ecc74aab5274f29a0177365bcb",
+    "semantic_hash": ""
+  },
+  "web/src/mapa/components/SideDrawer/SideDrawer.tsx": {
+    "mtime": 1795703955.6145759,
+    "seen": 1795704550.266725,
+    "ast_hash": "306cb44dbcee0011abe9ff9d935ffe98",
+    "semantic_hash": ""
+  },
+  "web/src/mapa/components/SideDrawer/StateView.tsx": {
+    "mtime": 1778536584.2629035,
+    "seen": 1795704550.266727,
+    "ast_hash": "1c25d88ddf5fdd77231ed2d00b5812ad",
+    "semantic_hash": ""
+  },
+  "web/src/mapa/components/SideDrawer/Top10View.tsx": {
+    "mtime": 1778536584.2629035,
+    "seen": 1795704550.266729,
+    "ast_hash": "71b490a36650de854cc601c4833de3bf",
+    "semantic_hash": ""
+  },
+  "web/src/mapa/components/SideDrawer/TopStatesBars.tsx": {
+    "mtime": 1795703865.6889653,
+    "seen": 1795704550.2667315,
+    "ast_hash": "9a230d1ab5551b16202f6d34641be047",
+    "semantic_hash": ""
+  },
+  "web/src/mapa/components/TimeSlider/TimeSlider.tsx": {
+    "mtime": 1795703867.851932,
+    "seen": 1795704550.266734,
+    "ast_hash": "63f3539006635ba715bcda4cbefd22bc",
+    "semantic_hash": ""
+  },
+  "web/src/mapa/components/UI/GlassPanel.tsx": {
+    "mtime": 1778536584.2629035,
+    "seen": 1795704550.2667358,
+    "ast_hash": "f46e7dad1cc9a13d72bfdbeebb541e72",
+    "semantic_hash": ""
+  },
+  "web/src/mapa/components/UI/RotateHint.tsx": {
+    "mtime": 1795703960.718497,
+    "seen": 1795704550.2667372,
+    "ast_hash": "6761db46fdb4f29af1375c4519db8ec6",
+    "semantic_hash": ""
+  },
+  "web/src/mapa/components/UI/Skeleton.tsx": {
+    "mtime": 1795703864.6649811,
+    "seen": 1795704550.2667387,
+    "ast_hash": "9ce29cf0fc938a3eaec80cd87cb623aa",
+    "semantic_hash": ""
+  },
+  "web/src/mapa/constants/colors.ts": {
+    "mtime": 1778536584.2635942,
+    "seen": 1795704550.26674,
+    "ast_hash": "d118c533b790a8bc22f225af4170c094",
+    "semantic_hash": ""
+  },
+  "web/src/mapa/data/capitals.ts": {
+    "mtime": 1778537332.9395497,
+    "seen": 1795704550.2667415,
+    "ast_hash": "994f64f7bcb56c344c2153121f48d8da",
+    "semantic_hash": ""
+  },
+  "web/src/mapa/hooks/useCountUp.ts": {
+    "mtime": 1778536584.2635942,
+    "seen": 1795704550.2667427,
+    "ast_hash": "b39ade608d44c39b131422b98880ff88",
+    "semantic_hash": ""
+  },
+  "web/src/mapa/hooks/useMapPulse.ts": {
+    "mtime": 1778536584.2638655,
+    "seen": 1795704550.2667453,
+    "ast_hash": "d44bfe60ca419a609a244ebc593c6df1",
+    "semantic_hash": ""
+  },
+  "web/src/mapa/hooks/useMapZoom.ts": {
+    "mtime": 1778536584.2638655,
+    "seen": 1795704550.266747,
+    "ast_hash": "e8f72c3b57b7c2d85d0b66ad9186abde",
+    "semantic_hash": ""
+  },
+  "web/src/mapa/hooks/useObras.ts": {
+    "mtime": 1778536584.2638655,
+    "seen": 1795704550.2667482,
+    "ast_hash": "cd71a54897ea332ec8bfc7822c2b0898",
+    "semantic_hash": ""
+  },
+  "web/src/mapa/hooks/useUrlSync.ts": {
+    "mtime": 1778536584.2638655,
+    "seen": 1795704550.2667508,
+    "ast_hash": "d227ea2e9be12f2193809c77ee7cb8f7",
+    "semantic_hash": ""
+  },
+  "web/src/mapa/hooks/useVenezuelaBoundary.ts": {
+    "mtime": 1778536584.2638655,
+    "seen": 1795704550.266752,
+    "ast_hash": "a73aa67e3a717dee92197582da9639f8",
+    "semantic_hash": ""
+  },
+  "web/src/mapa/hooks/useVenezuelaStates.ts": {
+    "mtime": 1778536584.2638655,
+    "seen": 1795704550.2667546,
+    "ast_hash": "adc334e3215f64e03c035595084098b4",
+    "semantic_hash": ""
+  },
+  "web/src/mapa/lib/csvExport.ts": {
+    "mtime": 1778536584.2638655,
+    "seen": 1795704550.2667568,
+    "ast_hash": "6f5113f197cbe10675467f934d53090d",
+    "semantic_hash": ""
+  },
+  "web/src/mapa/lib/firestore.ts": {
+    "mtime": 1778536584.2642164,
+    "seen": 1795704550.2667596,
+    "ast_hash": "26676cd23474634dfb6bba47b35dc983",
+    "semantic_hash": ""
+  },
+  "web/src/mapa/lib/mapStyle.ts": {
+    "mtime": 1778536584.2642164,
+    "seen": 1795704550.266762,
+    "ast_hash": "4fe17e5fa98e274dae4ace84d7daa5dc",
+    "semantic_hash": ""
+  },
+  "web/src/mapa/lib/seo.ts": {
+    "mtime": 1778536584.2642164,
+    "seen": 1795704550.2667637,
+    "ast_hash": "ad7104dd7bc5aeb87c85b440d1c91bbd",
+    "semantic_hash": ""
+  },
+  "web/src/mapa/lib/slug.ts": {
+    "mtime": 1778536584.2642164,
+    "seen": 1795704550.2667656,
+    "ast_hash": "c3e05b379b31a422e51a4822545ac80b",
+    "semantic_hash": ""
+  },
+  "web/src/mapa/lib/submissions.ts": {
+    "mtime": 1784907431.0052125,
+    "seen": 1795704550.2667675,
+    "ast_hash": "090e1919f842b8aa13b06ad52aa93d45",
+    "semantic_hash": ""
+  },
+  "web/src/mapa/mocks/obras.mock.ts": {
+    "mtime": 1778536584.2642164,
+    "seen": 1795704550.26677,
+    "ast_hash": "a5a93f3993613ee3278a76c7b1fb6331",
+    "semantic_hash": ""
+  },
+  "web/src/mapa/types/obra.ts": {
+    "mtime": 1778536584.2642164,
+    "seen": 1795704550.2667723,
+    "ast_hash": "7e90fefa88709cd425c8bc6cadf6fe83",
+    "semantic_hash": ""
+  },
+  "web/tailwind.config.ts": {
+    "mtime": 1778536584.2642164,
+    "seen": 1795704550.2667744,
+    "ast_hash": "db85c61f3d375b36a0f972c4fec9b6d9",
+    "semantic_hash": ""
+  },
+  "web/test-results/.last-run.json": {
+    "mtime": 1778194925.2003655,
+    "seen": 1795704550.2667766,
+    "ast_hash": "f196824657d8858bc7fa44eecbba38b1",
+    "semantic_hash": ""
+  },
+  "web/tsconfig.json": {
+    "mtime": 1777926267.4595222,
+    "seen": 1795704550.2667778,
+    "ast_hash": "a86960a14f0658c1d827c3299241514b",
+    "semantic_hash": ""
+  },
+  "web/vitest.config.mts": {
+    "mtime": 1778536584.2642164,
+    "seen": 1795704550.266779,
+    "ast_hash": "753c116fa63ab716dcbd00f35752c082",
+    "semantic_hash": ""
+  },
+  ".github/dependabot.yml": {
+    "mtime": 1778536970.187981,
+    "seen": 1795704550.2667818,
+    "ast_hash": "935430cb871d59a0ea93566476bdb856",
+    "semantic_hash": ""
+  },
+  ".github/workflows/ci.yml": {
+    "mtime": 1778549686.6770947,
+    "seen": 1795704550.2667828,
+    "ast_hash": "b3ccd9af59fbbfc8e2ce2b568b321b1d",
+    "semantic_hash": ""
+  },
+  ".github/workflows/db-migrate.yml": {
+    "mtime": 1778536584.2337003,
+    "seen": 1795704550.2667847,
+    "ast_hash": "5f58095d7936826a437032642b17ea8d",
+    "semantic_hash": ""
+  },
+  ".github/workflows/deploy-api.yml": {
+    "mtime": 1784907430.9823484,
+    "seen": 1795704550.2667863,
+    "ast_hash": "cb2110b3b14246d08acfadd879fe5e27",
+    "semantic_hash": ""
+  },
+  ".github/workflows/deploy-web.yml": {
+    "mtime": 1784907430.9826643,
+    "seen": 1795704550.2667887,
+    "ast_hash": "64d427a466fa2c5875c186c0c22cfa7e",
+    "semantic_hash": ""
+  },
+  ".github/workflows/etl-cron.yml": {
+    "mtime": 1784907430.9829304,
+    "seen": 1795704550.2667904,
+    "ast_hash": "b3d6db09703b0f128c39faf06b7bfe0d",
+    "semantic_hash": ""
+  },
+  ".github/workflows/etl-obras.yml": {
+    "mtime": 1778536584.2337003,
+    "seen": 1795704550.2667918,
+    "ast_hash": "15dda4256fa3ae80029801e7ca36056e",
+    "semantic_hash": ""
+  },
+  ".github/workflows/release-please.yml": {
+    "mtime": 1784907430.9830744,
+    "seen": 1795704550.2667942,
+    "ast_hash": "98f89c327c455c3292f39aa0cec51c6f",
+    "semantic_hash": ""
+  },
+  ".github/workflows/sismo-daily.yml": {
+    "mtime": 1786393247.9912934,
+    "seen": 1795704550.2667964,
+    "ast_hash": "c9898d91c6e6f6da850b34b10c96d830",
+    "semantic_hash": ""
+  },
+  ".pre-commit-config.yaml": {
+    "mtime": 1778536584.2337003,
+    "seen": 1795704550.2667985,
+    "ast_hash": "cfb7866846a22f5250d92221d3a6f235",
+    "semantic_hash": ""
+  },
+  "AGENTS.md": {
+    "mtime": 1795703514.836387,
+    "seen": 1795704550.2668004,
+    "ast_hash": "d239dca03b5cef6e42f0eae3596cc6f0",
+    "semantic_hash": ""
+  },
+  "README.md": {
+    "mtime": 1795703513.6354053,
+    "seen": 1795704550.2668028,
+    "ast_hash": "8a33c37ab3001e55d8751af6803ea23c",
+    "semantic_hash": ""
+  },
+  "docker-compose.yml": {
+    "mtime": 1784907430.985519,
+    "seen": 1795704550.2668047,
+    "ast_hash": "12d4fcfc9835f936d8f1537e0998fc9a",
+    "semantic_hash": ""
+  },
+  "docs/superpowers/specs/2026-07-07-puerta-giratoria-design.md": {
+    "mtime": 1784907430.9857888,
+    "seen": 1795704550.266807,
+    "ast_hash": "ff766561c799aa9eafad9ba13a76446c",
+    "semantic_hash": ""
+  },
+  "docs/superpowers/specs/2026-07-23-recibido-vs-hoy-y-sanciones-design.md": {
+    "mtime": 1784907430.9865758,
+    "seen": 1795704550.266809,
+    "ast_hash": "e8308d6b3a07e95670c530d24b1024ba",
+    "semantic_hash": ""
+  },
+  "web/public/llms-full.txt": {
+    "mtime": 1791230525.8357089,
+    "seen": 1795704550.2668104,
+    "ast_hash": "8d5f872b7bd52ea88177d8bce2919beb",
+    "semantic_hash": ""
+  },
+  "web/public/llms.txt": {
+    "mtime": 1791230525.8357089,
+    "seen": 1795704550.2668118,
+    "ast_hash": "96dbc2f4fc304bd095b3850e33a3929e",
+    "semantic_hash": ""
+  },
+  "web/public/mapa-del-olvido/robots.txt": {
+    "mtime": 1778536584.2542968,
+    "seen": 1795704550.2668138,
+    "ast_hash": "62280d62fb4106780973a6f1e088c5c1",
+    "semantic_hash": ""
+  },
+  "web/public/mapa-del-olvido/favicon.svg": {
+    "mtime": 1778536584.2542968,
+    "seen": 1795704550.2668147,
+    "ast_hash": "7e840862161341271697daa99a40d76b",
+    "semantic_hash": ""
+  },
+  "web/public/mapa-del-olvido/icons.svg": {
+    "mtime": 1778536584.2542968,
+    "seen": 1795704550.2668169,
+    "ast_hash": "3b4fcfcf393eca4d264dca4a4663bc37",
+    "semantic_hash": ""
+  },
+  "web/public/mapa-del-olvido/og-image.png": {
+    "mtime": 1778536584.2542968,
+    "seen": 1795704550.266819,
+    "ast_hash": "90c27fe88fae8d68f51a2eddd6b7c85f",
+    "semantic_hash": ""
+  }
+}

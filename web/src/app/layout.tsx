@@ -142,8 +142,17 @@ export default function RootLayout({
         />
       </head>
       <body className="flex min-h-screen flex-col text-slate-100 antialiased animate-page-fade">
+        <a href="#contenido" className="skip-link">
+          Saltar al contenido
+        </a>
         <SiteHeader />
-        <div className="flex-1 animate-page-rise">{children}</div>
+        <div
+          id="contenido"
+          tabIndex={-1}
+          className="flex-1 animate-page-rise focus:outline-none"
+        >
+          {children}
+        </div>
         <SiteFooter />
         {/*
           Plausible — privacy-first analytics, GDPR-friendly, no cookies.

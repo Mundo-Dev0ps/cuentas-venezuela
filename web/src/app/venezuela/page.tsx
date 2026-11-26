@@ -12,6 +12,7 @@ import {
   Globe2,
   AlertTriangle,
   RefreshCw,
+  ArrowRight,
 } from "lucide-react";
 import { pageMetadata } from "@/lib/seo";
 import { DAMAGE, fmtNum } from "./sismo-2026/data";
@@ -140,12 +141,12 @@ const SECTIONS = [
 
 export default function VenezuelaLanding() {
   return (
-    <div className="mx-auto max-w-5xl px-4 py-10 sm:px-6">
+    <main className="mx-auto max-w-5xl px-4 py-10 sm:px-6">
       <header className="mb-10">
-        <p className="text-orange-400 text-xs font-semibold uppercase tracking-widest mb-2">
-          Sección
+        <p className="text-orange-400 text-xs font-medium mb-2">
+          Sección · Venezuela
         </p>
-        <h1 className="text-3xl sm:text-4xl font-bold text-slate-100 mb-3">
+        <h1 className="text-3xl sm:text-4xl font-semibold text-slate-100 mb-3">
           Venezuela en datos
         </h1>
         <p className="text-slate-300 max-w-2xl leading-relaxed">
@@ -163,28 +164,30 @@ export default function VenezuelaLanding() {
             <Cmp
               key={href}
               href={href as never}
-              className={`group rounded-xl border p-6 transition ${
+              className={`group flex flex-col rounded-xl border p-6 transition-colors duration-150 ${
                 isAvailable
-                  ? "border-slate-700/40 bg-slate-900/80 hover:border-cyan-400/60 hover:shadow-lg cursor-pointer"
+                  ? "border-white/[0.08] bg-slate-900/80 hover:border-cyan-400/50 cursor-pointer"
                   : "border-slate-800/40 bg-slate-900/40 opacity-60"
               }`}
             >
-              <div className="flex items-center justify-between mb-3">
-                <div className="flex items-center gap-2">
-                  <Icon className={`h-5 w-5 ${color}`} />
-                  <h2 className="text-xl font-semibold text-slate-100">
+              <div className="flex items-center justify-between gap-2 mb-3">
+                <div className="flex items-center gap-2 min-w-0">
+                  <Icon className={`h-[18px] w-[18px] shrink-0 ${color}`} strokeWidth={1.5} aria-hidden />
+                  <h2 className="text-lg font-semibold text-slate-100 truncate">
                     {title}
                   </h2>
                 </div>
-                <span
-                  className={`text-[0.65rem] font-semibold uppercase tracking-wider px-2 py-0.5 rounded-full ${
-                    isAvailable
-                      ? "bg-cyan-400/10 text-cyan-300 border border-cyan-400/40"
-                      : "bg-slate-700/40 text-slate-400 border border-slate-700/60"
-                  }`}
-                >
-                  {badge}
-                </span>
+                {isAvailable ? (
+                  <ArrowRight
+                    className="h-4 w-4 shrink-0 text-slate-400 transition-[color,transform] duration-150 group-hover:translate-x-0.5 group-hover:text-cyan-300"
+                    strokeWidth={1.5}
+                    aria-hidden
+                  />
+                ) : (
+                  <span className="text-xs font-medium text-slate-400">
+                    {badge}
+                  </span>
+                )}
               </div>
               <p className="text-slate-400 text-sm leading-relaxed">{desc}</p>
             </Cmp>
@@ -192,10 +195,10 @@ export default function VenezuelaLanding() {
         })}
       </section>
 
-      <p className="mt-10 text-xs text-slate-500">
+      <p className="mt-10 text-xs text-slate-400">
         Fuentes principales: Banco Mundial, ACNUR, Freedom House, V-Dem, Foro
         Penal, Encovi (UCAB).
       </p>
-    </div>
+    </main>
   );
 }
