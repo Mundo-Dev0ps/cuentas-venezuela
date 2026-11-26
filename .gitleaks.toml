@@ -1,0 +1,10 @@
+title = "cuentas-venezuela gitleaks config"
+
+[extend]
+useDefault = true
+
+[allowlist]
+description = "Allow Graphify AST hash cache (false positives on *secrets.sh filenames)"
+paths = [
+  '''^graphify-out/cache/''',
+]
