@@ -42,3 +42,7 @@ pnpm-debug.log*
 # misc
 .turbo/
 coverage/
+graphify-out/cache/
+graphify-out/.graphify_*
+graphify-out/.rebuild.lock
+graphify-out/manifest.json

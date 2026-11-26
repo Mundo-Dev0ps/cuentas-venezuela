@@ -102,18 +102,18 @@ export function RankingList({ figures }: { figures: Figure[] }) {
                   <span className="truncate font-semibold text-slate-100">
                     {f.name}
                   </span>
-                  <span className="shrink-0 font-mono text-sm font-bold text-rose-300">
+                  <span className="shrink-0 font-mono tabular-nums text-sm font-semibold text-rose-300">
                     {unmet}
                   </span>
                 </span>
                 {/* Barra proporcional a promesas sin cumplir */}
                 <span className="mt-1.5 flex h-1.5 w-full overflow-hidden rounded-full bg-slate-800/70">
                   <span
-                    className="h-full rounded-full bg-gradient-to-r from-rose-500/70 to-rose-400"
+                    className="h-full rounded-full bg-rose-400/85"
                     style={{ width: `${(unmet / maxUnmet) * 100}%` }}
                   />
                 </span>
-                <span className="mt-1 flex items-center gap-2 text-xs text-slate-500">
+                <span className="mt-1 flex items-center gap-2 text-xs text-slate-400">
                   <span className="inline-flex items-center gap-0.5" aria-hidden>
                     {Array.from({ length: Math.min(offices, 8) }).map((_, i) => (
                       <span
@@ -146,8 +146,8 @@ export function RankingList({ figures }: { figures: Figure[] }) {
 
               {/* Cargos */}
               <div>
-                <h4 className="mb-2 flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-slate-400">
-                  <Briefcase className="h-3.5 w-3.5" />
+                <h4 className="mb-2 flex items-center gap-1.5 text-xs font-medium text-slate-400">
+                  <Briefcase className="h-3.5 w-3.5" strokeWidth={1.5} aria-hidden />
                   Cargos públicos
                 </h4>
                 <ol className="relative space-y-2 border-l border-slate-700/40 pl-4">
@@ -155,7 +155,7 @@ export function RankingList({ figures }: { figures: Figure[] }) {
                     <li key={`${o.title}-${i}`} className="relative">
                       <span className="absolute -left-[21px] top-1.5 h-2 w-2 rounded-full border border-cyan-500/60 bg-slate-950" />
                       <div className="flex flex-wrap items-baseline gap-x-2 text-sm">
-                        <span className="font-mono text-xs text-slate-500">
+                        <span className="font-mono tabular-nums text-xs text-slate-400">
                           {fmtDate(o.start)}
                           {o.end
                             ? `–${fmtDate(o.end)}`
@@ -171,7 +171,7 @@ export function RankingList({ figures }: { figures: Figure[] }) {
                           className="text-cyan-400 hover:text-cyan-300"
                           aria-label={`Fuente: ${o.source.label}`}
                         >
-                          <ExternalLink className="inline h-3 w-3" />
+                          <ExternalLink className="inline h-3 w-3" strokeWidth={1.5} aria-hidden />
                         </a>
                       </div>
                     </li>
@@ -181,7 +181,7 @@ export function RankingList({ figures }: { figures: Figure[] }) {
 
               {/* Promesas */}
               <div>
-                <h4 className="mb-2 text-xs font-semibold uppercase tracking-wider text-slate-400">
+                <h4 className="mb-2 text-xs font-medium text-slate-400">
                   Promesas y mandatos
                 </h4>
                 <ul className="space-y-3">
@@ -190,14 +190,14 @@ export function RankingList({ figures }: { figures: Figure[] }) {
                     return (
                       <li
                         key={i}
-                        className="rounded-lg border border-slate-700/40 bg-slate-950/40 p-3"
+                        className="rounded-lg border border-white/[0.08] bg-slate-950/40 p-3"
                       >
                         <div className="mb-1.5 flex items-center justify-between gap-2">
-                          <span className="font-mono text-xs text-slate-500">
+                          <span className="font-mono tabular-nums text-xs text-slate-400">
                             {fmtDate(p.madeDate)}
                           </span>
                           <span
-                            className={`rounded-md border px-1.5 py-0.5 text-[10px] font-medium uppercase tracking-wider ${st.badge}`}
+                            className={`rounded-md border px-1.5 py-0.5 text-xs font-medium ${st.badge}`}
                           >
                             {st.label}
                           </span>

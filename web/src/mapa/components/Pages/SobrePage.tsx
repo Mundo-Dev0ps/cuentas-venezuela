@@ -1,3 +1,4 @@
+import { Coffee } from 'lucide-react';
 import { PageLayout } from './PageLayout';
 
 export function SobrePage() {
@@ -83,12 +84,12 @@ export function SobrePage() {
           href="https://ko-fi.com/donjonny"
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center gap-2 bg-pink-500 hover:bg-pink-400 text-white font-bold px-5 py-2.5 rounded-lg transition-colors"
+          className="inline-flex items-center gap-2 bg-pink-500 hover:bg-pink-400 text-slate-950 font-semibold px-5 py-2.5 rounded-lg transition-[background-color,transform] duration-150 active:scale-[0.96]"
         >
-          <span className="text-lg">☕</span>
+          <Coffee className="h-4 w-4" strokeWidth={1.5} aria-hidden />
           <span>Apoyar en Ko-fi</span>
         </a>
-        <p className="text-slate-500 text-sm">
+        <p className="text-slate-400 text-sm">
           Cada aporte ayuda a mantener el dominio, el hosting y financiar nuevas fuentes de datos.
         </p>
       </Section>

@@ -41,7 +41,7 @@ export function TopStatesBars({ obras, onSelectState, limit = 5 }: TopStatesBars
 
   return (
     <div className="flex flex-col gap-2">
-      <p className="text-rose-400 text-xs uppercase tracking-widest font-medium">
+      <p className="text-rose-400 text-xs font-medium">
         Top estados — presupuesto perdido (USD)
       </p>
       <div className="flex flex-col gap-1.5">
@@ -51,24 +51,24 @@ export function TopStatesBars({ obras, onSelectState, limit = 5 }: TopStatesBars
             <button
               key={s.name}
               onClick={() => onSelectState(s.name)}
-              className="group text-left bg-slate-800/40 hover:bg-slate-800/70 transition-colors rounded-md p-2 border border-slate-700/30"
+              className="group text-left bg-slate-800/40 hover:bg-slate-800/70 transition-colors duration-150 rounded-lg p-2.5 border border-white/[0.08]"
             >
               <div className="flex items-center justify-between mb-1">
                 <span className="text-slate-100 text-xs font-semibold flex items-center gap-2 min-w-0 flex-1">
-                  <span className="text-slate-500 font-mono w-4 shrink-0">#{i + 1}</span>
+                  <span className="text-slate-400 font-mono tabular-nums w-4 shrink-0">#{i + 1}</span>
                   <span className="truncate">{s.name}</span>
                 </span>
-                <span className="text-rose-400 font-mono text-[11px] font-bold shrink-0 ml-2 whitespace-nowrap">
-                  {formatUSD(s.total)}<span className="text-rose-300/70 text-[9px] ml-0.5">USD</span>
+                <span className="text-rose-400 font-mono tabular-nums text-[11px] font-semibold shrink-0 ml-2 whitespace-nowrap">
+                  {formatUSD(s.total)}<span className="text-rose-300/80 text-[10px] ml-0.5">USD</span>
                 </span>
               </div>
               <div className="relative h-1.5 bg-slate-900/60 rounded-full overflow-hidden">
                 <div
-                  className="absolute inset-y-0 left-0 bg-gradient-to-r from-rose-500 to-orange-400 rounded-full transition-all"
+                  className="absolute inset-y-0 left-0 bg-rose-400 rounded-full transition-[width] duration-200"
                   style={{ width: `${pct}%` }}
                 />
               </div>
-              <p className="text-slate-500 text-[10px] mt-1">
+              <p className="text-slate-400 text-[11px] mt-1 font-mono tabular-nums">
                 {s.count} {s.count === 1 ? 'obra' : 'obras'}
               </p>
             </button>

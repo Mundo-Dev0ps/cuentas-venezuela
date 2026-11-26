@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { BarChart3, Coffee, Map, Search } from 'lucide-react';
 import { fetchAllObras } from '../../lib/firestore';
 import { useCountUp } from '../../hooks/useCountUp';
 import type { ObraPublica } from '../../types/obra';
@@ -71,17 +72,17 @@ export function LandingPage() {
       <Section eyebrow="Cómo se usa" title="Tres formas de explorar">
         <div className="grid md:grid-cols-3 gap-4">
           <FeatureCard
-            icon="🗺️"
+            icon={Map}
             title="Por ubicación"
             text="Hacé clic en un estado del mapa para ver todas las obras inconclusas allí."
           />
           <FeatureCard
-            icon="📊"
+            icon={BarChart3}
             title="Por presupuesto"
             text="Ranking de las obras más costosas. Filtros por año, categoría y estatus."
           />
           <FeatureCard
-            icon="🔍"
+            icon={Search}
             title="Por nombre"
             text="Buscá una obra específica si ya conocés su nombre. Compartí el link directo."
           />
@@ -100,7 +101,7 @@ export function LandingPage() {
             title="Código abierto"
             text="Todo el código y los datos son públicos. Forkeá, mejorá, contribuí."
             cta="Ver en GitHub →"
-            href="https://github.com/donjonny"
+            href="https://github.com/Mundo-Dev0ps/cuentas-venezuela"
             external
           />
           <ActionCard
@@ -112,27 +113,28 @@ export function LandingPage() {
           <ActionCard
             title="Apoyá económicamente"
             text="Un café mensual ayuda a sostener el proyecto sin publicidad ni patrocinios."
-            cta="Apoyar en Ko-fi ☕"
+            cta="Apoyar en Ko-fi →"
             href="https://ko-fi.com/donjonny"
             external
           />
         </div>
       </Section>
 
-      <footer className="border-t border-slate-700/40 py-8 px-4 sm:px-8 mt-16">
-        <div className="max-w-4xl mx-auto flex flex-wrap items-center justify-between gap-3 text-xs text-slate-500">
+      <footer className="border-t border-white/[0.08] py-8 px-4 sm:px-8 mt-16">
+        <div className="max-w-4xl mx-auto flex flex-wrap items-center justify-between gap-3 text-xs text-slate-400">
           <p>Mapa del Olvido · Datos abiertos · CC BY-SA 4.0</p>
           <div className="flex items-center gap-4">
-            <Link to="/sobre" className="hover:text-slate-300">Sobre</Link>
-            <Link to="/metodologia" className="hover:text-slate-300">Metodología</Link>
-            <Link to="/reportar" className="hover:text-slate-300">Reportar</Link>
+            <Link to="/sobre" className="hover:text-slate-200">Sobre</Link>
+            <Link to="/metodologia" className="hover:text-slate-200">Metodología</Link>
+            <Link to="/reportar" className="hover:text-slate-200">Reportar</Link>
             <a
               href="https://ko-fi.com/donjonny"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-pink-400 hover:text-pink-300"
+              className="text-pink-400 hover:text-pink-300 inline-flex items-center gap-1"
             >
-              ☕ Apoyar
+              <Coffee className="h-3.5 w-3.5" strokeWidth={1.5} aria-hidden />
+              <span>Apoyar</span>
             </a>
           </div>
         </div>
@@ -150,17 +152,12 @@ interface HeroProps {
 
 function Hero({ animTotal, animObras, animParalizadas, animEstados }: HeroProps) {
   return (
-    <section className="relative px-4 sm:px-8 pt-12 sm:pt-20 pb-16 overflow-hidden">
-      <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[800px] h-[800px] rounded-full bg-rose-500/8 blur-3xl" />
-        <div className="absolute top-1/2 left-1/3 w-[400px] h-[400px] rounded-full bg-orange-500/8 blur-3xl" />
-      </div>
-
+    <section className="relative px-4 sm:px-8 pt-12 sm:pt-20 pb-16">
       <div className="relative max-w-4xl mx-auto text-center">
-        <p className="text-orange-400 text-xs sm:text-sm uppercase tracking-[0.3em] font-semibold mb-4 animate-page-fade">
+        <p className="text-orange-400 text-xs sm:text-sm font-medium mb-4 animate-page-fade">
           Transparencia · Venezuela
         </p>
-        <h1 className="text-4xl sm:text-6xl md:text-7xl font-bold leading-[1.05] mb-4 animate-page-rise">
+        <h1 className="text-4xl sm:text-6xl md:text-7xl font-semibold leading-[1.05] mb-4 animate-page-rise">
           Mapa del{' '}
           <span className="text-rose-400">Olvido</span>
         </h1>
@@ -196,13 +193,13 @@ function Hero({ animTotal, animObras, animParalizadas, animEstados }: HeroProps)
         <div className="flex flex-col sm:flex-row gap-3 justify-center">
           <Link
             to="/"
-            className="bg-orange-500 hover:bg-orange-400 text-slate-900 font-bold py-3 px-7 rounded-lg transition-colors text-base sm:text-lg"
+            className="bg-orange-500 hover:bg-orange-400 text-slate-950 font-semibold py-3 px-7 rounded-lg transition-[background-color,transform] duration-150 active:scale-[0.96] text-base sm:text-lg"
           >
             Explorar el mapa →
           </Link>
           <Link
             to="/sobre"
-            className="border border-slate-600 hover:border-slate-400 text-slate-200 font-medium py-3 px-7 rounded-lg transition-colors text-base sm:text-lg"
+            className="border border-white/[0.15] hover:border-slate-400 text-slate-200 font-medium py-3 px-7 rounded-lg transition-colors text-base sm:text-lg"
           >
             Conocer más
           </Link>
@@ -214,9 +211,9 @@ function Hero({ animTotal, animObras, animParalizadas, animEstados }: HeroProps)
 
 function Stat({ value, label, color }: { value: string; label: string; color: string }) {
   return (
-    <div className="bg-slate-900/60 border border-slate-700/50 rounded-xl p-3 sm:p-4 backdrop-blur-md">
-      <p className={`${color} font-mono font-bold text-xl sm:text-3xl leading-none truncate`}>{value}</p>
-      <p className="text-slate-500 text-[10px] sm:text-xs uppercase tracking-wider mt-2 truncate">{label}</p>
+    <div className="bg-slate-900/75 border border-white/[0.08] rounded-xl p-3 sm:p-4 backdrop-blur-md">
+      <p className={`${color} font-mono tabular-nums font-semibold text-xl sm:text-3xl leading-none truncate`}>{value}</p>
+      <p className="text-slate-400 text-xs mt-2 truncate">{label}</p>
     </div>
   );
 }
@@ -226,18 +223,18 @@ function Section({
 }: { eyebrow: string; title: string; children: React.ReactNode }) {
   return (
     <section className="px-4 sm:px-8 py-10 sm:py-16 max-w-4xl mx-auto">
-      <p className="text-orange-400 text-xs uppercase tracking-widest font-semibold mb-2">{eyebrow}</p>
-      <h2 className="text-2xl sm:text-4xl font-bold leading-tight mb-6 text-slate-100">{title}</h2>
+      <p className="text-orange-400 text-xs font-medium mb-2">{eyebrow}</p>
+      <h2 className="text-2xl sm:text-4xl font-semibold leading-tight mb-6 text-slate-100">{title}</h2>
       <div className="space-y-4 text-slate-300">{children}</div>
     </section>
   );
 }
 
-function FeatureCard({ icon, title, text }: { icon: string; title: string; text: string }) {
+function FeatureCard({ icon: Icon, title, text }: { icon: React.ElementType; title: string; text: string }) {
   return (
-    <div className="bg-slate-900/50 border border-slate-700/40 rounded-xl p-5">
-      <span className="text-3xl block mb-3">{icon}</span>
-      <h3 className="text-slate-100 font-bold text-lg mb-1">{title}</h3>
+    <div className="bg-slate-900/60 border border-white/[0.08] rounded-xl p-5">
+      <Icon className="h-5 w-5 text-orange-400 mb-3" strokeWidth={1.5} aria-hidden />
+      <h3 className="text-slate-100 font-semibold text-lg mb-1">{title}</h3>
       <p className="text-slate-400 text-sm leading-relaxed">{text}</p>
     </div>
   );

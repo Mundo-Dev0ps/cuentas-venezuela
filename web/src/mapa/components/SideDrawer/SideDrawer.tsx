@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { Coffee } from 'lucide-react';
 import { GlassPanel } from '../UI/GlassPanel';
 import { ObraDetail } from './ObraDetail';
 import { StateView } from './StateView';
@@ -105,10 +106,10 @@ export function SideDrawer({
             href="https://ko-fi.com/donjonny"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-pink-400 hover:text-pink-300 flex items-center gap-1 font-semibold"
+            className="text-pink-400 hover:text-pink-300 flex items-center gap-1 font-medium"
             title="Apoyá el proyecto en Ko-fi"
           >
-            <span>☕</span>
+            <Coffee className="h-3.5 w-3.5" strokeWidth={1.5} aria-hidden />
             <span>Apoyar</span>
           </a>
         </nav>

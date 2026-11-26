@@ -28,12 +28,18 @@ import json
 import os
 import re
 import sys
+import time
+import urllib.error
 import urllib.request
+from typing import Callable
 
 WIKI_API = (
     "https://en.wikipedia.org/w/api.php?action=parse"
     "&page=2026_Venezuela_earthquakes&prop=wikitext&format=json&formatversion=2"
 )
+# Wikimedia API policy requires a contact/project URL in User-Agent to avoid 429 throttling.
+USER_AGENT = "cuentasvenezuela-sismo-bot/1.1 (https://cuentasvenezuela.org; hola@cuentasvenezuela.org)"
+RETRY_HTTP_CODES = {429, 500, 502, 503, 504}
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DATA_TS = os.path.join(ROOT, "web/src/app/venezuela/sismo-2026/data.ts")
@@ -62,10 +68,31 @@ def es_fecha(d: dt.date) -> str:
     return f"{d.day} de {MESES[d.month - 1]} de {d.year}"
 
 
-def fetch_wikitext() -> str:
-    req = urllib.request.Request(WIKI_API, headers={"User-Agent": "cuentasvenezuela-sismo-bot/1.0"})
-    with urllib.request.urlopen(req, timeout=30) as r:
-        return json.load(r)["parse"]["wikitext"]
+def fetch_wikitext(
+    retries: int = 4,
+    opener: Callable = urllib.request.urlopen,
+    sleep_fn: Callable[[float], None] = time.sleep,
+) -> str:
+    """Fetch Wikipedia infobox wikitext, retrying on 429/5xx with Retry-After or backoff."""
+    req = urllib.request.Request(WIKI_API, headers={"User-Agent": USER_AGENT})
+    for attempt in range(1, retries + 1):
+        try:
+            with opener(req, timeout=30) as r:
+                return json.load(r)["parse"]["wikitext"]
+        except urllib.error.HTTPError as e:
+            if e.code not in RETRY_HTTP_CODES or attempt == retries:
+                raise
+            retry_after = e.headers.get("Retry-After") if e.headers else None
+            delay = float(retry_after) if retry_after and retry_after.isdigit() else 5.0 * (2 ** (attempt - 1))
+            print(f"WARN: Wikipedia HTTP {e.code}, retrying in {delay:.0f}s (attempt {attempt}/{retries})")
+            sleep_fn(delay)
+        except (urllib.error.URLError, TimeoutError) as e:
+            if attempt == retries:
+                raise
+            delay = 5.0 * (2 ** (attempt - 1))
+            print(f"WARN: Network error ({e}), retrying in {delay:.0f}s (attempt {attempt}/{retries})")
+            sleep_fn(delay)
+    raise RuntimeError("unreachable")
 
 
 def _num_before(text: str, keyword: str) -> int | None:
@@ -150,7 +177,33 @@ def sub_file(path: str, subs: list[tuple[str, str]]) -> None:
     open(path, "w", encoding="utf-8").write(txt)
 
 
+def _self_test() -> int:
+    """Offline checks for parser, guardrails, and HTTP 429 retry logic."""
+    import io
+
+    assert parse_casualties("| casualties = at least 6,509 dead, 226,696 injured") == (6509, 226696)
+    assert parse_casualties("| casualties = {{rounddown|7120}} dead, 90,000 injured") == (7120, 90000)
+    assert guard(6000, 6509, MAX_DEAD, 1000, 3.0, None)[1] is not None
+    assert guard(25000, 6509, MAX_DEAD, 1000, 3.0, 25000) == (25000, None)
+
+    attempts = {"n": 0}
+    sleeps: list[float] = []
+
+    def fake_open(_req, timeout=30):
+        attempts["n"] += 1
+        if attempts["n"] < 3:
+            raise urllib.error.HTTPError(WIKI_API, 429, "Too many requests", {"Retry-After": "2"}, None)
+        return io.BytesIO(json.dumps({"parse": {"wikitext": "| casualties = 6509 dead, 226696 injured"}}).encode())
+
+    wt = fetch_wikitext(retries=4, opener=fake_open, sleep_fn=sleeps.append)
+    assert "6509 dead" in wt and sleeps == [2.0, 2.0]
+    print("self-test ok")
+    return 0
+
+
 def main() -> int:
+    if "--self-test" in sys.argv:
+        return _self_test()
     dry = "--dry-run" in sys.argv
     today = dt.date.today()
     iso = today.isoformat()

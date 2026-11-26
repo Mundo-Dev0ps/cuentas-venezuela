@@ -28,7 +28,7 @@ function SourceCard({ s }: { s: Source }) {
   return (
     <article
       id={s.slug}
-      className="rounded-xl border border-slate-700/40 bg-slate-900/80 p-5 scroll-mt-20"
+      className="rounded-xl border border-white/[0.08] bg-slate-900/80 p-5 scroll-mt-20"
     >
       <div className="flex items-start justify-between gap-3 mb-2">
         <div className="min-w-0">
@@ -42,9 +42,9 @@ function SourceCard({ s }: { s: Source }) {
           target="_blank"
           rel="noopener noreferrer"
           aria-label={`Abrir ${s.name} en nueva pestaña`}
-          className="shrink-0 inline-flex items-center gap-1 rounded-md border border-slate-700/40 hover:border-cyan-400/60 text-cyan-300 hover:text-cyan-200 text-xs px-2.5 py-1.5"
+          className="shrink-0 inline-flex items-center gap-1 rounded-lg border border-white/[0.08] hover:border-cyan-400/50 text-cyan-300 hover:text-cyan-200 text-xs px-2.5 py-1.5 transition-colors duration-150"
         >
-          Abrir <ExternalLink className="h-3 w-3" />
+          Abrir <ExternalLink className="h-3 w-3" strokeWidth={1.5} aria-hidden />
         </a>
       </div>
       {s.description && (
@@ -52,11 +52,11 @@ function SourceCard({ s }: { s: Source }) {
           {s.description}
         </p>
       )}
-      <div className="flex flex-wrap items-center gap-3 text-xs text-slate-500">
-        <span className="rounded-full border border-slate-700/40 bg-slate-900/60 px-2 py-0.5">
+      <div className="flex flex-wrap items-center gap-3 text-xs text-slate-400">
+        <span className="rounded-full border border-white/[0.08] bg-slate-900/60 px-2 py-0.5">
           Licencia: <span className="text-slate-300">{s.license ?? "no especificada"}</span>
         </span>
-        <code className="text-slate-500">{s.slug}</code>
+        <code className="text-slate-400">{s.slug}</code>
       </div>
     </article>
   );
@@ -104,12 +104,12 @@ export default async function FuentesPage() {
   );
 
   return (
-    <div className="mx-auto max-w-5xl px-4 py-10 sm:px-6">
+    <main className="mx-auto max-w-5xl px-4 py-10 sm:px-6">
       <header className="mb-10">
-        <p className="text-orange-400 text-xs font-semibold uppercase tracking-widest mb-2">
+        <p className="text-orange-400 text-xs font-medium mb-2">
           Transparencia
         </p>
-        <h1 className="text-3xl sm:text-4xl font-bold text-slate-100 mb-3">
+        <h1 className="text-3xl sm:text-4xl font-semibold text-slate-100 mb-3">
           Fuentes oficiales
         </h1>
         <p className="text-slate-300 max-w-3xl leading-relaxed mb-3">
@@ -167,7 +167,7 @@ export default async function FuentesPage() {
         </>
       )}
 
-      <footer className="mt-10 border-t border-slate-700/40 pt-6 text-xs text-slate-500 space-y-2">
+      <footer className="mt-10 border-t border-white/[0.08] pt-6 text-xs text-slate-400 space-y-2">
         <p>
           Los datasets agregados (Parquet en R2) se generan vía ETL en
           GitHub Actions y citan extracted_at para reproducibilidad.
@@ -184,6 +184,6 @@ export default async function FuentesPage() {
           .
         </p>
       </footer>
-    </div>
+    </main>
   );
 }

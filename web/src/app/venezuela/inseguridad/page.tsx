@@ -70,7 +70,7 @@ export default async function InseguridadPage() {
     .sort((a, b) => b.year - a.year)[0];
 
   return (
-    <div className="mx-auto max-w-6xl px-4 py-10 sm:px-6">
+    <main className="mx-auto max-w-6xl px-4 py-10 sm:px-6">
       <JsonLd
         data={breadcrumbsJsonLd([
           { name: "Inicio", path: "/" },
@@ -249,6 +249,6 @@ export default async function InseguridadPage() {
           <code className="text-slate-400">etl/pipelines/ve_macro.py</code>.
         </p>
       </footer>
-    </div>
+    </main>
   );
 }

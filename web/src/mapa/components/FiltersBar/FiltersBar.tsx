@@ -1,4 +1,5 @@
 import { useMemo, useState } from 'react';
+import { SlidersHorizontal, X } from 'lucide-react';
 import type { Estatus, ObraPublica } from '../../types/obra';
 import { STATUS_HEX } from '../../constants/colors';
 
@@ -144,12 +145,12 @@ export function FiltersBar({
       {/* Mobile: floating button + sheet */}
       <button
         onClick={() => setMobileOpen(true)}
-        className="mdo-overlay mdo-overlay-filters sm:hidden fixed bottom-32 left-3 z-20 w-12 h-12 rounded-full bg-slate-900/90 backdrop-blur-md border border-slate-700/50 shadow-xl text-slate-100 flex items-center justify-center"
+        className="mdo-overlay mdo-overlay-filters sm:hidden fixed bottom-32 left-3 z-20 w-12 h-12 rounded-full bg-slate-900/90 backdrop-blur-md border border-white/[0.1] shadow-xl text-slate-100 flex items-center justify-center active:scale-[0.96] transition-transform duration-150"
         aria-label="Abrir filtros"
       >
-        <span className="text-lg">⚲</span>
+        <SlidersHorizontal className="h-[18px] w-[18px]" strokeWidth={1.5} aria-hidden />
         {activeCount > 0 && (
-          <span className="absolute -top-1 -right-1 w-5 h-5 rounded-full bg-orange-500 text-slate-900 text-[10px] font-bold flex items-center justify-center">
+          <span className="absolute -top-1 -right-1 w-5 h-5 rounded-full bg-orange-500 text-slate-950 font-mono tabular-nums text-[10px] font-bold flex items-center justify-center">
             {activeCount}
           </span>
         )}
@@ -161,17 +162,17 @@ export function FiltersBar({
           onClick={() => setMobileOpen(false)}
         >
           <div
-            className="w-full bg-slate-900 border-t border-slate-700/50 rounded-t-2xl p-4 max-h-[80vh] overflow-y-auto"
+            className="w-full bg-slate-900 border-t border-white/[0.1] rounded-t-2xl p-4 max-h-[80vh] overflow-y-auto overscroll-contain"
             onClick={e => e.stopPropagation()}
           >
             <div className="flex items-center justify-between mb-3">
-              <p className="text-slate-200 text-sm font-semibold uppercase tracking-wider">Filtros</p>
+              <p className="text-slate-200 text-sm font-medium">Filtros</p>
               <button
                 onClick={() => setMobileOpen(false)}
-                className="text-slate-400 hover:text-slate-100 text-2xl leading-none w-8 h-8 flex items-center justify-center"
+                className="text-slate-400 hover:text-slate-100 w-9 h-9 inline-flex items-center justify-center rounded-lg"
                 aria-label="Cerrar"
               >
-                ×
+                <X className="h-5 w-5" strokeWidth={1.5} aria-hidden />
               </button>
             </div>
             {panel}

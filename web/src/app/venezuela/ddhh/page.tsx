@@ -96,7 +96,7 @@ export default async function DDHHPage() {
     .sort((a, b) => b.year - a.year);
 
   return (
-    <div className="mx-auto max-w-6xl px-4 py-10 sm:px-6">
+    <main className="mx-auto max-w-6xl px-4 py-10 sm:px-6">
       <JsonLd
         data={breadcrumbsJsonLd([
           { name: "Inicio", path: "/" },
@@ -292,6 +292,6 @@ export default async function DDHHPage() {
           <code className="text-slate-400">etl/pipelines/freedom_house.py</code>.
         </p>
       </footer>
-    </div>
+    </main>
   );
 }
